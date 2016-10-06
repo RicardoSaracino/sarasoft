@@ -93,7 +93,7 @@ class AnnotController extends Controller
 
 
 
-
+http://symfony.com/doc/current/bundles/SensioGeneratorBundle/commands/generate_doctrine_crud.html
 
 http://symfony.com/doc/current/security/form_login.html
 http://symfony.com/doc/current/security/entity_provider.html
