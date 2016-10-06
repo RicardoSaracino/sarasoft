@@ -39,27 +39,10 @@ class User implements UserInterface, \Serializable
 	private $password;
 
 	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="email", type="string", length=60)
-	 */
-	private $email;
-
-
-	/**
-	 * @ORM\Column(name="is_active", type="boolean")
-	 */
-	private $isActive;
-
-	/**
 	 *
 	 */
 	public function __construct()
 	{
-		$this->isActive = true;
-		# @see
-		// may not be needed, see section on salt below
-		// $this->salt = md5(uniqid(null, true));
 	}
 
 	/**
