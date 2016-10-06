@@ -92,5 +92,13 @@ class AnnotController extends Controller
 }
 
 
+
+
+
 http://symfony.com/doc/current/security/form_login.html
 http://symfony.com/doc/current/security/entity_provider.html
+http://symfony.com/doc/current/security/access_control.html
+http://symfony.com/doc/current/security/security_checker.html
+
+
+
