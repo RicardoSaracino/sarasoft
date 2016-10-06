@@ -9,10 +9,17 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+
+/**
+ * Class WelcomeController
+ * @package AppBundle\Controller
+ *
+ * @Route("/welcome")
+ */
 class WelcomeController extends Controller
 {
 	/**
-	 * @Route("/welcome")
+	 * @Route("/")
 	 */
 	public function indexAction()
 	{
