@@ -80,6 +80,13 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setPassword($password)
 	{
+
+		/*$options = [
+			'cost' => 12,
+		];
+		echo password_hash("rasmuslerdorf", PASSWORD_BCRYPT, $options);*/
+
+
 		$this->password = $password;
 
 		return $this;

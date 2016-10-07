@@ -1,7 +1,9 @@
 security:
 
     encoders:
-        AppBundle\Entity\User: plaintext
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 12
 
     providers:
         our_db_provider:
@@ -18,8 +20,18 @@ security:
               check_path: /login
               always_use_default_target_path: false
               default_target_path: /welcome
+            logout:
+               path:                 /logout
+               target:               /welcome
+               #success_handler:      ~
+               invalidate_session:   true
+               delete_cookies:
+                   name:
+                       path:                 null
+                       domain:               null
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/welcome, roles: ROLE_USER }
 

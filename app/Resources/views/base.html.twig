@@ -16,14 +16,25 @@
 		<title>{% block title %}Welcome!{% endblock %}</title>
 
         {% block stylesheets %}{% endblock %}
+
 		{% stylesheets '@bootstrap_css' %}
 		<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
 		{% endstylesheets %}
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
 		<style>
 			nav.navbar-fixed-top + .container {
 				margin-top: 30px;
+			}
+
+			.cw-table-list{
+				margin:0px !important;
+				table-layout:fixed;
+			}
+			.cw-table-list td{
+				padding-bottom: 0px !important;
+				overflow:hidden;
 			}
 		</style>
     </head>
