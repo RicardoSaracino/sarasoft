@@ -19,13 +19,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class WelcomeController extends Controller
 {
 	/**
-	 * @Route("/")
+	 * @Route("/", name="welcome")
 	 */
 	public function indexAction()
 	{
 		return $this->render(
 			'AppBundle:Welcome:index.html.twig',
-			array(// ...
+			array( // ...
 			)
 		);
 	}

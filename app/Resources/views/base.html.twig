@@ -1,49 +1,44 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
+<head>
+	<meta charset="UTF-8"/>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
 
-		<meta name="application-name" content="sarasoft">
+	<meta name="application-name" content="sarasoft">
 
-		<meta name="author" content="Ricardo Saracino">
+	<meta name="author" content="Ricardo Saracino">
 
-		<meta name="description" content="sarasoft">
+	<meta name="description" content="sarasoft">
 
-		<title>{% block title %}Welcome!{% endblock %}</title>
+	<title>{% block title %}Welcome!{% endblock %}</title>
 
-        {% block stylesheets %}{% endblock %}
+	{% block stylesheets %}{% endblock %}
 
-		{% stylesheets '@bootstrap_css' %}
-		<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
-		{% endstylesheets %}
+	{% stylesheets '@bootstrap_css' %}
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+	{% endstylesheets %}
 
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+	<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 
-		<style>
-			nav.navbar-fixed-top + .container {
-				margin-top: 30px;
-			}
+	<style>
+		nav.navbar-fixed-top + .container {
+			margin-top: 30px;
+		}
 
-			.cw-table-list{
-				margin:0px !important;
-				table-layout:fixed;
-			}
-			.cw-table-list td{
-				padding-bottom: 0px !important;
-				overflow:hidden;
-			}
-		</style>
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+		.table > tbody > tr > td {
+			vertical-align: middle;
+		}
+	</style>
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
 
-		{% javascripts '@jquery' '@bootstrap_js' %}
-		<script type="text/javascript" src="{{ asset_url }}"></script>
-		{% endjavascripts %}
-	</body>
+{% javascripts '@jquery' '@bootstrap_js' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+</body>
 </html>

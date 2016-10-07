@@ -1,21 +1,33 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Edit User{% endblock %}
+
 {% block body %}
-    <h1>User edit</h1>
+	{% include '::nav.html.twig' %}
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+	<div class="container">
 
-    <ul>
-        <li>
-            <a href="{{ path('user_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+		<div class="page-header">
+			<h1>Edit User</h1>
+		</div>
+
+		{{ form_start(edit_form) }}
+		{{ form_widget(edit_form) }}
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<input type="submit" class="btn btn-default" value="Save">
+			</div>
+		</div>
+		{{ form_end(edit_form) }}
+
+		<ul class="nav nav-pills nav-stacked">
+			<li>
+				<a href="{{ path('user_index') }}">Change Password</a>
+			</li>
+			<li>
+				<a href="{{ path('user_index') }}">Back to the list</a>
+			</li>
+		</ul>
+	</div>
 {% endblock %}

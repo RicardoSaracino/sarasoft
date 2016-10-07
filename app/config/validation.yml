@@ -1,0 +1,6 @@
+#AppBundle\Entity\Author:
+    #properties:
+        #email:
+            #- Email:
+                #message: The email "{{ value }}" is not a valid email.
+                #checkMX: true
