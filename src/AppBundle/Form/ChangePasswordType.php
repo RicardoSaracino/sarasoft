@@ -7,14 +7,17 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Class ChangePasswordType
- * @package AppBundle\Form
  *
  * @see http://stackoverflow.com/questions/9129784/implement-change-password-in-symfony2
+ *
+ * @package AppBundle\Form
  */
 class ChangePasswordType extends AbstractType
 {
@@ -24,14 +27,17 @@ class ChangePasswordType extends AbstractType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder->add('oldPassword', 'password');
-		$builder->add('newPassword', 'repeated', array(
-				'type' => 'password',
+		$builder
+			->add('oldPassword', PasswordType::class)
+
+			->add('newPassword', RepeatedType::class, [
+
+				'type' => PasswordType::class,
 				'invalid_message' => 'The password fields must match.',
 				'required' => true,
-				'first_options'  => array('label' => 'Password'),
-				'second_options' => array('label' => 'Repeat Password'),
-			));
+				'first_options'  => ['label' => 'Password'],
+				'second_options' => ['label' => 'Repeat Password'],
+			]);
 	}
 
 	/**
@@ -39,16 +45,8 @@ class ChangePasswordType extends AbstractType
 	 */
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
-		$resolver->setDefaults(array(
-				'data_class' => 'Acme\UserBundle\Form\Model\ChangePassword',
-			));
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getName()
-	{
-		return 'change_passwd';
+		$resolver->setDefaults([
+				'data_class' => 'AppBundle\Form\Model\ChangePassword',
+		]);
 	}
 }

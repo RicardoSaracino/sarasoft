@@ -8,8 +8,11 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+use Symfony\Component\Form\FormError;
 
 class SecurityController extends Controller
 {
@@ -18,20 +21,23 @@ class SecurityController extends Controller
 	 */
 	public function loginAction(Request $request)
 	{
+		$loginForm = $this->createForm('AppBundle\Form\LoginType', null, ['method' => 'POST']);
+
+		$loginForm->handleRequest($request);
+
 		$authenticationUtils = $this->get('security.authentication_utils');
 
-		// get the login error if there is one
-		$error = $authenticationUtils->getLastAuthenticationError();
+		# get the login error if there is one
+		if($authenticationException = $authenticationUtils->getLastAuthenticationError()){
 
-		// last username entered by the user
-		$lastUsername = $authenticationUtils->getLastUsername();
+			$loginForm->addError(new FormError($authenticationException->getMessageKey()));
+		}
 
 		return $this->render(
-			'AppBundle:Security:login.html.twig',
-			array(
-				'last_username' => $lastUsername,
-				'error' => $error,
-			)
+			'security/login.html.twig',[
+				'login_form' => $loginForm->createView(),
+				'last_username' => $authenticationUtils->getLastUsername(),
+			]
 		);
 	}
 

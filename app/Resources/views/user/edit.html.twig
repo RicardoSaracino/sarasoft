@@ -12,6 +12,7 @@
 		</div>
 
 		{{ form_start(edit_form) }}
+
 		{{ form_widget(edit_form) }}
 
 		<div class="form-group">
@@ -21,9 +22,12 @@
 		</div>
 		{{ form_end(edit_form) }}
 
+
 		<ul class="nav nav-pills nav-stacked">
+
+
 			<li>
-				<a href="{{ path('user_index') }}">Change Password</a>
+				<a href="{{ path('user_change_password', {'id':user.id}) }}">Change Password</a>
 			</li>
 			<li>
 				<a href="{{ path('user_index') }}">Back to the list</a>

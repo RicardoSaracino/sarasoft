@@ -29,6 +29,14 @@
 				<th>Email</th>
 				<td>{{ user.email }}</td>
 			</tr>
+			<tr>
+				<th>Created</th>
+				<td>{{ user.createdAt|date  }}</td>
+			</tr>
+			<tr>
+				<th>Updated</th>
+				<td>{{ user.updatedAt|date }}</td>
+			</tr>
 			</tbody>
 		</table>
 

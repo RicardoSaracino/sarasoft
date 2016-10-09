@@ -99,3 +99,72 @@ http://symfony.com/doc/current/security/form_login.html
 http://symfony.com/doc/current/security/entity_provider.html
 http://symfony.com/doc/current/security/access_control.html
 http://symfony.com/doc/current/security/security_checker.html
+
+
+
+
+<VirtualHost *:80>
+
+    ServerName sarasoft.site
+    ServerAlias ec2-52-55-71-226.compute-1.amazonaws.com
+
+    DocumentRoot /var/www/sarasoft/web
+
+    <Directory /var/www/sarasoft/web>
+        AllowOverride None
+        Order Allow,Deny
+        Allow from All
+
+        <IfModule mod_rewrite.c>
+            Options -MultiViews
+            RewriteEngine On
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteRule ^(.*)$ app.php [QSA,L]
+        </IfModule>
+    </Directory>
+
+    # uncomment the following lines if you install assets as symlinks
+    # or run into problems when compiling LESS/Sass/CoffeeScript assets
+    # <Directory /var/www/sarasoft/web>
+    #     Options FollowSymlinks
+    # </Directory>
+
+    # optionally disable the RewriteEngine for the asset directories
+    # which will allow apache to simply reply with a 404 when files are
+    # not found instead of passing the request into the full symfony stack
+    <Directory/var/www/sarasoft/web/bundles>
+        <IfModule mod_rewrite.c>
+            RewriteEngine Off
+        </IfModule>
+    </Directory>
+
+    ErrorLog /var/log/httpd/sarasoft_error.log
+    CustomLog /var/log/httpd/sarasoft_access.log combined
+</VirtualHost>
+
+
+    AllowOverride None
+    Order Allow,Deny
+    Allow from All
+<VirtualHost *:80>
+
+    ServerName default:80
+
+    # ServerName ec2-52-55-71-226.compute-1.amazonaws.com:80
+    # ServerAlias sarasoft.site
+
+        DocumentRoot /var/www/sarasoft/web
+
+    php_flag log_errors on
+    php_flag display_errors on
+    php_value error_reporting "E_ALL"
+    #php_value error_log /var/www/sarasoft/php_error.log
+    php_value date.timezone "UTC"
+
+        <Directory /var/www/sarasoft/web>
+                Require all granted
+        </Directory>
+
+        ErrorLog /var/log/httpd/sarasoft_error.log
+        CustomLog /var/log/httpd/sarasoft_access.log combined
+</VirtualHost>

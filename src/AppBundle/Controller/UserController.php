@@ -4,10 +4,17 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use AppBundle\Entity\User;
+
 use AppBundle\Form\UserType;
+use AppBundle\Form\ChangePasswordType;
+
+use AppBundle\Form\Model\ChangePassword;
+
 
 /**
  * User controller.
@@ -50,6 +57,7 @@ class UserController extends Controller
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
+			$user->setUpdatedAt($user->setCreatedAt(new \DateTime(\DateTimeZone::UTC))->getCreatedAt());
 			$em->persist($user);
 			$em->flush();
 
@@ -92,12 +100,13 @@ class UserController extends Controller
 	 */
 	public function editAction(Request $request, User $user)
 	{
-		$deleteForm = $this->createDeleteForm($user);
+		#$deleteForm = $this->createDeleteForm($user);
 		$editForm = $this->createForm('AppBundle\Form\UserType', $user);
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
 			$em = $this->getDoctrine()->getManager();
+			$user->setUpdatedAt(new \DateTime(\DateTimeZone::UTC));
 			$em->persist($user);
 			$em->flush();
 
@@ -109,10 +118,47 @@ class UserController extends Controller
 			array(
 				'user' => $user,
 				'edit_form' => $editForm->createView(),
-				'delete_form' => $deleteForm->createView(),
+				#'delete_form' => $deleteForm->createView(),
 			)
 		);
 	}
+
+
+	/**
+	 * Displays a form to edit an existing User entity password.
+	 *
+	 * @Route("/{id}/password", name="user_change_password")
+	 * @Method({"GET", "POST"})
+	 */
+	public function changePasswordAction(Request $request, User $user)
+	{
+		$changePasswordModel = new ChangePassword();
+
+		$changePasswordForm = $this->createForm('AppBundle\Form\ChangePasswordType', $changePasswordModel);
+		$changePasswordForm->handleRequest($request);
+
+		if ($changePasswordForm->isSubmitted() && $changePasswordForm->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			$encoder = $this->container->get('security.password_encoder');
+			$encodedPassword = $encoder->encodePassword($user, $changePasswordModel->getNewPassword());
+			$user->setPassword($encodedPassword);
+			$user->setUpdatedAt(new \DateTime(\DateTimeZone::UTC));
+			$user->setUpdatedPasswordAt(new \DateTime(\DateTimeZone::UTC));
+			$em->persist($user);
+			$em->flush();
+
+			return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
+		}
+
+		return $this->render(
+			'user/change_password.html.twig',
+			array(
+				'user' => $user,
+				'change_password_form' => $changePasswordForm->createView(),
+			)
+		);
+	}
+
 
 	/**
 	 * Deletes a User entity.

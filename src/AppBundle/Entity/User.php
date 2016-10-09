@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * User
  *
@@ -13,6 +15,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ *
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
  */
 class User implements UserInterface, \Serializable
 {
@@ -29,6 +34,9 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="username", type="string", length=32, unique=true)
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min=3)
 	 */
 	private $username;
 
@@ -36,13 +44,28 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="password", type="string", length=60)
+	 *
+	 * @Assert\NotBlank(groups="password")
+	 * @Assert\Length(min=3)
 	 */
 	private $password;
+
+	/**
+	 * json encoded string
+	 *
+	 * @var string
+	 *
+	 * @ORM\Column(name="roles", type="string", length=60)
+	 */
+	private $roles;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="first_name", type="string", length=32)
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min=3)
 	 */
 	private $firstName;
 
@@ -50,6 +73,9 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="last_name", type="string", length=32)
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min=3)
 	 */
 	private $lastName;
 
@@ -57,8 +83,32 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="email", type="string", length=64)
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\Email()
 	 */
 	private $email;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="created_at", type="datetime")
+	 */
+	private $createdAt;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="updated_at", type="datetime")
+	 */
+	private $updatedAt;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="updated_password_at", type="datetime", nullable=true)
+	 */
+	private $updatedPasswordAt;
 
 
 	/**
@@ -87,6 +137,49 @@ class User implements UserInterface, \Serializable
 	public function getUsername()
 	{
 		return $this->username;
+	}
+
+	/**
+	 * @param string $password
+	 *
+	 * @return User
+	 */
+	public function setPassword($password)
+	{
+		$this->password = $password;
+
+		return $this;
+	}
+
+	/**
+	 * @see Symfony\Component\Security\Core\User\UserInterface
+	 *
+	 * @return string
+	 */
+	public function getPassword()
+	{
+		return $this->password;
+	}
+
+	/**
+	 * @param array $roles
+	 * @return $this
+	 */
+	public function setRoles(array $roles)
+	{
+		$this->roles = json_encode($roles);
+
+		return $this;
+	}
+
+	/**
+	 * @see Symfony\Component\Security\Core\User\UserInterface
+	 *
+	 * @return array
+	 */
+	public function getRoles()
+	{
+		return json_decode($this->roles);
 	}
 
 	/**
@@ -147,41 +240,60 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-	 * @param string $password
-	 *
-	 * @return User
+	 * @param $createdAt
+	 * @return $this
 	 */
-	public function setPassword($password)
+	public function setCreatedAt($createdAt)
 	{
-		/*$options = [
-			'cost' => 12,
-		];
-		echo password_hash("rasmuslerdorf", PASSWORD_BCRYPT, $options);*/
-
-
-		$this->password = $password;
+		$this->createdAt = $createdAt;
 
 		return $this;
 	}
 
 	/**
-	 * @see Symfony\Component\Security\Core\User\UserInterface
-	 *
 	 * @return string
 	 */
-	public function getPassword()
+	public function getCreatedAt()
 	{
-		return $this->password;
+		return $this->createdAt;
 	}
 
 	/**
-	 * @see Symfony\Component\Security\Core\User\UserInterface
-	 *
-	 * @return array
+	 * @param $updatedAt
+	 * @return $this
 	 */
-	public function getRoles()
+	public function setUpdatedAt($updatedAt)
 	{
-		return array('ROLE_USER');
+		$this->updatedAt = $updatedAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUpdatedAt()
+	{
+		return $this->updatedAt;
+	}
+
+	/**
+	 * @param $updatedPasswordAt
+	 * @return $this
+	 */
+	public function setUpdatedPasswordAt($updatedPasswordAt)
+	{
+		$this->updatedPasswordAt = $updatedPasswordAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUpdatedPasswordAt()
+	{
+		return $this->updatedPasswordAt;
 	}
 
 	/**
@@ -235,5 +347,13 @@ class User implements UserInterface, \Serializable
 			// see section on salt below
 			// $this->salt
 			) = unserialize($serialized);
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function GetRoleOptions()
+	{
+		return ['User' => 'ROLE_USER', 'Admin' => 'ROLE_ADMIN', 'Super Admin' => 'ROLE_SUPER_ADMIN'];
 	}
 }
