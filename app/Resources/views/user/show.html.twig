@@ -11,43 +11,46 @@
 			<h1>User</h1>
 		</div>
 
-		<table class="table">
-			<tbody>
-			<tr>
-				<th>Username</th>
-				<td>{{ user.username }}</td>
-			</tr>
-			<tr>
-				<th>First Name</th>
-				<td>{{ user.firstName }}</td>
-			</tr>
-			<tr>
-				<th>Last Name</th>
-				<td>{{ user.lastName }}</td>
-			</tr>
-			<tr>
-				<th>Email</th>
-				<td>{{ user.email }}</td>
-			</tr>
-			<tr>
-				<th>Created</th>
-				<td>{{ user.createdAt|date  }}</td>
-			</tr>
-			<tr>
-				<th>Updated</th>
-				<td>{{ user.updatedAt|date }}</td>
-			</tr>
-			</tbody>
-		</table>
 
-		<ul class="nav nav-pills nav-stacked">
-			<li>
-				<a href="{{ path('user_index') }}">Back to the list</a>
-			</li>
-			<li>
-				<a href="{{ path('user_edit', { 'id': user.id }) }}">Edit</a>
-			</li>
-
-		</ul>
+		<div class="col-sm-9">
+			<table class="table">
+				<tbody>
+				<tr>
+					<th>Username</th>
+					<td>{{ user.username }}</td>
+				</tr>
+				<tr>
+					<th>First Name</th>
+					<td>{{ user.firstName }}</td>
+				</tr>
+				<tr>
+					<th>Last Name</th>
+					<td>{{ user.lastName }}</td>
+				</tr>
+				<tr>
+					<th>Email</th>
+					<td>{{ user.email }}</td>
+				</tr>
+				<tr>
+					<th>Created</th>
+					<td>{{ user.createdAt|date  }}</td>
+				</tr>
+				<tr>
+					<th>Updated</th>
+					<td>{{ user.updatedAt|date }}</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-sm-3">
+			<ul class="nav nav-pills nav-stacked">
+				<li>
+					<a href="{{ path('user_index') }}">Back to the list</a>
+				</li>
+				<li>
+					<a href="{{ path('user_edit', { 'id': user.id }) }}">Edit user</a>
+				</li>
+			</ul>
+		</div>
 	</div>
 {% endblock %}
