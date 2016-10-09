@@ -6,11 +6,13 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Class ChangePasswordType
@@ -37,7 +39,9 @@ class ChangePasswordType extends AbstractType
 				'required' => true,
 				'first_options'  => ['label' => 'Password'],
 				'second_options' => ['label' => 'Repeat Password'],
-			]);
+			])
+
+			->add('save', SubmitType::class, ['label' => 'Save']);
 	}
 
 	/**

@@ -45,7 +45,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(name="password", type="string", length=60)
 	 *
-	 * @Assert\NotBlank(groups="password")
+	 * @Assert\NotBlank()
 	 * @Assert\Length(min=3)
 	 */
 	private $password;
@@ -167,7 +167,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setRoles(array $roles)
 	{
-		$this->roles = json_encode($roles);
+		$this->roles = json_encode(array_values($roles));
 
 		return $this;
 	}

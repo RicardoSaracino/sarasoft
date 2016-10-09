@@ -28,8 +28,8 @@ class ChangePassword
 	 * @var string
 	 *
 	 * @Assert\Length(
-	 *     min = 6,
-	 *     minMessage = "Password should by at least 6 chars long"
+	 *     min = 8,
+	 *     minMessage = "Password should by at least 8 chars long"
 	 * )
 	 */
 	protected $newPassword;
