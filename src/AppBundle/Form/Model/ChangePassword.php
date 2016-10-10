@@ -18,7 +18,7 @@ class ChangePassword
 	/**
 	 * @var string
 	 *
-	 * @SecurityAssert\UserPassword(
+	 * SecurityAssert\UserPassword(
 	 *     message = "Wrong value for your current password"
 	 * )
 	 */

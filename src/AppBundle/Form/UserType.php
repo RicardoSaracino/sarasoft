@@ -2,12 +2,9 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\User;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -26,35 +23,32 @@ class UserType extends AbstractType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder
+		$builder->add('username');
 
-			->add('username')
+		if(isset($options['validation_groups']) && in_array('plain_password',$options['validation_groups'])){
 
-			->add('password', RepeatedType::class, [
+			$builder->add('plainPassword', RepeatedType::class, [
 				'type' => PasswordType::class,
 					'invalid_message' => 'The password fields must match.',
 					'required' => true,
 					'first_options'  => ['label' => 'Password'],
 					'second_options' => ['label' => 'Repeat Password'],
-				])
+				]);
+		}
 
+		$builder
 			->add('firstName')
-
 			->add('lastName')
-
 			->add('email')
-
 			->add(
 				'roles', ChoiceType::class, [
-					'choices' => \AppBundle\Entity\User::GetRoleOptions(),
+					'choices' => User::GetRoleOptions(),
 					'expanded' => true,
 					'multiple' => true,
 				]
 			)
-
 			->add('save', SubmitType::class, ['label' => 'Save']);
 	}
-
 
 	/**
 	 * @param OptionsResolverInterface $resolver
@@ -62,19 +56,7 @@ class UserType extends AbstractType
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
 		$resolver->setDefaults([
-			'data_class' => 'AppBundle\Entity\User',
+			'data_class' => User::class,
 		]);
 	}
-
-	/**
-	 * @param OptionsResolver $resolver
-	 */
-	/*public function configureOptions(OptionsResolver $resolver)
-	{
-		# http://stackoverflow.com/questions/10138505/symfony2-validation-not-working-for-embedded-form-type
-		# http://marcjuch.li/blog/2013/04/21/how-to-use-validation-groups-in-symfony/
-
-
-		);
-	}  */
 }

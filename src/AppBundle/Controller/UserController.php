@@ -4,15 +4,11 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 use AppBundle\Entity\User;
-
 use AppBundle\Form\UserType;
 use AppBundle\Form\ChangePasswordType;
-
 use AppBundle\Form\Model\ChangePassword;
 
 
@@ -33,13 +29,13 @@ class UserController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$users = $em->getRepository('AppBundle:User')->findAll();
+		$users = $em->getRepository(User::class)->findAll();
 
 		return $this->render(
 			'user/index.html.twig',
-			array(
+			[
 				'users' => $users,
-			)
+			]
 		);
 	}
 
@@ -52,12 +48,19 @@ class UserController extends Controller
 	public function newAction(Request $request)
 	{
 		$user = new User();
-		$form = $this->createForm(UserType::class, $user);
+
+		$form = $this->createForm(UserType::class, $user, ['validation_groups' => ['Default','plain_password']]);
+
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			$user->setUpdatedAt($user->setCreatedAt(new \DateTime(\DateTimeZone::UTC))->getCreatedAt());
+
+			$encoder = $this->container->get('security.password_encoder');
+			$user->setSalt(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
+			$encodedPassword = $encoder->encodePassword($user->getPlainPassword(), $user->getSalt());
+			$user->setPassword($encodedPassword);
+
 			$em->persist($user);
 			$em->flush();
 
@@ -65,7 +68,8 @@ class UserController extends Controller
 		}
 
 		return $this->render(
-			'user/new.html.twig',[
+			'user/new.html.twig',
+			[
 				'user' => $user,
 				'form' => $form->createView(),
 			]
@@ -80,12 +84,10 @@ class UserController extends Controller
 	 */
 	public function showAction(User $user)
 	{
-		$deleteForm = $this->createDeleteForm($user);
-
 		return $this->render(
-			'user/show.html.twig',[
-				'user' => $user,
-				'delete_form' => $deleteForm->createView(),
+			'user/show.html.twig',
+			[
+				'user' => $user
 			]
 		);
 	}
@@ -100,21 +102,19 @@ class UserController extends Controller
 	{
 		$editForm = $this->createForm(UserType::class, $user);
 
-		$editForm->remove('password');
-
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			$user->setUpdatedAt(new \DateTime(\DateTimeZone::UTC));
 			$em->persist($user);
 			$em->flush();
 
-			return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
+			return $this->redirectToRoute('user_show', array('id' => $user->getId()));
 		}
 
 		return $this->render(
-			'user/edit.html.twig',[
+			'user/edit.html.twig',
+			[
 				'user' => $user,
 				'edit_form' => $editForm->createView(),
 			]
@@ -131,17 +131,17 @@ class UserController extends Controller
 	public function changePasswordAction(Request $request, User $user)
 	{
 		$changePasswordModel = new ChangePassword();
-
 		$changePasswordForm = $this->createForm(ChangePasswordType::class, $changePasswordModel);
 		$changePasswordForm->handleRequest($request);
 
 		if ($changePasswordForm->isSubmitted() && $changePasswordForm->isValid()) {
 			$em = $this->getDoctrine()->getManager();
+
 			$encoder = $this->container->get('security.password_encoder');
-			$encodedPassword = $encoder->encodePassword($user, $changePasswordModel->getNewPassword());
+			$user->setSalt(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
+			$encodedPassword = $encoder->encodePassword($changePasswordModel->getNewPassword(), $user->getSalt());
 			$user->setPassword($encodedPassword);
-			$user->setUpdatedAt(new \DateTime(\DateTimeZone::UTC));
-			$user->setUpdatedPasswordAt(new \DateTime(\DateTimeZone::UTC));
+
 			$em->persist($user);
 			$em->flush();
 
@@ -149,13 +149,13 @@ class UserController extends Controller
 		}
 
 		return $this->render(
-			'user/change_password.html.twig',[
+			'user/change_password.html.twig',
+			[
 				'user' => $user,
 				'change_password_form' => $changePasswordForm->createView(),
 			]
 		);
 	}
-
 
 	/**
 	 * Deletes a User entity.

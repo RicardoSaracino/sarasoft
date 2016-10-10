@@ -8,13 +8,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
+
 /**
- * User
- *
- * @see http://symfony.com/doc/current/security/entity_provider.html
- *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  *
  * @UniqueEntity("username")
  * @UniqueEntity("email")
@@ -44,11 +43,23 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="password", type="string", length=60)
-	 *
-	 * @Assert\NotBlank()
-	 * @Assert\Length(min=3)
 	 */
 	private $password;
+
+	/**
+	 * @var string
+	 *
+	 * @Assert\NotBlank(groups={"plain_password"})
+	 * @Assert\Length(min=8,groups={"plain_password"})
+	 */
+	private $plainPassword;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="salt", type="string", length=60)
+	 */
+	private $salt;
 
 	/**
 	 * json encoded string
@@ -56,6 +67,9 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="roles", type="string", length=60)
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min=8)
 	 */
 	private $roles;
 
@@ -112,6 +126,14 @@ class User implements UserInterface, \Serializable
 
 
 	/**
+	 * @Assert\IsTrue(message="The password cannot match your username", groups={"plain_password"})
+	 */
+	public function isPasswordLegal()
+	{
+		return ($this->username !== $this->plainPassword);
+	}
+
+	/**
 	 * @return int
 	 */
 	public function getId()
@@ -159,6 +181,46 @@ class User implements UserInterface, \Serializable
 	public function getPassword()
 	{
 		return $this->password;
+	}
+
+	/**
+	 * @param $plainPassword
+	 * @return $this
+	 */
+	public function setPlainPassword($plainPassword)
+	{
+		$this->plainPassword = $plainPassword;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPlainPassword()
+	{
+		return $this->plainPassword;
+	}
+
+	/**
+	 * @param $salt
+	 * @return $this
+	 */
+	public function setSalt($salt)
+	{
+		$this->salt = $salt;
+
+		return $this;
+	}
+
+	/**
+	 * @see Symfony\Component\Security\Core\User\UserInterface
+	 *
+	 * @return string
+	 */
+	public function getSalt()
+	{
+		return $this->salt;
 	}
 
 	/**
@@ -296,17 +358,9 @@ class User implements UserInterface, \Serializable
 		return $this->updatedPasswordAt;
 	}
 
-	/**
-	 * @see Symfony\Component\Security\Core\User\UserInterface
-	 *
-	 * @return null
-	 */
-	public function getSalt()
-	{
-		// you *may* need a real salt depending on your encoder
-		// see section on salt below
-		return null;
-	}
+
+	##########
+
 
 	/**
 	 * @see Symfony\Component\Security\Core\User\UserInterface
@@ -349,11 +403,43 @@ class User implements UserInterface, \Serializable
 			) = unserialize($serialized);
 	}
 
+
+	#### REMOVE THIS ####
+
 	/**
 	 * @return array
 	 */
 	public static function GetRoleOptions()
 	{
 		return ['User' => 'ROLE_USER', 'Admin' => 'ROLE_ADMIN', 'Super Admin' => 'ROLE_SUPER_ADMIN'];
+	}
+
+	##########
+
+	/**
+	 * @ORM\PrePersist()
+	 */
+	public function triggerCreatedAt(LifecycleEventArgs $eventArgs)
+	{
+		$this->setCreatedAt(new \DateTime('now',new \DateTimeZone('UTC')));
+	}
+
+	/**
+	 * @ORM\PreUpdate()
+	 */
+	public function triggerUpdatedAt(LifecycleEventArgs $eventArgs)
+	{
+		$this->setUpdatedAt(new \DateTime('now',new \DateTimeZone('UTC')));
+	}
+
+	/**
+	 * @ORM\PrePersist()
+	 * @ORM\PreUpdate()
+	 */
+	public function triggerPasswordUpdatedAt(LifecycleEventArgs $eventArgs)
+	{
+		if ($eventArgs->hasChangedField('password')) {
+			$this->setUpdatedPasswordAt(new \DateTime('now',new \DateTimeZone('UTC')));
+		}
 	}
 }
