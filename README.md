@@ -1,5 +1,6 @@
 https://github.com/symfony/symfony/issues/12808
 http://stackoverflow.com/questions/39641809/symfony-convert-to-users-timezone-in-controller-or-twig
+http://stackoverflow.com/questions/9990625/symfony2-inject-current-user-in-service
 
 -----
 
