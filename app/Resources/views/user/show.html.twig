@@ -19,11 +19,11 @@
 					<td>{{ user.username }}</td>
 				</tr>
 				<tr>
-					<th>First Name</th>
+					<th>First name</th>
 					<td>{{ user.firstName }}</td>
 				</tr>
 				<tr>
-					<th>Last Name</th>
+					<th>Last name</th>
 					<td>{{ user.lastName }}</td>
 				</tr>
 				<tr>
@@ -31,12 +31,20 @@
 					<td>{{ user.email }}</td>
 				</tr>
 				<tr>
+					<th>Language</th>
+					<td>{{ user.language }}</td>
+				</tr>
+				<tr>
+					<th>Time zone</th>
+					<td>{{ user.timeZone }}</td>
+				</tr>
+				<tr>
 					<th>Created</th>
-					<td>{{ user.createdAt|date  }}</td>
+					<td>{{ user.createdAt|user_date }}</td>
 				</tr>
 				<tr>
 					<th>Updated</th>
-					<td>{{ user.updatedAt|date }}</td>
+					<td>{{ user.updatedAt|user_date }}</td>
 				</tr>
 				</tbody>
 			</table>

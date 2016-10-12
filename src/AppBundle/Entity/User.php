@@ -106,6 +106,26 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
+	 *
+	 *
+	 * @ORM\Column(name="language", type="string", length=64, options={"default":"en"})
+	 *
+	 * @Assert\Language()
+	 */
+	private $language;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="time_zone", type="string", length=64, options={"default":"America/Toronto"})
+	 *
+	 * @Assert\NotBlank()
+	 */
+	private $timeZone;
+
+	/**
+	 * @var string
+	 *
 	 * @ORM\Column(name="created_at", type="datetime")
 	 */
 	private $createdAt;
@@ -299,6 +319,44 @@ class User implements UserInterface, \Serializable
 	public function getEmail()
 	{
 		return $this->email;
+	}
+
+	/**
+	 * @param $language
+	 * @return $this
+	 */
+	public function setLanguage($language)
+	{
+		$this->language = $language;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLanguage()
+	{
+		return $this->language;
+	}
+
+	/**
+	 * @param $timeZone
+	 * @return $this
+	 */
+	public function setTimeZone($timeZone)
+	{
+		$this->timeZone = $timeZone;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTimeZone()
+	{
+		return $this->timeZone;
 	}
 
 	/**
