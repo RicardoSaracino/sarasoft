@@ -1,3 +1,8 @@
+http://symfony.com/doc/current/security/csrf_in_login_form.html
+$ php bin/console doctrine:mapping:import --force AcmeBlogBundle xml
+
+-----
+
 http://symfony.com/doc/current/templating.html#embedding-controllers
 
 app/Resources/views/
