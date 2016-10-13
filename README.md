@@ -1,3 +1,11 @@
+http://symfony.com/doc/current/templating.html#embedding-controllers
+
+app/Resources/views/
+The application's views directory can contain application-wide base templates (i.e. your application's layouts and templates of the application bundle) as well as templates that override third party bundle templates (see How to Override Templates from Third-Party Bundles).
+vendor/path/to/CoolBundle/Resources/views/
+Each third party bundle houses its templates in its Resources/views/ directory (and subdirectories). When you plan to share your bundle, you should put the templates in the bundle instead of the app/ directory.
+---
+
 https://github.com/symfony/symfony/issues/12808
 http://stackoverflow.com/questions/39641809/symfony-convert-to-users-timezone-in-controller-or-twig
 http://stackoverflow.com/questions/9990625/symfony2-inject-current-user-in-service
