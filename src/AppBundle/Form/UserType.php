@@ -42,8 +42,8 @@ class UserType extends AbstractType
 			->add('firstName')
 			->add('lastName')
 			->add('email')
-			->add('language', LanguageType::class)
-			->add('timeZone', TimezoneType::class)
+			->add('language', LanguageType::class, array('preferred_choices' => array('en','fr')))
+			->add('timeZone', TimezoneType::class, array('preferred_choices' => array('America/Toronto')))
 			->add(
 				'roles', ChoiceType::class, [
 					'choices' => User::GetRoleOptions(),

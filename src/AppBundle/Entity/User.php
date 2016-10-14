@@ -10,6 +10,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
+use Symfony\Component\Intl\Intl;
+
 /**
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -341,6 +343,14 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
+	 * @return null|string
+	 */
+	public function getLanguageName()
+	{
+		return Intl::getLocaleBundle()->getLocaleName($this->language);
+	}
+
+	/**
 	 * @param $timeZone
 	 * @return $this
 	 */
@@ -469,7 +479,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public static function GetRoleOptions()
 	{
-		return ['User' => 'ROLE_USER', 'Admin' => 'ROLE_ADMIN', 'Super Admin' => 'ROLE_SUPER_ADMIN'];
+		return ['Super Admin' => 'ROLE_SUPER_ADMIN', 'Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'];
 	}
 
 	##########

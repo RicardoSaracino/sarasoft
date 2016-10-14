@@ -61,6 +61,20 @@ php bin/console doctrine:schema:update --dump-sql | mysql -p5ar4SoF7 sarasoft
 
 -----
 
+Generate
+
+php bin/console doctrine:mapping:import --force AppBundle
+.... /Resources/config/doctrine/Customer.orm.xml
+
+php bin/console doctrine:generate:entities AppBundle:Customer
+
+
+php bin/console doctrine:mapping:convert annotation ./src
+
+php bin/console generate:doctrine:crud --entity=AppBundle:Customer --format=annotation --no-interaction
+
+
+
 [ec2-user@ip-172-31-61-162 sarasoft]$ cat /etc/httpd/conf.d/vhosts.symfony.conf
 <VirtualHost *:80>
 
