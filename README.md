@@ -52,8 +52,8 @@ php bin/console cache:clear --env=prod;
 
 http://bryanlor.com/blog/symfony2-troubleshooting-runtimeexception-unable-create-cache-directory
 
-setfacl -R -m u:apache:rwX -m u:ec2-user:rwX var/cache var/logs var/session;
-setfacl -dR -m u:apache:rwx -m u:ec2-user:rwx var/cache var/logs var/session;
+setfacl -R -m u:apache:rwX -m u:ec2-user:rwX var/cache var/logs var/sessions;
+setfacl -dR -m u:apache:rwx -m u:ec2-user:rwx var/cache var/logs var/sessions;
 
 -----
 
