@@ -1,3 +1,7 @@
+http://elnur.pro/how-to-add-or-update-several-model-objects-at-once-with-a-single-form-in-symfony
+
+-----
+
 http://symfony.com/doc/current/security/csrf_in_login_form.html
 $ php bin/console doctrine:mapping:import --force AcmeBlogBundle xml
 
