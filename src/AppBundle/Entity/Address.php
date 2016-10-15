@@ -7,8 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Address
  *
- * @see http://www.databaseanswers.org/data_models/customers_and_addresses/index.htm
- *
  * @ORM\Table(name="address", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
  * @ORM\Entity
  */

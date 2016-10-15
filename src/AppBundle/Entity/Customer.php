@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @see http://databaseanswers.org/data_models/customers_and_orders/index.htm
  *
+ *
  * @ORM\Table(name="customer", indexes={@ORM\Index(name="updated_by", columns={"updated_by"}), @ORM\Index(name="created_by", columns={"created_by"})})
  * @ORM\Entity
  */
