@@ -1,8 +1,11 @@
+http://symfony.com/doc/current/validation/translations.html
+------
+http://elnur.pro/how-to-add-or-update-several-model-objects-at-once-with-a-single-form-in-symfony
+http://elnur.pro/use-only-infrastructural-bundles-in-symfony
+-----
 http://symfony.com/doc/current/security/csrf_in_login_form.html
 $ php bin/console doctrine:mapping:import --force AcmeBlogBundle xml
-
 -----
-
 http://symfony.com/doc/current/templating.html#embedding-controllers
 
 app/Resources/views/
@@ -49,8 +52,8 @@ php bin/console cache:clear --env=prod;
 
 http://bryanlor.com/blog/symfony2-troubleshooting-runtimeexception-unable-create-cache-directory
 
-setfacl -R -m u:apache:rwX -m u:ec2-user:rwX var/cache var/logs var/session;
-setfacl -dR -m u:apache:rwx -m u:ec2-user:rwx var/cache var/logs var/session;
+setfacl -R -m u:apache:rwX -m u:ec2-user:rwX var/cache var/logs var/sessions;
+setfacl -dR -m u:apache:rwx -m u:ec2-user:rwx var/cache var/logs var/sessions;
 
 -----
 
