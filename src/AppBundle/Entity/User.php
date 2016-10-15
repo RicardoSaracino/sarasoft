@@ -5,9 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\Intl\Intl;
 
 /**
@@ -124,27 +125,35 @@ class User implements UserInterface, \Serializable
 	private $timeZone;
 
 	/**
-	 * @var string
+	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="created_at", type="datetime")
+	 *
+	 * @Gedmo\Timestampable(on="create")
 	 */
 	private $createdAt;
 
 	/**
-	 * @var string
+	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="updated_at", type="datetime")
+	 *
+	 * @Gedmo\Timestampable(on="update")
 	 */
 	private $updatedAt;
 
 	/**
-	 * @var string
+	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="updated_password_at", type="datetime", nullable=true)
+	 *
+	 * @Gedmo\Timestampable(on="change", field={"password"})
 	 */
 	private $updatedPasswordAt;
 
 	/**
+	 * @return bool
+	 *
 	 * @Assert\IsTrue(message="The password cannot match your username", groups={"plain_password"})
 	 */
 	public function isPasswordLegal()
@@ -181,9 +190,8 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-	 * @param string $password
-	 *
-	 * @return User
+	 * @param $password
+	 * @return $this
 	 */
 	public function setPassword($password)
 	{
@@ -340,14 +348,6 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-	 * @return null|string
-	 */
-	public function getLanguageName()
-	{
-		return Intl::getLocaleBundle()->getLocaleName($this->language);
-	}
-
-	/**
 	 * @param $timeZone
 	 * @return $this
 	 */
@@ -367,18 +367,7 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-	 * @param $createdAt
-	 * @return $this
-	 */
-	public function setCreatedAt($createdAt)
-	{
-		$this->createdAt = $createdAt;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
+	 * @return \DateTime
 	 */
 	public function getCreatedAt()
 	{
@@ -386,18 +375,7 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-	 * @param $updatedAt
-	 * @return $this
-	 */
-	public function setUpdatedAt($updatedAt)
-	{
-		$this->updatedAt = $updatedAt;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
+	 * @return \DateTime
 	 */
 	public function getUpdatedAt()
 	{
@@ -405,27 +383,14 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-	 * @param $updatedPasswordAt
-	 * @return $this
-	 */
-	public function setUpdatedPasswordAt($updatedPasswordAt)
-	{
-		$this->updatedPasswordAt = $updatedPasswordAt;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
+	 * @return \DateTime
 	 */
 	public function getUpdatedPasswordAt()
 	{
 		return $this->updatedPasswordAt;
 	}
 
-
 	##########
-
 
 	/**
 	 * @see Symfony\Component\Security\Core\User\UserInterface
@@ -479,32 +444,13 @@ class User implements UserInterface, \Serializable
 		return ['Super Admin' => 'ROLE_SUPER_ADMIN', 'Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'];
 	}
 
-	##########
+	### m ake extension out of this
 
 	/**
-	 * @ORM\PrePersist()
+	 * @return null|string
 	 */
-	public function triggerCreatedAt(LifecycleEventArgs $eventArgs)
+	public function getLanguageName()
 	{
-		$this->setCreatedAt(new \DateTime('now',new \DateTimeZone('UTC')));
-	}
-
-	/**
-	 * @ORM\PreUpdate()
-	 */
-	public function triggerUpdatedAt(LifecycleEventArgs $eventArgs)
-	{
-		$this->setUpdatedAt(new \DateTime('now',new \DateTimeZone('UTC')));
-	}
-
-	/**
-	 * @ORM\PrePersist()
-	 * @ORM\PreUpdate()
-	 */
-	public function triggerPasswordUpdatedAt(LifecycleEventArgs $eventArgs)
-	{
-		if ($eventArgs->hasChangedField('password')) {
-			$this->setUpdatedPasswordAt(new \DateTime('now',new \DateTimeZone('UTC')));
-		}
+		return Intl::getLocaleBundle()->getLocaleName($this->language);
 	}
 }
