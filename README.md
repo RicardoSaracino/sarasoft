@@ -70,6 +70,8 @@ php bin/console doctrine:mapping:import --force AppBundle xml
 
 php bin/console doctrine:mapping:convert annotation ./src
 
+php bin/console generate:doctrine:entities AppBundle:Address
+
 php bin/console doctrine:schema:update --dump-sql
 
 php bin/console generate:doctrine:form AppBundle:Address
