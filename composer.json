@@ -31,11 +31,17 @@
 
 		"symfony/assetic-bundle": "2.8.*",
 
-		"gedmo/doctrine-extensions": "dev-master",
 
 		"phpunit/phpunit": "5.5.*",
 		"components/jquery": "3.1.*",
-		"twitter/bootstrap": "3.3.*"
+		"twitter/bootstrap": "3.3.*",
+
+
+		"gedmo/doctrine-extensions": "dev-master",
+
+		"misd/phone-number-bundle": "dev-master",
+
+		"twig/extensions": "dev-master"
 	},
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

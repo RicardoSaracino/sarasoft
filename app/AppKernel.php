@@ -17,9 +17,11 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
 
+			## Added RS 2016-10-15
+			new Misd\PhoneNumberBundle\MisdPhoneNumberBundle(),
+
 			## Added RS 2016-10-04
 			new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-
 		];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
