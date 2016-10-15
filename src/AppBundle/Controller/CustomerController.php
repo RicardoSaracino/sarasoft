@@ -67,11 +67,8 @@ class CustomerController extends Controller
      */
     public function showAction(Customer $customer)
     {
-        $deleteForm = $this->createDeleteForm($customer);
-
         return $this->render('customer/show.html.twig', array(
             'customer' => $customer,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -83,7 +80,6 @@ class CustomerController extends Controller
      */
     public function editAction(Request $request, Customer $customer)
     {
-        $deleteForm = $this->createDeleteForm($customer);
         $editForm = $this->createForm('AppBundle\Form\CustomerType', $customer);
         $editForm->handleRequest($request);
 
@@ -92,14 +88,13 @@ class CustomerController extends Controller
             $em->persist($customer);
             $em->flush();
 
-            return $this->redirectToRoute('customer_edit', array('id' => $customer->getId()));
+            return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
         }
 
         return $this->render('customer/edit.html.twig', array(
             'customer' => $customer,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+		));
     }
 
     /**
