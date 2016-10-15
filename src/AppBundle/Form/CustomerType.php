@@ -5,7 +5,10 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
+use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 class CustomerType extends AbstractType
 {
     /**
@@ -13,7 +16,14 @@ class CustomerType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstName')->add('lastName')->add('phone')->add('altPhone')->add('email')->add('createdAt')->add('updatedAt')->add('createdBy')->add('updatedBy')        ;
+        $builder
+			->add('firstName')
+			->add('lastName')
+			->add('phone', PhoneNumberType::class,array('default_region' => 'CA')) ## todo use user region?
+			->add('altPhone', PhoneNumberType::class,array('default_region' => 'CA')) ## todo use user region?
+			->add('email',EmailType::class)
+
+			->add('save', SubmitType::class, ['label' => 'Save']);
     }
     
     /**
