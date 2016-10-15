@@ -28,7 +28,7 @@
         <option name="fixed">1</option>
       </options>
     </field>
-    <field name="email" type="string" column="email" length="32" nullable="false">
+    <field name="email" type="string" column="email" length="64" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
