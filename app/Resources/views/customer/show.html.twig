@@ -28,7 +28,7 @@
             </tr>
             <tr>
                 <th>Alt Phone</th>
-                <td>{{ phone_number_format(customer.altPhone) }}</td>
+				<td>{% if customer.altPhone %}{{ phone_number_format(customer.altPhone) }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Email</th>
