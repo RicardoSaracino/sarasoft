@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -40,7 +41,7 @@ class UserType extends AbstractType
 		$builder
 			->add('firstName')
 			->add('lastName')
-			->add('email')
+			->add('email',EmailType::class)
 			->add('language', LanguageType::class, array('preferred_choices' => array('en','fr')))
 			->add('timeZone', TimezoneType::class, array('preferred_choices' => array('America/Toronto')))
 			->add(
