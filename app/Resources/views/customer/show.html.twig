@@ -1,56 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Customer</h1>
+{% block title %}Customer{% endblock %}
 
-    <table>
+{% block body %}
+	{% include '::nav.html.twig' %}
+
+<div class="container">
+
+	<div class="page-header">
+		<h1>Customer</h1>
+	</div>
+
+	<div class="col-sm-9">
+		<table class="table">
         <tbody>
             <tr>
-                <th>Firstname</th>
+                <th>First Name</th>
                 <td>{{ customer.firstName }}</td>
             </tr>
             <tr>
-                <th>Lastname</th>
+                <th>Last Name</th>
                 <td>{{ customer.lastName }}</td>
             </tr>
             <tr>
                 <th>Phone</th>
-                <td>{{ customer.phone }}</td>
+                <td>{{ phone_number_format(customer.phone) }}</td>
             </tr>
             <tr>
-                <th>Altphone</th>
-                <td>{{ customer.altPhone }}</td>
+                <th>Alt Phone</th>
+                <td>{{ phone_number_format(customer.altPhone) }}</td>
             </tr>
             <tr>
                 <th>Email</th>
                 <td>{{ customer.email }}</td>
             </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{% if customer.createdAt %}{{ customer.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{% if customer.updatedAt %}{{ customer.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ customer.id }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('customer_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('customer_edit', { 'id': customer.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+			<tr>
+				<th>Created</th>
+				<td>{{ customer.createdAt|user_date }}</td>
+			</tr>
+			<tr>
+				<th>Updated</th>
+				<td>{{ customer.updatedAt|user_date }}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-sm-3">
+		<ul class="nav nav-pills nav-stacked">
+			<li>
+				<a href="{{ path('customer_index') }}">Back to the list</a>
+			</li>
+			<li>
+				<a href="{{ path('customer_edit', { 'id': customer.id }) }}">Edit</a>
+			</li>
+		</ul>
+	</div>
+</div>
 {% endblock %}

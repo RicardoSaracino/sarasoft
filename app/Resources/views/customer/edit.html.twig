@@ -1,21 +1,31 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Edit Customer{% endblock %}
+
 {% block body %}
-    <h1>Customer edit</h1>
+	{% include '::nav.html.twig' %}
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+	<div class="container">
 
-    <ul>
-        <li>
-            <a href="{{ path('customer_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+		<div class="page-header">
+			<h1>Edit Customer</h1>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-9" role="main">
+				{{ form_start(edit_form, {'attr': {'novalidate': 'novalidate', 'autocomplete':'off'}}) }}
+
+				{{ form_widget(edit_form) }}
+
+				{{ form_end(edit_form) }}
+			</div>
+			<div class="col-sm-3" role="complimentary">
+				<ul class="nav nav-pills nav-stacked">
+					<li>
+						<a href="{{ path('customer_index') }}">Back to the list</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 {% endblock %}
