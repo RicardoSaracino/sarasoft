@@ -56,5 +56,9 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/welcome, roles: ROLE_USER }
-        - { path: ^/user/new, roles: ROLE_USER }
-        - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/user/edit, roles: ROLE_USER }
+        - { path: ^/user, roles: ROLE_ADMIN }
+        - { path: ^/customer/index, roles: ROLE_USER }
+        - { path: ^/customer/show, roles: ROLE_USER }
+        - { path: ^/customer, roles: ROLE_ADMIN }
+        - { path: ^/, roles: ROLE_SUPER_ADMIN }

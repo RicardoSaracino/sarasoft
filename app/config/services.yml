@@ -7,10 +7,3 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-
-  twig.user_date_extension:
-      class: AppBundle\Twig\UserDateExtension
-      tags:
-          - { name: twig.extension }
-      arguments:
-          - "@security.token_storage"
