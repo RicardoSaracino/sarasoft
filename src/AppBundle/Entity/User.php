@@ -4,12 +4,10 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
 use Doctrine\ORM\Event\LifecycleEventArgs;
-
 use Symfony\Component\Intl\Intl;
 
 /**
@@ -145,7 +143,6 @@ class User implements UserInterface, \Serializable
 	 * @ORM\Column(name="updated_password_at", type="datetime", nullable=true)
 	 */
 	private $updatedPasswordAt;
-
 
 	/**
 	 * @Assert\IsTrue(message="The password cannot match your username", groups={"plain_password"})

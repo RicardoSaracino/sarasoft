@@ -9,33 +9,28 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AddressType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('line1')
-            ->add('line2')
-            ->add('line3')
-            ->add('city')
-            ->add('zipOrPostalcode')
-            ->add('stateOrProvince')
-            ->add('country')
-            ->add('createdAt', 'datetime')
-            ->add('updatedAt', 'datetime')
-            ->add('createdBy')
-            ->add('updatedBy')
-        ;
+        $builder->add('line1')->add('line2')->add('line3')->add('city')->add('zipOrPostalcode')->add('stateOrProvince')->add('country')->add('createdAt')->add('createdBy')->add('updatedAt')->add('updatedBy')        ;
     }
     
     /**
-     * @param OptionsResolver $resolver
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Address'
         ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'appbundle_address';
     }
 }

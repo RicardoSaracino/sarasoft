@@ -21,13 +21,10 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 class LoginType extends AbstractType
 {
 	/**
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
+	 * {@inheritdoc}
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder
-			->add('username')
-			->add('password', PasswordType::class);
+		$builder->add('username')->add('password', PasswordType::class);
 	}
 }

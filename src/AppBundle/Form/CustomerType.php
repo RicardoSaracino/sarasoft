@@ -9,27 +9,28 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomerType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('firstName')
-            ->add('lastName')
-            ->add('phone')
-            ->add('altPhone')
-            ->add('email')
-        ;
+        $builder->add('firstName')->add('lastName')->add('phone')->add('altPhone')->add('email')->add('createdAt')->add('updatedAt')->add('createdBy')->add('updatedBy')        ;
     }
     
     /**
-     * @param OptionsResolver $resolver
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Customer'
         ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'appbundle_customer';
     }
 }

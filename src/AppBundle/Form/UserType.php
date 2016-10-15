@@ -4,7 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\User;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -20,8 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class UserType extends AbstractType
 {
 	/**
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
+	 * {@inheritdoc}
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
@@ -55,12 +54,20 @@ class UserType extends AbstractType
 	}
 
 	/**
-	 * @param OptionsResolverInterface $resolver
+	 * {@inheritdoc}
 	 */
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
+	public function configureOptions(OptionsResolver $resolver)
 	{
-		$resolver->setDefaults([
-			'data_class' => User::class,
-		]);
+		$resolver->setDefaults(array(
+				'data_class' => 'AppBundle\Entity\User'
+			));
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getBlockPrefix()
+	{
+		return 'appbundle_user';
 	}
 }
