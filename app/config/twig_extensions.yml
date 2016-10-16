@@ -7,3 +7,19 @@ services:
           - { name: twig.extension }
       arguments:
           - "@security.token_storage"
+
+  twig.country_extension:
+      class: AppBundle\Twig\CountryExtension
+      tags:
+          - { name: twig.extension }
+
+
+  twig.language_extension:
+      class: AppBundle\Twig\LanguageExtension
+      tags:
+          - { name: twig.extension }
+
+  twig.stateProvince_extension:
+      class: AppBundle\Twig\StateProvinceExtension
+      tags:
+          - { name: twig.extension }

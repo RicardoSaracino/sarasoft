@@ -29,21 +29,21 @@ class UserDateExtension extends \Twig_Extension
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getFilters()
+	{
+		return [
+			'user_date' => new \Twig_Filter_Method($this, 'formatUserDate'),
+		];
+	}
+
+	/**
 	 * @return mixed
 	 */
 	public function getUser()
 	{
 		return $this->tokenStorage->getToken()->getUser();
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getFilters()
-	{
-		return array(
-			'user_date' => new \Twig_Filter_Method($this, 'formatUserDate'),
-		);
 	}
 
 	/**
