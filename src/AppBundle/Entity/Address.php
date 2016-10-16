@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -26,20 +27,23 @@ class Address
 	 * @var string
 	 *
 	 * @ORM\Column(name="line_1", type="string", length=32, nullable=false)
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min=3)
 	 */
 	private $line1;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="line_2", type="string", length=32, nullable=false)
+	 * @ORM\Column(name="line_2", type="string", length=32, nullable=true)
 	 */
 	private $line2;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="line_3", type="string", length=32, nullable=false)
+	 * @ORM\Column(name="line_3", type="string", length=32, nullable=true)
 	 */
 	private $line3;
 
@@ -47,6 +51,9 @@ class Address
 	 * @var string
 	 *
 	 * @ORM\Column(name="city", type="string", length=32, nullable=false)
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min=3)
 	 */
 	private $city;
 
@@ -68,6 +75,8 @@ class Address
 	 * @var string
 	 *
 	 * @ORM\Column(name="country", type="string", length=6, nullable=false)
+	 *
+	 * @Assert\Country()
 	 */
 	private $country;
 

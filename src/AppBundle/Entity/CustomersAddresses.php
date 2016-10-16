@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * CustomersAddresses
@@ -22,6 +24,8 @@ class CustomersAddresses
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
 	 * })
+	 *
+	 * @Assert\Valid()
 	 */
 	private $customer;
 
@@ -34,6 +38,8 @@ class CustomersAddresses
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
 	 * })
+	 *
+	 * @Assert\Valid()
 	 */
 	private $address;
 
