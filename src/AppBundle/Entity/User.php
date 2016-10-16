@@ -14,7 +14,6 @@ use Symfony\Component\Intl\Intl;
 /**
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @ORM\HasLifecycleCallbacks()
  *
  * @UniqueEntity("username")
  * @UniqueEntity("email")
@@ -106,8 +105,6 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @var string
-	 *
-	 *
 	 *
 	 * @ORM\Column(name="language", type="string", length=64, options={"default":"en"})
 	 *

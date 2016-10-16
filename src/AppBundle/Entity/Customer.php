@@ -3,6 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
 /**
  * Customer
@@ -12,307 +15,272 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Customer
 {
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="first_name", type="string", length=32, nullable=false)
-     */
-    private $firstName;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="IDENTITY")
+	 */
+	private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="last_name", type="string", length=32, nullable=false)
-     */
-    private $lastName;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="first_name", type="string", length=32, nullable=false)
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min=3)
+	 */
+	private $firstName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="phone", type="string", length=10, nullable=false)
-     */
-    private $phone;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="last_name", type="string", length=32, nullable=false)
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min=3)
+	 */
+	private $lastName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="alt_phone", type="string", length=10, nullable=false)
-     */
-    private $altPhone;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="phone", type="phone_number", length=10, nullable=false)
+	 *
+	 * @Assert\NotBlank()
+	 * @AssertPhoneNumber
+	 */
+	private $phone;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=32, nullable=false)
-     */
-    private $email;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="alt_phone", type="phone_number", length=10, nullable=true)
+	 *
+	 * @AssertPhoneNumber
+	 */
+	private $altPhone;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="email", type="string", length=64, nullable=true)
+	 *
+	 * @Assert\Email()
+	 */
+	private $email;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
-     */
-    private $updatedAt;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="created_at", type="datetime", nullable=false)
+	 *
+	 * @Gedmo\Timestampable(on="create")
+	 */
+	private $createdAt;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+	/**
+	 * @var \AppBundle\Entity\User
+	 *
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+	 * @ORM\JoinColumns({
+	 * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+	 * })
+	 *
+	 * @Gedmo\Blameable(on="create")
+	 */
+	private $createdBy;
 
-    /**
-     * @var \AppBundle\Entity\User
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
-     * })
-     */
-    private $createdBy;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+	 *
+	 * @Gedmo\Timestampable(on="update")
+	 */
+	private $updatedAt;
 
-    /**
-     * @var \AppBundle\Entity\User
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
-     * })
-     */
-    private $updatedBy;
+	/**
+	 * @var \AppBundle\Entity\User
+	 *
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+	 * @ORM\JoinColumns({
+	 * @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
+	 * })
+	 *
+	 * @Gedmo\Blameable(on="update")
+	 */
+	private $updatedBy;
 
-    /**
-     * Set firstName
-     *
-     * @param string $firstName
-     *
-     * @return Customer
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
+	/**
+	 * Get id
+	 *
+	 * @return integer
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set firstName
+	 *
+	 * @param string $firstName
+	 *
+	 * @return Customer
+	 */
+	public function setFirstName($firstName)
+	{
+		$this->firstName = $firstName;
 
-    /**
-     * Get firstName
-     *
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
+		return $this;
+	}
 
-    /**
-     * Set lastName
-     *
-     * @param string $lastName
-     *
-     * @return Customer
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
+	/**
+	 * Get firstName
+	 *
+	 * @return string
+	 */
+	public function getFirstName()
+	{
+		return $this->firstName;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set lastName
+	 *
+	 * @param string $lastName
+	 *
+	 * @return Customer
+	 */
+	public function setLastName($lastName)
+	{
+		$this->lastName = $lastName;
 
-    /**
-     * Get lastName
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
+		return $this;
+	}
 
-    /**
-     * Set phone
-     *
-     * @param string $phone
-     *
-     * @return Customer
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
+	/**
+	 * Get lastName
+	 *
+	 * @return string
+	 */
+	public function getLastName()
+	{
+		return $this->lastName;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set phone
+	 *
+	 * @param string $phone
+	 *
+	 * @return Customer
+	 */
+	public function setPhone($phone)
+	{
+		$this->phone = $phone;
 
-    /**
-     * Get phone
-     *
-     * @return string
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
+		return $this;
+	}
 
-    /**
-     * Set altPhone
-     *
-     * @param string $altPhone
-     *
-     * @return Customer
-     */
-    public function setAltPhone($altPhone)
-    {
-        $this->altPhone = $altPhone;
+	/**
+	 * Get phone
+	 *
+	 * @return string
+	 */
+	public function getPhone()
+	{
+		return $this->phone;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set altPhone
+	 *
+	 * @param string $altPhone
+	 *
+	 * @return Customer
+	 */
+	public function setAltPhone($altPhone)
+	{
+		$this->altPhone = $altPhone;
 
-    /**
-     * Get altPhone
-     *
-     * @return string
-     */
-    public function getAltPhone()
-    {
-        return $this->altPhone;
-    }
+		return $this;
+	}
 
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return Customer
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
+	/**
+	 * Get altPhone
+	 *
+	 * @return string
+	 */
+	public function getAltPhone()
+	{
+		return $this->altPhone;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set email
+	 *
+	 * @param string $email
+	 *
+	 * @return Customer
+	 */
+	public function setEmail($email)
+	{
+		$this->email = $email;
 
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
+		return $this;
+	}
 
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return Customer
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
+	/**
+	 * Get email
+	 *
+	 * @return string
+	 */
+	public function getEmail()
+	{
+		return $this->email;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get createdAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
 
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
+	/**
+	 * Get createdBy
+	 *
+	 * @return \AppBundle\Entity\User
+	 */
+	public function getCreatedBy()
+	{
+		return $this->createdBy;
+	}
 
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return Customer
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
+	/**
+	 * Get updatedAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getUpdatedAt()
+	{
+		return $this->updatedAt;
+	}
 
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set createdBy
-     *
-     * @param \AppBundle\Entity\User $createdBy
-     *
-     * @return Customer
-     */
-    public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
-    {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    /**
-     * Get createdBy
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    /**
-     * Set updatedBy
-     *
-     * @param \AppBundle\Entity\User $updatedBy
-     *
-     * @return Customer
-     */
-    public function setUpdatedBy(\AppBundle\Entity\User $updatedBy = null)
-    {
-        $this->updatedBy = $updatedBy;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedBy
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getUpdatedBy()
-    {
-        return $this->updatedBy;
-    }
+	/**
+	 * Get updatedBy
+	 *
+	 * @return \AppBundle\Entity\User
+	 */
+	public function getUpdatedBy()
+	{
+		return $this->updatedBy;
+	}
 }
