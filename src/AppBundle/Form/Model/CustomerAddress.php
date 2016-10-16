@@ -6,19 +6,28 @@
 
 namespace AppBundle\Form\Model;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Class CustomerAddress
+ *
+ * @see http://symfony.com/doc/current/reference/constraints/Valid.html
+ *
  * @package AppBundle\Form\Model
  */
-class CustomerAddress {
-
+class CustomerAddress
+{
 	/**
 	 * @var \AppBundle\Entity\Customer
+	 *
+	 * @Assert\Valid()
 	 */
 	public $customer;
 
 	/**
 	 * @var \AppBundle\Entity\Address
+	 *
+	 * @Assert\Valid()
 	 */
 	public $address;
 

@@ -2,12 +2,18 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Address;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use AppBundle\Entity\Customer;
-use AppBundle\Form\CustomerType;
+use AppBundle\Entity\CustomersAddresses;
+
+use AppBundle\Form\Model\CustomerAddress;
+use AppBundle\Form\CustomerAddressType;
+
 
 /**
  * Customer controller.
@@ -33,31 +39,40 @@ class CustomerController extends Controller
         ));
     }
 
-    /**
-     * Creates a new Customer entity.
-     *
-     * @Route("/new", name="customer_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newAction(Request $request)
-    {
-        $customer = new Customer();
-        $form = $this->createForm('AppBundle\Form\CustomerType', $customer);
-        $form->handleRequest($request);
+  	/**
+	 * Creates a new Customer entity.
+	 *
+	 * @Route("/new", name="customer_new")
+	 * @Method({"GET", "POST"})
+	 */
+	public function newAction(Request $request)
+	{
+		$customerAddressModel = new CustomerAddress(new Customer(), new Address());
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($customer);
-            $em->flush();
+		$form = $this->createForm(CustomerAddressType::class, $customerAddressModel);
 
-            return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
-        }
+		$form->handleRequest($request);
 
-        return $this->render('customer/new.html.twig', array(
-            'customer' => $customer,
-            'form' => $form->createView(),
-        ));
-    }
+		if ($form->isSubmitted() && $form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+
+			$customersAddresses = new CustomersAddresses();
+			$customersAddresses->setCustomer($customerAddressModel->customer);
+			$customersAddresses->setAddress($customerAddressModel->address);
+
+			$em->persist($customerAddressModel->customer);
+			$em->persist($customerAddressModel->address);
+			$em->persist($customersAddresses);
+
+			$em->flush();
+
+			return $this->redirectToRoute('customer_show', array('id' => $customerAddressModel->customer->getId()));
+		}
+
+		return $this->render('customer/new.html.twig',[
+			'form' => $form->createView(),
+		]);
+	}
 
     /**
      * Finds and displays a Customer entity.
@@ -67,9 +82,15 @@ class CustomerController extends Controller
      */
     public function showAction(Customer $customer)
     {
-        return $this->render('customer/show.html.twig', array(
-            'customer' => $customer,
-        ));
+		$em = $this->getDoctrine()->getManager();
+
+		$customersAddresses = $em->getRepository(CustomersAddresses::class)->findOneBy(['customer' => $customer]);
+
+		$address = $customersAddresses->getAddress();
+
+		return $this->render('customer/show.html.twig', [
+            'customer_address' => new CustomerAddress($customer, $address)
+        ]);
     }
 
     /**
@@ -80,21 +101,30 @@ class CustomerController extends Controller
      */
     public function editAction(Request $request, Customer $customer)
     {
-        $editForm = $this->createForm('AppBundle\Form\CustomerType', $customer);
-        $editForm->handleRequest($request);
+		$em = $this->getDoctrine()->getManager();
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($customer);
-            $em->flush();
+		$customersAddresses = $em->getRepository(CustomersAddresses::class)->findOneBy(['customer' => $customer]);
 
-            return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
-        }
+		$customerAddressModel = new CustomerAddress($customer,$customersAddresses->getAddress());
 
-        return $this->render('customer/edit.html.twig', array(
-            'customer' => $customer,
-            'edit_form' => $editForm->createView(),
-		));
+		$form = $this->createForm(CustomerAddressType::class, $customerAddressModel);
+
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+
+			$em->persist($customerAddressModel->customer);
+			$em->persist($customerAddressModel->address);
+
+			$em->flush();
+
+			return $this->redirectToRoute('customer_show', array('id' => $customerAddressModel->customer->getId()));
+		}
+
+		return $this->render('customer/new.html.twig',[
+				'form' => $form->createView(),
+			]);
     }
 
     /**

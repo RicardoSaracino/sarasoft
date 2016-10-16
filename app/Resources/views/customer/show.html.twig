@@ -4,55 +4,80 @@
 
 {% block body %}
 	{% include '::nav.html.twig' %}
-
-<div class="container">
-
-	<div class="page-header">
-		<h1>Customer</h1>
+	<div class="container">
+		<div class="page-header">
+			<h1>Customer</h1>
+		</div>
+		<div class="col-sm-9">
+			<table class="table">
+				<tbody>
+				<tr>
+					<th>First Name</th>
+					<td>{{ customer_address.customer.firstName }}</td>
+				</tr>
+				<tr>
+					<th>Last Name</th>
+					<td>{{ customer_address.customer.lastName }}</td>
+				</tr>
+				<tr>
+					<th>Phone</th>
+					<td>{{ phone_number_format(customer_address.customer.phone) }}</td>
+				</tr>
+				<tr>
+					<th>Alt Phone</th>
+					<td>{% if customer_address.customer.altPhone %}{{ phone_number_format(customer_address.customer.altPhone) }}{% endif %}</td>
+				</tr>
+				<tr>
+					<th>Email</th>
+					<td>{{ customer_address.customer.email }}</td>
+				</tr>
+				<tr>
+					<th>Line 1</th>
+					<td>{{ customer_address.address.line1 }}</td>
+				</tr>
+				<tr>
+					<th>Line 2</th>
+					<td>{{ customer_address.address.line2 }}</td>
+				</tr>
+				<tr>
+					<th>Line 3</th>
+					<td>{{ customer_address.address.line3 }}</td>
+				</tr>
+				<tr>
+					<th>City</th>
+					<td>{{ customer_address.address.city }}</td>
+				</tr>
+				<tr>
+					<th>Zip/Postal Code</th>
+					<td>{{ customer_address.address.zipOrPostalcode }}</td>
+				</tr>
+				<tr>
+					<th>State/Province</th>
+					<td>{{ customer_address.address.stateOrProvince|stateProvince }}</td>
+				</tr>
+				<tr>
+					<th>Country</th>
+					<td>{{ customer_address.address.country|country }}</td>
+				</tr>
+				<tr>
+					<th>Created</th>
+					<td>{{ customer_address.customer.createdAt|user_date }}</td>
+				</tr>
+				<tr>
+					<th>Updated</th>
+					<td>{{ customer_address.customer.updatedAt|user_date }}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-sm-3">
+			<ul class="nav nav-pills nav-stacked">
+				<li>
+					<a href="{{ path('customer_index') }}">Back to the list</a>
+				</li>
+				<li>
+					<a href="{{ path('customer_edit', { 'id': customer_address.customer.id }) }}">Edit</a>
+				</li>
+			</ul>
+		</div>
 	</div>
-
-	<div class="col-sm-9">
-		<table class="table">
-        <tbody>
-            <tr>
-                <th>First Name</th>
-                <td>{{ customer.firstName }}</td>
-            </tr>
-            <tr>
-                <th>Last Name</th>
-                <td>{{ customer.lastName }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ phone_number_format(customer.phone) }}</td>
-            </tr>
-            <tr>
-                <th>Alt Phone</th>
-				<td>{% if customer.altPhone %}{{ phone_number_format(customer.altPhone) }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ customer.email }}</td>
-            </tr>
-			<tr>
-				<th>Created</th>
-				<td>{{ customer.createdAt|user_date }}</td>
-			</tr>
-			<tr>
-				<th>Updated</th>
-				<td>{{ customer.updatedAt|user_date }}</td>
-			</tr>
-		</table>
-	</div>
-	<div class="col-sm-3">
-		<ul class="nav nav-pills nav-stacked">
-			<li>
-				<a href="{{ path('customer_index') }}">Back to the list</a>
-			</li>
-			<li>
-				<a href="{{ path('customer_edit', { 'id': customer.id }) }}">Edit</a>
-			</li>
-		</ul>
-	</div>
-</div>
 {% endblock %}

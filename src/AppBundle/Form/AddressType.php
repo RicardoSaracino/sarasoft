@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use AppBundle\Form\Model\StateProvinceType;
+
 /**
  * Class AddressType
  * @package AppBundle\Form
@@ -23,8 +25,8 @@ class AddressType extends AbstractType
 			->add('line3')
 			->add('city')
 			->add('zipOrPostalcode')
-			->add('stateOrProvince')
-			->add('country',CountryType::class, ['preferred_choices' => ['CA','US']]);
+			->add('stateOrProvince',StateProvinceType::class, ['preferred_choices' => ['ON']])
+			->add('country',CountryType::class, ['preferred_choices' => ['CA']]);
     }
 
     /**
