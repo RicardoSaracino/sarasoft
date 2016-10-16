@@ -5,7 +5,11 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+/**
+ * Class AddressType
+ * @package AppBundle\Form
+ */
 class AddressType extends AbstractType
 {
     /**
@@ -13,24 +17,23 @@ class AddressType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('line1')->add('line2')->add('line3')->add('city')->add('zipOrPostalcode')->add('stateOrProvince')->add('country')->add('createdAt')->add('createdBy')->add('updatedAt')->add('updatedBy')        ;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Address'
-        ));
+        $builder
+			->add('line1')
+			->add('line2')
+			->add('line3')
+			->add('city')
+			->add('zipOrPostalcode')
+			->add('stateOrProvince')
+			->add('country',CountryType::class, ['preferred_choices' => ['CA','US']]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return 'appbundle_address';
+        $resolver->setDefaults([
+            'data_class' => \AppBundle\Entity\Address::class
+        ]);
     }
 }

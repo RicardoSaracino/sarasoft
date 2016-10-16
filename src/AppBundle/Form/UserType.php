@@ -2,17 +2,15 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\User;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Class UserType
@@ -42,33 +40,14 @@ class UserType extends AbstractType
 			->add('firstName')
 			->add('lastName')
 			->add('email',EmailType::class)
-			->add('language', LanguageType::class, array('preferred_choices' => array('en','fr')))
-			->add('timeZone', TimezoneType::class, array('preferred_choices' => array('America/Toronto')))
+			->add('language', LanguageType::class, ['preferred_choices' => ['en','fr']])
+			->add('timeZone', TimezoneType::class, ['preferred_choices' => ['America/Toronto','America/Edmonton','America/Halifax','America/Thunder_Bay','America/Vancouver']])
 			->add(
 				'roles', ChoiceType::class, [
-					'choices' => User::GetRoleOptions(),
+					'choices' => \AppBundle\Entity\User::GetRoleOptions(),
 					'expanded' => true,
 					'multiple' => true,
 				]
-			)
-			->add('save', SubmitType::class, ['label' => 'Save']);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults(array(
-				'data_class' => 'AppBundle\Entity\User'
-			));
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getBlockPrefix()
-	{
-		return 'appbundle_user';
+			);
 	}
 }
