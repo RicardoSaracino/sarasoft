@@ -4,3 +4,10 @@
             #- Email:
                 #message: The email "{{ value }}" is not a valid email.
                 #checkMX: true
+
+
+services:
+  validator.contains_alphanumeric:
+      class: AppBundle\Validator\Constraints\ContainsAlphanumericValidator
+      tags:
+          - { name: validator.constraint_validator }

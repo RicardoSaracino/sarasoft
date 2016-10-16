@@ -3,7 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as AppAssert;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -36,6 +38,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min=3)
+	 * @AppAssert\ContainsAlphanumeric
 	 */
 	private $username;
 
@@ -106,7 +109,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="language", type="string", length=64, options={"default":"en"})
+	 * @ORM\Column(name="language", type="string", length=16)
 	 *
 	 * @Assert\Language()
 	 */
@@ -115,7 +118,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="time_zone", type="string", length=64, options={"default":"America/Toronto"})
+	 * @ORM\Column(name="time_zone", type="string", length=32)
 	 *
 	 * @Assert\NotBlank()
 	 */
