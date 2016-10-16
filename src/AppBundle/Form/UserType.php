@@ -40,8 +40,11 @@ class UserType extends AbstractType
 			->add('firstName')
 			->add('lastName')
 			->add('email',EmailType::class)
-			->add('language', LanguageType::class, ['preferred_choices' => ['en','fr']])
-			->add('timeZone', TimezoneType::class, ['preferred_choices' => ['America/Toronto','America/Edmonton','America/Halifax','America/Thunder_Bay','America/Vancouver']])
+			->add('language', LanguageType::class, ['preferred_choices' => ['en','fr'],'data'=>'en'])
+			->add('timeZone', TimezoneType::class, [
+				'preferred_choices' => ['America/Edmonton','America/Halifax','America/Thunder_Bay','America/Toronto','America/Vancouver'],
+				'data'=>'America/Toronto'
+			])
 			->add(
 				'roles', ChoiceType::class, [
 					'choices' => \AppBundle\Entity\User::GetRoleOptions(),
@@ -50,4 +53,14 @@ class UserType extends AbstractType
 				]
 			);
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults([
+			'data_class' => \AppBundle\Entity\User::class
+        ]);
+    }
 }

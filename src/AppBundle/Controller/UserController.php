@@ -71,7 +71,6 @@ class UserController extends Controller
 		return $this->render(
 			'user/new.html.twig',
 			[
-				'user' => $user,
 				'form' => $form->createView(),
 			]
 		);
@@ -101,11 +100,12 @@ class UserController extends Controller
 	 */
 	public function editAction(Request $request, User $user)
 	{
-		$editForm = $this->createForm(UserType::class, $user);
+		$form = $this->createForm(UserType::class, $user);
 
-		$editForm->handleRequest($request);
+		$form->handleRequest($request);
 
-		if ($editForm->isSubmitted() && $editForm->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) {
+
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($user);
 			$em->flush();
@@ -117,7 +117,7 @@ class UserController extends Controller
 			'user/edit.html.twig',
 			[
 				'user' => $user,
-				'edit_form' => $editForm->createView(),
+				'edit_form' => $form->createView(),
 			]
 		);
 	}
@@ -141,7 +141,6 @@ class UserController extends Controller
 			$encoder = $this->container->get('security.password_encoder');
 			$user->setSalt(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
 			#$encodedPassword = $encoder->encodePassword($changePasswordModel->getNewPassword(), $user->getSalt());
-			$encodedPassword = $encoder->encodePassword($user, $changePasswordModel->getNewPassword());
 			$user->setPassword($encodedPassword);
 
 			$em->persist($user);
