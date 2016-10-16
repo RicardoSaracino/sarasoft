@@ -9,7 +9,6 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-
 /**
  * Class WelcomeController
  * @package AppBundle\Controller
@@ -23,11 +22,6 @@ class WelcomeController extends Controller
 	 */
 	public function indexAction()
 	{
-		return $this->render(
-			'AppBundle:Welcome:index.html.twig',
-			array( // ...
-			)
-		);
+		return $this->render('welcome/index.html.twig',[]);
 	}
-
 }
