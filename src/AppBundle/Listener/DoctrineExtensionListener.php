@@ -12,6 +12,10 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
+/**
+ * Class DoctrineExtensionListener
+ * @package AppBundle\Listener
+ */
 class DoctrineExtensionListener implements ContainerAwareInterface
 {
 	/**
@@ -19,23 +23,35 @@ class DoctrineExtensionListener implements ContainerAwareInterface
 	 */
 	protected $container;
 
+	/**
+	 * @param ContainerInterface $container
+	 */
 	public function setContainer(ContainerInterface $container = null)
 	{
 		$this->container = $container;
 	}
 
+	/**
+	 * @param GetResponseEvent $event
+	 */
 	public function onLateKernelRequest(GetResponseEvent $event)
 	{
 		$translatable = $this->container->get('gedmo.listener.translatable');
 		$translatable->setTranslatableLocale($event->getRequest()->getLocale());
 	}
 
+	/**
+	 *
+	 */
 	public function onConsoleCommand()
 	{
 		$this->container->get('gedmo.listener.translatable')
 			->setTranslatableLocale($this->container->get('translator')->getLocale());
 	}
 
+	/**
+	 * @param GetResponseEvent $event
+	 */
 	public function onKernelRequest(GetResponseEvent $event)
 	{
 		if (Kernel::MAJOR_VERSION == 2 && Kernel::MINOR_VERSION < 6) {

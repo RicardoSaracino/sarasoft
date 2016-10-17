@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * CustomersAddresses
  *
- * @ORM\Table(name="customers_addresses", indexes={@ORM\Index(name="updated_by", columns={"updated_by"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="address_id", columns={"address_id"}), @ORM\Index(name="IDX_5319CD999395C3F3", columns={"customer_id"})})
+ * @ORM\Table(name="customers_addresses", indexes={@ORM\Index(name="updated_by", columns={"updated_by"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="address_id", columns={"address_id"}), @ORM\Index(name="customer_id", columns={"customer_id"})})
  * @ORM\Entity
  */
 class CustomersAddresses
@@ -20,7 +20,7 @@ class CustomersAddresses
 	 *
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="NONE")
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Customer")
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Customer", cascade={"persist"})
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
 	 * })
@@ -34,7 +34,7 @@ class CustomersAddresses
 	 *
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="NONE")
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Address")
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Address", cascade={"persist"})
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
 	 * })
@@ -84,6 +84,7 @@ class CustomersAddresses
 	 * @Gedmo\Blameable(on="update")
 	 */
 	private $updatedBy;
+
 
 	/**
 	 * Set customer
