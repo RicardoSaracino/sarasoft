@@ -10,8 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\CustomersAddresses;
-
-use AppBundle\Form\Model\CustomerAddress;
 use AppBundle\Form\CustomerAddressType;
 
 
@@ -52,8 +50,7 @@ class CustomerController extends Controller
 	{
 		$customersAddresses = new CustomersAddresses();
 
-		$form = $this->createForm(CustomerAddressType::
-		class, $customersAddresses);
+		$form = $this->createForm(CustomerAddressType::class, $customersAddresses);
 
 		$form->handleRequest($request);
 
@@ -85,9 +82,7 @@ class CustomerController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$customersAddresses = $em->getRepository(CustomersAddresses::
-		class)->
-		findOneBy(['customer' => $customer]);
+		$customersAddresses = $em->getRepository(CustomersAddresses::class)->findOneBy(['customer' => $customer]);
 
 		return $this->render(
 			'customer/show.html.twig',
@@ -124,7 +119,7 @@ class CustomerController extends Controller
 		}
 
 		return $this->render(
-			'customer/new.html.twig',
+			'customer/edit.html.twig',
 			[
 				'form' => $form->createView(),
 			]
