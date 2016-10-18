@@ -1,3 +1,6 @@
+
+http://symfony.com/doc/current/security/voters.html
+http://symfony.com/doc/current/security/user_checkers.html
 ------
 https://packagist.org/packages/ancarebeca/full-calendar-bundle
 ------
