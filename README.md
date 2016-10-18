@@ -1,6 +1,7 @@
-
+php bin/console security:check
 http://symfony.com/doc/current/security/voters.html
 http://symfony.com/doc/current/security/user_checkers.html
+http://symfony.com/doc/current/security/acl.html
 ------
 https://packagist.org/packages/ancarebeca/full-calendar-bundle
 ------
