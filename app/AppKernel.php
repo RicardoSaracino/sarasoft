@@ -22,6 +22,9 @@ class AppKernel extends Kernel
 
 			## Added RS 2016-10-04
 			new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+
+			## Added RS 2016-10-18
+			new AncaRebeca\FullCalendarBundle\FullCalendarBundle(),
 		];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
