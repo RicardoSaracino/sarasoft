@@ -1,3 +1,6 @@
+------
+https://packagist.org/packages/ancarebeca/full-calendar-bundle
+------
 http://symfony.com/doc/current/validation/translations.html
 ------
 http://elnur.pro/how-to-add-or-update-several-model-objects-at-once-with-a-single-form-in-symfony
