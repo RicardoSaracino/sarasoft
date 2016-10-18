@@ -8,6 +8,10 @@ namespace AppBundle\Event;
 
 use AncaRebeca\FullCalendarBundle\Model\Event as BaseEvent;
 
+/**
+ * Class CalendarEvent
+ * @package AppBundle\Event
+ */
 class CalendarEvent extends BaseEvent {
 
 }

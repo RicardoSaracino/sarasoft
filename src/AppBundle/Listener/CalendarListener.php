@@ -9,6 +9,10 @@ namespace AppBundle\Listener;
 use AncaRebeca\FullCalendarBundle\Event\CalendarEvent;
 use AppBundle\Event\CalendarEvent as Event;
 
+/**
+ * Class CalendarListener
+ * @package AppBundle\Listener
+ */
 class CalendarListener
 {
 	/**
