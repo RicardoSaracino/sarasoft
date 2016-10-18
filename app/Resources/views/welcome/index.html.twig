@@ -3,17 +3,12 @@
 {% block title %}Welcome{% endblock %}
 
 {% block body %}
-
 	{% include '::nav.html.twig' %}
-
 	<div class="container">
 		<div class="page-header">
 			<h1>Welcome</h1>
 		</div>
-
 		<h4>Username: {{ app.user.username }}</h4>
 		<h4>Roles: {{ app.user.roles|join(', ') }}</h4>
-
 	</div>
-
 {% endblock %}
