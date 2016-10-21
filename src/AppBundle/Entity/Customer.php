@@ -81,12 +81,13 @@ class Customer
 	 */
 	private $createdAt;
 
+
 	/**
 	 * @var \AppBundle\Entity\User
 	 *
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
 	 * @ORM\JoinColumns({
-	 * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+	 *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
 	 * })
 	 *
 	 * @Gedmo\Blameable(on="create")
@@ -107,12 +108,35 @@ class Customer
 	 *
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
 	 * @ORM\JoinColumns({
-	 * @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
+	 * 	@ORM\JoinColumn(name="updated_by", referencedColumnName="id")
 	 * })
 	 *
 	 * @Gedmo\Blameable(on="update")
 	 */
 	private $updatedBy;
+
+	/**
+	 * @var \Doctrine\Common\Collections\Collection
+	 *
+	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Address", inversedBy="customer")
+	 * @ORM\JoinTable(name="customers_addresses",
+	 *   joinColumns={
+	 *     @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+	 *   },
+	 *   inverseJoinColumns={
+	 *     @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+	 *   }
+	 * )
+	 */
+	private $address;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->address = new \Doctrine\Common\Collections\ArrayCollection();
+	}
 
 	/**
 	 * Get id
@@ -282,5 +306,39 @@ class Customer
 	public function getUpdatedBy()
 	{
 		return $this->updatedBy;
+	}
+
+    /**
+     * Add address
+     *
+     * @param \AppBundle\Entity\Address $address
+     *
+     * @return Customer
+     */
+    public function addAddress(\AppBundle\Entity\Address $address)
+    {
+        $this->address[] = $address;
+
+        return $this;
+    }
+
+    /**
+     * Remove address
+     *
+     * @param \AppBundle\Entity\Address $address
+     */
+    public function removeAddress(\AppBundle\Entity\Address $address)
+    {
+        $this->address->removeElement($address);
+    }
+
+    /**
+     * Get address
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAddress()
+    {
+        return $this->address;
 	}
 }
