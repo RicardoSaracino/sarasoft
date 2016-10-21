@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Customerorder</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ customerOrder.id }}</td>
+            </tr>
+            <tr>
+                <th>Orderstatuscode</th>
+                <td>{{ customerOrder.orderStatusCode }}</td>
+            </tr>
+            <tr>
+                <th>Bookedfor</th>
+                <td>{% if customerOrder.bookedFor %}{{ customerOrder.bookedFor|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Startedon</th>
+                <td>{% if customerOrder.startedOn %}{{ customerOrder.startedOn|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Finishedon</th>
+                <td>{% if customerOrder.finishedOn %}{{ customerOrder.finishedOn|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Paidon</th>
+                <td>{% if customerOrder.paidOn %}{{ customerOrder.paidOn|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Details</th>
+                <td>{{ customerOrder.details }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if customerOrder.createdAt %}{{ customerOrder.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if customerOrder.updatedAt %}{{ customerOrder.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('customerorder_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('customerorder_edit', { 'id': customerOrder.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

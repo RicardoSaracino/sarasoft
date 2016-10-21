@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Customerorders list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Orderstatuscode</th>
+                <th>Bookedfor</th>
+                <th>Startedon</th>
+                <th>Finishedon</th>
+                <th>Paidon</th>
+                <th>Details</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for customerOrder in customerOrders %}
+            <tr>
+                <td><a href="{{ path('customerorder_show', { 'id': customerOrder.id }) }}">{{ customerOrder.id }}</a></td>
+                <td>{{ customerOrder.orderStatusCode }}</td>
+                <td>{% if customerOrder.bookedFor %}{{ customerOrder.bookedFor|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if customerOrder.startedOn %}{{ customerOrder.startedOn|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if customerOrder.finishedOn %}{{ customerOrder.finishedOn|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if customerOrder.paidOn %}{{ customerOrder.paidOn|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ customerOrder.details }}</td>
+                <td>{% if customerOrder.createdAt %}{{ customerOrder.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if customerOrder.updatedAt %}{{ customerOrder.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('customerorder_show', { 'id': customerOrder.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('customerorder_edit', { 'id': customerOrder.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('customerorder_new') }}">Create a new customerOrder</a>
+        </li>
+    </ul>
+{% endblock %}
