@@ -22,9 +22,11 @@ class CalendarListener
 	 */
 	public function loadData(CalendarEvent $calendarEvent)
 	{
-		$startDate = $calendarEvent->getStartDatetime();
-		$endDate = $calendarEvent->getEndDatetime();
-		$filters = $calendarEvent->getFilters();
+
+		$startDate = $calendarEvent->getStart();
+		$startDate = $calendarEvent->getEnd();
+		$startDate = $calendarEvent->getFilters();
+
 
 		//You may want do a custom query to populate the events
 

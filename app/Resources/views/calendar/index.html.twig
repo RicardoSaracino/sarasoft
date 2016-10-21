@@ -8,53 +8,32 @@
 	<script type="text/javascript" src="{{ asset('bundles/fullcalendar/js/fullcalendar/lib/jquery.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('bundles/fullcalendar/js/fullcalendar/lib/moment.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('bundles/fullcalendar/js/fullcalendar/fullcalendar.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('bundles/fullcalendar/js/fullcalendar/fullcalendar.default-settings.js') }}"></script>
-	<script>
-		/**
-		 * https://fullcalendar.io/
-		 * https://packagist.org/packages/ancarebeca/full-calendar-bundle#v3.0.1
-		 */
+
+	<script type="text/javascript">
+		{# override default to add env <script type="text/javascript" src="{{ asset('bundles/fullcalendar/js/fullcalendar/fullcalendar.default-settings.js') }}"> </script> #}
+
 		$(function () {
 			$('#calendar-holder').fullCalendar({
 				header: {
 					left: 'prev, next',
 					center: 'title',
-					right: 'month, agendaWeek, agendaDay'
+					right: 'month, basicWeek, basicDay,'
 				},
-				timezone: ('Europe/London'),
-				businessHours: {
-					start: '09:00',
-					end: '17:30',
-					dow: [1, 2, 3, 4, 5]
-				},
-				allDaySlot: false,
-				defaultView: 'agendaWeek',
 				lazyFetching: true,
-				firstDay: 1,
-				selectable: true,
 				timeFormat: {
 					agenda: 'h:mmt',
 					'': 'h:mmt'
 				},
-				columnFormat:{
-					month: 'ddd',
-					week: 'ddd D/M',
-					day: 'dddd'
-				},
-				editable: true,
-				eventDurationEditable: true,
 				eventSources: [
 					{
-						url: /full-calendar/load,
+						url: '{{ app.environment == 'dev' ? '/app_dev.php' : '' }}/full-calendar/load', // todo fix this
 						type: 'POST',
-						data: {
-							filters: { param: foo }
-						}
-						error: function() {
-							//alert()
-						}
+						data: {},
+						error: function () {}
 					}
 				]
+			});
+		});
 	</script>
 {% endblock %}
 
@@ -69,3 +48,4 @@
 		{% include '@FullCalendar/Calendar/calendar.html.twig' %}
 	</div>
 {% endblock %}
+
