@@ -8,11 +8,11 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 use Symfony\Component\Form\FormError;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 /**
  * Class SecurityController
@@ -22,6 +22,7 @@ class SecurityController extends Controller
 {
 	/**
 	 * @Route("/login", name="login")
+	 * @Method("POST")
 	 */
 	public function loginAction(Request $request)
 	{

@@ -2,15 +2,16 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Address;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\CustomersAddresses;
 use AppBundle\Form\CustomerAddressType;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 
 /**
