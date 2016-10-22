@@ -170,13 +170,15 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
+	 * Lower cases on set
+	 *
 	 * @param string $username
 	 *
 	 * @return User
 	 */
 	public function setUsername($username)
 	{
-		$this->username = $username;
+		$this->username = mb_strtolower($username);
 
 		return $this;
 	}
@@ -310,12 +312,14 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
+	 * Lower cases on set
+	 *
 	 * @param $email
 	 * @return $this
 	 */
 	public function setEmail($email)
 	{
-		$this->email = $email;
+		$this->email = mb_strtolower($email);
 
 		return $this;
 	}
@@ -453,4 +457,10 @@ class User implements UserInterface, \Serializable
 	{
 		return Intl::getLocaleBundle()->getLocaleName($this->language);
 	}
+
+
+	/**
+	 *
+	 *
+	 */
 }
