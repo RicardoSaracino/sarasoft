@@ -7,7 +7,7 @@
 namespace AppBundle\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\InvalidConfigurationException;
+#use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\Exception\TransformationFailedException;;
 
 /**
@@ -19,18 +19,16 @@ class EntityToIdTransformer implements DataTransformerInterface
 	/**
 	 * @param mixed $entity
 	 * @return mixed|null
-	 * @throws \Symfony\Component\Form\Exception\InvalidConfigurationException
+	 * @throws \Symfony\Component\Form\Exception\TransformationFailedException
 	 */
 	public function transform($entity)
 	{
-		#dump($entity);    die;
-
-		if (null === $entity) {
-			return null;
+		if (!is_object ($entity)) {
+			throw new TransformationFailedException(sprintf('EntityToIdTransformer::transform requires an object'));
 		}
 
 		if (!method_exists($entity, 'getId')) {
-			throw new InvalidConfigurationException(sprintf('There is no method getId for class "%s".', get_class($entity)));
+			throw new TransformationFailedException(sprintf('There is no method getId for class "%s".', get_class($entity)));
 		}
 
 		return $entity->getId();
@@ -43,7 +41,7 @@ class EntityToIdTransformer implements DataTransformerInterface
 	 */
 	public function reverseTransform($id)
 	{
-		if (!$id) {
+		/*if (!$id) {
 			return null;
 		}
 
@@ -55,6 +53,6 @@ class EntityToIdTransformer implements DataTransformerInterface
 			throw new TransformationFailedException();
 		}
 
-		return $entity;
+		return $entity; */
 	}
 }
