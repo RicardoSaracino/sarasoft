@@ -36,7 +36,7 @@
 
 					<ul class="dropdown-menu">
 
-						<li class="dropdown-header">{{ app.user.username }}</li>
+						<li class="dropdown-header">{{ app.user.firstName }} {{ app.user.lastName }}</li>
 
 						<li><a href="{{ path('user_edit',{'id': app.user.id}) }}">Account</a></li>
 
