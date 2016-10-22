@@ -26,7 +26,7 @@ class AddressType extends AbstractType
 			->add('city')
 			->add('zipOrPostalcode')
 			->add('stateOrProvince',StateProvinceType::class, ['preferred_choices' => ['ON']])
-			->add('country',CountryType::class, ['preferred_choices' => ['CA']]);
+			->add('country',CountryType::class, ['preferred_choices' => ['CA','US']]);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Util\StateProvince;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -61,6 +62,8 @@ class Address
 	 * @var string
 	 *
 	 * @ORM\Column(name="zip_or_postalcode", type="string", length=32, nullable=false)
+	 *
+	 * todo validate with county
 	 */
 	private $zipOrPostalcode;
 
@@ -68,6 +71,8 @@ class Address
 	 * @var string
 	 *
 	 * @ORM\Column(name="state_or_province", type="string", length=32, nullable=false)
+	 *
+	 * todo validate with county
 	 */
 	private $stateOrProvince;
 
@@ -121,6 +126,58 @@ class Address
 	 * @Gedmo\Blameable(on="update")
 	 */
 	private $updatedBy;
+
+	/**
+	 * @return bool
+	 *
+	 * @Assert\IsTrue(message="The state or province does not match country")
+	 */
+	public function isStateOrProvinceValid()
+	{
+		if ($this->getCountry() == 'CA') {
+
+			return array_key_exists($this->getStateOrProvince(), StateProvince::getProvinces());
+		} else {
+			if ($this->getCountry() == 'US') {
+
+				return array_key_exists($this->getStateOrProvince(), StateProvince::getStates());
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * @return bool
+	 *
+	 * @Assert\IsTrue(message="The zip or postal code does not match country")
+	 */
+	public function isZipOrPostalcodeValid()
+	{
+		## more comprehensive list http://unicode.org/cldr/trac/browser/tags/release-26-0-1/common/supplemental/postalCodeData.xml
+		$ZIPREG = array(
+			'US' => '^\d{5}([\-]?\d{4})?$',
+			'UK' => '^(GIR|[A-Z]\d[A-Z\d]??|[A-Z]{2}\d[A-Z\d]??)[ ]??(\d[A-Z]{2})$',
+			'DE' => '\b((?:0[1-46-9]\d{3})|(?:[1-357-9]\d{4})|(?:[4][0-24-9]\d{3})|(?:[6][013-9]\d{3}))\b',
+			'CA' => '^([ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ])\ {0,1}(\d[ABCEGHJKLMNPRSTVWXYZ]\d)$',
+			'FR' => '^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$',
+			'IT' => '^(V-|I-)?[0-9]{5}$',
+			'AU' => '^(0[289][0-9]{2})|([1345689][0-9]{3})|(2[0-8][0-9]{2})|(290[0-9])|(291[0-4])|(7[0-4][0-9]{2})|(7[8-9][0-9]{2})$',
+			'NL' => '^[1-9][0-9]{3}\s?([a-zA-Z]{2})?$',
+			'ES' => '^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$',
+			'DK' => '^([D|d][K|k]( |-))?[1-9]{1}[0-9]{3}$',
+			'SE' => '^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$',
+			'BE' => '^[1-9]{1}[0-9]{3}$',
+			'IN' => '^\d{6}$'
+		);
+
+		if (array_key_exists($this->getCountry(), $ZIPREG)) {
+			$reg = $ZIPREG[$this->getCountry()];
+			return 1 === preg_match('/' . $reg . '/i', $this->getZipOrPostalcode());
+		}
+
+		return true;
+	}
 
 	/**
 	 * Get id
@@ -231,13 +288,15 @@ class Address
 	/**
 	 * Set zipOrPostalcode
 	 *
+	 * Upper case on set
+	 *
 	 * @param string $zipOrPostalcode
 	 *
 	 * @return Address
 	 */
 	public function setZipOrPostalcode($zipOrPostalcode)
 	{
-		$this->zipOrPostalcode = $zipOrPostalcode;
+		$this->zipOrPostalcode = strtoupper($zipOrPostalcode);
 
 		return $this;
 	}
