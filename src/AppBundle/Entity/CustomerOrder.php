@@ -3,6 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * CustomerOrders
@@ -42,7 +45,9 @@ class CustomerOrder
      * @var \DateTime
      *
      * @ORM\Column(name="booked_for", type="date", nullable=false)
-     */
+	 *
+	 * @Assert\NotBlank()
+	 */
     private $bookedFor;
 
     /**
@@ -70,13 +75,17 @@ class CustomerOrder
      * @var string
      *
      * @ORM\Column(name="details", type="text", length=65535, nullable=false)
-     */
+	 *
+	 * @Assert\NotBlank()
+	 */
     private $details;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
+	 *
+	 * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
 
@@ -87,6 +96,8 @@ class CustomerOrder
 	 * @ORM\JoinColumns({
 	 *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
 	 * })
+	 *
+	 * @Gedmo\Blameable(on="create")
 	 */
 	private $createdBy;
 
@@ -94,6 +105,8 @@ class CustomerOrder
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+	 *
+	 * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt;
 
@@ -104,7 +117,9 @@ class CustomerOrder
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
      * })
-     */
+	 *
+	 * @Gedmo\Blameable(on="update")
+	 */
     private $updatedBy;
 
     /**
