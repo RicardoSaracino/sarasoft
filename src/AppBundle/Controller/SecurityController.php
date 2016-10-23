@@ -22,7 +22,7 @@ class SecurityController extends Controller
 {
 	/**
 	 * @Route("/login", name="login")
-	 * @Method("POST")
+	 * @Method({"GET", "POST"})
 	 */
 	public function loginAction(Request $request)
 	{
