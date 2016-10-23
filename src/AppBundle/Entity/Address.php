@@ -296,7 +296,7 @@ class Address
 	 */
 	public function setZipOrPostalcode($zipOrPostalcode)
 	{
-		$this->zipOrPostalcode = strtoupper($zipOrPostalcode);
+		$this->zipOrPostalcode = mb_strtoupper($zipOrPostalcode);
 
 		return $this;
 	}
