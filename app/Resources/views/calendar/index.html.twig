@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('bundles/fullcalendar/css/fullcalendar/fullcalendar.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/fullcalendar/css/fullcalendar/fullcalendar.min.css') }}"/>
 {% endblock %}
 
 {% block javascripts %}
@@ -31,7 +31,8 @@
 						url: '{{ app.environment == 'dev' ? '/app_dev.php' : '' }}/full-calendar/load', // todo fix this
 						type: 'POST',
 						data: {},
-						error: function () {}
+						error: function () {
+						}
 					}
 				]
 			});
