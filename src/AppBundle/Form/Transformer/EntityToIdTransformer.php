@@ -7,8 +7,8 @@
 namespace AppBundle\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-#use Symfony\Component\Form\Exception\InvalidConfigurationException;
-use Symfony\Component\Form\Exception\TransformationFailedException;;
+use Symfony\Component\Form\Exception\TransformationFailedException;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Class EntityToIdTransformer
@@ -16,6 +16,28 @@ use Symfony\Component\Form\Exception\TransformationFailedException;;
  */
 class EntityToIdTransformer implements DataTransformerInterface
 {
+
+	/**
+	 * @var ObjectManager
+	 */
+	protected $objectManager;
+
+	/**
+	 * @var string
+	 */
+	protected $class;
+
+	/**
+	 * @param ObjectManager $objectManager
+	 * @param $class
+	 */
+	public function __construct(ObjectManager $objectManager, $class)
+	{
+		$this->objectManager = $objectManager;
+		$this->class = $class;
+	}
+
+
 	/**
 	 * @param mixed $entity
 	 * @return mixed|null
@@ -23,12 +45,15 @@ class EntityToIdTransformer implements DataTransformerInterface
 	 */
 	public function transform($entity)
 	{
-		if (!is_object ($entity)) {
-			throw new TransformationFailedException(sprintf('EntityToIdTransformer::transform requires an object'));
+		if (!$entity instanceof $this->class) {
+			throw new TransformationFailedException(sprintf('Entity is not an instance of %s', $this->class));
 		}
 
 		if (!method_exists($entity, 'getId')) {
-			throw new TransformationFailedException(sprintf('There is no method getId for class "%s".', get_class($entity)));
+			throw new TransformationFailedException(sprintf(
+				'There is no method getId for class "%s".',
+				get_class($entity)
+			));
 		}
 
 		return $entity->getId();
@@ -41,7 +66,7 @@ class EntityToIdTransformer implements DataTransformerInterface
 	 */
 	public function reverseTransform($id)
 	{
-		/*if (!$id) {
+		if (!$id) {
 			return null;
 		}
 
@@ -53,6 +78,6 @@ class EntityToIdTransformer implements DataTransformerInterface
 			throw new TransformationFailedException();
 		}
 
-		return $entity; */
+		return $entity;
 	}
 }

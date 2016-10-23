@@ -2,14 +2,19 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Customer;
-use AppBundle\Entity\CustomerOrder;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use AppBundle\Entity\Customer;
+use AppBundle\Entity\CustomerOrder;
+
+use AppBundle\Form\Type\CustomerOrderType;
+use AppBundle\Form\Type\HiddenEntityType;
 
 /**
  * CustomerOrder controller.
@@ -38,7 +43,7 @@ class CustomerOrderController extends Controller
     /**
      * Creates a new customerOrder entity.
      *
-     * @Route("/new/{customer_id}", name="customerorder_new")
+     * @Route("/customer/{customer_id}/new", name="customerorder_new")
 	 *
 	 * @ParamConverter("customer", options={"mapping": {"customer_id" : "id"}})
 	 *
@@ -48,9 +53,9 @@ class CustomerOrderController extends Controller
     {
         $customerOrder = new CustomerOrder();
 
-        $form = $this->createForm('AppBundle\Form\CustomerOrderType', $customerOrder);
+        $form = $this->createForm(CustomerOrderType::class, $customerOrder);
 
-		$form->add('customer_id', \AppBundle\Form\Model\EntityHiddenType::class, ['data' => $customer]);
+		$form->add('customer', HiddenEntityType::class, ['class' => Customer::class, 'data' => $customer]);
 
         $form->handleRequest($request);
 
@@ -63,8 +68,9 @@ class CustomerOrderController extends Controller
         }
 
 
-        return $this->render('customerorder/new.html.twig', array(
 
+
+        return $this->render('customerorder/new.html.twig', array(
 			'customer' => $customer,
             'customerOrder' => $customerOrder,
             'form' => $form->createView(),
@@ -96,7 +102,7 @@ class CustomerOrderController extends Controller
     public function editAction(Request $request, CustomerOrder $customerOrder)
     {
         $deleteForm = $this->createDeleteForm($customerOrder);
-        $editForm = $this->createForm('AppBundle\Form\CustomerOrderType', $customerOrder);
+        $editForm = $this->createForm(CustomerOrderType::class, $customerOrder);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

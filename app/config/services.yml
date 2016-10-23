@@ -12,3 +12,11 @@ services:
         class: AppBundle\Listener\CalendarListener
         tags:
             - { name: 'kernel.event_listener', event: 'fullcalendar.set_data', method: loadData }
+
+
+
+    app_bundle.type.hidden_entity:
+        class: AppBundle\Form\Type\HiddenEntityType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+          - { name: form.type, alias: hidden_entity }
