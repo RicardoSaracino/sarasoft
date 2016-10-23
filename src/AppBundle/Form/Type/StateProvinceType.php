@@ -4,16 +4,18 @@
  * @since 10/16/16
  */
 
-namespace AppBundle\Form\Model;
+namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use \Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 /**
  * Class StateProvinceType
- * @package AppBundle\Form\Model
+ * @package AppBundle\Form\Type
  */
-class StateProvinceType extends AbstractType
+class StateProvinceType extends ChoiceType
 {
 	/**
 	 * {@inheritdoc}
@@ -31,7 +33,7 @@ class StateProvinceType extends AbstractType
 	 */
 	public function getParent()
 	{
-		return \Symfony\Component\Form\Extension\Core\Type\ChoiceType::class;
+		return ChoiceType::class;
 	}
 
 	/**
@@ -41,6 +43,4 @@ class StateProvinceType extends AbstractType
 	{
 		return 'state_province';
 	}
-
-
 }

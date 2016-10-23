@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use AppBundle\Form\Model\StateProvinceType;
+use AppBundle\Form\Type\StateProvinceType;
 
 /**
  * Class AddressType

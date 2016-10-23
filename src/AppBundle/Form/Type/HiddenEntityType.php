@@ -18,9 +18,14 @@ use Doctrine\Common\Persistence\ObjectManager;
  */
 class HiddenEntityType extends HiddenType
 {
-
+	/**
+	 * @var ObjectManager
+	 */
 	private $objectManager;
 
+	/**
+	 * @param ObjectManager $objectManager
+	 */
 	public function __construct(ObjectManager $objectManager)
 	{
 		$this->objectManager = $objectManager;
