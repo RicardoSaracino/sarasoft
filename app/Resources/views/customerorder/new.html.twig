@@ -6,20 +6,17 @@
 {% endblock %}
 
 {% block javascripts %}
-
 	{{ parent() }}
-
 	<script type="text/javascript" src="{{ asset('bundles/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-
 	<script>
 		$(document).ready(function() {
 			$('.js-datepicker').datepicker({
-				todayHighlight: true
+				todayHighlight: true,
+				autoclose: true
 			});
 		});
 	</script>
-{%  endblock %}
-
+{% endblock %}
 
 {% block title %}New Customer Order{% endblock %}
 
