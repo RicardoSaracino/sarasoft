@@ -23,27 +23,51 @@ use AppBundle\Form\Type\HiddenEntityType;
  */
 class CustomerOrderController extends Controller
 {
+
+
+	/**
+	 * Lists all customerOrder entities.
+	 *
+	 * @Route("/", name="listCustomerOrders")
+	 * @Method({"GET", "POST"})
+	 */
+	public function listAllAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findAll();
+
+		return $this->render('customerorder/list_all.html.twig', [
+			'customerOrders' => $customerOrders,
+		]);
+	}
+
+
     /**
-     * Lists all customerOrder entities.
-     *
-     * @Route("/", name="customerorder_index")
-     * @Method("GET")
-     */
-    public function indexAction()
+     * Lists all customerOrder entities for the given customer.
+	 *
+	 * @Route("/customer/{customer_id}", name="listCustomerOrdersByCustomer")
+	 *
+	 * @ParamConverter("customer", options={"mapping": {"customer_id" : "id"}})
+	 *
+	 * @Method({"GET", "POST"})
+	 */
+    public function listByCustomerAction(Request $request, Customer $customer)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findAll();
+        $customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByCustomer($customer);
 
-        return $this->render('customerorder/index.html.twig', array(
+		return $this->render('customerorder/list.html.twig', [
+			'customer' => $customer,
             'customerOrders' => $customerOrders,
-        ));
+        ]);
     }
 
     /**
      * Creates a new customerOrder entity.
      *
-     * @Route("/customer/{customer_id}/new", name="customerorder_new")
+     * @Route("/customer/{customer_id}/new", name="newCustomerOrderForCustomer")
 	 *
 	 * @ParamConverter("customer", options={"mapping": {"customer_id" : "id"}})
 	 *
@@ -64,11 +88,8 @@ class CustomerOrderController extends Controller
             $em->persist($customerOrder);
             $em->flush($customerOrder);
 
-            return $this->redirectToRoute('customerorder_show', array('id' => $customerOrder->getId()));
+            return $this->redirectToRoute('showCustomerOrder', array('id' => $customerOrder->getId()));
         }
-
-
-
 
         return $this->render('customerorder/new.html.twig', array(
 			'customer' => $customer,
@@ -80,77 +101,37 @@ class CustomerOrderController extends Controller
     /**
      * Finds and displays a customerOrder entity.
      *
-     * @Route("/{id}", name="customerorder_show")
+     * @Route("/{id}", name="showCustomerOrder")
      * @Method("GET")
      */
     public function showAction(CustomerOrder $customerOrder)
     {
-        $deleteForm = $this->createDeleteForm($customerOrder);
-
         return $this->render('customerorder/show.html.twig', array(
             'customerOrder' => $customerOrder,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
      * Displays a form to edit an existing customerOrder entity.
      *
-     * @Route("/{id}/edit", name="customerorder_edit")
+     * @Route("/{id}/edit", name="editCustomerOrder")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, CustomerOrder $customerOrder)
     {
-        $deleteForm = $this->createDeleteForm($customerOrder);
-        $editForm = $this->createForm(CustomerOrderType::class, $customerOrder);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('customerorder_edit', array('id' => $customerOrder->getId()));
-        }
-
-        return $this->render('customerorder/edit.html.twig', array(
-            'customerOrder' => $customerOrder,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a customerOrder entity.
-     *
-     * @Route("/{id}", name="customerorder_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, CustomerOrder $customerOrder)
-    {
-        $form = $this->createDeleteForm($customerOrder);
+        $form = $this->createForm(CustomerOrderType::class, $customerOrder);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($customerOrder);
-            $em->flush($customerOrder);
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('showCustomerOrder', array('id' => $customerOrder->getId()));
         }
 
-        return $this->redirectToRoute('customerorder_index');
-    }
-
-    /**
-     * Creates a form to delete a customerOrder entity.
-     *
-     * @param CustomerOrder $customerOrder The customerOrder entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(CustomerOrder $customerOrder)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('customerorder_delete', array('id' => $customerOrder->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
+        return $this->render('customerorder/edit.html.twig', array(
+			'customer' => $customerOrder->getCustomer(),
+            'customerOrder' => $customerOrder,
+            'form' => $form->createView()
+        ));
+	}
 }

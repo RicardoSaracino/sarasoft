@@ -118,6 +118,8 @@ class Customer
 	/**
 	 * @var \Doctrine\Common\Collections\Collection
 	 *
+	 * todo The association AppBundle\Entity\Customer#addresses refers to the inverse side field AppBundle\Entity\Address#customer which does not exist.
+	 *
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Address", inversedBy="customer")
 	 * @ORM\JoinTable(name="customers_addresses",
 	 *   joinColumns={
@@ -128,14 +130,14 @@ class Customer
 	 *   }
 	 * )
 	 */
-	private $address;
+	private $addresses;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct()
 	{
-		$this->address = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 	/**
@@ -317,7 +319,7 @@ class Customer
      */
     public function addAddress(\AppBundle\Entity\Address $address)
     {
-        $this->address[] = $address;
+        $this->addresses[] = $address;
 
         return $this;
     }
@@ -329,7 +331,7 @@ class Customer
      */
     public function removeAddress(\AppBundle\Entity\Address $address)
     {
-        $this->address->removeElement($address);
+        $this->addresses->removeElement($address);
     }
 
     /**
@@ -337,8 +339,8 @@ class Customer
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAddress()
+    public function getAddresses()
     {
-        return $this->address;
+        return $this->addresses;
 	}
 }

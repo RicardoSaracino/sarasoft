@@ -13,6 +13,13 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
  */
 class CustomerOrderType extends AbstractType
 {
+	private static $DATE_ATTR = [
+		'widget' => 'single_text',
+		#-'html5' => true,
+		'format' => 'MM/dd/yyyy',
+		'attr' => ['class' => 'js-datepicker', 'placeholder' => 'MM/DD/YYYY']
+	];
+
     /**
      * {@inheritdoc}
      */
@@ -20,15 +27,10 @@ class CustomerOrderType extends AbstractType
     {
         $builder
 			->add('orderStatusCode')
-			->add('bookedFor', DateType::class,  [
-				'widget' => 'single_text',
-				#-'html5' => true,
-				'format' => 'MM/dd/yyyy',
-				'attr' => ['class' => 'js-datepicker', 'placeholder' => 'MM/DD/YYYY']
-			])
-			->add('startedOn')
-			->add('finishedOn')
-			->add('paidOn')
+			->add('bookedFor', DateType::class, self::$DATE_ATTR)
+			->add('startedOn', DateType::class, self::$DATE_ATTR)
+			->add('finishedOn', DateType::class, self::$DATE_ATTR)
+			->add('paidOn', DateType::class, self::$DATE_ATTR)
 			->add('details');
     }
 

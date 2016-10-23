@@ -78,9 +78,13 @@
 					<a href="{{ path('customer_edit', { 'id': customer_address.customer.id }) }}">Edit Customer</a>
 				</li>
 				<li>
-					<a href="{{ path('customerorder_new', { 'customer_id': customer_address.customer.id }) }}">New Customer Order</a>
+					<a href="{{ path('newCustomerOrderForCustomer', { 'customer_id': customer_address.customer.id }) }}">New Customer Order</a>
+				</li>
+				<li>
+					<a href="{{ path('listCustomerOrdersByCustomer', { 'customer_id': customer_address.customer.id }) }}">Show Customer Orders</a>
 				</li>
 			</ul>
 		</div>
 	</div>
+
 {% endblock %}

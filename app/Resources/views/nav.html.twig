@@ -17,15 +17,15 @@
 					<a href="{{ path('welcome') }}"><span class="glyphicon glyphicon-home" aria-hidden="true" aria-label="Home"></span></a>
 				</li>
 
-				<li><a href="{{ path('calendar_index') }}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"
-												  aria-label="Calendar"></span></a></li>
+				<li><a href="{{ path('calendar_index') }}"><span class="glyphicon glyphicon-calendar" aria-hidden="true" aria-label="Calendar"></span></a></li>
 
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-					   aria-expanded="false">Admin<span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="{{ path('user_index') }}">Users</a></li>
 						<li><a href="{{ path('customer_index') }}">Customers</a></li>
+						<li><a href="{{ path('listCustomerOrders') }}">Customer Orders</a></li>
+
 					</ul>
 				</li>
 			</ul>
