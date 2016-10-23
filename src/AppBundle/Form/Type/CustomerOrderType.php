@@ -1,11 +1,12 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Type;
 
-use AppBundle\Entity\Customer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 
 class CustomerOrderType extends AbstractType
 {
@@ -14,8 +15,14 @@ class CustomerOrderType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('orderStatusCode')
-			->add('bookedFor')
+        $builder
+			->add('orderStatusCode')
+			->add('bookedFor', DateType::class,  [
+				'widget' => 'single_text',
+				#-'html5' => true,
+				'format' => 'MM/dd/yyyy',
+				'attr' => ['class' => 'js-datepicker', 'placeholder' => 'MM/DD/YYYY']
+			])
 			->add('startedOn')
 			->add('finishedOn')
 			->add('paidOn')

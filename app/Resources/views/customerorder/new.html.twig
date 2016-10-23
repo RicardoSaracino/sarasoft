@@ -1,5 +1,26 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('bundles/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+
+	{{ parent() }}
+
+	<script type="text/javascript" src="{{ asset('bundles/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+
+	<script>
+		$(document).ready(function() {
+			$('.js-datepicker').datepicker({
+				todayHighlight: true
+			});
+		});
+	</script>
+{%  endblock %}
+
+
 {% block title %}New Customer Order{% endblock %}
 
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
@@ -8,9 +29,10 @@
 	{% include '::nav.html.twig' %}
 	<div class="container">
 		<div class="page-header">
-			<h1>New Customer Order</h1>
+			<h1>New Customer Order<br><small>{{ customer.firstName }} {{ customer.lastName }}</small></h1>
 		</div>
-		<div class="row">
+
+		<div class="main">
 			<div class="col-sm-9">
 				{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'autocomplete':'off' }}) }}
 				{{ form_widget(form) }}
