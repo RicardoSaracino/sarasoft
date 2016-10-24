@@ -44,11 +44,20 @@ class CustomerOrder
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="booked_for", type="date", nullable=false)
+     * @ORM\Column(name="booked_from", type="date", nullable=false)
 	 *
 	 * @Assert\NotBlank()
 	 */
-    private $bookedFor;
+    private $bookedFrom;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="booked_until", type="date", nullable=false)
+	 *
+	 * @Assert\NotBlank()
+	 */
+    private $bookedUntil;
 
     /**
      * @var \DateTime
@@ -156,29 +165,46 @@ class CustomerOrder
         return $this->orderStatusCode;
     }
 
-    /**
-     * Set bookedFor
-     *
-     * @param \DateTime $bookedFor
-     *
-     * @return CustomerOrders
-     */
-    public function setBookedFor($bookedFor)
+
+	/**
+	 * @param $bookedFrom
+	 * @return $this
+	 */
+	public function setBookedFrom($bookedFrom)
     {
-        $this->bookedFor = $bookedFor;
+        $this->bookedFrom = $bookedFrom;
 
         return $this;
     }
 
-    /**
-     * Get bookedFor
-     *
-     * @return \DateTime
-     */
-    public function getBookedFor()
+	/**
+	 * @return \DateTime
+	 */
+	public function getBookedFrom()
     {
-        return $this->bookedFor;
+        return $this->bookedFrom;
     }
+
+	/**
+	 * @param $bookedUntil
+	 * @return $this
+	 */
+	public function setBookedUntil($bookedUntil)
+    {
+        $this->bookedUntil = $bookedUntil;
+
+        return $this;
+    }
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getBookedUntil()
+    {
+        return $this->bookedUntil;
+    }
+
+
 
     /**
      * Set startedOn

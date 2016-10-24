@@ -30,7 +30,8 @@
 					{
 						url: '{{ app.environment == 'dev' ? '/app_dev.php' : '' }}/full-calendar/load', // todo fix this
 						type: 'POST',
-						data: {},
+						data: {
+						},
 						error: function () {
 						}
 					}

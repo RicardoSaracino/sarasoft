@@ -27,7 +27,8 @@ class CustomerOrderType extends AbstractType
     {
         $builder
 			->add('orderStatusCode')
-			->add('bookedFor', DateType::class, self::$DATE_ATTR)
+			->add('bookedFrom', DateType::class, self::$DATE_ATTR)
+			->add('bookedUntil', DateType::class, self::$DATE_ATTR)
 			->add('startedOn', DateType::class, self::$DATE_ATTR)
 			->add('finishedOn', DateType::class, self::$DATE_ATTR)
 			->add('paidOn', DateType::class, self::$DATE_ATTR)

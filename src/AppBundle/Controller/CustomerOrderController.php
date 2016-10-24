@@ -23,8 +23,6 @@ use AppBundle\Form\Type\HiddenEntityType;
  */
 class CustomerOrderController extends Controller
 {
-
-
 	/**
 	 * Lists all customerOrder entities.
 	 *

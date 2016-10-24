@@ -20,7 +20,7 @@
 				</tr>
 				<tr>
 					<th>Booked</th>
-					<td>{% if customerOrder.bookedFor %}{{ customerOrder.bookedFor|user_date }}{% endif %}</td>
+					<td>{% if customerOrder.bookedFrom %}{{ customerOrder.bookedFrom|user_date }}{% endif %} to {% if customerOrder.bookedUntil %}{{ customerOrder.bookedUntil|user_date }}{% endif %}</td>
 				</tr>
 				<tr>
 					<th>Started</th>
