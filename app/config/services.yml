@@ -9,11 +9,10 @@ services:
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
     app_bundle.service.listener:
-        class: AppBundle\Listener\CalendarListener
+        class: AppBundle\Listener\CustomerOrderCalendarListener
+        arguments: ["@doctrine.orm.entity_manager", "@router"]
         tags:
             - { name: 'kernel.event_listener', event: 'fullcalendar.set_data', method: loadData }
-
-
 
     app_bundle.type.hidden_entity:
         class: AppBundle\Form\Type\HiddenEntityType
