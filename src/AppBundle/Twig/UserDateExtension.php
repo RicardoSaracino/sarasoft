@@ -57,7 +57,7 @@ class UserDateExtension extends \Twig_Extension
 	 */
 	public function formatUserDate(\DateTime $date, $format = self::FORMAT_DATE)
 	{
-		return $date->setTimezone(new \DateTimeZone($this->getUser()->getTimeZone()))->format($format);
+		return $date->format($format);
 	}
 
 	/**
