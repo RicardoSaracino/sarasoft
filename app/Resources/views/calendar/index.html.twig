@@ -28,7 +28,7 @@
 				},
 				eventSources: [
 					{
-						url: '{{ app.environment == 'dev' ? '/app_dev.php' : '' }}/full-calendar/load', // todo fix this
+						url: '{{ app.environment == 'dev' ? '/app_dev.php' : '/app.php' }}/full-calendar/load', // todo fix this
 						type: 'POST',
 						data: {
 						},
