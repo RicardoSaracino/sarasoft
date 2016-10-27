@@ -6,7 +6,7 @@
 	{% include '::nav.html.twig' %}
 	<div class="container">
 		<div class="page-header">
-			<h1>Order<br>
+			<h1>Customer Order<br>
 				<small>{{ customerOrder.customer.firstName }} {{ customerOrder.customer.lastName }}</small>
 				<br>
 				<small>{{ phone_number_format(customerOrder.customer.phone) }}</small>
@@ -59,10 +59,13 @@
 		<div class="col-sm-3">
 			<ul class="nav nav-pills nav-stacked">
 				<li>
-					<a href="{{ path('listCustomerOrders') }}">Back to the list</a>
+					<a href="{{ path('listCustomerOrders') }}">List All Orders</a>
 				</li>
 				<li>
-					<a href="{{ path('editCustomerOrder', { 'id': customerOrder.id }) }}">Edit Order</a>
+					<a href="{{ path('listCustomerOrdersByCustomer', {'customer_id': customerOrder.customer.id}) }}">List Customer Orders</a>
+				</li>
+				<li>
+					<a href="{{ path('editCustomerOrder', { 'id': customerOrder.id }) }}">Edit Customer Order</a>
 				</li>
 				<li>
 					<a href="{{ path('newCustomerOrderForCustomer', { 'customer_id': customerOrder.id }) }}">New Customer Order</a>

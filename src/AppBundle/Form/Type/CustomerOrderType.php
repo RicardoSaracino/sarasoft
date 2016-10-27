@@ -7,6 +7,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AppBundle\Entity\CustomerOrder;
+use AppBundle\Entity\Referral;
+
 /**
  * Class CustomerOrderType
  * @package AppBundle\Form\Type
@@ -24,9 +28,11 @@ class CustomerOrderType extends AbstractType
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
+
     {
         $builder
 			->add('orderStatusCode')
+			->add('referral', EntityType::class, ['class' => Referral::class, 'choice_label' => 'name', 'placeholder' => 'Choose'])
 			->add('bookedFrom', DateType::class, self::$DATE_ATTR)
 			->add('bookedUntil', DateType::class, self::$DATE_ATTR)
 			->add('startedOn', DateType::class, self::$DATE_ATTR)
@@ -41,7 +47,7 @@ class CustomerOrderType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-        	'data_class' => \AppBundle\Entity\CustomerOrder::class
+        	'data_class' => CustomerOrder::class
         ]);
     }
 
