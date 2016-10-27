@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Referral{% endblock %}
+
+{% block body %}
+	{% include '::nav.html.twig' %}
+
+	<div class="container">
+		<div class="page-header">
+			<h1>Referral</h1>
+		</div>
+		<div class="col-sm-9">
+			<table class="table">
+				<tbody>
+				<tr>
+					<th>Name</th>
+					<td>{{ referral.name }}</td>
+				</tr>
+				<tr>
+					<th>Created</th>
+					<td>{{ referral.createdAt|user_datetime }}</td>
+				</tr>
+				<tr>
+					<th>Updated</th>
+					<td>{{ referral.updatedAt|user_datetime }}</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-sm-3">
+			<ul class="nav nav-pills nav-stacked">
+				<li>
+					<a href="{{ path('referral_index') }}">Back to the list</a>
+				</li>
+				<li>
+					<a href="{{ path('referral_edit', { 'id': referral.id }) }}">Edit Referral</a>
+				</li>
+				<li>
+					<a href="{{ path('referral_new', { 'id': referral.id }) }}">New Referral</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}
+
