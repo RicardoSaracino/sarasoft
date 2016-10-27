@@ -18,7 +18,7 @@
 	</script>
 {% endblock %}
 
-{% block title %}New Customer Order{% endblock %}
+{% block title %}New Order{% endblock %}
 
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
@@ -26,7 +26,7 @@
 	{% include '::nav.html.twig' %}
 	<div class="container">
 		<div class="page-header">
-			<h1>New Customer Order<br>
+			<h1>New Order<br>
 				<small>{{ customer.firstName }} {{ customer.lastName }}</small>
 				<br>
 				<small>{{ phone_number_format(customer.phone) }}</small>
