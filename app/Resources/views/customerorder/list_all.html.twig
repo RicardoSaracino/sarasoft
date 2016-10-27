@@ -4,55 +4,55 @@
 
 {% block body %}
 	{% include '::nav.html.twig' %}
-<div class="container">
-	<div class="page-header">
-		<h1>Customer Orders</h1>
-	</div>
-	<div class="table-responsive">
-		<table class="table">
-			<thead>
-			<tr>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Phone</th>
-				<th>Status</th>
-				<th>Booked For</th>
-				<th>Started On</th>
-				<th>Finished On</th>
-				<th>Paid On</th>
-				<th>Actions</th>
-			</tr>
-			</thead>
-			<tbody>
-			{% for customerOrder in customerOrders %}
+	<div class="container">
+		<div class="page-header">
+			<h1>Customer Orders</h1>
+		</div>
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
 				<tr>
-					<td>{{ customerOrder.customer.firstName }}</td>
-					<td>{{ customerOrder.customer.lastName}}</td>
-					<td>{{ phone_number_format(customerOrder.customer.phone) }}</td>
-					<td>{{ customerOrder.orderStatusCode }}</td>
-					<td>{% if customerOrder.bookedFor %}{{ customerOrder.bookedFor|user_date }}{% endif %}</td>
-					<td>{% if customerOrder.startedOn %}{{ customerOrder.startedOn|user_date }}{% endif %}</td>
-					<td>{% if customerOrder.finishedOn %}{{ customerOrder.finishedOn|user_date }}{% endif %}</td>
-					<td>{% if customerOrder.paidOn %}{{ customerOrder.paidOn|user_date }}{% endif %}</td>
-					<td>
-						<ul class="nav nav-pills">
-							<li>
-								<a href="{{ path('showCustomerOrder', { 'id': customerOrder.id }) }}">show</a>
-							</li>
-							<li>
-								<a href="{{ path('editCustomerOrder', { 'id': customerOrder.id }) }}">Edit</a>
-							</li>
-						</ul>
-					</td>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Phone</th>
+					<th>Status</th>
+					<th>Booked For</th>
+					<th>Started On</th>
+					<th>Finished On</th>
+					<th>Paid On</th>
+					<th>Actions</th>
 				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+				{% for customerOrder in customerOrders %}
+					<tr>
+						<td>{{ customerOrder.customer.firstName }}</td>
+						<td>{{ customerOrder.customer.lastName }}</td>
+						<td>{{ phone_number_format(customerOrder.customer.phone) }}</td>
+						<td>{{ customerOrder.orderStatusCode }}</td>
+						<td>{% if customerOrder.bookedFrom %}{{ customerOrder.bookedFrom|user_date }}{% endif %} - {% if customerOrder.bookedUntil %}{{ customerOrder.bookedUntil|user_date }}{% endif %}</td>
+						<td>{% if customerOrder.startedOn %}{{ customerOrder.startedOn|user_date }}{% endif %}</td>
+						<td>{% if customerOrder.finishedOn %}{{ customerOrder.finishedOn|user_date }}{% endif %}</td>
+						<td>{% if customerOrder.paidOn %}{{ customerOrder.paidOn|user_date }}{% endif %}</td>
+						<td>
+							<ul class="nav nav-pills">
+								<li>
+									<a href="{{ path('showCustomerOrder', { 'id': customerOrder.id }) }}">show</a>
+								</li>
+								<li>
+									<a href="{{ path('editCustomerOrder', { 'id': customerOrder.id }) }}">edit</a>
+								</li>
+							</ul>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<ul class="nav nav-pills nav-stacked">
+			<li>
+				<a href="{# { path('newCustomerOrderForCustomer', { 'customer_id': customer.id }) } #}">Create a new customer order</a>
+			</li>
+		</ul>
 	</div>
-	<ul class="nav nav-pills nav-stacked">
-		<li>
-			<a href="{# { path('newCustomerOrderForCustomer', { 'customer_id': customer.id }) } #}">Create a new customer order</a>
-		</li>
-	</ul>
-</div>
 {% endblock %}
