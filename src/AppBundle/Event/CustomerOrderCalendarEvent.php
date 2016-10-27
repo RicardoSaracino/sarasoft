@@ -12,6 +12,7 @@ use AncaRebeca\FullCalendarBundle\Model\Event as BaseEvent;
  * Class CustomerOrderCalendarEvent
  * @package AppBundle\Event
  */
-class CustomerOrderCalendarEvent extends BaseEvent {
+class CustomerOrderCalendarEvent extends BaseEvent
+{
 
 }

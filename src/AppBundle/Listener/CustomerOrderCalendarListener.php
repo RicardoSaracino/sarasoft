@@ -48,15 +48,14 @@ class CustomerOrderCalendarListener
 			FROM AppBundle:CustomerOrder o
 			WHERE o.bookedFrom BETWEEN :startDate AND :endDate and o.orderStatusCode = :orderStatusCode'
 		)
-		->setParameter('startDate', $calendarEvent->getStart())
-		->setParameter('endDate', $calendarEvent->getEnd())
-		->setParameter('orderStatusCode', 'BKD');
+			->setParameter('startDate', $calendarEvent->getStart())
+			->setParameter('endDate', $calendarEvent->getEnd())
+			->setParameter('orderStatusCode', 'BKD');
 
 		$customerOrders = $query->getResult();
 
-		foreach( $customerOrders as $customerOrder )
-		{
-			$title = 'Booked'."\n".$customerOrder->getCustomer()->getFirstName().' '.$customerOrder->getCustomer()->getLastName();
+		foreach ($customerOrders as $customerOrder) {
+			$title = 'Booked' . "\n" . $customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
 
 			$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
 
@@ -78,15 +77,14 @@ class CustomerOrderCalendarListener
 			FROM AppBundle:CustomerOrder o
 			WHERE o.startedOn BETWEEN :startDate AND :endDate and o.orderStatusCode = :orderStatusCode'
 		)
-		->setParameter('startDate', $calendarEvent->getStart())
-		->setParameter('endDate', $calendarEvent->getEnd())
-		->setParameter('orderStatusCode', 'PRG');
+			->setParameter('startDate', $calendarEvent->getStart())
+			->setParameter('endDate', $calendarEvent->getEnd())
+			->setParameter('orderStatusCode', 'PRG');
 
 		$customerOrders = $query->getResult();
 
-		foreach( $customerOrders as $customerOrder )
-		{
-			$title = 'In Progress'."\n".$customerOrder->getCustomer()->getFirstName().' '.$customerOrder->getCustomer()->getLastName();
+		foreach ($customerOrders as $customerOrder) {
+			$title = 'In Progress' . "\n" . $customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
 
 			$calEvent = new CalEvent($title, $customerOrder->getStartedOn());
 

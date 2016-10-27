@@ -24,7 +24,10 @@
 			<div class="col-sm-3" role="complimentary">
 				<ul class="nav nav-pills nav-stacked">
 					<li>
-						<a href="{{ path('customer_index') }}">Back to the list</a>
+						<a href="{{ path('customer_index') }}">List Customers</a>
+					</li>
+					<li>
+						<a href="{{ path('listCustomerOrdersByCustomer', { 'customer_id': customer_address.customer.id }) }}">List Customer Orders</a>
 					</li>
 				</ul>
 			</div>

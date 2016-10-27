@@ -173,6 +173,7 @@ class Address
 
 		if (array_key_exists($this->getCountry(), $ZIPREG)) {
 			$reg = $ZIPREG[$this->getCountry()];
+
 			return 1 === preg_match('/' . $reg . '/i', $this->getZipOrPostalcode());
 		}
 

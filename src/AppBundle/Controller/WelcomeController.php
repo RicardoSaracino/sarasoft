@@ -23,6 +23,6 @@ class WelcomeController extends Controller
 	 */
 	public function indexAction()
 	{
-		return $this->render('welcome/index.html.twig',[]);
+		return $this->render('welcome/index.html.twig', []);
 	}
 }

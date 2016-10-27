@@ -20,7 +20,7 @@ class CustomersAddresses
 	 * @ORM\GeneratedValue(strategy="NONE")
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Customer", cascade={"persist"})
 	 * @ORM\JoinColumns({
-	 * 	@ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
 	 * })
 	 *
 	 * @Assert\Valid()
@@ -34,7 +34,7 @@ class CustomersAddresses
 	 * @ORM\GeneratedValue(strategy="NONE")
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Address", cascade={"persist"})
 	 * @ORM\JoinColumns({
-	 * 	@ORM\JoinColumn(name="address_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
 	 * })
 	 *
 	 * @Assert\Valid()

@@ -39,12 +39,16 @@
 					<td>{{ user.timeZone }}</td>
 				</tr>
 				<tr>
+					<th>Roles</th>
+					<td>{{ user.roles|join(', ') }}</td>
+				</tr>
+				<tr>
 					<th>Created</th>
-					<td>{{ user.createdAt|user_date }}</td>
+					<td>{{ user.createdAt|user_datetime }}</td>
 				</tr>
 				<tr>
 					<th>Updated</th>
-					<td>{{ user.updatedAt|user_date }}</td>
+					<td>{{ user.updatedAt|user_datetime }}</td>
 				</tr>
 				</tbody>
 			</table>
@@ -55,7 +59,10 @@
 					<a href="{{ path('user_index') }}">Back to the list</a>
 				</li>
 				<li>
-					<a href="{{ path('user_edit', { 'id': user.id }) }}">Edit user</a>
+					<a href="{{ path('user_edit', { 'id': user.id }) }}">Edit User</a>
+				</li>
+				<li>
+					<a href="{{ path('user_new', { 'id': user.id }) }}">New User</a>
 				</li>
 			</ul>
 		</div>

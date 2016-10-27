@@ -87,7 +87,7 @@ class Customer
 	 *
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
 	 * @ORM\JoinColumns({
-	 *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
 	 * })
 	 *
 	 * @Gedmo\Blameable(on="create")
@@ -108,7 +108,7 @@ class Customer
 	 *
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
 	 * @ORM\JoinColumns({
-	 * 	@ORM\JoinColumn(name="updated_by", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
 	 * })
 	 *
 	 * @Gedmo\Blameable(on="update")
@@ -123,10 +123,10 @@ class Customer
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Address", inversedBy="customer")
 	 * @ORM\JoinTable(name="customers_addresses",
 	 *   joinColumns={
-	 *     @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
 	 *   },
 	 *   inverseJoinColumns={
-	 *     @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
 	 *   }
 	 * )
 	 */
@@ -310,37 +310,37 @@ class Customer
 		return $this->updatedBy;
 	}
 
-    /**
-     * Add address
-     *
-     * @param \AppBundle\Entity\Address $address
-     *
-     * @return Customer
-     */
-    public function addAddress(\AppBundle\Entity\Address $address)
-    {
-        $this->addresses[] = $address;
+	/**
+	 * Add address
+	 *
+	 * @param \AppBundle\Entity\Address $address
+	 *
+	 * @return Customer
+	 */
+	public function addAddress(\AppBundle\Entity\Address $address)
+	{
+		$this->addresses[] = $address;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Remove address
-     *
-     * @param \AppBundle\Entity\Address $address
-     */
-    public function removeAddress(\AppBundle\Entity\Address $address)
-    {
-        $this->addresses->removeElement($address);
-    }
+	/**
+	 * Remove address
+	 *
+	 * @param \AppBundle\Entity\Address $address
+	 */
+	public function removeAddress(\AppBundle\Entity\Address $address)
+	{
+		$this->addresses->removeElement($address);
+	}
 
-    /**
-     * Get address
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAddresses()
-    {
-        return $this->addresses;
+	/**
+	 * Get address
+	 *
+	 * @return \Doctrine\Common\Collections\Collection
+	 */
+	public function getAddresses()
+	{
+		return $this->addresses;
 	}
 }

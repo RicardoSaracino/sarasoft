@@ -60,8 +60,7 @@ class DoctrineExtensionListener implements ContainerAwareInterface
 				$loggable = $this->container->get('gedmo.listener.loggable');
 				$loggable->setUsername($securityContext->getToken()->getUsername());
 			}
-		}
-		else {
+		} else {
 			$tokenStorage = $this->container->get('security.token_storage')->getToken();
 			$authorizationChecker = $this->container->get('security.authorization_checker');
 			if (null !== $tokenStorage && $authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {

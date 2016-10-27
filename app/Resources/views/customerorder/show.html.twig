@@ -7,7 +7,8 @@
 	<div class="container">
 		<div class="page-header">
 			<h1>Customer Order<br>
-				<small>{{ customerOrder.customer.firstName }} {{ customerOrder.customer.lastName }}</small><br>
+				<small>{{ customerOrder.customer.firstName }} {{ customerOrder.customer.lastName }}</small>
+				<br>
 				<small>{{ phone_number_format(customerOrder.customer.phone) }}</small>
 			</h1>
 		</div>
@@ -17,6 +18,10 @@
 				<tr>
 					<th>Status</th>
 					<td>{{ customerOrder.orderStatusCode }}</td>
+				</tr>
+				<tr>
+					<th>Referral</th>
+					<td>{{ customerOrder.referral }}</td>
 				</tr>
 				<tr>
 					<th>Booked</th>
@@ -57,10 +62,12 @@
 					<a href="{{ path('listCustomerOrders') }}">Back to the list</a>
 				</li>
 				<li>
-					<a href="{{ path('editCustomerOrder', { 'id': customerOrder.id }) }}">Edit</a>
+					<a href="{{ path('editCustomerOrder', { 'id': customerOrder.id }) }}">Edit Customer Order</a>
+				</li>
+				<li>
+					<a href="{{ path('newCustomerOrderForCustomer', { 'customer_id': customerOrder.id }) }}">New Customer Order</a>
 				</li>
 			</ul>
 		</div>
 	</div>
-
 {% endblock %}

@@ -81,11 +81,11 @@ php bin/console doctrine:schema:update --dump-sql | mysql -p5ar4SoF7 sarasoft
 Generate
 
 ## pretty sur this is all we need
-app/console doctrine:mapping:import AppBundle annotation
+app/console doctrine:mapping:import AppBundle:CustomerOrderReferral annotation
 
-php bin/console generate:doctrine:entities AppBundle:CustomerOrders
+php bin/console generate:doctrine:entities AppBundle:CustomerOrderReferral
 
-php bin/console generate:doctrine:crud --entity=AppBundle:CustomerOrders --format=annotation
+php bin/console generate:doctrine:crud --entity=AppBundle:CustomerOrderReferral --format=annotation
 
 # crud generates form
 php bin/console generate:doctrine:form AppBundle:CustomerOrders
