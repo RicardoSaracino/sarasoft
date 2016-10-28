@@ -9,3 +9,7 @@ http://symfony.com/doc/current/email/cloud.html
 http://symfony.com/doc/current/email/dev_environment.html
 
 http://symfony.com/doc/current/reference/forms/types/entity.html
+
+
+timestampable trait?
+https://www.sitepoint.com/using-traits-doctrine-entities/
