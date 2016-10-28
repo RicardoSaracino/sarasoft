@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -10,8 +11,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * CustomerOrders
  *
- * @ORM\Table(name="customer_order", indexes={@ORM\Index(name="customer_id", columns={"customer_id"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
+ * @ORM\Table(name="customer_order", indexes={@ORM\Index(name="customer_id", columns={"customer_id"}), @ORM\Index(name="referral_id", columns={"referral_id"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class CustomerOrder
 {
@@ -44,7 +46,6 @@ class CustomerOrder
 	 */
 	private $referral;
 
-
 	/**
 	 * @var string
 	 *
@@ -55,7 +56,7 @@ class CustomerOrder
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="booked_from", type="date", nullable=false)
+	 * @ORM\Column(name="booked_from", type="datetime", nullable=false)
 	 *
 	 * @Assert\NotBlank()
 	 */
@@ -64,41 +65,18 @@ class CustomerOrder
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="booked_until", type="date", nullable=false)
+	 * @ORM\Column(name="booked_until", type="datetime", nullable=false)
 	 *
 	 * @Assert\NotBlank()
 	 */
 	private $bookedUntil;
 
 	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="started_on", type="date", nullable=true)
-	 */
-	private $startedOn;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="finished_on", type="date", nullable=true)
-	 */
-	private $finishedOn;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="paid_on", type="date", nullable=true)
-	 */
-	private $paidOn;
-
-	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="details", type="text", length=65535, nullable=false)
-	 *
-	 * @Assert\NotBlank()
+	 * @ORM\Column(name="booking_notes", type="text", length=65535, nullable=false)
 	 */
-	private $details;
+	private $bookingNotes;
 
 	/**
 	 * @var \DateTime
@@ -143,8 +121,6 @@ class CustomerOrder
 	private $updatedBy;
 
 	/**
-	 * Get id
-	 *
 	 * @return integer
 	 */
 	public function getId()
@@ -153,8 +129,6 @@ class CustomerOrder
 	}
 
 	/**
-	 * Set customer
-	 *
 	 * @param \AppBundle\Entity\Customer $customer
 	 *
 	 * @return CustomerOrder
@@ -167,8 +141,6 @@ class CustomerOrder
 	}
 
 	/**
-	 * Get customer
-	 *
 	 * @return \AppBundle\Entity\Customer
 	 */
 	public function getCustomer()
@@ -177,8 +149,6 @@ class CustomerOrder
 	}
 
 	/**
-	 * Set referral
-	 *
 	 * @param \AppBundle\Entity\Referral $referral
 	 *
 	 * @return CustomerOrder
@@ -191,8 +161,6 @@ class CustomerOrder
 	}
 
 	/**
-	 * Get referral
-	 *
 	 * @return \AppBundle\Entity\Referral
 	 */
 	public function getReferral()
@@ -218,7 +186,6 @@ class CustomerOrder
 	{
 		return $this->orderStatusCode;
 	}
-
 
 	/**
 	 * @param $bookedFrom
@@ -258,71 +225,13 @@ class CustomerOrder
 		return $this->bookedUntil;
 	}
 
-
 	/**
-	 * @param $startedOn
+	 * @param $newBookingNotes
 	 * @return $this
 	 */
-	public function setStartedOn($startedOn)
+	public function setBookingNotes($newBookingNotes)
 	{
-		$this->startedOn = $startedOn;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getStartedOn()
-	{
-		return $this->startedOn;
-	}
-
-	/**
-	 * @param $finishedOn
-	 * @return $this
-	 */
-	public function setFinishedOn($finishedOn)
-	{
-		$this->finishedOn = $finishedOn;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getFinishedOn()
-	{
-		return $this->finishedOn;
-	}
-
-	/**
-	 * @param $paidOn
-	 * @return $this
-	 */
-	public function setPaidOn($paidOn)
-	{
-		$this->paidOn = $paidOn;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getPaidOn()
-	{
-		return $this->paidOn;
-	}
-
-	/**
-	 * @param $details
-	 * @return $this
-	 */
-	public function setDetails($details)
-	{
-		$this->details = $details;
+		$this->bookingNotes = $newBookingNotes;
 
 		return $this;
 	}
@@ -330,9 +239,33 @@ class CustomerOrder
 	/**
 	 * @return string
 	 */
-	public function getDetails()
+	public function getBookingNotes()
 	{
-		return $this->details;
+		return $this->bookingNotes;
+	}
+
+	/**
+	 * @ORM\PrePersist
+	 */
+	public function prePersistBookingNotes()
+	{
+		if ($this->bookingNotes) {
+
+			$this->bookingNotes = 'User name' . "\n" . $this->bookingNotes;
+		}
+	}
+
+	/**
+	 * @ORM\PreUpdate
+	 */
+	public function preUpdateBookingNotes(PreUpdateEventArgs $eventArgs)
+	{
+		$changeSet = $eventArgs->getEntityChangeSet();
+
+		if (array_key_exists('bookingNotes', $changeSet)) {
+
+			$this->bookingNotes = 'User name' . "\n" . $changeSet['bookingNotes'][1] . "\n\n" . $changeSet['bookingNotes'][0];
+		}
 	}
 
 	/**
@@ -343,6 +276,14 @@ class CustomerOrder
 	public function getCreatedAt()
 	{
 		return $this->createdAt;
+	}
+
+	/**
+	 * @return \AppBundle\Entity\User
+	 */
+	public function getCreatedBy()
+	{
+		return $this->createdBy;
 	}
 
 	/**
@@ -359,14 +300,5 @@ class CustomerOrder
 	public function getUpdatedBy()
 	{
 		return $this->updatedBy;
-	}
-
-
-	/**
-	 * @return \AppBundle\Entity\User
-	 */
-	public function getCreatedBy()
-	{
-		return $this->createdBy;
 	}
 }

@@ -1,1 +1,4 @@
 user info on created updated, readonly updatable details, date time calendar, invoice
+
+booking date validation
+booking notes username and time ??? should this be done in a sperate table ??

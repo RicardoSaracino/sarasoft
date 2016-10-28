@@ -2,21 +2,29 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('bundles/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css') }}"/>
+	<link rel="stylesheet" href="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}"/>
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-	<script type="text/javascript" src="{{ asset('bundles/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/vendor/moment/min/moment.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script>
+		// http://eonasdan.github.io/bootstrap-datetimepicker/Options/
+
 		$(document).ready(function () {
-			$('.js-datepicker').datepicker({
-				todayHighlight: true,
-				autoclose: true
+			$('.js-datepicker').datetimepicker({
+				format: "MM/DD/YYYY"
+			});
+
+			$('.js-datetimepicker').datetimepicker({
+
+				format: "MM/DD/YYYY hh:mm A"
 			});
 		});
 	</script>
 {% endblock %}
+
 
 {% block title %}New Customer Order{% endblock %}
 

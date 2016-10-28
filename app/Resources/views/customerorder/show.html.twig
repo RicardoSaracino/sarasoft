@@ -16,33 +16,23 @@
 			<table class="table">
 				<tbody>
 				<tr>
-					<th>Status</th>
+					<th>Order Status</th>
 					<td>{{ customerOrder.orderStatusCode }}</td>
 				</tr>
-				<tr>
-					<th>Referral</th>
-					<td>{{ customerOrder.referral }}</td>
-				</tr>
+				{% if customerOrder.referral %}
+					<tr>
+						<th>Referral</th>
+						<td>{{ customerOrder.referral.name }}</td>
+					</tr>
+				{% endif %}
 				<tr>
 					<th>Booked</th>
-					<td>{% if customerOrder.bookedFrom %}{{ customerOrder.bookedFrom|user_date }}{% endif %} to {% if customerOrder.bookedUntil %}{{ customerOrder.bookedUntil|user_date }}{% endif %}</td>
+					<td>{% if customerOrder.bookedFrom %}{{ customerOrder.bookedFrom|user_datetime }}{% endif %} to {% if customerOrder.bookedUntil %}{{ customerOrder.bookedUntil|user_datetime }}{% endif %}</td>
 				</tr>
 				<tr>
-					<th>Started</th>
-					<td>{% if customerOrder.startedOn %}{{ customerOrder.startedOn|user_date }}{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Finished</th>
-					<td>{% if customerOrder.finishedOn %}{{ customerOrder.finishedOn|user_date }}{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Paid</th>
-					<td>{% if customerOrder.paidOn %}{{ customerOrder.paidOn|user_date }}{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Details</th>
+					<th>Booking Notes</th>
 					<td>
-						<div style="max-height: 95px; margin: 0" class="well well-sm pre-scrollable">{{ customerOrder.details|nl2br }}</div>
+						<div style="max-height: 95px; margin: 0" class="well well-sm pre-scrollable">{{ customerOrder.bookingNotes|nl2br }}</div>
 					</td>
 				</tr>
 				<tr>

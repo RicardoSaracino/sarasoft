@@ -49,7 +49,6 @@ class Referral
 	 */
 	private $createdAt;
 
-
 	/**
 	 * @var \AppBundle\Entity\User
 	 *
