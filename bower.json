@@ -1,0 +1,21 @@
+{
+  "name": "sarasoft",
+  "homepage": "https://github.com/RicardoSaracino/sarasoft",
+  "authors": [
+    "Ricardo Saracino <ricardo.saracino@ricardosaracino.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "eonasdan-bootstrap-datetimepicker": "^4.17.43"
+  }
+}
