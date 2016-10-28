@@ -13,6 +13,7 @@ http://symfony.com/doc/current/reference/forms/types/entity.html
 
 timestampable trait?
 https://www.sitepoint.com/using-traits-doctrine-entities/
+date attr traits
 
 
 push vendor full-calendar
