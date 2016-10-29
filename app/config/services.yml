@@ -19,3 +19,9 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
           - { name: form.type, alias: hidden_entity }
+
+    app_bundle.type.user_date_time_picker:
+        class: AppBundle\Form\Type\UserDateTimePickerType
+        arguments: ["@security.token_storage"]
+        tags:
+          - { name: form.type, alias: user_date_time_picker }

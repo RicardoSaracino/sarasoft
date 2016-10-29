@@ -2,6 +2,8 @@
 
 namespace AppBundle\Form\Type;
 
+use AppBundle\Form\Type as MyType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,22 +19,6 @@ use AppBundle\Entity\Referral;
  */
 class CustomerOrderType extends AbstractType
 {
-	private static $DATE_ATTR = [
-		'widget' => 'single_text',
-		#-'html5' => true,
-		'format' => 'MM/dd/yyyy',
-		'attr' => ['class' => 'js-datepicker', 'placeholder' => 'MM/DD/YYYY']
-	];
-
-	private static $DATETIME_ATTR = [
-		'widget' => 'single_text',
-		#-'html5' => true,
-		'format' => 'MM/dd/yyyy hh:mm a',
-		'model_timezone' => 'UTC',
-		'view_timezone' => 'America/Toronto',
-		'attr' => ['class' => 'js-datetimepicker', 'placeholder' => 'MM/DD/YYYY hh:mm a']
-	];
-
 	/**
      * {@inheritdoc}
      */
@@ -43,8 +29,8 @@ class CustomerOrderType extends AbstractType
         $builder
 			->add('orderStatusCode', Type\TextType::class, ['label' => 'Order Status', 'disabled' => true])
 			->add('referral', EntityType::class, ['class' => Referral::class, 'choice_label' => 'name', 'placeholder' => 'Choose'])
-			->add('bookedFrom', Type\DateType::class, self::$DATETIME_ATTR + ['label' => 'Booked From'])
-			->add('bookedUntil', Type\DateType::class, self::$DATETIME_ATTR + ['label' => 'Booked Until'])
+			->add('bookedFrom', MyType\UserDateTimePickerType::class, ['label' => 'Booked Until'])
+			->add('bookedUntil', MyType\UserDateTimePickerType::class, ['label' => 'Booked Until'])
 		;
 
 		if ( $customerOrder->getBookingNotes() ) {
