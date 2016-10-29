@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2016 at 11:12 PM
+-- Generation Time: Oct 29, 2016 at 02:33 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -104,9 +104,11 @@ INSERT INTO `customers_addresses` (`customer_id`, `address_id`) VALUES
 CREATE TABLE `customer_order` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
+  `referral_id` int(11) DEFAULT NULL,
   `order_status_code` char(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'BKD',
-  `booked_from` date NOT NULL,
-  `booked_until` date NOT NULL,
+  `booked_from` datetime NOT NULL,
+  `booked_until` datetime NOT NULL,
+  `booking_notes` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `started_on` date DEFAULT NULL,
   `finished_on` date DEFAULT NULL,
   `paid_on` date DEFAULT NULL,
@@ -121,9 +123,30 @@ CREATE TABLE `customer_order` (
 -- Dumping data for table `customer_order`
 --
 
-INSERT INTO `customer_order` (`id`, `customer_id`, `order_status_code`, `booked_from`, `booked_until`, `started_on`, `finished_on`, `paid_on`, `details`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'PRG', '2016-10-14', '2016-10-23', '2016-10-16', NULL, NULL, 'dsfgsdfgdsfgdsfgdsfgadsfffffffffffffffffffffffffffffffffasdfasdfadsfadswerwerwerasdfasdfasdfasdf\r\nasdf\r\nasdf\r\nasdf\r\nasd\r\nf\r\nasdf\r\ndsaf\r\nf\r\ndsa\r\ndsfa\r\nfdsa\r\nads\r\n\r\ndsaf\r\ndsfa\r\nfsda', '2016-10-23 04:18:23', 1, '2016-10-23 23:55:33', 1),
-(2, 2, 'BKD', '2016-10-15', '2016-10-20', NULL, NULL, NULL, 'asdfasdfasdf', '2016-10-23 04:30:27', 1, '2016-10-24 00:34:21', 1);
+INSERT INTO `customer_order` (`id`, `customer_id`, `referral_id`, `order_status_code`, `booked_from`, `booked_until`, `booking_notes`, `started_on`, `finished_on`, `paid_on`, `details`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 2, 1, 'BKD', '2016-10-30 01:55:00', '2016-10-30 02:25:00', 'User name\n\n\nUser name\nBooking notes', NULL, NULL, NULL, '', '2016-10-29 01:57:10', 1, '2016-10-29 02:27:14', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `referral`
+--
+
+CREATE TABLE `referral` (
+  `id` int(11) NOT NULL,
+  `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `updated_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `referral`
+--
+
+INSERT INTO `referral` (`id`, `name`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 'Karen Plankton', '2016-10-29 01:56:17', 1, '2016-10-29 01:56:17', 1);
 
 -- --------------------------------------------------------
 
@@ -140,7 +163,9 @@ CREATE TABLE `user` (
   `email` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `roles` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
   `updated_at` datetime NOT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   `updated_password_at` datetime DEFAULT NULL,
   `salt` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `time_zone` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -151,9 +176,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `roles`, `created_at`, `updated_at`, `updated_password_at`, `salt`, `time_zone`, `language`) VALUES
-(1, 'admin', '$2a$12$oakMxAtS3pfalU92lgWmhudPkkPHQqFYlGC0IGBSnBuxcpbJcZuLy', 'Ricardo', 'Saracino', 'ricardo.saracino@ricardosaracino.com', '["ROLE_SUPER_ADMIN"]', '2016-10-06 11:24:17', '2016-10-12 01:03:38', '2016-10-10 10:24:00', '', 'America/Toronto', 'en'),
-(2, 'dsfsdfsdf', '$2y$12$bj4/rkPm9FGuvKYMNkB8K.IHtJr7QSqHC9YSvl4M1BdVieTUKLyki', 'dfdf', 'dfdf', 'asdf@asdf.asdfasdf', '["ROLE_ADMIN"]', '2016-10-22 19:55:05', '2016-10-22 19:55:05', NULL, '?T¯Dró^µ¤wêÒ†H;', 'America/Toronto', 'en');
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `roles`, `created_at`, `created_by`, `updated_at`, `updated_by`, `updated_password_at`, `salt`, `time_zone`, `language`) VALUES
+(1, 'admin', '$2a$12$oakMxAtS3pfalU92lgWmhudPkkPHQqFYlGC0IGBSnBuxcpbJcZuLy', 'Ricardo', 'Saracino', 'ricardo.saracino@ricardosaracino.com', '["ROLE_SUPER_ADMIN"]', '2016-10-06 11:24:17', NULL, '2016-10-12 01:03:38', NULL, '2016-10-10 10:24:00', '', 'America/Toronto', 'en'),
+(3, 'asdfasdf', '$2y$12$rwAQkW1HwmdGlJUkQGa85O9syG/4DnniiDJndTBh.qaWmJrJngTbO', 'asdf', 'dddd', 'asdf@asdf.ca', '["ROLE_SUPER_ADMIN"]', '2016-10-29 02:04:03', 1, '2016-10-29 02:04:03', 1, NULL, ' z£Ãõ™ ï0ãðœÌ', 'America/Toronto', 'en');
 
 --
 -- Indexes for dumped tables
@@ -189,6 +214,16 @@ ALTER TABLE `customer_order`
   ADD PRIMARY KEY (`id`),
   ADD KEY `customer_id` (`customer_id`),
   ADD KEY `created_by` (`created_by`),
+  ADD KEY `updated_by` (`updated_by`),
+  ADD KEY `referral_id` (`referral_id`);
+
+--
+-- Indexes for table `referral`
+--
+ALTER TABLE `referral`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `created_by` (`created_by`),
   ADD KEY `updated_by` (`updated_by`);
 
 --
@@ -196,7 +231,9 @@ ALTER TABLE `customer_order`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`);
+  ADD UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`),
+  ADD KEY `created_by` (`created_by`),
+  ADD KEY `updated_by` (`updated_by`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -216,12 +253,17 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `customer_order`
 --
 ALTER TABLE `customer_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `referral`
+--
+ALTER TABLE `referral`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
@@ -253,7 +295,22 @@ ALTER TABLE `customers_addresses`
 ALTER TABLE `customer_order`
   ADD CONSTRAINT `customer_order_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
   ADD CONSTRAINT `customer_order_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `customer_order_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `customer_order_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `customer_order_ibfk_4` FOREIGN KEY (`referral_id`) REFERENCES `referral` (`id`);
+
+--
+-- Constraints for table `referral`
+--
+ALTER TABLE `referral`
+  ADD CONSTRAINT `referral_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `referral_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
