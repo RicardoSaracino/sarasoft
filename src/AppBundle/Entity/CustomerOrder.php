@@ -80,6 +80,27 @@ class CustomerOrder
 	private $bookingNotes;
 
 	/**
+	 * @return bool
+	 *
+	 * @Assert\IsTrue(message="Booked From must be before Booked Until")
+	 */
+	public function isBookedFromUntilLegal()
+	{
+		return ($this->bookedFrom <= $this->bookedUntil);
+	}
+
+	/**
+	 * @return bool
+	 *
+	 * @Assert\IsTrue(message="Booking must be in the future")
+	 */
+	public function isBookedFromLegal()
+	{
+		return ($this->bookedFrom >= (new \DateTime('now')));
+	}
+
+
+	/**
 	 * @return integer
 	 */
 	public function getId()
