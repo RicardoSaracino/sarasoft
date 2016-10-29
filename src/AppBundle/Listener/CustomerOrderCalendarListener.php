@@ -59,8 +59,6 @@ class CustomerOrderCalendarListener
 
 			$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
 
-			$calEvent->setAllDay(true);
-
 			$calEvent->setUrl($this->router->generate('showCustomerOrder', array('id' => $customerOrder->getId())));
 
 			$calEvent->setStartDate($customerOrder->getBookedFrom());
@@ -70,28 +68,6 @@ class CustomerOrderCalendarListener
 			$calendarEvent->addEvent($calEvent);
 		}
 
-		##############
-
-		$query = $this->manager->createQuery(
-			'SELECT o
-			FROM AppBundle:CustomerOrder o
-			WHERE o.startedOn BETWEEN :startDate AND :endDate and o.orderStatusCode = :orderStatusCode'
-		)
-			->setParameter('startDate', $calendarEvent->getStart())
-			->setParameter('endDate', $calendarEvent->getEnd())
-			->setParameter('orderStatusCode', 'PRG');
-
-		$customerOrders = $query->getResult();
-
-		foreach ($customerOrders as $customerOrder) {
-			$title = 'In Progress' . "\n" . $customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
-
-			$calEvent = new CalEvent($title, $customerOrder->getStartedOn());
-
-			$calEvent->setAllDay(true);
-
-			$calendarEvent->addEvent($calEvent);
-		}
 
 		#$startDate = $calendarEvent->getFilters();
 	}

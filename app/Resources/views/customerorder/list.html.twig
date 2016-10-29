@@ -27,7 +27,7 @@
 					<tr>
 						<td>{{ customerOrder.orderStatusCode }}</td>
 						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>
-						<td>{% if customerOrder.bookedFrom %}{{ customerOrder.bookedFrom|user_date }}{% endif %} - {% if customerOrder.bookedUntil %}{{ customerOrder.bookedUntil|user_date }}{% endif %}</td>
+						<td>{% if customerOrder.bookedFrom %}{{ customerOrder.bookedFrom|user_datetime }}{% endif %} to {% if customerOrder.bookedUntil %}{{ customerOrder.bookedUntil|user_datetime }}{% endif %}</td>
 						<td>
 							<ul class="nav nav-pills">
 								<li>
