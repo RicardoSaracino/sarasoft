@@ -5,8 +5,6 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
-
 
 /**
  * CustomerOrders
@@ -17,6 +15,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class CustomerOrder
 {
+	use \AppBundle\Entity\Traits\Timestampable;
+	use \AppBundle\Entity\Traits\Blameable;	use \AppBundle\Entity\Traits\Blameable;
+
 	/**
 	 * @var integer
 	 *
@@ -77,48 +78,6 @@ class CustomerOrder
 	 * @ORM\Column(name="booking_notes", type="text", length=65535, nullable=false)
 	 */
 	private $bookingNotes;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="created_at", type="datetime", nullable=false)
-	 *
-	 * @Gedmo\Timestampable(on="create")
-	 */
-	private $createdAt;
-
-	/**
-	 * @var \AppBundle\Entity\User
-	 *
-	 * @ORM\ManyToOne(targetEntity="User")
-	 * @ORM\JoinColumns({
-	 * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
-	 * })
-	 *
-	 * @Gedmo\Blameable(on="create")
-	 */
-	private $createdBy;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="updated_at", type="datetime", nullable=false)
-	 *
-	 * @Gedmo\Timestampable(on="update")
-	 */
-	private $updatedAt;
-
-	/**
-	 * @var \AppBundle\Entity\User
-	 *
-	 * @ORM\ManyToOne(targetEntity="User")
-	 * @ORM\JoinColumns({
-	 * @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
-	 * })
-	 *
-	 * @Gedmo\Blameable(on="update")
-	 */
-	private $updatedBy;
 
 	/**
 	 * @return integer
@@ -266,39 +225,5 @@ class CustomerOrder
 
 			$this->bookingNotes = 'User name' . "\n" . $changeSet['bookingNotes'][1] . "\n\n" . $changeSet['bookingNotes'][0];
 		}
-	}
-
-	/**
-	 * Get createdAt
-	 *
-	 * @return \DateTime
-	 */
-	public function getCreatedAt()
-	{
-		return $this->createdAt;
-	}
-
-	/**
-	 * @return \AppBundle\Entity\User
-	 */
-	public function getCreatedBy()
-	{
-		return $this->createdBy;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getUpdatedAt()
-	{
-		return $this->updatedAt;
-	}
-
-	/**
-	 * @return \AppBundle\Entity\User
-	 */
-	public function getUpdatedBy()
-	{
-		return $this->updatedBy;
 	}
 }

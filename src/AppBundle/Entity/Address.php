@@ -5,7 +5,6 @@ namespace AppBundle\Entity;
 use AppBundle\Util\StateProvince;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Address
@@ -15,6 +14,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Address
 {
+	use \AppBundle\Entity\Traits\Timestampable;
+	use \AppBundle\Entity\Traits\Blameable;
+
 	/**
 	 * @var integer
 	 *
@@ -84,48 +86,6 @@ class Address
 	 * @Assert\Country()
 	 */
 	private $country;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="created_at", type="datetime", nullable=false)
-	 *
-	 * @Gedmo\Timestampable(on="create")
-	 */
-	private $createdAt;
-
-	/**
-	 * @var \AppBundle\Entity\User
-	 *
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-	 * @ORM\JoinColumns({
-	 * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
-	 * })
-	 *
-	 * @Gedmo\Blameable(on="create")
-	 */
-	private $createdBy;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="updated_at", type="datetime", nullable=false)
-	 *
-	 * @Gedmo\Timestampable(on="update")
-	 */
-	private $updatedAt;
-
-	/**
-	 * @var \AppBundle\Entity\User
-	 *
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-	 * @ORM\JoinColumns({
-	 * @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
-	 * })
-	 *
-	 * @Gedmo\Blameable(on="update")
-	 */
-	private $updatedBy;
 
 	/**
 	 * @return bool
@@ -358,45 +318,5 @@ class Address
 	public function getCountry()
 	{
 		return $this->country;
-	}
-
-	/**
-	 * Get createdAt
-	 *
-	 * @return \DateTime
-	 */
-	public function getCreatedAt()
-	{
-		return $this->createdAt;
-	}
-
-	/**
-	 * Get createdBy
-	 *
-	 * @return \AppBundle\Entity\User
-	 */
-	public function getCreatedBy()
-	{
-		return $this->createdBy;
-	}
-
-	/**
-	 * Get updatedAt
-	 *
-	 * @return \DateTime
-	 */
-	public function getUpdatedAt()
-	{
-		return $this->updatedAt;
-	}
-
-	/**
-	 * Get updatedBy
-	 *
-	 * @return \AppBundle\Entity\User
-	 */
-	public function getUpdatedBy()
-	{
-		return $this->updatedBy;
 	}
 }

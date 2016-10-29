@@ -7,8 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as AppAssert;
 
-use Gedmo\Mapping\Annotation as Gedmo;
-
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Intl\Intl;
@@ -22,6 +20,9 @@ use Symfony\Component\Intl\Intl;
  */
 class User implements UserInterface, \Serializable
 {
+	use \AppBundle\Entity\Traits\Timestampable;
+	use \AppBundle\Entity\Traits\Blameable;
+
 	/**
 	 * @var int
 	 *
@@ -123,24 +124,6 @@ class User implements UserInterface, \Serializable
 	 * @Assert\NotBlank()
 	 */
 	private $timeZone;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="created_at", type="datetime")
-	 *
-	 * @Gedmo\Timestampable(on="create")
-	 */
-	private $createdAt;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="updated_at", type="datetime")
-	 *
-	 * @Gedmo\Timestampable(on="update")
-	 */
-	private $updatedAt;
 
 	/**
 	 * @var \DateTime
@@ -368,22 +351,6 @@ class User implements UserInterface, \Serializable
 	public function getTimeZone()
 	{
 		return $this->timeZone;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getCreatedAt()
-	{
-		return $this->createdAt;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getUpdatedAt()
-	{
-		return $this->updatedAt;
 	}
 
 	/**
