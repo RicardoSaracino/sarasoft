@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CustomerOrder
 {
 	use \AppBundle\Entity\Traits\Timestampable;
-	use \AppBundle\Entity\Traits\Blameable;	use \AppBundle\Entity\Traits\Blameable;
+	use \AppBundle\Entity\Traits\Blameable;
 
 	/**
 	 * @var integer

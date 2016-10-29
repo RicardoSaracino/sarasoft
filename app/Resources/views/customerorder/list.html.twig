@@ -17,10 +17,8 @@
 				<thead>
 				<tr>
 					<th>Status</th>
+					<th>Referral</th>
 					<th>Booked</th>
-					<th>Started On</th>
-					<th>Finished On</th>
-					<th>Paid On</th>
 					<th>Actions</th>
 				</tr>
 				</thead>
@@ -28,10 +26,8 @@
 				{% for customerOrder in customerOrders %}
 					<tr>
 						<td>{{ customerOrder.orderStatusCode }}</td>
+						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>
 						<td>{% if customerOrder.bookedFrom %}{{ customerOrder.bookedFrom|user_date }}{% endif %} - {% if customerOrder.bookedUntil %}{{ customerOrder.bookedUntil|user_date }}{% endif %}</td>
-						<td>{% if customerOrder.startedOn %}{{ customerOrder.startedOn|user_date }}{% endif %}</td>
-						<td>{% if customerOrder.finishedOn %}{{ customerOrder.finishedOn|user_date }}{% endif %}</td>
-						<td>{% if customerOrder.paidOn %}{{ customerOrder.paidOn|user_date }}{% endif %}</td>
 						<td>
 							<ul class="nav nav-pills">
 								<li>

@@ -3,13 +3,12 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as AppAssert;
-
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Intl\Intl;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="user")
@@ -292,6 +291,14 @@ class User implements UserInterface, \Serializable
 	public function getLastName()
 	{
 		return $this->lastName;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getFullName()
+	{
+		return $this->firstName.' '.$this->lastName;
 	}
 
 	/**

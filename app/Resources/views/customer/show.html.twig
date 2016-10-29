@@ -61,11 +61,11 @@
 				</tr>
 				<tr>
 					<th>Created</th>
-					<td>{{ customer_address.customer.createdAt|user_datetime }}</td>
+					<td>{{ customer_address.customer.createdAt|user_datetime }}{% if customer_address.customer.getCreatedBy %} by {{ customer_address.customer.getCreatedBy.fullName }}{% endif %}</td>
 				</tr>
 				<tr>
 					<th>Updated</th>
-					<td>{{ customer_address.customer.updatedAt|user_datetime }}</td>
+					<td>{{ customer_address.customer.updatedAt|user_datetime }}{% if customer_address.customer.getUpdatedBy %} by {{ customer_address.customer.getUpdatedBy.fullName }}{% endif %}</td>
 				</tr>
 			</table>
 		</div>

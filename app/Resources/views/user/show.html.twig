@@ -44,11 +44,11 @@
 				</tr>
 				<tr>
 					<th>Created</th>
-					<td>{{ user.createdAt|user_datetime }}</td>
+					<td>{{ user.createdAt|user_datetime }}{% if user.getCreatedBy %} by {{ user.getCreatedBy.fullName }}{% endif %}</td>
 				</tr>
 				<tr>
 					<th>Updated</th>
-					<td>{{ user.updatedAt|user_datetime }}</td>
+					<td>{{ user.updatedAt|user_datetime }}{% if user.getUpdatedBy %} by {{ user.getUpdatedBy.fullName }}{% endif %}</td>
 				</tr>
 				</tbody>
 			</table>

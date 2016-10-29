@@ -18,11 +18,11 @@
 				</tr>
 				<tr>
 					<th>Created</th>
-					<td>{{ referral.createdAt|user_datetime }}</td>
+					<td>{{ referral.createdAt|user_datetime }}{% if referral.getCreatedBy %} by {{ referral.getCreatedBy.fullName }}{% endif %}</td>
 				</tr>
 				<tr>
 					<th>Updated</th>
-					<td>{{ referral.updatedAt|user_datetime }}</td>
+					<td>{{ referral.updatedAt|user_datetime }}{% if referral.getUpdatedBy %} by {{ referral.getUpdatedBy.fullName }}{% endif %}</td>
 				</tr>
 				</tbody>
 			</table>
