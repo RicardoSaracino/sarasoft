@@ -27,7 +27,7 @@ class CustomerOrderType extends AbstractType
         $builder
 			->add('orderStatusCode', Type\TextType::class, ['label' => 'Order Status', 'disabled' => true])
 			->add('referral', EntityType::class, ['class' => Referral::class, 'choice_label' => 'name', 'placeholder' => 'Choose'])
-			->add('bookedFrom', MyType\UserDateTimePickerType::class, ['label' => 'Booked Until'])
+			->add('bookedFrom', MyType\UserDateTimePickerType::class, ['label' => 'Booked From'])
 			->add('bookedUntil', MyType\UserDateTimePickerType::class, ['label' => 'Booked Until'])
 		;
 
