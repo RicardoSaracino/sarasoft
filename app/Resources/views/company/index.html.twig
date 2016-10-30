@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Companies{% endblock %}
+
+{% block body %}
+	{% include '::nav.html.twig' %}
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>Companies</h1>
+		</div>
+
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Alt Phone</th>
+					<th>Actions</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for company in companies %}
+					<tr>
+						<td>{{ company.name }}</td>
+						<td><a href="{{ phone_number_format(company.phone,'RFC3966') }}">{{ phone_number_format(company.phone) }}</a></td>
+						<td>{% if company.altPhone %}<a href="{{ phone_number_format(company.altPhone,'RFC3966') }}">{{ phone_number_format(company.altPhone) }}</a>{% endif %}</td>
+						<td>
+							<ul class="nav nav-pills">
+								<li>
+									<a href="{{ path('company_show', { 'id': company.id }) }}">show</a>
+								</li>
+								<li>
+									<a href="{{ path('company_edit', { 'id': company.id }) }}">edit</a>
+								</li>
+							</ul>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<ul class="nav nav-pills nav-stacked">
+			<li>
+				<a href="{{ path('company_new') }}">New Company</a>
+			</li>
+		</ul>
+	</div>
+{% endblock %}
