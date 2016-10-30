@@ -92,7 +92,7 @@ C:\Users\Ricardo\Projects\sarasoft>php bin\console generate:doctrine:entity --en
 
   Welcome to the Doctrine2 entity generator
 
-
+                           generate:doctrine:entity --entity=Company
 
 This command helps you generate Doctrine2 entities.
 

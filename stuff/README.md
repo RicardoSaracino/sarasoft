@@ -83,12 +83,15 @@ Generate
 ## pretty sur this is all we need
 app/console doctrine:mapping:import AppBundle:CustomerOrderReferral annotation
 
-php bin/console generate:doctrine:entities AppBundle:CustomerOrderReferral
+php bin/console doctrine:mapping:convert annotation ./src
 
-php bin/console generate:doctrine:crud --entity=AppBundle:CustomerOrderReferral --format=annotation
+php bin/console generate:doctrine:entities AppBundle:Address
+
+
+php bin/console generate:doctrine:crud --entity=AppBundle:Company --format=annotation
 
 # crud generates form
-php bin/console generate:doctrine:form AppBundle:CustomerOrders
+php bin/console generate:doctrine:form AppBundle:Company
 
 [ec2-user@ip-172-31-61-162 sarasoft]$ cat /etc/httpd/conf.d/vhosts.symfony.conf
 <VirtualHost *:80>
