@@ -3,10 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Referral;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Customerorderreferral controller.
@@ -29,9 +31,9 @@ class ReferralController extends Controller
 
 		return $this->render(
 			'referral/index.html.twig',
-			array(
+			[
 				'referrals' => $referrals,
-			)
+			]
 		);
 	}
 
@@ -57,10 +59,10 @@ class ReferralController extends Controller
 
 		return $this->render(
 			'referral/new.html.twig',
-			array(
+			[
 				'referral' => $referral,
 				'form' => $form->createView(),
-			)
+			]
 		);
 	}
 
@@ -76,10 +78,10 @@ class ReferralController extends Controller
 
 		return $this->render(
 			'referral/show.html.twig',
-			array(
+			[
 				'referral' => $referral,
 				'delete_form' => $deleteForm->createView(),
-			)
+			]
 		);
 	}
 
@@ -102,45 +104,10 @@ class ReferralController extends Controller
 
 		return $this->render(
 			'referral/edit.html.twig',
-			array(
+			[
 				'referral' => $referral,
 				'form' => $form->createView(),
-			)
+			]
 		);
-	}
-
-	/**
-	 * Deletes a referral entity.
-	 *
-	 * @Route("/{id}", name="referral_delete")
-	 * @Method("DELETE")
-	 */
-	public function deleteAction(Request $request, Referral $referral)
-	{
-		$form = $this->createDeleteForm($referral);
-		$form->handleRequest($request);
-
-		if ($form->isSubmitted() && $form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->remove($referral);
-			$em->flush($referral);
-		}
-
-		return $this->redirectToRoute('referral_index');
-	}
-
-	/**
-	 * Creates a form to delete a referral entity.
-	 *
-	 * @param Referral $referral The referral entity
-	 *
-	 * @return \Symfony\Component\Form\Form The form
-	 */
-	private function createDeleteForm(Referral $referral)
-	{
-		return $this->createFormBuilder()
-			->setAction($this->generateUrl('referral_delete', array('id' => $referral->getId())))
-			->setMethod('DELETE')
-			->getForm();
 	}
 }

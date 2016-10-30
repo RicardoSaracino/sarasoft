@@ -116,7 +116,7 @@ class UserController extends Controller
 		}
 
 		return $this->render(
-			'user/edit.html.twig',
+			'user/show.html.twig',
 			[
 				'user' => $user,
 				'edit_form' => $form->createView(),
@@ -158,40 +158,5 @@ class UserController extends Controller
 				'change_password_form' => $changePasswordForm->createView(),
 			]
 		);
-	}
-
-	/**
-	 * Deletes a User entity.
-	 *
-	 * @Route("/{id}", name="user_delete")
-	 * @Method("DELETE")
-	 */
-	public function deleteAction(Request $request, User $user)
-	{
-		$form = $this->createDeleteForm($user);
-		$form->handleRequest($request);
-
-		if ($form->isSubmitted() && $form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->remove($user);
-			$em->flush();
-		}
-
-		return $this->redirectToRoute('user_index');
-	}
-
-	/**
-	 * Creates a form to delete a User entity.
-	 *
-	 * @param User $user The User entity
-	 *
-	 * @return \Symfony\Component\Form\Form The form
-	 */
-	private function createDeleteForm(User $user)
-	{
-		return $this->createFormBuilder()
-			->setAction($this->generateUrl('user_delete', ['id' => $user->getId()]))
-			->setMethod('DELETE')
-			->getForm();
 	}
 }

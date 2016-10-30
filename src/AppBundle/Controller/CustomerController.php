@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
-
 /**
  * Customer controller.
  *
@@ -59,10 +58,13 @@ class CustomerController extends Controller
 			return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
 		}
 
-		return $this->render('customer/new.html.twig', array(
+		return $this->render(
+			'customer/new.html.twig',
+			array(
 				'customer' => $customer,
 				'form' => $form->createView(),
-			));
+			)
+		);
 	}
 
 	/**
@@ -73,9 +75,12 @@ class CustomerController extends Controller
 	 */
 	public function showAction(Customer $customer)
 	{
-		return $this->render('customer/show.html.twig', array(
+		return $this->render(
+			'customer/show.html.twig',
+			array(
 				'customer' => $customer,
-			));
+			)
+		);
 	}
 
 	/**
@@ -92,12 +97,15 @@ class CustomerController extends Controller
 		if ($form->isSubmitted() && $form->isValid()) {
 			$this->getDoctrine()->getManager()->flush();
 
-			return $this->redirectToRoute('customer_edit', array('id' => $customer->getId()));
+			return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
 		}
 
-		return $this->render('customer/edit.html.twig', array(
+		return $this->render(
+			'customer/edit.html.twig',
+			array(
 				'customer' => $customer,
 				'form' => $form->createView()
-			));
-    }
+			)
+		);
+	}
 }
