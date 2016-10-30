@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2016 at 02:33 AM
+-- Generation Time: Oct 30, 2016 at 03:56 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -47,7 +47,35 @@ CREATE TABLE `address` (
 
 INSERT INTO `address` (`id`, `line_1`, `line_2`, `line_3`, `city`, `zip_or_postalcode`, `state_or_province`, `country`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (1, 'Bikinibottom', NULL, NULL, 'Bikinibottom', 'K1K1K1', 'SK', 'CA', '2016-10-16 23:27:32', NULL, '2016-10-22 21:21:15', 1),
-(2, 'asdfas', 'fsadfdd', 'asdfasd', 'fsadf', 'asdfsadf', 'ON', 'CA', '2016-10-17 23:39:50', 1, '2016-10-17 23:47:01', 1);
+(2, 'asdfas', 'fsadfdd', 'asdfasd', 'fsadf', 'asdfsadf', 'ON', 'CA', '2016-10-17 23:39:50', 1, '2016-10-17 23:47:01', 1),
+(4, '2990 Islington Ave', '978', NULL, 'North York', 'K2E7B4', 'ON', 'CA', '2016-10-30 01:06:17', 1, '2016-10-30 01:06:17', 1),
+(5, '120 Conch Street', NULL, NULL, 'Bikini Bottom', 'K1K1K1', 'ON', 'CA', '2016-10-30 02:43:35', 1, '2016-10-30 02:43:35', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company`
+--
+
+CREATE TABLE `company` (
+  `id` int(11) NOT NULL,
+  `address_id` int(11) NOT NULL,
+  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alt_phone` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `updated_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `company`
+--
+
+INSERT INTO `company` (`id`, `address_id`, `name`, `phone`, `alt_phone`, `email`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 4, 'Krusty Crab', '+16135555555', NULL, 'crusty.crab@ricardosaracino.com', '2016-10-30 01:06:17', 1, '2016-10-30 01:06:17', 1);
 
 -- --------------------------------------------------------
 
@@ -57,6 +85,7 @@ INSERT INTO `address` (`id`, `line_1`, `line_2`, `line_3`, `city`, `zip_or_posta
 
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL,
+  `address_id` int(11) NOT NULL,
   `first_name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -72,28 +101,10 @@ CREATE TABLE `customer` (
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `phone`, `alt_phone`, `email`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'Spongebob', 'Squarepants', '+16135555555', NULL, NULL, '2016-10-16 23:27:32', 1, '2016-10-22 21:21:15', 1),
-(2, 'Squidward', 'Tenticals', '+16137052563', NULL, NULL, '2016-10-17 23:39:50', 1, '2016-10-18 19:35:02', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `customers_addresses`
---
-
-CREATE TABLE `customers_addresses` (
-  `customer_id` int(11) NOT NULL,
-  `address_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `customers_addresses`
---
-
-INSERT INTO `customers_addresses` (`customer_id`, `address_id`) VALUES
-(1, 1),
-(2, 2);
+INSERT INTO `customer` (`id`, `address_id`, `first_name`, `last_name`, `phone`, `alt_phone`, `email`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 1, 'Spongebob', 'Squarepants', '+16135555555', NULL, NULL, '2016-10-16 23:27:32', 1, '2016-10-22 21:21:15', 1),
+(2, 2, 'Squidward', 'Tenticals', '+16137052563', NULL, NULL, '2016-10-17 23:39:50', 1, '2016-10-18 19:35:02', 1),
+(3, 5, 'Patrik', 'Star', '+16137257079', NULL, 'patrik.star@ricardosaracino.com', '2016-10-30 02:43:35', 1, '2016-10-30 02:43:35', 1);
 
 -- --------------------------------------------------------
 
@@ -109,10 +120,6 @@ CREATE TABLE `customer_order` (
   `booked_from` datetime NOT NULL,
   `booked_until` datetime NOT NULL,
   `booking_notes` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `started_on` date DEFAULT NULL,
-  `finished_on` date DEFAULT NULL,
-  `paid_on` date DEFAULT NULL,
-  `details` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -123,8 +130,8 @@ CREATE TABLE `customer_order` (
 -- Dumping data for table `customer_order`
 --
 
-INSERT INTO `customer_order` (`id`, `customer_id`, `referral_id`, `order_status_code`, `booked_from`, `booked_until`, `booking_notes`, `started_on`, `finished_on`, `paid_on`, `details`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 2, 1, 'BKD', '2016-10-30 01:55:00', '2016-10-30 02:25:00', 'User name\n\n\nUser name\nBooking notes', NULL, NULL, NULL, '', '2016-10-29 01:57:10', 1, '2016-10-29 02:27:14', 1);
+INSERT INTO `customer_order` (`id`, `customer_id`, `referral_id`, `order_status_code`, `booked_from`, `booked_until`, `booking_notes`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 2, 1, 'BKD', '2016-10-29 02:50:00', '2016-10-30 02:45:00', 'User name\nUSER NAME & Time sdfgsdfgsdfg\n\n', '2016-10-29 01:57:10', 1, '2016-10-29 23:24:06', 1);
 
 -- --------------------------------------------------------
 
@@ -193,18 +200,22 @@ ALTER TABLE `address`
   ADD KEY `updated_by` (`updated_by`);
 
 --
+-- Indexes for table `company`
+--
+ALTER TABLE `company`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `address_id` (`address_id`),
+  ADD KEY `created_by` (`created_by`),
+  ADD KEY `updated_by` (`updated_by`);
+
+--
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`),
   ADD KEY `updated_by` (`updated_by`),
-  ADD KEY `created_by` (`created_by`);
-
---
--- Indexes for table `customers_addresses`
---
-ALTER TABLE `customers_addresses`
-  ADD PRIMARY KEY (`customer_id`,`address_id`),
+  ADD KEY `created_by` (`created_by`),
   ADD KEY `address_id` (`address_id`);
 
 --
@@ -243,12 +254,17 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `company`
+--
+ALTER TABLE `company`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `customer_order`
 --
@@ -276,18 +292,20 @@ ALTER TABLE `address`
   ADD CONSTRAINT `address_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`);
 
 --
+-- Constraints for table `company`
+--
+ALTER TABLE `company`
+  ADD CONSTRAINT `company_ibfk_1` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `company_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `company_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`);
+
+--
 -- Constraints for table `customer`
 --
 ALTER TABLE `customer`
   ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `customer_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`);
-
---
--- Constraints for table `customers_addresses`
---
-ALTER TABLE `customers_addresses`
-  ADD CONSTRAINT `customers_addresses_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
-  ADD CONSTRAINT `customers_addresses_ibfk_2` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`);
+  ADD CONSTRAINT `customer_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `customer_ibfk_3` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `customer_order`
