@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2016 at 03:56 AM
+-- Generation Time: Oct 30, 2016 at 03:57 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `sarasoft`
 --
+CREATE DATABASE IF NOT EXISTS `sarasoft` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `sarasoft`;
 
 -- --------------------------------------------------------
 
@@ -26,6 +28,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `address`
 --
 
+DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address` (
   `id` int(11) NOT NULL,
   `line_1` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -57,6 +60,7 @@ INSERT INTO `address` (`id`, `line_1`, `line_2`, `line_3`, `city`, `zip_or_posta
 -- Table structure for table `company`
 --
 
+DROP TABLE IF EXISTS `company`;
 CREATE TABLE `company` (
   `id` int(11) NOT NULL,
   `address_id` int(11) NOT NULL,
@@ -83,6 +87,7 @@ INSERT INTO `company` (`id`, `address_id`, `name`, `phone`, `alt_phone`, `email`
 -- Table structure for table `customer`
 --
 
+DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL,
   `address_id` int(11) NOT NULL,
@@ -112,6 +117,7 @@ INSERT INTO `customer` (`id`, `address_id`, `first_name`, `last_name`, `phone`, 
 -- Table structure for table `customer_order`
 --
 
+DROP TABLE IF EXISTS `customer_order`;
 CREATE TABLE `customer_order` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
@@ -139,6 +145,7 @@ INSERT INTO `customer_order` (`id`, `customer_id`, `referral_id`, `order_status_
 -- Table structure for table `referral`
 --
 
+DROP TABLE IF EXISTS `referral`;
 CREATE TABLE `referral` (
   `id` int(11) NOT NULL,
   `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -161,6 +168,7 @@ INSERT INTO `referral` (`id`, `name`, `created_at`, `created_by`, `updated_at`, 
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
