@@ -168,7 +168,7 @@ class Company
      */
     public function setEmail($email)
     {
-        $this->email = $email;
+		$this->email = mb_strtolower($email);
 
         return $this;
     }
