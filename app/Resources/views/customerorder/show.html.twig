@@ -19,6 +19,11 @@
 					<th>Order Status</th>
 					<td>{{ customerOrder.orderStatusCode }}</td>
 				</tr>
+				<tr>
+					<th>Company</th>
+					<td>{{ customerOrder.company.name }}</td>
+				</tr>
+				</tr>
 				{% if customerOrder.referral %}
 					<tr>
 						<th>Referral</th>

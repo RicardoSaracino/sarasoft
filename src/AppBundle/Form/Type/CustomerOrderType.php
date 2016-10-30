@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Form\Type as MyType;
 use AppBundle\Entity\CustomerOrder;
+use AppBundle\Entity\Company;
 use AppBundle\Entity\Referral;
 
 use Symfony\Component\Form\CallbackTransformer;
@@ -29,6 +30,7 @@ class CustomerOrderType extends AbstractType
 
         $builder
 			->add('orderStatusCode', Type\TextType::class, ['label' => 'Order Status', 'disabled' => true])
+			->add('company', EntityType::class, ['class' => Company::class, 'choice_label' => 'name', 'placeholder' => 'Choose'])
 			->add('referral', EntityType::class, ['class' => Referral::class, 'choice_label' => 'name', 'placeholder' => 'Choose'])
 			->add('bookedFrom', MyType\UserDateTimePickerType::class, ['label' => 'Booked From'])
 			->add('bookedUntil', MyType\UserDateTimePickerType::class, ['label' => 'Booked Until'])

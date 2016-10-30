@@ -32,18 +32,32 @@ class CustomerOrder
 	 *
 	 * @ORM\ManyToOne(targetEntity="Customer")
 	 * @ORM\JoinColumns({
-	 * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=false)
 	 * })
 	 */
 	private $customer;
+
+	/**
+	 * @var \AppBundle\Entity\Company
+	 *
+	 * @ORM\ManyToOne(targetEntity="Company")
+	 * @ORM\JoinColumns({
+	 * @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=false)
+	 * })
+	 *
+	 * @Assert\NotBlank()
+	 */
+	private $company;
 
 	/**
 	 * @var \AppBundle\Entity\Referral
 	 *
 	 * @ORM\ManyToOne(targetEntity="Referral")
 	 * @ORM\JoinColumns({
-	 * @ORM\JoinColumn(name="referral_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="referral_id", referencedColumnName="id", nullable=true)
 	 * })
+	 *
+	 * @Assert\NotBlank()
 	 */
 	private $referral;
 
@@ -96,7 +110,7 @@ class CustomerOrder
 	 */
 	public function isBookedFromLegal()
 	{
-		return ($this->bookedFrom >= (new \DateTime('now')));
+		return true; # return ($this->bookedFrom >= (new \DateTime('now')));
 	}
 
 
@@ -126,6 +140,26 @@ class CustomerOrder
 	public function getCustomer()
 	{
 		return $this->customer;
+	}
+
+	/**
+	 * @param \AppBundle\Entity\Company $company
+	 *
+	 * @return CustomerOrder
+	 */
+	public function setCompany(\AppBundle\Entity\Company $company = null)
+	{
+		$this->company = $company;
+
+		return $this;
+	}
+
+	/**
+	 * @return \AppBundle\Entity\Company
+	 */
+	public function getCompany()
+	{
+		return $this->company;
 	}
 
 	/**
