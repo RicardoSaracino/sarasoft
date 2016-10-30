@@ -49,7 +49,7 @@ class Customer
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="phone", type="phone_number", length=10, nullable=false)
+	 * @ORM\Column(name="phone", type="phone_number", length=35, nullable=false)
 	 *
 	 * @Assert\NotBlank()
 	 * @AssertPhoneNumber
@@ -59,7 +59,7 @@ class Customer
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="alt_phone", type="phone_number", length=10, nullable=true)
+	 * @ORM\Column(name="alt_phone", type="phone_number", length=35, nullable=true)
 	 *
 	 * @AssertPhoneNumber
 	 */
@@ -75,29 +75,16 @@ class Customer
 	private $email;
 
 	/**
-	 * @var \Doctrine\Common\Collections\Collection
+	 * @var \Address
 	 *
-	 * todo The association AppBundle\Entity\Customer#addresses refers to the inverse side field AppBundle\Entity\Address#customer which does not exist.
+	 * @ORM\ManyToOne(targetEntity="Address", cascade={"all"})
+	 * @ORM\JoinColumns({
+	 *   @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+	 * })
 	 *
-	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Address", inversedBy="customer")
-	 * @ORM\JoinTable(name="customers_addresses",
-	 *   joinColumns={
-	 * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
-	 *   },
-	 *   inverseJoinColumns={
-	 * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
-	 *   }
-	 * )
+	 * @Assert\Valid()
 	 */
-	private $addresses;
-
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+	private $address;
 
 	/**
 	 * Get id
@@ -229,38 +216,27 @@ class Customer
 		return $this->email;
 	}
 
-
 	/**
-	 * Add address
+	 * Set address
 	 *
 	 * @param \AppBundle\Entity\Address $address
 	 *
-	 * @return Customer
+	 * @return Company
 	 */
-	public function addAddress(\AppBundle\Entity\Address $address)
+	public function setAddress(\AppBundle\Entity\Address $address = null)
 	{
-		$this->addresses[] = $address;
+		$this->address = $address;
 
 		return $this;
 	}
 
 	/**
-	 * Remove address
-	 *
-	 * @param \AppBundle\Entity\Address $address
-	 */
-	public function removeAddress(\AppBundle\Entity\Address $address)
-	{
-		$this->addresses->removeElement($address);
-	}
-
-	/**
 	 * Get address
 	 *
-	 * @return \Doctrine\Common\Collections\Collection
+	 * @return \AppBundle\Entity\Address
 	 */
-	public function getAddresses()
+	public function getAddress()
 	{
-		return $this->addresses;
+		return $this->address;
 	}
 }

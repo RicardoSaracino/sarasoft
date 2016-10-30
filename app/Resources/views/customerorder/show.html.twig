@@ -37,11 +37,11 @@
 				</tr>
 				<tr>
 					<th>Created</th>
-					<td>{{ customerOrder.createdAt|user_datetime }}{% if customerOrder.getCreatedBy %} by {{ customerOrder.getCreatedBy.fullName }}{% endif %}</td>
+					<td>{{ customerOrder.createdAt|user_datetime }}{% if customerOrder.createdBy %} by {{ customerOrder.createdBy.fullName }}{% endif %}</td>
 				</tr>
 				<tr>
 					<th>Updated</th>
-					<td>{{ customerOrder.updatedAt|user_datetime }}{% if customerOrder.getUpdatedBy %} by {{ customerOrder.getUpdatedBy.fullName }}{% endif %}</td>
+					<td>{{ customerOrder.updatedAt|user_datetime }}{% if customerOrder.updatedBy %} by {{ customerOrder.updatedBy.fullName }}{% endif %}</td>
 				</tr>
 				</tbody>
 			</table>

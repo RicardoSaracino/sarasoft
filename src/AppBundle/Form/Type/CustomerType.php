@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,7 +24,8 @@ class CustomerType extends AbstractType
 			->add('lastName')
 			->add('phone', PhoneNumberType::class,['default_region' => 'CA']) ## todo use user region?
 			->add('altPhone', PhoneNumberType::class,['default_region' => 'CA']) ## todo use user region?
-			->add('email',EmailType::class);
+			->add('email',EmailType::class)
+			->add('address', AddressType::class);
 	}
 
     /**

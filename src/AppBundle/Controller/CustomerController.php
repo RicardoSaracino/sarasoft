@@ -3,8 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Customer;
-use AppBundle\Entity\CustomersAddresses;
-use AppBundle\Form\CustomerAddressType;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -49,28 +47,22 @@ class CustomerController extends Controller
 	 */
 	public function newAction(Request $request)
 	{
-		$customersAddresses = new CustomersAddresses();
-
-		$form = $this->createForm(CustomerAddressType::class, $customersAddresses);
-
+		$customer = new Customer();
+		$form = $this->createForm('AppBundle\Form\Type\CustomerType', $customer);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
+			$em->persist($customer);
+			$em->flush($customer);
 
-			$em->persist($customersAddresses);
-
-			$em->flush();
-
-			return $this->redirectToRoute('customer_show', array('id' => $customersAddresses->getCustomer()->getId()));
+			return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
 		}
 
-		return $this->render(
-			'customer/new.html.twig',
-			[
+		return $this->render('customer/new.html.twig', array(
+				'customer' => $customer,
 				'form' => $form->createView(),
-			]
-		);
+			));
 	}
 
 	/**
@@ -81,16 +73,9 @@ class CustomerController extends Controller
 	 */
 	public function showAction(Customer $customer)
 	{
-		$em = $this->getDoctrine()->getManager();
-
-		$customersAddresses = $em->getRepository(CustomersAddresses::class)->findOneBy(['customer' => $customer]);
-
-		return $this->render(
-			'customer/show.html.twig',
-			[
-				'customer_address' => $customersAddresses
-			]
-		);
+		return $this->render('customer/show.html.twig', array(
+				'customer' => $customer,
+			));
 	}
 
 	/**
@@ -101,64 +86,18 @@ class CustomerController extends Controller
 	 */
 	public function editAction(Request $request, Customer $customer)
 	{
-		$em = $this->getDoctrine()->getManager();
-
-		$customersAddresses = $em->getRepository(CustomersAddresses::class)->findOneBy(['customer' => $customer]);
-
-		$form = $this->createForm(CustomerAddressType::class, $customersAddresses);
-
+		$form = $this->createForm('AppBundle\Form\Type\CustomerType', $customer);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
+			$this->getDoctrine()->getManager()->flush();
 
-			$em->persist($customersAddresses);
-
-			$em->flush();
-
-			return $this->redirectToRoute('customer_show', array('id' => $customersAddresses->getCustomer()->getId()));
+			return $this->redirectToRoute('customer_edit', array('id' => $customer->getId()));
 		}
 
-		return $this->render(
-			'customer/edit.html.twig',
-			[
-				'form' => $form->createView(),
-			]
-		);
+		return $this->render('customer/edit.html.twig', array(
+				'customer' => $customer,
+				'form' => $form->createView()
+			));
     }
-
-	/**
-	 * Deletes a Customer entity.
-	 *
-	 * @Route("/{id}", name="customer_delete")
-	 * @Method("DELETE")
-	 */
-	public function deleteAction(Request $request, Customer $customer)
-	{
-		$form = $this->createDeleteForm($customer);
-		$form->handleRequest($request);
-
-		if ($form->isSubmitted() && $form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->remove($customer);
-			$em->flush();
-		}
-
-		return $this->redirectToRoute('customer_index');
-	}
-
-	/**
-	 * Creates a form to delete a Customer entity.
-	 *
-	 * @param Customer $customer The Customer entity
-	 *
-	 * @return \Symfony\Component\Form\Form The form
-	 */
-	private function createDeleteForm(Customer $customer)
-	{
-		return $this->createFormBuilder()
-			->setAction($this->generateUrl('customer_delete', array('id' => $customer->getId())))
-			->setMethod('DELETE')
-			->getForm();
-	}
 }

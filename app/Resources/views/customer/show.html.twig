@@ -13,59 +13,59 @@
 				<tbody>
 				<tr>
 					<th>First Name</th>
-					<td>{{ customer_address.customer.firstName }}</td>
+					<td>{{ customer.firstName }}</td>
 				</tr>
 				<tr>
 					<th>Last Name</th>
-					<td>{{ customer_address.customer.lastName }}</td>
+					<td>{{ customer.lastName }}</td>
 				</tr>
 				<tr>
 					<th>Phone</th>
-					<td>{{ phone_number_format(customer_address.customer.phone) }}</td>
+					<td><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></td>
 				</tr>
 				<tr>
 					<th>Alt Phone</th>
-					<td>{% if customer_address.customer.altPhone %}{{ phone_number_format(customer_address.customer.altPhone) }}{% endif %}</td>
+					<td>{% if customer.altPhone %}<a href="{{ phone_number_format(customer.altPhone,'RFC3966') }}">{{ phone_number_format(customer.altPhone) }}</a>{% endif %}</td>
 				</tr>
 				<tr>
 					<th>Email</th>
-					<td>{{ customer_address.customer.email }}</td>
+					<td>{% if customer.email %}<a href="mailto:customer.email">{{ customer.email }}</a>{% endif %}</td>
 				</tr>
 				<tr>
 					<th>Line 1</th>
-					<td>{{ customer_address.address.line1 }}</td>
+					<td>{{ customer.address.line1 }}</td>
 				</tr>
 				<tr>
 					<th>Line 2</th>
-					<td>{{ customer_address.address.line2 }}</td>
+					<td>{{ customer.address.line2 }}</td>
 				</tr>
 				<tr>
 					<th>Line 3</th>
-					<td>{{ customer_address.address.line3 }}</td>
+					<td>{{ customer.address.line3 }}</td>
 				</tr>
 				<tr>
 					<th>City</th>
-					<td>{{ customer_address.address.city }}</td>
+					<td>{{ customer.address.city }}</td>
 				</tr>
 				<tr>
 					<th>Zip/Postal Code</th>
-					<td>{{ customer_address.address.zipOrPostalcode }}</td>
+					<td>{{ customer.address.zipOrPostalcode }}</td>
 				</tr>
 				<tr>
 					<th>State/Province</th>
-					<td>{{ customer_address.address.stateOrProvince|stateProvince }}</td>
+					<td>{{ customer.address.stateOrProvince|stateProvince }}</td>
 				</tr>
 				<tr>
 					<th>Country</th>
-					<td>{{ customer_address.address.country|country }}</td>
+					<td>{{ customer.address.country|country }}</td>
 				</tr>
 				<tr>
 					<th>Created</th>
-					<td>{{ customer_address.customer.createdAt|user_datetime }}{% if customer_address.customer.getCreatedBy %} by {{ customer_address.customer.getCreatedBy.fullName }}{% endif %}</td>
+					<td>{{ customer.createdAt|user_datetime }}{% if customer.createdBy %} by {{ customer.createdBy.fullName }}{% endif %}</td>
 				</tr>
 				<tr>
 					<th>Updated</th>
-					<td>{{ customer_address.customer.updatedAt|user_datetime }}{% if customer_address.customer.getUpdatedBy %} by {{ customer_address.customer.getUpdatedBy.fullName }}{% endif %}</td>
+					<td>{{ customer.updatedAt|user_datetime }}{% if customer.updatedBy %} by {{ customer.updatedBy.fullName }}{% endif %}</td>
 				</tr>
 			</table>
 		</div>
@@ -75,13 +75,13 @@
 					<a href="{{ path('customer_index') }}">List Customers</a>
 				</li>
 				<li>
-					<a href="{{ path('customer_edit', { 'id': customer_address.customer.id }) }}">Edit Customer</a>
+					<a href="{{ path('customer_edit', { 'id': customer.id }) }}">Edit Customer</a>
 				</li>
 				<li>
-					<a href="{{ path('listCustomerOrdersByCustomer', { 'customer_id': customer_address.customer.id }) }}">List Customer Orders</a>
+					<a href="{{ path('listCustomerOrdersByCustomer', { 'customer_id': customer.id }) }}">List Customer Orders</a>
 				</li>
 				<li>
-					<a href="{{ path('newCustomerOrderForCustomer', { 'customer_id': customer_address.customer.id }) }}">New Customer Order</a>
+					<a href="{{ path('newCustomerOrderForCustomer', { 'customer_id': customer.id }) }}">New Customer Order</a>
 				</li>
 
 			</ul>

@@ -11,6 +11,9 @@ use AppBundle\Form\Type as MyType;
 use AppBundle\Entity\CustomerOrder;
 use AppBundle\Entity\Referral;
 
+use Symfony\Component\Form\CallbackTransformer;
+
+
 /**
  * Class CustomerOrderType
  * @package AppBundle\Form\Type
@@ -40,6 +43,19 @@ class CustomerOrderType extends AbstractType
 			$builder->add('bookingNotes', Type\TextareaType::class, ['label' => 'Booking Notes', 'trim' => true]);
 
 		}
+
+
+		$builder->get('bookingNotes')
+			->addModelTransformer(new CallbackTransformer(
+					function ($notes) {
+						// transform the array to a string
+						return $notes;
+					},
+					function ($notes) {
+						// transform the string back to an array
+						return 'USER NAME & Time ' . $notes;
+					}
+				));
     }
 
     /**

@@ -24,8 +24,8 @@
 					<tr>
 						<td>{{ customer.firstName }}</td>
 						<td>{{ customer.lastName }}</td>
-						<td>{{ phone_number_format(customer.phone) }}</td>
-						<td>{% if customer.altPhone %}{{ phone_number_format(customer.altPhone) }}{% endif %}</td>
+						<td><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></td>
+						<td>{% if customer.altPhone %}<a href="{{ phone_number_format(customer.altPhone,'RFC3966') }}">{{ phone_number_format(customer.altPhone) }}</a>{% endif %}</td>
 						<td>
 							<ul class="nav nav-pills">
 								<li>
