@@ -51,9 +51,9 @@ class UserTextAreaPrependType extends AbstractType
 
 		$builder
 
-			->add('orig_'.$builder->getName(), TextareaType::class, ['label' => 'Previous', 'disabled' => true, 'data' => $orig_data, 'mapped' => false])
+			->add('orig_'.$builder->getName(), TextareaType::class, ['disabled' => true, 'data' => $orig_data, 'mapped' => false])
 
-			->add($builder->getName(), TextareaType::class, ['label' => 'New', 'trim' => true, 'data' => '']);
+			->add($builder->getName(), TextareaType::class, ['trim' => true, 'data' => '']);
 
 		$builder->addModelTransformer(new UserTextAreaPrependTransformer($this->entityManager,$this->tokenStorage,$options['data_class'],$builder->getName()));
 	}
