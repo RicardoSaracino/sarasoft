@@ -56,8 +56,6 @@ class CustomerOrder
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="referral_id", referencedColumnName="id", nullable=true)
 	 * })
-	 *
-	 * @Assert\NotBlank()
 	 */
 	private $referral;
 
@@ -90,6 +88,8 @@ class CustomerOrder
 	 * @var string
 	 *
 	 * @ORM\Column(name="booking_notes", type="text", length=65535, nullable=false)
+	 *
+	 * @Assert\NotBlank(message="Booking Notes should not be blank")
 	 */
 	private $bookingNotes;
 
@@ -256,29 +256,5 @@ class CustomerOrder
 	public function getBookingNotes()
 	{
 		return $this->bookingNotes;
-	}
-
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function prePersistBookingNotes()
-	{
-		if ($this->bookingNotes) {
-
-			$this->bookingNotes = 'User name' . "\n" . $this->bookingNotes;
-		}
-	}
-
-	/**
-	 * @ORM\PreUpdate
-	 */
-	public function preUpdateBookingNotes(PreUpdateEventArgs $eventArgs)
-	{
-		$changeSet = $eventArgs->getEntityChangeSet();
-
-		if (array_key_exists('bookingNotes', $changeSet)) {
-
-			$this->bookingNotes = 'User name' . "\n" . $changeSet['bookingNotes'][1] . "\n\n" . $changeSet['bookingNotes'][0];
-		}
 	}
 }
