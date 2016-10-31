@@ -15,7 +15,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Doctrine\ORM\EntityManager;
 
-
 /**
  * Class PrependTextAreaType
  * @package AppBundle\Form\Type
@@ -57,8 +56,6 @@ class UserTextAreaPrependType extends AbstractType
 			->add($builder->getName(), TextareaType::class, ['label' => 'New', 'trim' => true, 'data' => '']);
 
 		$builder->addModelTransformer(new UserTextAreaPrependTransformer($this->entityManager,$this->tokenStorage,$options['data_class'],$builder->getName()));
-
-
 	}
 
 	/**
@@ -68,5 +65,13 @@ class UserTextAreaPrependType extends AbstractType
 	{
 		$resolver
 			->setRequired(['data_class', 'data']);
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getBlockPrefix()
+	{
+		return 'textarea_prepend';
 	}
 }
