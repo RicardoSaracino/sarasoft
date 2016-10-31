@@ -11,3 +11,5 @@ http://symfony.com/doc/current/email/dev_environment.html
 http://symfony.com/doc/current/reference/forms/types/entity.html
 
 http://stackoverflow.com/questions/22014792/symfony-how-to-avoid-custom-form-types-getting-wrapped-in-a-div-automatically
+
+******* http://stackoverflow.com/questions/32903667/reduce-form-groups-layout-in-twig-with-symfony2-7
