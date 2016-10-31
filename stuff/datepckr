@@ -13,3 +13,14 @@ http://symfony.com/doc/current/reference/forms/types/entity.html
 http://stackoverflow.com/questions/22014792/symfony-how-to-avoid-custom-form-types-getting-wrapped-in-a-div-automatically
 
 ******* http://stackoverflow.com/questions/32903667/reduce-form-groups-layout-in-twig-with-symfony2-7
+
+
+
+http://symfony.com/doc/current/reference/twig_reference.html
+logout_url¶
+
+1
+{{ logout_url(key = null) }}
+key (optional)
+type: string
+Equal to the logout_path function, but it'll generate an absolute URL instead of a relative one.
