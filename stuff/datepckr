@@ -14,7 +14,7 @@ http://stackoverflow.com/questions/22014792/symfony-how-to-avoid-custom-form-typ
 
 ******* http://stackoverflow.com/questions/32903667/reduce-form-groups-layout-in-twig-with-symfony2-7
 
-
+do datetimepicker with calendar
 
 http://symfony.com/doc/current/reference/twig_reference.html
 logout_url¶
@@ -24,3 +24,22 @@ logout_url¶
 key (optional)
 type: string
 Equal to the logout_path function, but it'll generate an absolute URL instead of a relative one.
+
+
+
+
+https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+
+date_time_picker_widget ??
+
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker2'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
