@@ -1,6 +1,6 @@
 {% block textarea_prepend_widget %}
 	{% for child in form.children %}
-		{{ form_widget(child, { 'attr': {'class': 'form-control' }}) }}
+		{{ form_widget(child, { 'attr': {'class': 'form-control', 'rows': 3 }}) }}
 		{{ form_errors(child) }}
 		<br>
 	{% endfor %}
