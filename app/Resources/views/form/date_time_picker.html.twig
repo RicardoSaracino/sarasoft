@@ -1,0 +1,8 @@
+{% block date_time_picker_widget %}
+	<div class="input-group date js-datetimepicker">
+		{{- form_widget(form, { 'attr': {'placeholder': 'MM/DD/YYYY hh:mm a'} }) -}}{# 'class': 'js-datetimepicker',  #}
+		<span class="input-group-addon">
+			<span class="glyphicon glyphicon-calendar"></span>
+		</span>
+	</div>
+{% endblock %}

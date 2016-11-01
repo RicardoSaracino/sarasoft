@@ -27,5 +27,11 @@ class DatePickerType extends DateType
 		parent::buildForm($builder, $options);
 	}
 
-
+	/**
+	 * @return null|string
+	 */
+	public function getBlockPrefix()
+	{
+		return 'date_picker';
+	}
 }

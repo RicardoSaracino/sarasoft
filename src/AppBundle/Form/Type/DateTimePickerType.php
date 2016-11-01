@@ -32,4 +32,12 @@ class DateTimePickerType extends \Symfony\Component\Form\Extension\Core\Type\Dat
 			]
 		);
 	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getBlockPrefix()
+	{
+		return 'date_time_picker';
+	}
 }

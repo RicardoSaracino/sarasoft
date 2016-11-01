@@ -1,33 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}"/>
-{% endblock %}
-
-{% block javascripts %}
-	{{ parent() }}
-	<script type="text/javascript" src="{{ asset('assets/vendor/moment/min/moment.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
-	<script>
-		// http://eonasdan.github.io/bootstrap-datetimepicker/Options/
-
-		$(document).ready(function () {
-			$('.js-datepicker').datetimepicker({
-				format: "MM/DD/YYYY"
-			});
-
-			$('.js-datetimepicker').datetimepicker({
-
-				format: "MM/DD/YYYY hh:mm A",
-
-				showClose: true,
-
-				stepping: 5
-			});
-		});
-	</script>
-{% endblock %}
 
 
 {% block title %}Edit Customer Order{% endblock %}

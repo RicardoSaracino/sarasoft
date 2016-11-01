@@ -33,14 +33,21 @@ class UserDateTimePickerType extends \Symfony\Component\Form\Extension\Core\Type
 		$resolver->setDefaults(
 			[
 				'widget' => 'single_text',
+				'format' => 'MM/dd/yyyy hh:mm a',
 				'html5' => false,
 				'compound' => false,
 				'input' => null,
-				'format' => 'MM/dd/yyyy hh:mm a',
 				'model_timezone' => 'UTC',
 				'view_timezone' => $this->tokenStorage->getToken()->getUser()->getTimeZone(),
-				'attr' => ['class' => 'js-datetimepicker', 'placeholder' => 'MM/DD/YYYY hh:mm a']
 			]
 		);
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getBlockPrefix()
+	{
+		return 'date_time_picker';
 	}
 }
