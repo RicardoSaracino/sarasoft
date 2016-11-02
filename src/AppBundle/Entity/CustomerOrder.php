@@ -58,6 +58,13 @@ class CustomerOrder
 	private $referral;
 
 	/**
+	 * @var \AppBundle\Entity\CustomerOrderService
+	 *
+	 * @ORM\OneToMany(targetEntity="CustomerOrderService", mappedBy="customer_order_id")
+	 */
+	private $customerOrderServices;
+
+	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="order_status_code", type="string", length=3, nullable=false)
@@ -90,6 +97,14 @@ class CustomerOrder
 	 * @Assert\NotBlank(message="Booking Notes should not be blank")
 	 */
 	private $bookingNotes;
+
+	/**
+	 *
+	 */
+	public function __construct()
+	{
+		$this->customerOrderServices = new \Doctrine\Common\Collections\ArrayCollection();
+	}
 
 	/**
 	 * @return bool
@@ -178,6 +193,40 @@ class CustomerOrder
 	public function getReferral()
 	{
 		return $this->referral;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getCustomerOrderServices()
+	{
+		return $this->customerOrderServices;
+	}
+
+	/**
+	 * @param CustomerOrderService $customerOrderService
+	 * @return $this
+	 */
+	public function addCustomerOrderService(\AppBundle\Entity\CustomerOrderService $customerOrderService = null)
+	{
+		if (!$this->customerOrderServices->contains($customerOrderService)) {
+			$this->customerOrderServices->add($customerOrderService);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param CustomerOrderService $customerOrderService
+	 * @return $this
+	 */
+	public function removeCustomerOrderService(\AppBundle\Entity\CustomerOrderService $customerOrderService = null)
+	{
+		if ($this->customerOrderServices->contains($customerOrderService)) {
+			$this->customerOrderServices->removeElement($customerOrderService);
+		}
+
+		return $this;
 	}
 
 	/**

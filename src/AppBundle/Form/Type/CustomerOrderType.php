@@ -39,6 +39,11 @@ class CustomerOrderType extends AbstractType
 		{
 			$builder->add('bookingNotes', MyType\UserTextAreaType::class, ['label' => 'Booking Notes', 'trim' => true]);
 		}
+
+
+        $builder->add('customerOrderServices', Type\CollectionType::class, array(
+		'entry_type' => CustomerOrderService::class
+        ));
     }
 
     /**

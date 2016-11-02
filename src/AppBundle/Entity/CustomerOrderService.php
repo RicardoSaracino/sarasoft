@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CustomerOrderService
  *
- * @ORM\Table(name="customer_order_service", uniqueConstraints={@ORM\UniqueConstraint(name="created_by", columns={"created_by"})}, indexes={@ORM\Index(name="updated_by", columns={"updated_by"}), @ORM\Index(name="service_id", columns={"service_id"}), @ORM\Index(name="IDX_7382439AA15A2E17", columns={"customer_order_id"})})
+ * @ORM\Table(name="customer_order_service", uniqueConstraints={@ORM\UniqueConstraint(name="customer_order_id", columns={"customer_order_id", "service_id"})}, indexes={@ORM\Index(name="updated_by", columns={"updated_by"}), @ORM\Index(name="service_id", columns={"service_id"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="IDX_7382439AA15A2E17", columns={"customer_order_id"})})
  * @ORM\Entity
  */
 class CustomerOrderService
@@ -18,7 +18,18 @@ class CustomerOrderService
 	/**
 	 * @var integer
 	 *
+	 * @ORM\Column(name="id", type="integer", nullable=false)
+	 * @ORM\Id
+	 * todo ORM\GeneratedValue(strategy="IDENTITY")
+	 */
+	private $id;
+
+	/**
+	 * @var integer
+	 *
 	 * @ORM\Column(name="quantity", type="integer", nullable=false)
+	 *
+	 * todo Assert\Type(type="integer")
 	 */
 	private $quantity;
 
@@ -33,7 +44,6 @@ class CustomerOrderService
 	 * @var \AppBundle\Entity\CustomerOrder
 	 *
 	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="NONE")
 	 * @ORM\OneToOne(targetEntity="CustomerOrder")
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="customer_order_id", referencedColumnName="id")
@@ -45,13 +55,20 @@ class CustomerOrderService
 	 * @var \AppBundle\Entity\Service
 	 *
 	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="NONE")
 	 * @ORM\OneToOne(targetEntity="Service")
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
 	 * })
 	 */
 	private $service;
+
+	/**
+	 * @return integer
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
 	/**
 	 * Set quantity
