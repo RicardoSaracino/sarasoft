@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Service{% endblock %}
+
+{% block body %}
+	{% include '::nav.html.twig' %}
+
+	<div class="container">
+		<div class="page-header">
+			<h1>Service</h1>
+		</div>
+		<div class="col-sm-9">
+			<table class="table">
+				<tbody>
+				<tr>
+					<th>Name</th>
+					<td>{{ service.name }}</td>
+				</tr>
+				<tr>
+					<th>Description</th>
+					<td>{{ service.description }}</td>
+				</tr>
+				<tr>
+					<th>Created</th>
+					<td>{{ service.createdAt|user_datetime }}{% if service.createdBy %} by {{ service.createdBy.fullName }}{% endif %}</td>
+				</tr>
+				<tr>
+					<th>Updated</th>
+					<td>{{ service.updatedAt|user_datetime }}{% if service.updatedBy %} by {{ service.updatedBy.fullName }}{% endif %}</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-sm-3">
+			<ul class="nav nav-pills nav-stacked">
+				<li>
+					<a href="{{ path('service_index') }}">List Services</a>
+				</li>
+				<li>
+					<a href="{{ path('service_edit', { 'id': service.id }) }}">Edit Service</a>
+				</li>
+				<li>
+					<a href="{{ path('service_new', { 'id': service.id }) }}">New Service</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}
+
