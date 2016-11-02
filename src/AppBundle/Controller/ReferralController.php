@@ -11,9 +11,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
- * Customerorderreferral controller.
+ * Refferal controller.
  *
- * @Route("referral")
+ * @Route("/referral")
  */
 class ReferralController extends Controller
 {
@@ -74,13 +74,10 @@ class ReferralController extends Controller
 	 */
 	public function showAction(Referral $referral)
 	{
-		$deleteForm = $this->createDeleteForm($referral);
-
 		return $this->render(
 			'referral/show.html.twig',
 			[
 				'referral' => $referral,
-				'delete_form' => $deleteForm->createView(),
 			]
 		);
 	}

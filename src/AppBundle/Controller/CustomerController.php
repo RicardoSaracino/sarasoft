@@ -4,12 +4,11 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Customer;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * Customer controller.
@@ -19,7 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class CustomerController extends Controller
 {
 	/**
-	 * Lists all Customer entities.
+	 * Lists all customer entities.
 	 *
 	 * @Route("/", name="customer_index")
 	 * @Method("GET")
@@ -33,13 +32,13 @@ class CustomerController extends Controller
 		return $this->render(
 			'customer/index.html.twig',
 			[
-				'customers' => $customers
+				'customers' => $customers,
 			]
 		);
 	}
 
 	/**
-	 * Creates a new Customer entity.
+	 * Creates a new customer entity.
 	 *
 	 * @Route("/new", name="customer_new")
 	 * @Method({"GET", "POST"})
@@ -60,15 +59,15 @@ class CustomerController extends Controller
 
 		return $this->render(
 			'customer/new.html.twig',
-			array(
+			[
 				'customer' => $customer,
 				'form' => $form->createView(),
-			)
+			]
 		);
 	}
 
 	/**
-	 * Finds and displays a Customer entity.
+	 * Finds and displays a customer entity.
 	 *
 	 * @Route("/{id}", name="customer_show")
 	 * @Method("GET")
@@ -77,14 +76,14 @@ class CustomerController extends Controller
 	{
 		return $this->render(
 			'customer/show.html.twig',
-			array(
+			[
 				'customer' => $customer,
-			)
+			]
 		);
 	}
 
 	/**
-	 * Displays a form to edit an existing Customer entity.
+	 * Displays a form to edit an existing customer entity.
 	 *
 	 * @Route("/{id}/edit", name="customer_edit")
 	 * @Method({"GET", "POST"})
@@ -102,10 +101,10 @@ class CustomerController extends Controller
 
 		return $this->render(
 			'customer/edit.html.twig',
-			array(
+			[
 				'customer' => $customer,
-				'form' => $form->createView()
-			)
+				'form' => $form->createView(),
+			]
 		);
 	}
 }
