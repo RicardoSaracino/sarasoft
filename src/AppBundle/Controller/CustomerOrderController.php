@@ -75,6 +75,8 @@ class CustomerOrderController extends Controller
     {
         $customerOrder = new CustomerOrder();
 
+		$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
+
         $form = $this->createForm(CustomerOrderType::class, $customerOrder);
 
 		$form->add('customer', HiddenEntityType::class, ['class' => Customer::class, 'data' => $customer]);

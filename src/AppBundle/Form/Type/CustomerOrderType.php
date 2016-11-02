@@ -42,7 +42,7 @@ class CustomerOrderType extends AbstractType
 
 
         $builder->add('customerOrderServices', Type\CollectionType::class, array(
-		'entry_type' => CustomerOrderService::class
+		'entry_type' => CustomerOrderServiceType::class
         ));
     }
 
