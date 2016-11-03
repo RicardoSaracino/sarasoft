@@ -36,9 +36,9 @@ class CustomerOrderService
 	private $quantity;
 
 	/**
-	 * @var integer
+	 * @var string
 	 *
-	 * @ORM\Column(name="comments", type="integer", nullable=false)
+	 * @ORM\Column(name="comments", type="string", length=256, nullable=true)
 	 */
 	private $comments;
 
@@ -99,7 +99,7 @@ class CustomerOrderService
 	/**
 	 * Set comments
 	 *
-	 * @param integer $comments
+	 * @param string $comments
 	 *
 	 * @return CustomerOrderService
 	 */
@@ -113,7 +113,7 @@ class CustomerOrderService
 	/**
 	 * Get comments
 	 *
-	 * @return integer
+	 * @return string
 	 */
 	public function getComments()
 	{
