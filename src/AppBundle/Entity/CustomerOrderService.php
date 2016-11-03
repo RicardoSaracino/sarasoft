@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CustomerOrderService
@@ -29,7 +30,8 @@ class CustomerOrderService
 	 *
 	 * @ORM\Column(name="quantity", type="integer", nullable=false)
 	 *
-	 * todo Assert\Type(type="integer")
+	 * @Assert\NotBlank()
+	 * @Assert\Range(min="1")
 	 */
 	private $quantity;
 
@@ -57,6 +59,8 @@ class CustomerOrderService
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
 	 * })
+	 *
+	 * @Assert\NotBlank()
 	 */
 	private $service;
 

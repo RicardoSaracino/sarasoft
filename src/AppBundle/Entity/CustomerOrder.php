@@ -60,8 +60,9 @@ class CustomerOrder
 	/**
 	 * @var \Doctrine\Common\Collections\ArrayCollection
 	 *
-	 *
 	 * @ORM\OneToMany(targetEntity="CustomerOrderService", mappedBy="customerOrder", orphanRemoval=true, cascade={"persist", "remove"})
+	 *
+	 * @Assert\Valid()
 	 */
 	private $customerOrderServices;
 
