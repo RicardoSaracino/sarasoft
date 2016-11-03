@@ -20,7 +20,7 @@ class CustomerOrderService
 	 *
 	 * @ORM\Column(name="id", type="integer", nullable=false)
 	 * @ORM\Id
-	 * todo ORM\GeneratedValue(strategy="IDENTITY")
+	 * @ORM\GeneratedValue(strategy="IDENTITY")
 	 */
 	private $id;
 
@@ -43,8 +43,7 @@ class CustomerOrderService
 	/**
 	 * @var \AppBundle\Entity\CustomerOrder
 	 *
-	 * @ORM\Id
-	 * @ORM\OneToOne(targetEntity="CustomerOrder")
+	 * @ORM\ManyToOne(targetEntity="CustomerOrder", inversedBy="customerOrderServices")
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="customer_order_id", referencedColumnName="id")
 	 * })
@@ -54,7 +53,6 @@ class CustomerOrderService
 	/**
 	 * @var \AppBundle\Entity\Service
 	 *
-	 * @ORM\Id
 	 * @ORM\OneToOne(targetEntity="Service")
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="service_id", referencedColumnName="id")

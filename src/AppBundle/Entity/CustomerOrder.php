@@ -58,9 +58,10 @@ class CustomerOrder
 	private $referral;
 
 	/**
-	 * @var \AppBundle\Entity\CustomerOrderService
+	 * @var \Doctrine\Common\Collections\ArrayCollection
 	 *
-	 * @ORM\OneToMany(targetEntity="CustomerOrderService", mappedBy="customer_order_id")
+	 *
+	 * @ORM\OneToMany(targetEntity="CustomerOrderService", mappedBy="customerOrder", orphanRemoval=true, cascade={"persist", "remove"})
 	 */
 	private $customerOrderServices;
 
@@ -210,6 +211,7 @@ class CustomerOrder
 	public function addCustomerOrderService(\AppBundle\Entity\CustomerOrderService $customerOrderService = null)
 	{
 		if (!$this->customerOrderServices->contains($customerOrderService)) {
+			$customerOrderService->setCustomerOrder($this);
 			$this->customerOrderServices->add($customerOrderService);
 		}
 
