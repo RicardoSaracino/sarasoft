@@ -1,0 +1,24 @@
+{% block form_row -%}
+	{% if form.vars.compound %}
+		{% if form.vars.label != false %}
+			<div class="form-group" style="margin-bottom: 0">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-10">
+					<h3 style="margin: 15px 0 0 0">{{ form.vars.label }}</h3>
+					<hr style="margin-top: 15px">
+				</div>
+			</div>
+		{% endif %}
+		<div class="form-group">
+		{{- form_widget(form) -}}
+		</div>
+	{% else %}
+		<div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+			{{- form_label(form) -}}
+			<div class="{{ block('form_group_class') }}">
+				{{- form_widget(form) -}}
+				{{- form_errors(form) -}}
+			</div>
+		</div>
+	{% endif %}
+{%- endblock form_row %}

@@ -120,6 +120,9 @@ class CustomerOrderController extends Controller
     public function editAction(Request $request, CustomerOrder $customerOrder)
     {
         $form = $this->createForm(CustomerOrderType::class, $customerOrder);
+
+		$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

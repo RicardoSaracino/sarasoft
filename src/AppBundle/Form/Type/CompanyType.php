@@ -26,7 +26,7 @@ class CompanyType extends AbstractType
 			->add('phone', PhoneNumberType::class)
 			->add('altPhone', PhoneNumberType::class)
 			->add('email', EmailType::class)
-			->add('address', AddressType::class); # todo fix label
+			->add('address', AddressType::class,['label' => 'Address', 'compound' => true]); # todo fix label
 		;
     }
     

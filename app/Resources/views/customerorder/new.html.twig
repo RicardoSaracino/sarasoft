@@ -2,16 +2,8 @@
 
 {% block title %}New Customer Order{% endblock %}
 
-{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
-
 {% block body %}
-
-
 	{% form_theme form _self %}
-
-
-
-
 	{% include '::nav.html.twig' %}
 	<div class="container">
 		<div class="page-header">
@@ -22,15 +14,8 @@
 			</h1>
 		</div>
 		<div class="main">
-
-
 			<div class="col-sm-9">
 				{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'autocomplete':'off' }}) }}
-
-
-
-
-
 				{{ form_widget(form) }}
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">

@@ -1,20 +1,23 @@
-{% block collection_widget -%}
-	{#
-	<div class="form-group" style="margin-bottom: 0"><h3 style="margin-bottom: 0">{{ form_label(form) }}</h3></div> #}
-		{% for children in form %}
-			{% for child in children %}
-				{{ form_row(child) }}
-			{% endfor %}
-
-			<div class="form-group" style="margin-bottom: 0">
-				<div class="col-sm-2"></div>
-				<div class="col-sm-10">
-					<ul class="nav nav-pills nav-horizontal">
-						<li><a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</a></li>
-					</ul>
-				</div>
+{# https://github.com/ninsuo/symfony-collection #}
+{%- block collection_widget -%}
+	{% if prototype is defined %}
+		{%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+	{% endif %}
+	{% for child in form.children %}
+		{{- form_widget(child) -}}
+		<div class="form-group">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-10">
+				<ul class="nav nav-pills nav-justified small">
+					<li><a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Up</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> Down</a></li>
+				</ul>
+				{% if not loop.last %}
+				<hr style="margin:10px 0">
+				{% endif %}
 			</div>
-			<hr style="margin-top: 15px">
-		{% endfor %}
-{% endblock collection_widget %}
+		</div>
+	{% endfor %}
+{%- endblock collection_widget -%}

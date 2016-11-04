@@ -41,9 +41,13 @@ class CustomerOrderType extends AbstractType
 		}
 
 
-        $builder->add('customerOrderServices', Type\CollectionType::class, array(
-		'entry_type' => CustomerOrderServiceType::class
-        ));
+        $builder->add('customerOrderServices', Type\CollectionType::class, [
+			'entry_type' => CustomerOrderServiceType::class,
+			'label' => 'Services',
+	        'allow_add' => true,
+			'allow_delete' => true,
+        ]);
+
     }
 
     /**
