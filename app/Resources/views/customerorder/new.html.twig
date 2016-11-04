@@ -1,36 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}"/>
-{% endblock %}
-
-{% block javascripts %}
-	{{ parent() }}
-	<script type="text/javascript" src="{{ asset('assets/vendor/moment/min/moment.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
-	<script>
-		// http://eonasdan.github.io/bootstrap-datetimepicker/Options/
-
-		$(document).ready(function () {
-			$('.js-datepicker').datetimepicker({
-				format: "MM/DD/YYYY"
-			});
-
-			$('.js-datetimepicker').datetimepicker({
-
-				format: "MM/DD/YYYY hh:mm A"
-			});
-		});
-	</script>
-{% endblock %}
-
-
 {% block title %}New Customer Order{% endblock %}
 
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
 {% block body %}
+
+
+	{% form_theme form _self %}
+
+
+
+
 	{% include '::nav.html.twig' %}
 	<div class="container">
 		<div class="page-header">
@@ -41,8 +22,15 @@
 			</h1>
 		</div>
 		<div class="main">
+
+
 			<div class="col-sm-9">
 				{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'autocomplete':'off' }}) }}
+
+
+
+
+
 				{{ form_widget(form) }}
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">

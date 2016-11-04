@@ -45,6 +45,7 @@ twig:
         - "bootstrap_3_horizontal_layout.html.twig"
         - "form/textarea_prepend.html.twig"
         - "form/date_time_picker.html.twig"
+        - "form/collection.html.twig"
 
 
 # Doctrine Configuration
