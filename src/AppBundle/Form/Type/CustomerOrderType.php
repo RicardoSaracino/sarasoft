@@ -51,7 +51,7 @@ class CustomerOrderType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults([
-			'data_class' => CustomerOrder:class
+			'data_class' => CustomerOrder::class
         ]);
     }
 }
