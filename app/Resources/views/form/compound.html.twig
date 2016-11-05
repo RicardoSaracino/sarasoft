@@ -1,5 +1,5 @@
 {% block form_row -%}
-	{% if form.vars.compound %}
+	{% if form.vars.compound and 'textarea_prepend' not in form.vars.block_prefixes %}
 		{% if form.vars.label != false %}
 			<div class="form-group" style="margin-bottom: 0">
 				<div class="col-sm-2"></div>
