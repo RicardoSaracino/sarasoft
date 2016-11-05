@@ -25,7 +25,7 @@ class CustomerType extends AbstractType
 			->add('phone', PhoneNumberType::class,['default_region' => 'CA']) ## todo use user region?
 			->add('altPhone', PhoneNumberType::class,['default_region' => 'CA']) ## todo use user region?
 			->add('email',EmailType::class)
-			->add('address', AddressType::class,['label' => 'Home Address', 'compound' => true]);
+			->add('address', AddressType::class,['label' => 'Home Address']);
 	}
 
     /**
