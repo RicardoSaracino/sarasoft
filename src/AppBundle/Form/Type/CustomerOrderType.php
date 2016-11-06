@@ -40,8 +40,12 @@ class CustomerOrderType extends AbstractType
         $builder->add('customerOrderServices', Type\CollectionType::class, [
 			'entry_type' => CustomerOrderServiceType::class,
 			'label' => 'Services',
+			'prototype' => true,
 	        'allow_add' => true,
 			'allow_delete' => true,
+		    'attr' => [
+				'class' => 'js-collection',
+			],
 		]);
     }
 

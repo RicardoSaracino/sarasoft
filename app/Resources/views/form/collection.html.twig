@@ -1,23 +1,59 @@
-{# https://github.com/ninsuo/symfony-collection #}
-{%- block collection_widget -%}
-	{% if prototype is defined %}
-		{%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
-	{% endif %}
-	{% for child in form.children %}
-		{{- form_widget(child) -}}
+{#
+https://github.com/ninsuo/symfony-collection
+http://symfony-collection.fuz.org/basic
+
+bower install symfony-collection#master -add
+#}
+
+{% block collection_widget %}
+	{% spaceless %}
+		{% if prototype is defined %}
+			{% set attr = attr|merge({'data-prototype': block('collection_prototype') }) %}
+		{% endif %}
+		{% set attr = attr|merge({'data-allow-add': allow_add ? 1 : 0}) %}
+		{% set attr = attr|merge({'data-allow-remove': allow_delete ? 1 : 0 }) %}
+		{% set attr = attr|merge({'data-name-prefix': full_name}) %}
+		{% for child in form.children %}
+			<div {{ block('widget_container_attributes') }}>
+				{%- if form.parent is empty -%}
+					{{ form_errors(form) }}
+				{%- endif -%}
+				<div class="form-group" id={{ child.vars.id }}>
+					{% for row in child %}
+						{{ form_row(row) }}
+					{% endfor %}
+					{{ block('collection_options') }}
+				</div>
+			</div>
+		{% endfor %}
+	{% endspaceless %}
+{% endblock collection_widget %}
+
+{% block collection_prototype %}
+	{% spaceless %}
+		<div id={{ prototype.vars.id }}>
+			{% for row in prototype %}
+				{{ form_row(row) }}
+			{% endfor %}
+			{{ block('collection_options') }}
+		</div>
+	{% endspaceless %}
+{% endblock %}
+
+{% block collection_options %}
+	{% spaceless %}
 		<div class="form-group">
 			<div class="col-sm-2"></div>
-			<div class="col-sm-10">
-				<ul class="nav nav-pills nav-justified small">
-					<li><a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Up</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> Down</a></li>
+			<div class="col-sm-10 collection-actions">
+				<ul class="nav nav-pills nav-horizontal small">
+					<li><a class="collection-add collection-action" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</a></li>
+					<li><a class="collection-remove collection-action" href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</a></li>
+					<li><a class="collection-up collection-action" href="#"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Up</a></li>
+					<li><a class="collection-down collection-action" href="#"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> Down</a></li>
+					<li><a class="collection-duplicate collection-action" href="#"><span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate</a></li>
 				</ul>
-				{% if not loop.last %}
-				<hr style="margin:10px 0">
-				{% endif %}
+				<hr style="margin:10px 0 0 0">
 			</div>
 		</div>
-	{% endfor %}
-{%- endblock collection_widget -%}
+	{% endspaceless %}
+{% endblock %}
