@@ -36,9 +36,8 @@ class UserDateExtension extends \Twig_Extension
 	public function getFilters()
 	{
 		return [
-			'user_date' => new \Twig_Filter_Method($this, 'formatUserDate'),
-			'user_datetime' => new \Twig_Filter_Method($this, 'formatUserDateTime'),
-
+			new \Twig_SimpleFilter('user_date', array($this, 'formatUserDate')),
+			new \Twig_SimpleFilter('user_datetime', array($this, 'formatUserDateTime')),
 		];
 	}
 
