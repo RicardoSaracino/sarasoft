@@ -30,15 +30,14 @@
     "jquery": ">=1.7",
     "jquery-ui": ">=1.0"
   },
-  "version": "2.0.2",
-  "_release": "2.0.2",
+  "_release": "04c4a7b180",
   "_resolution": {
-    "type": "version",
-    "tag": "2.0.2",
-    "commit": "d62482502effc06b4e46e0d063db2affc126c816"
+    "type": "branch",
+    "branch": "master",
+    "commit": "04c4a7b1801bdd21f6b745455b3920b5d59369db"
   },
   "_source": "https://github.com/ninsuo/symfony-collection.git",
-  "_target": "^2.0.2",
+  "_target": "master",
   "_originalSource": "symfony-collection",
   "_direct": true
 }
