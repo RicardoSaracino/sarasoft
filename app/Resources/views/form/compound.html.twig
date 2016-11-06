@@ -1,4 +1,4 @@
-{% block form_row -%}
+{% block form_row %}
 	{% if form.vars.compound and 'textarea_prepend' not in form.vars.block_prefixes %}
 		{% if form.vars.label != false %}
 			<div class="form-group" style="margin-bottom: 0">
@@ -9,14 +9,14 @@
 				</div>
 			</div>
 		{% endif %}
-		{{- form_widget(form) -}}
+		{{ form_widget(form) }}
 	{% else %}
 		<div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
-			{{- form_label(form) -}}
+			{{ form_label(form) }}
 			<div class="{{ block('form_group_class') }}">
 				{{- form_widget(form) -}}
 				{{- form_errors(form) -}}
 			</div>
 		</div>
 	{% endif %}
-{%- endblock form_row %}
+{% endblock form_row %}
