@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mysql -uroot -p  < sarasoft.sql;
+mysql -uroot -p sarasoft  < sarasoft.sql;
 rm -rf var/cache/prod/*;
 php bin/console cache:clear --env prod;
 find * -type d -exec chmod 770 {} \;

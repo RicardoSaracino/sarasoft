@@ -1,0 +1,35 @@
+{% extends 'container.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block title %}Complete Customer Order{% endblock %}
+
+{% block container %}
+	{% block container_header %}
+		<h1>Complete Customer Order<br>
+			<small>{{ customer.firstName }} {{ customer.lastName }}</small>
+			<br>
+			<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
+		</h1>
+	{% endblock %}
+	{% block container_main %}
+		{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'autocomplete':'off' }}) }}
+		{{ form_widget(form) }}
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<input type="submit" class="btn btn-default" value="Save">
+			</div>
+		</div>
+		{{ form_end(form) }}
+	{% endblock %}
+	{% block container_complimentary %}
+		<ul class="nav nav-pills nav-stacked">
+			<li>
+				<a href="{{ path('listCustomerOrders') }}">List All Orders</a>
+			</li>
+			<li>
+				<a href="{{ path('listCustomerOrdersByCustomer', {'customer_id': customer.id}) }}">List Customer Orders</a>
+			</li>
+		</ul>
+	{% endblock %}
+{% endblock %}
