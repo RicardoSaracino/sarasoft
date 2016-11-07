@@ -8,3 +8,6 @@ http://obtao.com/blog/2014/06/paginate-with-symfony-and-elasticsearch/
 
 move database connection params to vhost
 http://symfony.com/doc/current/configuration/external_parameters.html
+
+statuses
+http://stackoverflow.com/questions/18062382/right-way-to-define-and-work-with-enum-types-from-symfony2-and-doctrine2
