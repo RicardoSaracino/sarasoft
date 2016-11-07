@@ -18,7 +18,7 @@ bower install symfony-collection#master -add
 				{%- if form.parent is empty -%}
 					{{ form_errors(form) }}
 				{%- endif -%}
-				<div class="form-group" id={{ child.vars.id }}>
+				<div id={{ child.vars.id }}>
 					{% for row in child %}
 						{{ form_row(row) }}
 					{% endfor %}

@@ -198,7 +198,7 @@ class CustomerOrder
 	}
 
 	/**
-	 * @return array
+	 * @return \Doctrine\Common\Collections\ArrayCollection
 	 */
 	public function getCustomerOrderServices()
 	{

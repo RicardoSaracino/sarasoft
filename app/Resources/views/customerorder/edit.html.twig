@@ -9,7 +9,7 @@
 		<h1>Edit Customer Order<br>
 			<small>{{ customer.firstName }} {{ customer.lastName }}</small>
 			<br>
-			<small>{{ phone_number_format(customer.phone) }}</small>
+			<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
 		</h1>
 	{% endblock %}
 	{% block container_main %}

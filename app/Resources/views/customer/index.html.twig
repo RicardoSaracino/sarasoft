@@ -12,8 +12,7 @@
 			<table class="table">
 				<thead>
 				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
+					<th>Name</th>
 					<th>Phone</th>
 					<th>Alt Phone</th>
 					<th>Actions</th>
@@ -22,8 +21,7 @@
 				<tbody>
 				{% for customer in customers %}
 					<tr>
-						<td>{{ customer.firstName }}</td>
-						<td>{{ customer.lastName }}</td>
+						<td>{{ customer.firstName }} {{ customer.lastName }}</td>
 						<td><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></td>
 						<td>{% if customer.altPhone %}<a href="{{ phone_number_format(customer.altPhone,'RFC3966') }}">{{ phone_number_format(customer.altPhone) }}</a>{% endif %}</td>
 						<td>

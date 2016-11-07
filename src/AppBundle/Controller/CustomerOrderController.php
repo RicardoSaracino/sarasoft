@@ -75,8 +75,6 @@ class CustomerOrderController extends Controller
     {
         $customerOrder = new CustomerOrder();
 
-		$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
-
         $form = $this->createForm(CustomerOrderType::class, $customerOrder);
 
 		$form->add('customer', HiddenEntityType::class, ['class' => Customer::class, 'data' => $customer]);
@@ -121,7 +119,6 @@ class CustomerOrderController extends Controller
     {
         $form = $this->createForm(CustomerOrderType::class, $customerOrder);
 
-		$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
 
         $form->handleRequest($request);
 
@@ -132,6 +129,37 @@ class CustomerOrderController extends Controller
         }
 
         return $this->render('customerorder/edit.html.twig', array(
+			'customer' => $customerOrder->getCustomer(),
+            'customerOrder' => $customerOrder,
+            'form' => $form->createView()
+        ));
+	}
+
+
+	/**
+     * Displays a form to complete an existing customerOrder entity.
+     *
+     * @Route("/{id}/complete", name="completeCustomerOrder")
+     * @Method({"GET", "POST"})
+     */
+    public function completeAction(Request $request, CustomerOrder $customerOrder)
+    {
+		## make sure we have at least one
+		if( $customerOrder->getCustomerOrderServices()->isEmpty() ){
+			$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
+		}
+
+		$form = $this->createForm(CustomerOrderType::class, $customerOrder);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('showCustomerOrder', array('id' => $customerOrder->getId()));
+        }
+
+        return $this->render('customerorder/complete.html.twig', array(
 			'customer' => $customerOrder->getCustomer(),
             'customerOrder' => $customerOrder,
             'form' => $form->createView()

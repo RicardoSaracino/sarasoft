@@ -63,6 +63,9 @@
 					<a href="{{ path('editCustomerOrder', { 'id': customerOrder.id }) }}">Edit Customer Order</a>
 				</li>
 				<li>
+					<a href="{{ path('completeCustomerOrder', { 'id': customerOrder.id }) }}">Complete Customer Order</a>
+				</li>
+				<li>
 					<a href="{{ path('newCustomerOrderForCustomer', { 'customer_id': customerOrder.id }) }}">New Customer Order</a>
 				</li>
 			</ul>
