@@ -4,3 +4,7 @@ booking date validation
 booking notes username and time ??? should this be done in a sperate table ??
 
 http://obtao.com/blog/2014/06/paginate-with-symfony-and-elasticsearch/
+
+
+move database connection params to vhost
+http://symfony.com/doc/current/configuration/external_parameters.html
