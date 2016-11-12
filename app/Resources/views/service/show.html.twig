@@ -10,26 +10,27 @@
 			<h1>Service</h1>
 		</div>
 		<div class="col-sm-9">
-			<table class="table">
-				<tbody>
-				<tr>
-					<th>Name</th>
-					<td>{{ service.name }}</td>
-				</tr>
-				<tr>
-					<th>Description</th>
-					<td>{{ service.description }}</td>
-				</tr>
-				<tr>
-					<th>Created</th>
-					<td>{{ service.createdAt|user_datetime }}{% if service.createdBy %} by {{ service.createdBy.fullName }}{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Updated</th>
-					<td>{{ service.updatedAt|user_datetime }}{% if service.updatedBy %} by {{ service.updatedBy.fullName }}{% endif %}</td>
-				</tr>
-				</tbody>
-			</table>
+			<div class="table">
+				<div class="row">
+					<div class="col-sm-2">Name</div>
+					<div class="col-sm-10">{{ service.name }}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-2">Description</div>
+					<div class="col-sm-10">{{ service.description }}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-2">Created</div>
+					<div class="col-sm-10">{{ service.createdAt|user_datetime }}{% if service.createdBy %} by {{ service.createdBy.fullName }}{% endif %}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-2">Updated</div>
+					<div class="col-sm-10">{{ service.updatedAt|user_datetime }}{% if service.updatedBy %} by {{ service.updatedBy.fullName }}{% endif %}</div>
+				</div>
+			</div>
 		</div>
 		<div class="col-sm-3">
 			<ul class="nav nav-pills nav-stacked">

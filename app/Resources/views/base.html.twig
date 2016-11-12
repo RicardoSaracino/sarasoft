@@ -19,6 +19,8 @@
 
 	<title>{% block title %}Sarasoft{% endblock %}</title>
 
+	<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
 	{% stylesheets '@bootstrap_css' %}
 	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
 	{% endstylesheets %}
@@ -26,8 +28,6 @@
 	{% block stylesheets %}
 		<link rel="stylesheet" href="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}"/>
 	{% endblock %}
-
-	<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 
 	<style>
 		nav.navbar-fixed-top + .container {
@@ -38,6 +38,7 @@
 			vertical-align: middle;
 		}
 
+		/* START */
 		div.table .row {
 			margin: 0;
 			padding: 8px 0 8px 0;
@@ -53,6 +54,7 @@
 		div.table .row div:first-child {
 			font-weight: bold;
 		}
+		/* END */
 	</style>
 </head>
 <body>

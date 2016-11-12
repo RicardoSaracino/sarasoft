@@ -10,22 +10,22 @@
 			<h1>Referral</h1>
 		</div>
 		<div class="col-sm-9">
-			<table class="table">
-				<tbody>
-				<tr>
-					<th>Name</th>
-					<td>{{ referral.name }}</td>
-				</tr>
-				<tr>
-					<th>Created</th>
-					<td>{{ referral.createdAt|user_datetime }}{% if referral.createdBy %} by {{ referral.createdBy.fullName }}{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Updated</th>
-					<td>{{ referral.updatedAt|user_datetime }}{% if referral.updatedBy %} by {{ referral.updatedBy.fullName }}{% endif %}</td>
-				</tr>
-				</tbody>
-			</table>
+			<div class="table">
+				<div class="row">
+					<div class="col-sm-2">Name</div>
+					<div class="col-sm-10">{{ referral.name }}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-2">Created</div>
+					<div class="col-sm-10">{{ referral.createdAt|user_datetime }}{% if referral.createdBy %} by {{ referral.createdBy.fullName }}{% endif %}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-2">Updated</div>
+					<div class="col-sm-10">{{ referral.updatedAt|user_datetime }}{% if referral.updatedBy %} by {{ referral.updatedBy.fullName }}{% endif %}</div>
+				</div>
+			</div>
 		</div>
 		<div class="col-sm-3">
 			<ul class="nav nav-pills nav-stacked">

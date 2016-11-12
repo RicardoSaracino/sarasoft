@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="status.booked">
+                <source>status.booked</source>
+                <target>Booked</target>
+            </trans-unit>
+            <trans-unit id="status.inprogress">
+                <source>status.inprogress</source>
+                <target>In Progress</target>
+            </trans-unit>
+            <trans-unit id="status.complete">
+                <source>status.complete</source>
+                <target>Complete</target>
+            </trans-unit>
+            <trans-unit id="status.invoiced">
+                <source>status.invoiced</source>
+                <target>Invioced</target>
+            </trans-unit>
+            <trans-unit id="status.paid">
+                <source>status.paid</source>
+                <target>Paid</target>
+            </trans-unit>
+            <trans-unit id="status.cancelled">
+                <source>status.cancelled</source>
+                <target>Cancelled</target>
+            </trans-unit>
+
+            <trans-unit id="customer.label.firstName">
+                <source>customer.label.firstName</source>
+                <target>First Name</target>
+            </trans-unit>
+            <trans-unit id="customer.label.lastName">
+                <source>customer.label.lastName</source>
+                <target>Last Name</target>
+            </trans-unit>
+            <trans-unit id="customer.label.email">
+                <source>customer.label.email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="customer.label.phone">
+                <source>customer.label.phone</source>
+                <target>Phone</target>
+            </trans-unit>
+            <trans-unit id="customer.label.altPhone">
+                <source>customer.label.altPhone</source>
+                <target>Alt Phone</target>
+            </trans-unit>
+            <trans-unit id="customer.label.homeAddress">
+                <source>customer.label.homeAddress</source>
+                <target>Home Address</target>
+            </trans-unit>
+
+            <trans-unit id="address.label.line1">
+                <source>address.label.line1</source>
+                <target>Line 1</target>
+            </trans-unit>
+            <trans-unit id="address.label.line2">
+                <source>address.label.line2</source>
+                <target>Line 2</target>
+            </trans-unit>
+            <trans-unit id="address.label.line3">
+                <source>address.label.line3</source>
+                <target>Line 3</target>
+            </trans-unit>
+            <trans-unit id="address.label.city">
+                <source>address.label.city</source>
+                <target>City</target>
+            </trans-unit>
+            <trans-unit id="address.label.zipOrPostalcode">
+                <source>address.label.zipOrPostalcode</source>
+                <target>Postal Code</target>
+            </trans-unit>
+            <trans-unit id="address.label.stateOrProvince">
+                <source>address.label.stateOrProvince</source>
+                <target>Province</target>
+            </trans-unit>
+            <trans-unit id="address.label.country">
+                <source>address.label.country</source>
+                <target>Country</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
