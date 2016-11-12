@@ -1,0 +1,11 @@
+{% macro start() %}<ul class="nav nav-pills nav-stacked">{% endmacro %}
+
+{% macro end() %}</ul>{% endmacro %}
+
+{% macro item(label, path) %}
+	{% spaceless %}
+		<li>
+			<a href="{{ path }}">{{ label }}</a>
+		</li>
+	{% endspaceless %}
+{% endmacro %}

@@ -27,6 +27,8 @@
                 <target>Cancelled</target>
             </trans-unit>
 
+
+
             <trans-unit id="customer.label.firstName">
                 <source>customer.label.firstName</source>
                 <target>First Name</target>
@@ -80,6 +82,38 @@
                 <source>address.label.country</source>
                 <target>Country</target>
             </trans-unit>
+
+            <!-- User -->
+
+            <trans-unit id="user.label.username">
+                <source>user.label.username</source>
+                <target>Username</target>
+            </trans-unit>
+            <trans-unit id="user.label.firstName">
+                <source>user.label.firstName</source>
+                <target>First Name</target>
+            </trans-unit>
+            <trans-unit id="user.label.lastName">
+                <source>user.label.lastName</source>
+                <target>Last Name</target>
+            </trans-unit>
+            <trans-unit id="user.label.email">
+                <source>user.label.email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="user.label.language">
+                <source>user.label.language</source>
+                <target>Language</target>
+            </trans-unit>
+            <trans-unit id="user.label.timeZone">
+                <source>user.label.timeZone</source>
+                <target>Time Zone</target>
+            </trans-unit>
+            <trans-unit id="user.label.roles">
+                <source>user.label.roles</source>
+                <target>Roles</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

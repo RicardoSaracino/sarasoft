@@ -1,74 +1,35 @@
-{% extends 'base.html.twig' %}
+{% extends 'page.html.twig' %}
 
 {% block title %}User{% endblock %}
 
-{% block body %}
-	{% include '::nav.html.twig' %}
-	<div class="container">
-		<div class="page-header">
-			<h1>User</h1>
-		</div>
-		<div class="col-sm-9">
-			<div class="table">
-				<div class="row">
-					<div class="col-sm-2">Username</div>
-					<div class="col-sm-10">{{ user.username }}</div>
-				</div>
+{% block header %}<h1>User</h1>{% endblock %}
 
-				<div class="row">
-					<div class="col-sm-2">First Name</div>
-					<div class="col-sm-10">{{ user.firstName }}</div>
-				</div>
+{% block main %}
+	{{ table.start }}
+		{{ table.row('user.label.username', user.username) }}
 
-				<div class="row">
-					<div class="col-sm-2">Last Name</div>
-					<div class="col-sm-10">{{ user.lastName }}</div>
-				</div>
+		{{ table.row('user.label.firstName', user.firstName) }}
 
-				<div class="row">
-					<div class="col-sm-2">Email</div>
-					<div class="col-sm-10">{% if user.email %}<a href="mailto:{{ user.email }}">{{ user.email }}</a>{% endif %}</div>
-				</div>
+		{{ table.row('user.label.lastName', user.lastName) }}
 
-				<div class="row">
-					<div class="col-sm-2">Language</div>
-					<div class="col-sm-10">{{ user.language|language }}</div>
-				</div>
+		{{ table.row_email('user.label.email', user.email) }}
 
-				<div class="row">
-					<div class="col-sm-2">Time Zone</div>
-					<div class="col-sm-10">{{ user.timeZone }}</div>
-				</div>
+		{{ table.row('user.label.language', user.language|language) }}
 
-				<div class="row">
-					<div class="col-sm-2">Roles</div>
-					<div class="col-sm-10">{{ user.roles|join(', ') }}</div>
-				</div>
+		{{ table.row('user.label.timeZone', user.timeZone) }}
 
+		{{ table.row('user.label.roles', user.roles|join(', ')) }}
 
-				<div class="row">
-					<div class="col-sm-2">Created</div>
-					<div class="col-sm-10">{{ user.createdAt|user_datetime }}{% if user.createdBy %} by {{ user.createdBy.fullName }}{% endif %}</div>
-				</div>
+		{{ table.row_created(user) }}
 
-				<div class="row">
-					<div class="col-sm-2">Updated</div>
-					<div class="col-sm-10">{{ user.updatedAt|user_datetime }}{% if user.updatedBy %} by {{ user.updatedBy.fullName }}{% endif %}</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-3">
-			<ul class="nav nav-pills nav-stacked">
-				<li>
-					<a href="{{ path('user_index') }}">List Users</a>
-				</li>
-				<li>
-					<a href="{{ path('user_edit', { 'id': user.id }) }}">Edit User</a>
-				</li>
-				<li>
-					<a href="{{ path('user_new', { 'id': user.id }) }}">New User</a>
-				</li>
-			</ul>
-		</div>
-	</div>
+		{{ table.row_updated(user) }}
+	{{ table.end }}
+{% endblock %}
+
+{% block complimentary %}
+	{{ nav.start }}
+		{{ nav.item('List Users', path('user_index')) }}
+		{{ nav.item('Edit User', path('user_edit', { 'id': user.id })) }}
+		{{ nav.item('New User', path('user_new')) }}
+	{{ nav.end }}
 {% endblock %}

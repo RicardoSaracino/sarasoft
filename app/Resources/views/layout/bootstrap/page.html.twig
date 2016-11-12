@@ -1,17 +1,19 @@
 {% extends 'base.html.twig' %}
+{% import 'nav.html.twig' as nav %}
+{% import 'table.html.twig' as table %}
 {% block title %}{{ parent() }}{% endblock %}
 {% block body %}
 	{% include '::nav.html.twig' %}
 	<div class="container">
 		<div class="page-header">
-			{% block container_header %}{% endblock %}
+			{%- block header %}{% endblock -%}
 		</div>
 		<div class="row">
 			<div class="col-sm-9" role="main">
-				{% block container_main %}{% endblock %}
+				{% block main %}{% endblock %}
 			</div>
 			<div class="col-sm-3" role="complimentary">
-				{% block container_complimentary %}{% endblock %}
+				{% block complimentary %}{% endblock %}
 			</div>
 		</div>
 	</div>

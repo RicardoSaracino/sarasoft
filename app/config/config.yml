@@ -48,7 +48,8 @@ twig:
         - "form/date_time_picker.html.twig"
         - "form/collection.html.twig"
         - "form/compound.html.twig"
-
+    paths:
+      - "%kernel.root_dir%/Resources/views/layout/bootstrap"
 
 # Doctrine Configuration
 doctrine:
