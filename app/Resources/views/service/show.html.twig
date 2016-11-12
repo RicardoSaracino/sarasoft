@@ -16,8 +16,8 @@
 {% block complimentary %}
 	{{ nav.start }}
 	{{ nav.item('List Services', path('service_index')) }}
-	{{ nav.item('Edit Services', path('service_edit', { 'id': service.id })) }}
-	{{ nav.item('New Services', path('service_new')) }}
+	{{ nav.item('Edit Service', path('service_edit', { 'id': service.id })) }}
+	{{ nav.item('New Service', path('service_new')) }}
 	{{ nav.end }}
 {% endblock %}
 
