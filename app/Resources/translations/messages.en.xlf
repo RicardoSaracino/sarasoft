@@ -83,6 +83,20 @@
                 <target>Country</target>
             </trans-unit>
 
+
+
+            <!-- Service -->
+
+            <trans-unit id="service.label.name">
+                <source>service.label.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="service.label.description">
+                <source>service.label.description</source>
+                <target>Description</target>
+            </trans-unit>
+
+
             <!-- User -->
 
             <trans-unit id="user.label.username">
