@@ -9,61 +9,72 @@
 			<h1>Customer</h1>
 		</div>
 		<div class="col-sm-9">
-			<table class="table">
-				<tbody>
-				<tr>
-					<th>Name</th>
-					<td>{{ customer.firstName }} {{ customer.lastName }}</td>
-				</tr>
-				<tr>
-					<th>Phone</th>
-					<td><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></td>
-				</tr>
-				<tr>
-					<th>Alt Phone</th>
-					<td>{% if customer.altPhone %}<a href="{{ phone_number_format(customer.altPhone,'RFC3966') }}">{{ phone_number_format(customer.altPhone) }}</a>{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Email</th>
-					<td>{% if customer.email %}<a href="mailto:customer.email">{{ customer.email }}</a>{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Line 1</th>
-					<td>{{ customer.address.line1 }}</td>
-				</tr>
-				<tr>
-					<th>Line 2</th>
-					<td>{{ customer.address.line2 }}</td>
-				</tr>
-				<tr>
-					<th>Line 3</th>
-					<td>{{ customer.address.line3 }}</td>
-				</tr>
-				<tr>
-					<th>City</th>
-					<td>{{ customer.address.city }}</td>
-				</tr>
-				<tr>
-					<th>Zip/Postal Code</th>
-					<td>{{ customer.address.zipOrPostalcode }}</td>
-				</tr>
-				<tr>
-					<th>State/Province</th>
-					<td>{{ customer.address.stateOrProvince|stateProvince }}</td>
-				</tr>
-				<tr>
-					<th>Country</th>
-					<td>{{ customer.address.country|country }}</td>
-				</tr>
-				<tr>
-					<th>Created</th>
-					<td>{{ customer.createdAt|user_datetime }}{% if customer.createdBy %} by {{ customer.createdBy.fullName }}{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Updated</th>
-					<td>{{ customer.updatedAt|user_datetime }}{% if customer.updatedBy %} by {{ customer.updatedBy.fullName }}{% endif %}</td>
-				</tr>
-			</table>
+			<div class="table">
+				<div class="row">
+					<div class="col-sm-3">Name</div>
+					<div class="col-sm-9">{{ customer.firstName }} {{ customer.lastName }}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">{{ 'customer.label.phone'|trans }}</div>
+					<div class="col-sm-9"><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">{{ 'customer.label.altPhone'|trans }}</div>
+					<div class="col-sm-9">{% if customer.altPhone %}<a href="{{ phone_number_format(customer.altPhone,'RFC3966') }}">{{ phone_number_format(customer.altPhone) }}</a>{% endif %}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">{{ 'customer.label.email'|trans }}</div>
+					<div class="col-sm-9">{% if customer.email %}<a href="mailto:customer.email">{{ customer.email }}</a>{% endif %}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">{{ 'address.label.line1'|trans }}</div>
+					<div class="col-sm-9">{{ customer.address.line1 }}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">{{ 'address.label.line2'|trans }}</div>
+					<div class="col-sm-9">{{ customer.address.line2 }}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">{{ 'address.label.line3'|trans }}</div>
+					<div class="col-sm-9">{{ customer.address.line3 }}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">{{ 'address.label.city'|trans }}</div>
+					<div class="col-sm-9">{{ customer.address.city}}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">{{ 'address.label.zipOrPostalcode'|trans }}</div>
+					<div class="col-sm-9">{{ customer.address.zipOrPostalcode}}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">{{ 'address.label.stateOrProvince'|trans }}</div>
+					<div class="col-sm-9">{{ customer.address.stateOrProvince|stateProvince}}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">{{ 'address.label.country'|trans }}</div>
+					<div class="col-sm-9">{{ customer.address.country|country}}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">Created</div>
+					<div class="col-sm-9">{{ customer.createdAt|user_datetime }}{% if customer.createdBy %} by {{ customer.createdBy.fullName }}{% endif %}</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">Updated</div>
+					<div class="col-sm-9">{{ customer.updatedAt|user_datetime }}{% if customer.updatedBy %} by {{ customer.updatedBy.fullName }}{% endif %}</div>
+				</div>
+			</div>
 		</div>
 		<div class="col-sm-3">
 			<ul class="nav nav-pills nav-stacked">
@@ -83,5 +94,4 @@
 			</ul>
 		</div>
 	</div>
-
 {% endblock %}
