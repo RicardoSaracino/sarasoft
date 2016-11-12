@@ -1,45 +1,23 @@
-{% extends 'base.html.twig' %}
+{% extends 'page.html.twig' %}
 
 {% block title %}Referral{% endblock %}
 
-{% block body %}
-	{% include '::nav.html.twig' %}
+{% block header %}<h1>Referral</h1>{% endblock %}
 
-	<div class="container">
-		<div class="page-header">
-			<h1>Referral</h1>
-		</div>
-		<div class="col-sm-9">
-			<div class="table">
-				<div class="row">
-					<div class="col-sm-2">Name</div>
-					<div class="col-sm-10">{{ referral.name }}</div>
-				</div>
-
-				<div class="row">
-					<div class="col-sm-2">Created</div>
-					<div class="col-sm-10">{{ referral.createdAt|user_datetime }}{% if referral.createdBy %} by {{ referral.createdBy.fullName }}{% endif %}</div>
-				</div>
-
-				<div class="row">
-					<div class="col-sm-2">Updated</div>
-					<div class="col-sm-10">{{ referral.updatedAt|user_datetime }}{% if referral.updatedBy %} by {{ referral.updatedBy.fullName }}{% endif %}</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-3">
-			<ul class="nav nav-pills nav-stacked">
-				<li>
-					<a href="{{ path('referral_index') }}">List Referrals</a>
-				</li>
-				<li>
-					<a href="{{ path('referral_edit', { 'id': referral.id }) }}">Edit Referral</a>
-				</li>
-				<li>
-					<a href="{{ path('referral_new', { 'id': referral.id }) }}">New Referral</a>
-				</li>
-			</ul>
-		</div>
-	</div>
+{% block main %}
+	{{ table.start }}
+	{{ table.row('referral.label.name', referral.name) }}
+	{{ table.row_created(referral) }}
+	{{ table.row_updated(referral) }}
+	{{ table.end }}
 {% endblock %}
+
+{% block complimentary %}
+	{{ nav.start }}
+	{{ nav.item('List Referrals', path('referral_index')) }}
+	{{ nav.item('Edit Referral', path('referral_edit', { 'id': referral.id })) }}
+	{{ nav.item('New Referral', path('referral_new')) }}
+	{{ nav.end }}
+{% endblock %}
+
 

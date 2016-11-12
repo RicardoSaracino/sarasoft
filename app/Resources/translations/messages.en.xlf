@@ -84,6 +84,13 @@
             </trans-unit>
 
 
+            <!-- Referral -->
+
+            <trans-unit id="referral.label.name">
+                <source>referral.label.name</source>
+                <target>Name</target>
+            </trans-unit>
+
 
             <!-- Service -->
 
