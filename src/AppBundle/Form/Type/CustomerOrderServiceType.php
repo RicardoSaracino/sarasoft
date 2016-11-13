@@ -17,13 +17,13 @@ class CustomerOrderServiceType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('service', EntityType::class, ['class' => Service::class, 'choice_label' => 'name', 'placeholder' => 'Choose'])
-			->add('quantity', Type\IntegerType::class, [
+			->add('service', EntityType::class, ['label' => 'customerOrderService.label.service', 'class' => Service::class, 'choice_label' => 'name', 'placeholder' => 'label.choose'])
+			->add('quantity', Type\IntegerType::class, ['label' => 'customerOrderService.label.quantity',
 				'data' => '1',
 				'attr' => [
 					'min' => 1,
 				]])
-			->add('comments');
+			->add('comments', Type\TextType::class, ['label' => 'customerOrderService.label.comments']);
 	}
 
 	/**
