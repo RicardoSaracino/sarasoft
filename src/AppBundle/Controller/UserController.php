@@ -141,7 +141,7 @@ class UserController extends Controller
 
 			$encoder = $this->container->get('security.password_encoder');
 			$user->setSalt(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
-			$encodedPassword = $encoder->encodePassword($user, $user->getPlainPassword());
+			$encodedPassword = $encoder->encodePassword($changePasswordModel->getNewPassword(), $user->getSalt());
 			$user->setPassword($encodedPassword);
 
 			$em->persist($user);
