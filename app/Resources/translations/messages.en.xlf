@@ -2,31 +2,18 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit id="status.booked">
-                <source>status.booked</source>
-                <target>Booked</target>
-            </trans-unit>
-            <trans-unit id="status.inprogress">
-                <source>status.inprogress</source>
-                <target>In Progress</target>
-            </trans-unit>
-            <trans-unit id="status.complete">
-                <source>status.complete</source>
-                <target>Complete</target>
-            </trans-unit>
-            <trans-unit id="status.invoiced">
-                <source>status.invoiced</source>
-                <target>Invioced</target>
-            </trans-unit>
-            <trans-unit id="status.paid">
-                <source>status.paid</source>
-                <target>Paid</target>
-            </trans-unit>
-            <trans-unit id="status.cancelled">
-                <source>status.cancelled</source>
-                <target>Cancelled</target>
+
+            <!-- General -->
+
+            <trans-unit id="label.choose">
+                <source>label.choose</source>
+                <target>Choose</target>
             </trans-unit>
 
+            <trans-unit id="MM/DD/YYYY hh:mm a">
+                <source>MM/DD/YYYY hh:mm a</source>
+                <target>MM/DD/YYYY hh:mm a</target>
+            </trans-unit>
 
             <!-- Address -->
 
@@ -112,6 +99,77 @@
             <trans-unit id="customer.label.homeAddress">
                 <source>customer.label.homeAddress</source>
                 <target>Home Address</target>
+            </trans-unit>
+
+
+            <!-- Customer Order -->
+
+            <trans-unit id="customerOrder.label.company">
+                <source>customerOrder.label.company</source>
+                <target>Company</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.referral">
+                <source>customerOrder.label.referral</source>
+                <target>Referral</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.bookedFrom">
+                <source>customerOrder.label.bookedFrom</source>
+                <target>Booked From</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.bookedUntil">
+                <source>customerOrder.label.bookedUntil</source>
+                <target>Booked Until</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.bookingNotes">
+                <source>customerOrder.label.bookingNotes</source>
+                <target>Booking Notes</target>
+            </trans-unit>
+
+            <trans-unit id="customerOrder.label.services">
+                <source>customerOrder.label.services</source>
+                <target>Services</target>
+            </trans-unit>
+
+            <!-- database defined -->
+            <trans-unit id="customerOrder.status.booked">
+                <source>customerOrder.status.booked</source>
+                <target>Booked</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.status.inprogress">
+                <source>customerOrder.status.inprogress</source>
+                <target>In Progress</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.status.complete">
+                <source>customerOrder.status.complete</source>
+                <target>Complete</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.status.invoiced">
+                <source>customerOrder.status.invoiced</source>
+                <target>Invioced</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.status.paid">
+                <source>customerOrder.status.paid</source>
+                <target>Paid</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.status.cancelled">
+                <source>customerOrder.status.cancelled</source>
+                <target>Cancelled</target>
+            </trans-unit>
+
+
+            <!-- Customer Order Service -->
+
+            <trans-unit id="customerOrderService.label.service">
+                <source>customerOrderService.label.service</source>
+                <target>Service</target>
+            </trans-unit>
+            <trans-unit id="customerOrderService.label.quantity">
+                <source>customerOrderService.label.quantity</source>
+                <target>Quantity</target>
+            </trans-unit>
+            <trans-unit id="customerOrderService.label.comments">
+                <source>customerOrderService.label.comments</source>
+                <target>Comments</target>
             </trans-unit>
 
 
