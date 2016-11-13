@@ -1,97 +1,44 @@
-{% extends 'base.html.twig' %}
+{% extends 'page.html.twig' %}
 
 {% block title %}Customer{% endblock %}
 
-{% block body %}
-	{% include '::nav.html.twig' %}
-	<div class="container">
-		<div class="page-header">
-			<h1>Customer</h1>
-		</div>
-		<div class="col-sm-10">
-			<div class="table">
-				<div class="row">
-					<div class="col-sm-2">Name</div>
-					<div class="col-sm-10">{{ customer.firstName }} {{ customer.lastName }}</div>
-				</div>
+{% block header %}<h1>Customer</h1>{% endblock %}
 
-				<div class="row">
-					<div class="col-sm-2">{{ 'customer.label.phone'|trans }}</div>
-					<div class="col-sm-10"><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></div>
-				</div>
+{% block main %}
+	{{ table.start }}
+	{{ table.row('customer.label.name', customer.name) }}
 
-				<div class="row">
-					<div class="col-sm-2">{{ 'customer.label.altPhone'|trans }}</div>
-					<div class="col-sm-10">{% if customer.altPhone %}<a href="{{ phone_number_format(customer.altPhone,'RFC3966') }}">{{ phone_number_format(customer.altPhone) }}</a>{% endif %}</div>
-				</div>
+	{{ table.row_phone('customer.label.phone', customer.phone) }}
 
-				<div class="row">
-					<div class="col-sm-2">{{ 'customer.label.email'|trans }}</div>
-					<div class="col-sm-10">{% if customer.email %}<a href="mailto:{{ customer.email }}">{{ customer.email }}</a>{% endif %}</div>
-				</div>
+	{{ table.row_phone('customer.label.altPhone', customer.altPhone) }}
 
-				<div class="row">
-					<div class="col-sm-2">{{ 'address.label.line1'|trans }}</div>
-					<div class="col-sm-10">{{ customer.address.line1 }}</div>
-				</div>
+	{{ table.row_email('customer.label.email', customer.email) }}
 
-				<div class="row">
-					<div class="col-sm-2">{{ 'address.label.line2'|trans }}</div>
-					<div class="col-sm-10">{{ customer.address.line2 }}</div>
-				</div>
+	{{ table.row('address.label.line1', customer.address.line1) }}
 
-				<div class="row">
-					<div class="col-sm-2">{{ 'address.label.line3'|trans }}</div>
-					<div class="col-sm-10">{{ customer.address.line3 }}</div>
-				</div>
+	{{ table.row('address.label.line2', customer.address.line2) }}
 
-				<div class="row">
-					<div class="col-sm-2">{{ 'address.label.city'|trans }}</div>
-					<div class="col-sm-10">{{ customer.address.city}}</div>
-				</div>
+	{{ table.row('address.label.line3', customer.address.line3) }}
 
-				<div class="row">
-					<div class="col-sm-2">{{ 'address.label.zipOrPostalcode'|trans }}</div>
-					<div class="col-sm-10">{{ customer.address.zipOrPostalcode}}</div>
-				</div>
+	{{ table.row('address.label.city', customer.address.city) }}
 
-				<div class="row">
-					<div class="col-sm-2">{{ 'address.label.stateOrProvince'|trans }}</div>
-					<div class="col-sm-10">{{ customer.address.stateOrProvince|stateProvince}}</div>
-				</div>
+	{{ table.row('address.label.zipOrPostalcode', customer.address.zipOrPostalcode) }}
 
-				<div class="row">
-					<div class="col-sm-2">{{ 'address.label.country'|trans }}</div>
-					<div class="col-sm-10">{{ customer.address.country|country}}</div>
-				</div>
+	{{ table.row('address.label.stateOrProvince', customer.address.stateOrProvince|stateProvince) }}
 
-				<div class="row">
-					<div class="col-sm-2">Created</div>
-					<div class="col-sm-10">{{ customer.createdAt|user_datetime }}{% if customer.createdBy %} by {{ customer.createdBy.fullName }}{% endif %}</div>
-				</div>
+	{{ table.row('address.label.country', customer.address.country|country) }}
 
-				<div class="row">
-					<div class="col-sm-2">Updated</div>
-					<div class="col-sm-10">{{ customer.updatedAt|user_datetime }}{% if customer.updatedBy %} by {{ customer.updatedBy.fullName }}{% endif %}</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-2">
-			<ul class="nav nav-pills nav-stacked">
-				<li>
-					<a href="{{ path('customer_index') }}">List Customers</a>
-				</li>
-				<li>
-					<a href="{{ path('customer_edit', { 'id': customer.id }) }}">Edit Customer</a>
-				</li>
-				<li>
-					<a href="{{ path('listCustomerOrdersByCustomer', { 'customer_id': customer.id }) }}">List Customer Orders</a>
-				</li>
-				<li>
-					<a href="{{ path('newCustomerOrderForCustomer', { 'customer_id': customer.id }) }}">New Customer Order</a>
-				</li>
+	{{ table.row_created(customer) }}
+	{{ table.row_updated(customer) }}
+	{{ table.end }}
+{% endblock %}
 
-			</ul>
-		</div>
-	</div>
+{% block complimentary %}
+	{{ nav.start }}
+	{{ nav.item('List Companies', path('customer_index')) }}
+	{{ nav.item('Edit Customer', path('customer_edit', { 'id': customer.id })) }}
+	{{ nav.item('New Customer', path('customer_new')) }}
+	{{ nav.item('List Customer Orders', path('listCustomerOrdersByCustomer', { 'customer_id': customer.id })) }}
+	{{ nav.item('New Customer Order', path('newCustomerOrderForCustomer', { 'customer_id': customer.id })) }}
+	{{ nav.end }}
 {% endblock %}

@@ -85,6 +85,10 @@
 
             <!-- Customer -->
 
+            <trans-unit id="customer.label.name">
+                <source>customer.label.name</source>
+                <target>Name</target>
+            </trans-unit>
             <trans-unit id="customer.label.firstName">
                 <source>customer.label.firstName</source>
                 <target>First Name</target>

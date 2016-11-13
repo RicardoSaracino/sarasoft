@@ -91,8 +91,6 @@ class Customer
 	private $address;
 
 	/**
-	 * Get id
-	 *
 	 * @return integer
 	 */
 	public function getId()
@@ -101,8 +99,6 @@ class Customer
 	}
 
 	/**
-	 * Set firstName
-	 *
 	 * @param string $firstName
 	 *
 	 * @return Customer
@@ -115,8 +111,6 @@ class Customer
 	}
 
 	/**
-	 * Get firstName
-	 *
 	 * @return string
 	 */
 	public function getFirstName()
@@ -125,8 +119,6 @@ class Customer
 	}
 
 	/**
-	 * Set lastName
-	 *
 	 * @param string $lastName
 	 *
 	 * @return Customer
@@ -139,8 +131,6 @@ class Customer
 	}
 
 	/**
-	 * Get lastName
-	 *
 	 * @return string
 	 */
 	public function getLastName()
@@ -149,8 +139,14 @@ class Customer
 	}
 
 	/**
-	 * Set phone
-	 *
+	 * @return string
+	 */
+	public function getName()
+	{
+		return $this->getFirstName(). ' ' . $this->getLastName();
+	}
+
+	/**
 	 * @param string $phone
 	 *
 	 * @return Customer
@@ -163,8 +159,6 @@ class Customer
 	}
 
 	/**
-	 * Get phone
-	 *
 	 * @return string
 	 */
 	public function getPhone()
@@ -173,8 +167,6 @@ class Customer
 	}
 
 	/**
-	 * Set altPhone
-	 *
 	 * @param string $altPhone
 	 *
 	 * @return Customer
@@ -187,8 +179,6 @@ class Customer
 	}
 
 	/**
-	 * Get altPhone
-	 *
 	 * @return string
 	 */
 	public function getAltPhone()
@@ -197,8 +187,6 @@ class Customer
 	}
 
 	/**
-	 * Set email
-	 *
 	 * @param string $email
 	 *
 	 * @return Customer
@@ -211,8 +199,6 @@ class Customer
 	}
 
 	/**
-	 * Get email
-	 *
 	 * @return string
 	 */
 	public function getEmail()
@@ -221,8 +207,6 @@ class Customer
 	}
 
 	/**
-	 * Set address
-	 *
 	 * @param \AppBundle\Entity\Address $address
 	 *
 	 * @return Company
@@ -235,8 +219,6 @@ class Customer
 	}
 
 	/**
-	 * Get address
-	 *
 	 * @return \AppBundle\Entity\Address
 	 */
 	public function getAddress()
