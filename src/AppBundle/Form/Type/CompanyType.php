@@ -5,9 +5,8 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type as Type;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
-use AppBundle\Form\Type\AddressType;
 
 
 /**
@@ -22,11 +21,11 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('name')
-			->add('phone', PhoneNumberType::class)
-			->add('altPhone', PhoneNumberType::class)
-			->add('email', EmailType::class)
-			->add('address', AddressType::class,['label' => 'Address', 'compound' => true]); # todo fix label
+			->add('name', Type\TextType::class, ['label' => 'company.label.name'])
+			->add('phone', PhoneNumberType::class, ['label' => 'company.label.phone'])
+			->add('altPhone', PhoneNumberType::class, ['label' => 'company.label.altPhone'])
+			->add('email', Type\EmailType::class, ['label' => 'company.label.email'])
+			->add('address', AddressType::class, ['label' => 'company.label.address', 'compound' => true]); # todo fix label
 		;
     }
     

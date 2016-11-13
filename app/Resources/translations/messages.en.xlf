@@ -78,7 +78,10 @@
                 <source>company.label.email</source>
                 <target>Email</target>
             </trans-unit>
-
+            <trans-unit id="company.label.address">
+                <source>company.label.address</source>
+                <target>Address</target>
+            </trans-unit>
 
             <!-- Customer -->
 
