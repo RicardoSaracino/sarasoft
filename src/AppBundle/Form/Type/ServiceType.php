@@ -5,6 +5,8 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type as Type;
+
 
 /**
  * Class ServiceType
@@ -18,8 +20,9 @@ class ServiceType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('name')
-			->add('description');
+			->add('name', Type\TextType::class, ['label' => 'service.label.name'])
+			->add('description', Type\TextType::class, ['label' => 'service.label.description'])
+		;
 	}
 
 	/**
@@ -27,10 +30,8 @@ class ServiceType extends AbstractType
 	 */
 	public function configureOptions(OptionsResolver $resolver)
 	{
-		$resolver->setDefaults(
-			array(
-				'data_class' => 'AppBundle\Entity\Service'
-			)
-		);
+		$resolver->setDefaults([
+			'data_class' => \AppBundle\Entity\Service::class
+		]);
 	}
 }

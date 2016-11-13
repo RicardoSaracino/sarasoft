@@ -28,14 +28,14 @@ class CompanyType extends AbstractType
 			->add('address', AddressType::class, ['label' => 'company.label.address', 'compound' => true]); # todo fix label
 		;
     }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => \AppBundle\Entity\Company::class
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults([
+			'data_class' => \AppBundle\Entity\Company::class
         ]);
     }
 }
