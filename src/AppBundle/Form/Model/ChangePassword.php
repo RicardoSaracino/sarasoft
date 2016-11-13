@@ -27,6 +27,7 @@ class ChangePassword
 	/**
 	 * @var string
 	 *
+	 * @Assert\NotBlank()
 	 * @Assert\Length(
 	 *     min = 8,
 	 *     minMessage = "Password should by at least 8 chars long"

@@ -28,8 +28,9 @@
 
 {% block complimentary %}
 	{{ nav.start }}
-		{{ nav.item('List Users', path('user_index')) }}
-		{{ nav.item('Edit User', path('user_edit', { 'id': user.id })) }}
-		{{ nav.item('New User', path('user_new')) }}
+	{{ nav.item('Change Password', path('user_change_password', {'id':user.id})) }}
+	{{ nav.item('List Users', path('user_index')) }}
+	{{ nav.item('Edit User', path('user_edit', { 'id': user.id })) }}
+	{{ nav.item('New User', path('user_new')) }}
 	{{ nav.end }}
 {% endblock %}
