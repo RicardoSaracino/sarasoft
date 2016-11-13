@@ -20,6 +20,15 @@
 	{% endspaceless %}
 {% endmacro %}
 
+{% macro row_phone(label, phone) %}
+	{% spaceless %}
+		<div class="row">
+			<div class="col-sm-2">{{ label|trans }}</div>
+			<div class="col-sm-10">{% if phone %}<a href="{{ phone_number_format(phone,'RFC3966') }}">{{ phone_number_format(phone) }}</a>{% endif %}</div>
+		</div>
+	{% endspaceless %}
+{% endmacro %}
+
 {% macro row_created(entity) %}
 	{% spaceless %}
 		<div class="row">
