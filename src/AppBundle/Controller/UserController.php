@@ -3,8 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use AppBundle\Form\UserType;
-use AppBundle\Form\ChangePasswordType;
+use AppBundle\Form\Type\UserType;
+use AppBundle\Form\Type\ChangePasswordType;
 use AppBundle\Form\Model\ChangePassword;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +51,7 @@ class UserController extends Controller
 	{
 		$user = new User();
 
-		$form = $this->createForm(UserType::class, $user, ['validation_groups' => ['Default','plain_password']]);
+		$form = $this->createForm(UserType::class, $user, ['validation_groups' => ['Default', 'plain_password']]);
 
 		$form->handleRequest($request);
 
@@ -60,7 +60,6 @@ class UserController extends Controller
 
 			$encoder = $this->container->get('security.password_encoder');
 			$user->setSalt(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
-			#$encodedPassword = $encoder->encodePassword($user->getPlainPassword(), $user->getSalt());
 			$encodedPassword = $encoder->encodePassword($user, $user->getPlainPassword());
 			$user->setPassword($encodedPassword);
 
@@ -142,7 +141,7 @@ class UserController extends Controller
 
 			$encoder = $this->container->get('security.password_encoder');
 			$user->setSalt(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM));
-			#$encodedPassword = $encoder->encodePassword($changePasswordModel->getNewPassword(), $user->getSalt());
+			$encodedPassword = $encoder->encodePassword($user, $user->getPlainPassword());
 			$user->setPassword($encodedPassword);
 
 			$em->persist($user);
