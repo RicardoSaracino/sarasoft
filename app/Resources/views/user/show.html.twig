@@ -6,23 +6,23 @@
 
 {% block main %}
 	{{ table.start }}
-		{{ table.row('user.label.username', user.username) }}
+	{{ table.row('user.label.username', user.username) }}
 
-		{{ table.row('user.label.firstName', user.firstName) }}
+	{{ table.row('user.label.firstName', user.firstName) }}
 
-		{{ table.row('user.label.lastName', user.lastName) }}
+	{{ table.row('user.label.lastName', user.lastName) }}
 
-		{{ table.row_email('user.label.email', user.email) }}
+	{{ table.row_email('user.label.email', user.email) }}
 
-		{{ table.row('user.label.language', user.language|language) }}
+	{{ table.row('user.label.language', user.language|language) }}
 
-		{{ table.row('user.label.timeZone', user.timeZone) }}
+	{{ table.row('user.label.timeZone', user.timeZone) }}
 
-		{{ table.row('user.label.roles', user.roles|join(', ')) }}
+	{{ table.row('user.label.roles', user.roles|join(', ')) }}
 
-		{{ table.row_created(user) }}
+	{{ table.row_created(user) }}
 
-		{{ table.row_updated(user) }}
+	{{ table.row_updated(user) }}
 	{{ table.end }}
 {% endblock %}
 
