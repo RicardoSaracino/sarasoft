@@ -1,85 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends 'page.html.twig' %}
 
 {% block title %}Company{% endblock %}
 
-{% block body %}
-	{% include '::nav.html.twig' %}
+{% block header %}<h1>Company</h1>{% endblock %}
 
-	<div class="container">
-		<div class="page-header">
-			<h1>Company</h1>
-		</div>
-		<div class="col-sm-9">
-			<table class="table">
-				<tbody>
-				<tr>
-					<th>Name</th>
-					<td>{{ company.name }}</td>
-				</tr>
-				<tr>
-					<th>Phone</th>
-					<td><a href="{{ phone_number_format(company.phone,'RFC3966') }}">{{ phone_number_format(company.phone) }}</a></td>
-				</tr>
-				<tr>
-					<th>Alt Phone</th>
-					<td>{% if company.altPhone %}<a href="{{ phone_number_format(company.altPhone,'RFC3966') }}">{{ phone_number_format(company.altPhone) }}</a>{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Email</th>
-					<td>{% if company.email %}<a href="mailto:company.email">{{ company.email }}</a>{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Line 1</th>
-					<td>{{ company.address.line1 }}</td>
-				</tr>
-				<tr>
-					<th>Line 2</th>
-					<td>{{ company.address.line2 }}</td>
-				</tr>
-				<tr>
-					<th>Line 3</th>
-					<td>{{ company.address.line3 }}</td>
-				</tr>
-				<tr>
-					<th>City</th>
-					<td>{{ company.address.city }}</td>
-				</tr>
-				<tr>
-					<th>Zip/Postal Code</th>
-					<td>{{ company.address.zipOrPostalcode }}</td>
-				</tr>
-				<tr>
-					<th>State/Province</th>
-					<td>{{ company.address.stateOrProvince|stateProvince }}</td>
-				</tr>
-				<tr>
-					<th>Country</th>
-					<td>{{ company.address.country|country }}</td>
-				</tr>
-				<tr>
-					<th>Created</th>
-					<td>{{ company.createdAt|user_datetime }}{% if company.createdBy %} by {{ company.createdBy.fullName }}{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Updated</th>
-					<td>{{ company.updatedAt|user_datetime }}{% if company.updatedBy %} by {{ company.updatedBy.fullName }}{% endif %}</td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="col-sm-3">
-			<ul class="nav nav-pills nav-stacked">
-				<li>
-					<a href="{{ path('company_index') }}">List Companies</a>
-				</li>
-				<li>
-					<a href="{{ path('company_edit', { 'id': company.id }) }}">Edit Company</a>
-				</li>
-				<li>
-					<a href="{{ path('company_new', { 'id': company.id }) }}">New Company</a>
-				</li>
-			</ul>
-		</div>
-	</div>
+{% block main %}
+	{{ table.start }}
+	{{ table.row('company.label.name', company.name) }}
+
+	{{ table.row_phone('company.label.phone', company.phone) }}
+
+	{{ table.row_phone('company.label.altPhone', company.altPhone) }}
+
+	{{ table.row_email('company.label.email', company.email) }}
+
+	{{ table.row('address.label.line1', company.address.line1) }}
+
+	{{ table.row('address.label.line2', company.address.line2) }}
+
+	{{ table.row('address.label.line3', company.address.line3) }}
+
+	{{ table.row('address.label.city', company.address.city) }}
+
+	{{ table.row('address.label.zipOrPostalcode', company.address.zipOrPostalcode) }}
+
+	{{ table.row('address.label.stateOrProvince', company.address.stateOrProvince|stateProvince) }}
+
+	{{ table.row('address.label.country', company.address.country|country) }}
+
+
+	{{ table.row_created(company) }}
+	{{ table.row_updated(company) }}
+	{{ table.end }}
 {% endblock %}
 
+{% block complimentary %}
+	{{ nav.start }}
+	{{ nav.item('List Companies', path('company_index')) }}
+	{{ nav.item('Edit Company', path('company_edit', { 'id': company.id })) }}
+	{{ nav.item('New Company', path('company_new')) }}
+	{{ nav.end }}
+{% endblock %}

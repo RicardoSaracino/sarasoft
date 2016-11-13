@@ -28,31 +28,7 @@
             </trans-unit>
 
 
-
-            <trans-unit id="customer.label.firstName">
-                <source>customer.label.firstName</source>
-                <target>First Name</target>
-            </trans-unit>
-            <trans-unit id="customer.label.lastName">
-                <source>customer.label.lastName</source>
-                <target>Last Name</target>
-            </trans-unit>
-            <trans-unit id="customer.label.email">
-                <source>customer.label.email</source>
-                <target>Email</target>
-            </trans-unit>
-            <trans-unit id="customer.label.phone">
-                <source>customer.label.phone</source>
-                <target>Phone</target>
-            </trans-unit>
-            <trans-unit id="customer.label.altPhone">
-                <source>customer.label.altPhone</source>
-                <target>Alt Phone</target>
-            </trans-unit>
-            <trans-unit id="customer.label.homeAddress">
-                <source>customer.label.homeAddress</source>
-                <target>Home Address</target>
-            </trans-unit>
+            <!-- Address -->
 
             <trans-unit id="address.label.line1">
                 <source>address.label.line1</source>
@@ -81,6 +57,54 @@
             <trans-unit id="address.label.country">
                 <source>address.label.country</source>
                 <target>Country</target>
+            </trans-unit>
+
+
+            <!-- Company -->
+
+            <trans-unit id="company.label.name">
+                <source>company.label.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="company.label.phone">
+                <source>company.label.phone</source>
+                <target>Phone</target>
+            </trans-unit>
+            <trans-unit id="company.label.altPhone">
+                <source>company.label.altPhone</source>
+                <target>Alt Phone</target>
+            </trans-unit>
+            <trans-unit id="company.label.email">
+                <source>company.label.email</source>
+                <target>Email</target>
+            </trans-unit>
+
+
+            <!-- Customer -->
+
+            <trans-unit id="customer.label.firstName">
+                <source>customer.label.firstName</source>
+                <target>First Name</target>
+            </trans-unit>
+            <trans-unit id="customer.label.lastName">
+                <source>customer.label.lastName</source>
+                <target>Last Name</target>
+            </trans-unit>
+            <trans-unit id="customer.label.email">
+                <source>customer.label.email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="customer.label.phone">
+                <source>customer.label.phone</source>
+                <target>Phone</target>
+            </trans-unit>
+            <trans-unit id="customer.label.altPhone">
+                <source>customer.label.altPhone</source>
+                <target>Alt Phone</target>
+            </trans-unit>
+            <trans-unit id="customer.label.homeAddress">
+                <source>customer.label.homeAddress</source>
+                <target>Home Address</target>
             </trans-unit>
 
 
