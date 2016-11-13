@@ -141,7 +141,7 @@ class Customer
 	/**
 	 * @return string
 	 */
-	public function getName()
+	public function getFullName()
 	{
 		return $this->getFirstName(). ' ' . $this->getLastName();
 	}

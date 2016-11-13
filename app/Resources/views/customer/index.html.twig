@@ -21,7 +21,7 @@
 				<tbody>
 				{% for customer in customers %}
 					<tr>
-						<td>{{ customer.firstName }} {{ customer.lastName }}</td>
+						<td>{{ customer.fullName }}</td>
 						<td><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></td>
 						<td>{% if customer.altPhone %}<a href="{{ phone_number_format(customer.altPhone,'RFC3966') }}">{{ phone_number_format(customer.altPhone) }}</a>{% endif %}</td>
 						<td>
