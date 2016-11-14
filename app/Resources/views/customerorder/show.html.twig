@@ -4,8 +4,7 @@
 
 {% block header %}
 	<h1>Order<br>
-		<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.full
-				Name }}</a></small>
+		<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.fullName }}</a></small>
 		<br>
 		<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
 	</h1>
@@ -38,7 +37,7 @@
 {% block complimentary %}
 	{{ nav.start }}
 
-	{{ nav.item('List All Orders', path('listCustomerOrders')) }}
+	{{ nav.item('List All Orders', path('customer_order_list_all')) }}
 
 	{{ nav.item('List Customer Orders', path('newCustomerOrderForCustomer', { 'customer_id': customerOrder.customer.id })) }}
 
