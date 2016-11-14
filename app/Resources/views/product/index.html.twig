@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products{% endblock %}
+
+{% block body %}
+	{% include '::nav.html.twig' %}
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>Products</h1>
+		</div>
+
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Actions</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for product in products %}
+					<tr>
+						<td>{{ product.name }}</td>
+						<td>{{ product.description }}</td>
+						<td>
+							<ul class="nav nav-pills">
+								<li>
+									<a href="{{ path('product_show', { 'id': product.id }) }}">show</a>
+								</li>
+								<li>
+									<a href="{{ path('product_edit', { 'id': product.id }) }}">edit</a>
+								</li>
+							</ul>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<ul class="nav nav-pills nav-stacked">
+			<li>
+				<a href="{{ path('product_new') }}">New Product</a>
+			</li>
+		</ul>
+	</div>
+{% endblock %}

@@ -173,6 +173,18 @@
             </trans-unit>
 
 
+            <!-- Product -->
+
+            <trans-unit id="product.label.name">
+                <source>product.label.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="product.label.description">
+                <source>product.label.description</source>
+                <target>Description</target>
+            </trans-unit>
+
+
             <!-- Referral -->
 
             <trans-unit id="referral.label.name">
