@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * User controller.
  *
- * @Route("/user")
+ * @Route("user")
  */
 class UserController extends Controller
 {
@@ -31,7 +31,7 @@ class UserController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$users = $em->getRepository(User::class)->findAll();
+		$users = $em->getRepository('AppBundle\Entity\User')->findAll();
 
 		return $this->render(
 			'user/index.html.twig',
@@ -51,7 +51,7 @@ class UserController extends Controller
 	{
 		$user = new User();
 
-		$form = $this->createForm(UserType::class, $user, ['validation_groups' => ['Default', 'plain_password']]);
+		$form = $this->createForm('AppBundle\Entity\User', $user, ['validation_groups' => ['Default', 'plain_password']]);
 
 		$form->handleRequest($request);
 
@@ -101,7 +101,7 @@ class UserController extends Controller
 	 */
 	public function editAction(Request $request, User $user)
 	{
-		$form = $this->createForm(UserType::class, $user);
+		$form = $this->createForm('AppBundle\Entity\User', $user);
 
 		$form->handleRequest($request);
 
@@ -133,7 +133,7 @@ class UserController extends Controller
 	public function changePasswordAction(Request $request, User $user)
 	{
 		$changePasswordModel = new ChangePassword();
-		$changePasswordForm = $this->createForm(ChangePasswordType::class, $changePasswordModel);
+		$changePasswordForm = $this->createForm('AppBundle\Form\Type\ChangePasswordType', $changePasswordModel);
 		$changePasswordForm->handleRequest($request);
 
 		if ($changePasswordForm->isSubmitted() && $changePasswordForm->isValid()) {
