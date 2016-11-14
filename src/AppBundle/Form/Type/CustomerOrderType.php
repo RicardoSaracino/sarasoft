@@ -24,22 +24,21 @@ class CustomerOrderType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('orderStatusCode', Type\TextType::class, ['label' => 'Order Status', 'disabled' => true])
-			->add('company', EntityType::class, ['class' => Company::class, 'choice_label' => 'name', 'placeholder' => 'Choose'])
-			->add('referral', EntityType::class, ['class' => Referral::class, 'choice_label' => 'name', 'placeholder' => 'Choose'])
-			->add('bookedFrom', MyType\UserDateTimePickerType::class, ['label' => 'Booked From'])
-			->add('bookedUntil', MyType\UserDateTimePickerType::class, ['label' => 'Booked Until']);
+			->add('company', EntityType::class, ['label' => 'customerOrder.label.company', 'class' => Company::class, 'choice_label' => 'name', 'placeholder' => 'label.choose'])
+			->add('referral', EntityType::class, ['label' => 'customerOrder.label.referral', 'class' => Referral::class, 'choice_label' => 'name', 'placeholder' => 'label.choose'])
+			->add('bookedFrom', MyType\UserDateTimePickerType::class, ['label' => 'customerOrder.label.bookedFrom'])
+			->add('bookedUntil', MyType\UserDateTimePickerType::class, ['label' => 'customerOrder.label.bookedUntil']);
 
 		if ($builder->getData()->getBookingNotes()) {
 			$builder->add('bookingNotes', MyType\UserTextAreaPrependType::class, [
-				'label' => 'Booking Notes', 'trim' => true, 'data' => $builder->getData(), 'data_class' => CustomerOrder::class]);
+				'label' => 'customerOrder.label.bookingNotes', 'trim' => true, 'data' => $builder->getData(), 'data_class' => CustomerOrder::class]);
 		} else {
-			$builder->add('bookingNotes', MyType\UserTextAreaType::class, ['label' => 'Booking Notes', 'trim' => true]);
+			$builder->add('bookingNotes', MyType\UserTextAreaType::class, ['label' => 'customerOrder.label.bookingNotes', 'trim' => true]);
 		}
 
         $builder->add('customerOrderServices', Type\CollectionType::class, [
 			'entry_type' => CustomerOrderServiceType::class,
-			'label' => 'Services',
+			'label' => 'customerOrder.label.services',
 			'prototype' => true,
 	        'allow_add' => true,
 			'allow_delete' => true,

@@ -1,74 +1,53 @@
-{% extends 'base.html.twig' %}
+{% extends 'page.html.twig' %}
 
-{% block title %}Customer Order{% endblock %}
+{% block title %}Order{% endblock %}
 
-{% block body %}
-	{% include '::nav.html.twig' %}
-	<div class="container">
-		<div class="page-header">
-			<h1>Customer Order<br>
-				<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.firstName }} {{ customerOrder.customer.lastName }}</a></small>
-				<br>
-				<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
-			</h1>
-		</div>
-		<div class="col-sm-9">
-			<table class="table">
-				<tbody>
-				<tr>
-					<th>Order Status</th>
-					<td>{{ customerOrder.orderStatusCode }}</td>
-				</tr>
-				<tr>
-					<th>Company</th>
-					<td>{{ customerOrder.company.name }}</td>
-				</tr>
-				</tr>
-				{% if customerOrder.referral %}
-					<tr>
-						<th>Referral</th>
-						<td>{{ customerOrder.referral.name }}</td>
-					</tr>
-				{% endif %}
-				<tr>
-					<th>Booked</th>
-					<td>{% if customerOrder.bookedFrom %}{{ customerOrder.bookedFrom|user_datetime }}{% endif %} to {% if customerOrder.bookedUntil %}{{ customerOrder.bookedUntil|user_datetime }}{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Booking Notes</th>
-					<td>
-						<div style="max-height: 95px; margin: 0" class="well well-sm pre-scrollable">{{ customerOrder.bookingNotes|nl2br }}</div>
-					</td>
-				</tr>
-				<tr>
-					<th>Created</th>
-					<td>{{ customerOrder.createdAt|user_datetime }}{% if customerOrder.createdBy %} by {{ customerOrder.createdBy.fullName }}{% endif %}</td>
-				</tr>
-				<tr>
-					<th>Updated</th>
-					<td>{{ customerOrder.updatedAt|user_datetime }}{% if customerOrder.updatedBy %} by {{ customerOrder.updatedBy.fullName }}{% endif %}</td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="col-sm-3">
-			<ul class="nav nav-pills nav-stacked">
-				<li>
-					<a href="{{ path('listCustomerOrders') }}">List All Orders</a>
-				</li>
-				<li>
-					<a href="{{ path('listCustomerOrdersByCustomer', {'customer_id': customerOrder.customer.id}) }}">List Customer Orders</a>
-				</li>
-				<li>
-					<a href="{{ path('editCustomerOrder', { 'id': customerOrder.id }) }}">Edit Customer Order</a>
-				</li>
-				<li>
-					<a href="{{ path('completeCustomerOrder', { 'id': customerOrder.id }) }}">Complete Customer Order</a>
-				</li>
-				<li>
-					<a href="{{ path('newCustomerOrderForCustomer', { 'customer_id': customerOrder.id }) }}">New Customer Order</a>
-				</li>
-			</ul>
-		</div>
-	</div>
+{% block header %}
+	<h1>Order<br>
+		<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.full
+				Name }}</a></small>
+		<br>
+		<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
+	</h1>
 {% endblock %}
+
+{% block main %}
+	{{ table.start }}
+
+	{{ table.row_title(customerOrder.status) }}
+
+	{{ table.row('customerOrder.label.company', customerOrder.company.name) }}
+
+	{% if customerOrder.referral %}
+		{{ table.row('customerOrder.label.referral', customerOrder.referral.name) }}
+	{% endif %}
+
+	{{ table.row_user_datetime('customerOrder.label.bookedFrom', customerOrder.bookedFrom) }}
+
+	{{ table.row_user_datetime('customerOrder.label.bookedUntil', customerOrder.bookedUntil) }}
+
+	{{ table.row_scrollable('customerOrder.label.bookingNotes', customerOrder.bookingNotes) }}
+
+	{{ table.row_created(customerOrder) }}
+
+	{{ table.row_updated(customerOrder) }}
+
+	{{ table.end }}
+{% endblock %}
+
+{% block complimentary %}
+	{{ nav.start }}
+
+	{{ nav.item('List All Orders', path('listCustomerOrders')) }}
+
+	{{ nav.item('List Customer Orders', path('newCustomerOrderForCustomer', { 'customer_id': customerOrder.customer.id })) }}
+
+	{{ nav.item('New Order', path('newCustomerOrderForCustomer', { 'customer_id': customerOrder.customer.id })) }}
+
+	{{ nav.end }}
+{% endblock %}
+
+
+	{#
+	 <a href="{{ path('listCustomerOrdersByCustomer', {'customer_id': customerOrder.customer.id}) }}">List Customer Orders</a> #}
+

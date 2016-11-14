@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Customer Order{% endblock %}
+{% block title %}New Order{% endblock %}
 
 {% block body %}
 	{% form_theme form _self %}
 	{% include '::nav.html.twig' %}
 	<div class="container">
 		<div class="page-header">
-			<h1>New Customer Order<br>
+			<h1>New Order<br>
 				<small>{{ customer.firstName }} {{ customer.lastName }}</small>
 				<br>
-				<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
+				<small><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></small>
 			</h1>
 		</div>
 		<div class="main">

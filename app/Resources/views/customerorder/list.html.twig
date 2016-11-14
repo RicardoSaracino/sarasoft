@@ -9,7 +9,7 @@
 			<h1>Customer Orders<br>
 				<small>{{ customer.firstName }} {{ customer.lastName }}</small>
 				<br>
-				<small>{{ phone_number_format(customer.phone) }}</small>
+				<small><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></small>
 			</h1>
 		</div>
 		<div class="table-responsive">
@@ -26,7 +26,7 @@
 				<tbody>
 				{% for customerOrder in customerOrders %}
 					<tr>
-						<td>{{ customerOrder.orderStatusCode }}</td>
+						<td>{{ customerOrder.status|trans }}</td>
 						<td>{{ customerOrder.company.name }}</td>
 						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>
 						<td>{% if customerOrder.bookedFrom %}{{ customerOrder.bookedFrom|user_datetime }}{% endif %} to {% if customerOrder.bookedUntil %}{{ customerOrder.bookedUntil|user_datetime }}{% endif %}</td>

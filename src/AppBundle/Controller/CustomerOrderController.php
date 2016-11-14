@@ -159,8 +159,7 @@ class CustomerOrderController extends Controller
             return $this->redirectToRoute('showCustomerOrder', array('id' => $customerOrder->getId()));
         }
 
-        return $this->render('customerorder/complete.html.twig', array(
-			'customer' => $customerOrder->getCustomer(),
+        return $this->render('customerorder/edit_complete.html.twig', array(
             'customerOrder' => $customerOrder,
             'form' => $form->createView()
         ));

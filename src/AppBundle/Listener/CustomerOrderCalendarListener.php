@@ -7,6 +7,7 @@
 namespace AppBundle\Listener;
 
 use AncaRebeca\FullCalendarBundle\Event\CalendarEvent;
+use AppBundle\Entity\CustomerOrder;
 use AppBundle\Event\CustomerOrderCalendarEvent as CalEvent;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
@@ -46,26 +47,70 @@ class CustomerOrderCalendarListener
 		$query = $this->manager->createQuery(
 			'SELECT o
 			FROM AppBundle:CustomerOrder o
-			WHERE o.bookedFrom BETWEEN :startDate AND :endDate and o.orderStatusCode = :orderStatusCode'
+			WHERE o.bookedFrom BETWEEN :startDate AND :endDate'
 		)
 			->setParameter('startDate', $calendarEvent->getStart())
-			->setParameter('endDate', $calendarEvent->getEnd())
-			->setParameter('orderStatusCode', 'BKD');
+			->setParameter('endDate', $calendarEvent->getEnd());
 
 		$customerOrders = $query->getResult();
 
+		/* @var $customerOrder \AppBundle\Entity\CustomerOrder */
 		foreach ($customerOrders as $customerOrder) {
-			$title = 'Booked' . "\n" . $customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
 
-			$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
+			switch( $customerOrder->getStatus() )
+			{
+				case CustomerOrder::STATUS_BOOKED:
 
-			$calEvent->setUrl($this->router->generate('showCustomerOrder', array('id' => $customerOrder->getId())));
+					$title = 'Booked' . "\n" . $customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
 
-			$calEvent->setStartDate($customerOrder->getBookedFrom());
+					$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
 
-			$calEvent->setEndDate($customerOrder->getBookedUntil());
+					$calEvent->setUrl($this->router->generate('showCustomerOrder', array('id' => $customerOrder->getId())));
 
-			$calendarEvent->addEvent($calEvent);
+					$calEvent->setStartDate($customerOrder->getBookedFrom());
+
+					$calEvent->setEndDate($customerOrder->getBookedUntil());
+
+					$calendarEvent->addEvent($calEvent);
+
+					break;
+
+
+				case CustomerOrder::STATUS_INPROGRESS:
+
+					$title = 'In Progress' . "\n" . $customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
+
+					$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
+
+					$calEvent->setUrl($this->router->generate('showCustomerOrder', array('id' => $customerOrder->getId())));
+
+					$calEvent->setStartDate($customerOrder->getBookedFrom());
+
+					$calEvent->setEndDate($customerOrder->getBookedUntil());
+
+					$calendarEvent->addEvent($calEvent);
+
+					break;
+
+
+				case CustomerOrder::STATUS_COMPLETE:
+
+					$title = 'Complete' . "\n" . $customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
+
+					$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
+
+					$calEvent->setUrl($this->router->generate('showCustomerOrder', array('id' => $customerOrder->getId())));
+
+					$calEvent->setStartDate($customerOrder->getBookedFrom());
+
+					$calEvent->setEndDate($customerOrder->getBookedUntil());
+
+					$calendarEvent->addEvent($calEvent);
+
+					break;
+			}
+
+
 		}
 
 

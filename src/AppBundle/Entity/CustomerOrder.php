@@ -13,8 +13,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class CustomerOrder
 {
-	use \AppBundle\Entity\Traits\Timestampable;
-	use \AppBundle\Entity\Traits\Blameable;
+	use Traits\Timestampable;
+	use Traits\Blameable;
+
+	const STATUS_BOOKED = 'customerOrder.status.booked';
+	const STATUS_INPROGRESS = 'customerOrder.status.inprogress';
+	const STATUS_COMPLETE = 'customerOrder.status.complete';
+	const STATUS_INVOICED = 'customerOrder.status.invoiced';
+	const STATUS_PAID = 'customerOrder.status.paid';
+	const STATUS_CANCELLED = 'customerOrder.status.cancelled';
 
 	/**
 	 * @var integer
@@ -69,9 +76,9 @@ class CustomerOrder
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="order_status_code", type="string", length=3, nullable=false)
+	 * @ORM\Column(name="status", type="string", length=3, nullable=false)
 	 */
-	private $orderStatusCode = 'BKD';
+	private $status = self::STATUS_BOOKED;
 
 	/**
 	 * @var \DateTime
@@ -142,7 +149,7 @@ class CustomerOrder
 	 *
 	 * @return CustomerOrder
 	 */
-	public function setCustomer(\AppBundle\Entity\Customer $customer = null)
+	public function setCustomer(Customer $customer = null)
 	{
 		$this->customer = $customer;
 
@@ -162,7 +169,7 @@ class CustomerOrder
 	 *
 	 * @return CustomerOrder
 	 */
-	public function setCompany(\AppBundle\Entity\Company $company = null)
+	public function setCompany(Company $company = null)
 	{
 		$this->company = $company;
 
@@ -182,7 +189,7 @@ class CustomerOrder
 	 *
 	 * @return CustomerOrder
 	 */
-	public function setReferral(\AppBundle\Entity\Referral $referral = null)
+	public function setReferral(Referral $referral = null)
 	{
 		$this->referral = $referral;
 
@@ -206,10 +213,10 @@ class CustomerOrder
 	}
 
 	/**
-	 * @param CustomerOrderService $customerOrderService
+	 * @param \AppBundle\Entity\CustomerOrderService $customerOrderService
 	 * @return $this
 	 */
-	public function addCustomerOrderService(\AppBundle\Entity\CustomerOrderService $customerOrderService = null)
+	public function addCustomerOrderService(CustomerOrderService $customerOrderService = null)
 	{
 		if (!$this->customerOrderServices->contains($customerOrderService)) {
 			$customerOrderService->setCustomerOrder($this);
@@ -220,10 +227,10 @@ class CustomerOrder
 	}
 
 	/**
-	 * @param CustomerOrderService $customerOrderService
+	 * @param \AppBundle\Entity\CustomerOrderService $customerOrderService
 	 * @return $this
 	 */
-	public function removeCustomerOrderService(\AppBundle\Entity\CustomerOrderService $customerOrderService = null)
+	public function removeCustomerOrderService(CustomerOrderService $customerOrderService = null)
 	{
 		if ($this->customerOrderServices->contains($customerOrderService)) {
 			$this->customerOrderServices->removeElement($customerOrderService);
@@ -233,22 +240,27 @@ class CustomerOrder
 	}
 
 	/**
-	 * @param $orderStatusCode
-	 * @return $this
+	 * @return string
 	 */
-	public function setOrderStatusCode($orderStatusCode)
+	public function getStatus()
 	{
-		$this->orderStatusCode = $orderStatusCode;
-
-		return $this;
+		return $this->status;
 	}
 
 	/**
-	 * @return string
+	 * @param $status
+	 * @return $this
+	 * @throws \InvalidArgumentException
 	 */
-	public function getOrderStatusCode()
+	public function setStatus($status)
 	{
-		return $this->orderStatusCode;
+		if (!in_array($status, array(self::STATUS_BOOKED, self::STATUS_INPROGRESS, self::STATUS_COMPLETE, self::STATUS_INVOICED, self::STATUS_PAID, self::STATUS_CANCELLED))) {
+			throw new \InvalidArgumentException('Invalid status');
+		}
+
+		$this->status = $status;
+
+		return $this;
 	}
 
 	/**
