@@ -166,7 +166,7 @@
 
             <trans-unit id="customerOrderProduct.label.product">
                 <source>customerOrderProduct.label.product</source>
-                <target>Service</target>
+                <target>Product</target>
             </trans-unit>
             <trans-unit id="customerOrderProduct.label.quantity">
                 <source>customerOrderProduct.label.quantity</source>
