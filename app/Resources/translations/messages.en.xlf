@@ -130,6 +130,11 @@
                 <target>Services</target>
             </trans-unit>
 
+            <trans-unit id="customerOrder.label.products">
+                <source>customerOrder.label.products</source>
+                <target>Products</target>
+            </trans-unit>
+
             <!-- database defined -->
             <trans-unit id="customerOrder.status.booked">
                 <source>customerOrder.status.booked</source>
@@ -154,6 +159,22 @@
             <trans-unit id="customerOrder.status.cancelled">
                 <source>customerOrder.status.cancelled</source>
                 <target>Cancelled</target>
+            </trans-unit>
+
+
+            <!-- Customer Order Products -->
+
+            <trans-unit id="customerOrderProduct.label.product">
+                <source>customerOrderProduct.label.product</source>
+                <target>Service</target>
+            </trans-unit>
+            <trans-unit id="customerOrderProduct.label.quantity">
+                <source>customerOrderProduct.label.quantity</source>
+                <target>Quantity</target>
+            </trans-unit>
+            <trans-unit id="customerOrderProduct.label.comments">
+                <source>customerOrderProduct.label.comments</source>
+                <target>Comments</target>
             </trans-unit>
 
 

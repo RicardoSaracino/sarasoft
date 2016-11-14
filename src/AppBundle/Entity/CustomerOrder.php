@@ -67,6 +67,14 @@ class CustomerOrder
 	/**
 	 * @var \Doctrine\Common\Collections\ArrayCollection
 	 *
+	 * @ORM\OneToMany(targetEntity="CustomerOrderProduct", mappedBy="customerOrder", orphanRemoval=true, cascade={"persist", "remove"})
+	 *
+	 * @Assert\Valid()
+	 */
+	private $customerOrderProducts;
+	/**
+	 * @var \Doctrine\Common\Collections\ArrayCollection
+	 *
 	 * @ORM\OneToMany(targetEntity="CustomerOrderService", mappedBy="customerOrder", orphanRemoval=true, cascade={"persist", "remove"})
 	 *
 	 * @Assert\Valid()
@@ -112,6 +120,7 @@ class CustomerOrder
 	 */
 	public function __construct()
 	{
+		$this->customerOrderProducts = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->customerOrderServices = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
@@ -204,6 +213,41 @@ class CustomerOrder
 		return $this->referral;
 	}
 
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */
+	public function getCustomerOrderProducts()
+	{
+		return $this->customerOrderProducts;
+	}
+
+	/**
+	 * @param \AppBundle\Entity\CustomerOrderProduct $customerOrderProduct
+	 * @return $this
+	 */
+	public function addCustomerOrderProduct(CustomerOrderProduct $customerOrderProduct = null)
+	{
+		if (!$this->customerOrderProducts->contains($customerOrderProduct)) {
+			$customerOrderProduct->setCustomerOrder($this);
+			$this->customerOrderProducts->add($customerOrderProduct);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param \AppBundle\Entity\CustomerOrderProduct $customerOrderProduct
+	 * @return $this
+	 */
+	public function removeCustomerOrderProduct(CustomerOrderProduct $customerOrderProduct = null)
+	{
+		if ($this->customerOrderProducts->contains($customerOrderProduct)) {
+			$this->customerOrderProducts->removeElement($customerOrderProduct);
+		}
+
+		return $this;
+	}
+	
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection
 	 */

@@ -25,7 +25,7 @@
 
 {% block complimentary %}
 	{{ nav.start }}
-	{{ nav.item('List All Orders', path('listCustomerOrders')) }}
+	{{ nav.item('List All Orders', path('customer_order_list_all')) }}
 	{{ nav.item('List Customer Orders', path('listCustomerOrdersByCustomer', {'customer_id': customerOrder.customer.id})) }}
 	{{ nav.end }}
 {% endblock %}

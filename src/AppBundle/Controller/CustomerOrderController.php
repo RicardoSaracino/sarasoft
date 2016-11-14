@@ -196,6 +196,11 @@ class CustomerOrderController extends Controller
     public function completeAction(Request $request, CustomerOrder $customerOrder)
     {
 		## make sure we have at least one
+		if( $customerOrder->getCustomerOrderProducts()->isEmpty() ){
+			$customerOrder->addCustomerOrderProduct(new \AppBundle\Entity\CustomerOrderProduct());
+		}
+
+		## make sure we have at least one
 		if( $customerOrder->getCustomerOrderServices()->isEmpty() ){
 			$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
 		}
@@ -210,7 +215,7 @@ class CustomerOrderController extends Controller
             return $this->redirectToRoute('showCustomerOrder', array('id' => $customerOrder->getId()));
         }
 
-        return $this->render('customerorder/complete.html.twig', array(
+        return $this->render('customerorder/edit_complete.html.twig', array(
 			'customer' => $customerOrder->getCustomer(),
             'customerOrder' => $customerOrder,
             'form' => $form->createView()
