@@ -26,7 +26,7 @@ class CustomerOrderController extends Controller
 	/**
 	 * Lists all customerOrder entities.
 	 *
-	 * @Route("/", name="listCustomerOrders")
+	 * @Route("/", name="customer_order_list_all")
 	 * @Method({"GET", "POST"})
 	 */
 	public function listAllAction(Request $request)
@@ -34,6 +34,57 @@ class CustomerOrderController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
 		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findAll();
+
+		return $this->render('customerorder/list_all.html.twig', [
+			'customerOrders' => $customerOrders,
+		]);
+	}
+
+	/**
+	 * Lists all booked customerOrder entities.
+	 *
+	 * @Route("/booked", name="customer_order_list_booked")
+	 * @Method({"GET", "POST"})
+	 */
+	public function listBookedAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_BOOKED);
+
+		return $this->render('customerorder/list_all.html.twig', [
+			'customerOrders' => $customerOrders,
+		]);
+	}
+
+	/**
+	 * Lists all in progress customerOrder entities.
+	 *
+	 * @Route("/inprogress", name="customer_order_list_inprogress")
+	 * @Method({"GET", "POST"})
+	 */
+	public function listInProgressAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_INPROGRESS);
+
+		return $this->render('customerorder/list_all.html.twig', [
+			'customerOrders' => $customerOrders,
+		]);
+	}
+
+	/**
+	 * Lists all complete customerOrder entities.
+	 *
+	 * @Route("/complete", name="customer_order_list_complete")
+	 * @Method({"GET", "POST"})
+	 */
+	public function listCompleteAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_COMPLETE);
 
 		return $this->render('customerorder/list_all.html.twig', [
 			'customerOrders' => $customerOrders,
@@ -159,7 +210,8 @@ class CustomerOrderController extends Controller
             return $this->redirectToRoute('showCustomerOrder', array('id' => $customerOrder->getId()));
         }
 
-        return $this->render('customerorder/edit_complete.html.twig', array(
+        return $this->render('customerorder/complete.html.twig', array(
+			'customer' => $customerOrder->getCustomer(),
             'customerOrder' => $customerOrder,
             'form' => $form->createView()
         ));
