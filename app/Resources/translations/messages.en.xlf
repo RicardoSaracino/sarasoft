@@ -125,6 +125,33 @@
                 <target>Booking Notes</target>
             </trans-unit>
 
+            <trans-unit id="customerOrder.label.cancelledOn">
+                <source>customerOrder.label.cancelledOn</source>
+                <target>Cancelled</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.cancellationNotes">
+                <source>customerOrder.label.cancellationNotes</source>
+                <target>Cancellation Notes</target>
+            </trans-unit>
+
+            <trans-unit id="customerOrder.label.progressStartedAt">
+                <source>customerOrder.label.progressStartedAt</source>
+                <target>Started</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.progressNotes">
+                <source>customerOrder.label.progressNotes</source>
+                <target>Progress Notes</target>
+            </trans-unit>
+
+            <trans-unit id="customerOrder.label.completedAt">
+                <source>customerOrder.label.completedAt</source>
+                <target>Completed</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.completionNotes">
+                <source>customerOrder.label.completionNotes</source>
+                <target>Completion Notes</target>
+            </trans-unit>
+
             <trans-unit id="customerOrder.label.services">
                 <source>customerOrder.label.services</source>
                 <target>Services</target>

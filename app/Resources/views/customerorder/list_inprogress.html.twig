@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Orders{% endblock %}
+{% block title %}In Progress Orders{% endblock %}
 
 {% block body %}
 	{% include '::nav.html.twig' %}
 	<div class="container">
 		<div class="page-header">
-			<h1>Orders</h1>
+			<h1>In Progress Orders</h1>
 		</div>
 		<div class="table-responsive">
 			<table class="table">
@@ -14,10 +14,9 @@
 				<tr>
 					<th>Customer</th>
 					<th>Phone</th>
-					<th>Status</th>
 					<th>Company</th>
 					<th>Referral</th>
-					<th>Booked</th>
+					<th>Progress Started</th>
 					<th>Actions</th>
 				</tr>
 				</thead>
@@ -25,18 +24,17 @@
 				{% for customerOrder in customerOrders %}
 					<tr>
 						<td>{{ customerOrder.customer.fullName }}</td>
-						<td>{{ phone_number_format(customerOrder.customer.phone) }}</td>
-						<td>{{ customerOrder.status|trans }}</td>
+						<td><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></td>
 						<td>{{ customerOrder.company.name }}</td>
 						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>
-						<td>{% if customerOrder.bookedFrom %}{{ customerOrder.bookedFrom|user_datetime }}{% endif %} to {% if customerOrder.bookedUntil %}{{ customerOrder.bookedUntil|user_datetime }}{% endif %}</td>
+						<td>{{ customerOrder.progressStartedAt|user_datetime }}</td>
 						<td>
 							<ul class="nav nav-pills">
 								<li>
 									<a href="{{ path('show_customer_order', { 'id': customerOrder.id }) }}">show</a>
 								</li>
 								<li>
-									<a href="{{ path('edit_customer_order_booked', { 'id': customerOrder.id }) }}">edit</a>
+									<a href="{{ path('edit_customer_order_inprogress', { 'id': customerOrder.id }) }}">edit</a>
 								</li>
 							</ul>
 						</td>

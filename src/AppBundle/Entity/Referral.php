@@ -7,7 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- *
  * Referral
  *
  * @ORM\Table(name="referral", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"})}, indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
@@ -40,9 +39,7 @@ class Referral
 	private $name;
 
 	/**
-	 * Get id
-	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getId()
 	{
@@ -50,11 +47,8 @@ class Referral
 	}
 
 	/**
-	 * Set name
-	 *
-	 * @param integer $name
-	 *
-	 * @return Referral
+	 * @param $name
+	 * @return $this
 	 */
 	public function setName($name)
 	{
@@ -64,9 +58,7 @@ class Referral
 	}
 
 	/**
-	 * Get name
-	 *
-	 * @return integer
+	 * @return string
 	 */
 	public function getName()
 	{

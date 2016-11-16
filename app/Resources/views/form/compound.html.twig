@@ -1,8 +1,24 @@
+{%- block form_rows -%}
+	{% if form.vars.label != false %}
+		<div class="form-group" style="margin: 0">
+			<div class="{{ block('form_label_class') }}"></div>
+			<div class="{{ block('form_group_class') }}">
+				<h3 style="margin: 15px 0 10px 0">{{ form.vars.label|trans }}</h3>
+				<hr style="margin: 0 0 15px 0">
+			</div>
+		</div>
+	{% endif %}
+	{% for child in form %}
+		{{- form_row(child) -}}
+	{% endfor %}
+{%- endblock form_rows -%}
+
 {% block form_row %}
 	{% if form.vars.compound and 'textarea_prepend' not in form.vars.block_prefixes and 'choice' not in form.vars.block_prefixes %}
 		{% if form.vars.label != false %}
 			<div class="form-group" style="margin: 0">
-				<div class="col-sm-offset-2 col-sm-10">
+				<div class="{{ block('form_label_class') }}"></div>
+				<div class="{{ block('form_group_class') }}">
 					<h3 style="margin: 15px 0 10px 0">{{ form.vars.label|trans }}</h3>
 					<hr style="margin: 0 0 15px 0">
 				</div>

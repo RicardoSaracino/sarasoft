@@ -1,12 +1,10 @@
 {% extends 'page.html.twig' %}
 
-{% block title %}Complete Order{% endblock %}
+{% block title %}Cancel Order{% endblock %}
 
 {% block header %}
-	<h1>Complete Order<br>
-		<small>{{ customerOrder.status|trans }}</small>
-		<br>
-		<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.firstName }} {{ customerOrder.customer.lastName }}</a></small>
+	<h1>Cancel Order<br>
+		<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.fullName }}</a></small>
 		<br>
 		<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
 	</h1>

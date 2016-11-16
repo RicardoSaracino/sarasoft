@@ -1,21 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Customer Orders{% endblock %}
+{% block title %}Booked Orders{% endblock %}
 
 {% block body %}
 	{% include '::nav.html.twig' %}
 	<div class="container">
 		<div class="page-header">
-			<h1>Customer Orders<br>
-				<small>{{ customer.firstName }} {{ customer.lastName }}</small>
-				<br>
-				<small><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></small>
-			</h1>
+			<h1>Booked Orders</h1>
 		</div>
 		<div class="table-responsive">
 			<table class="table">
 				<thead>
 				<tr>
+					<th>Customer</th>
+					<th>Phone</th>
 					<th>Status</th>
 					<th>Company</th>
 					<th>Referral</th>
@@ -26,6 +24,8 @@
 				<tbody>
 				{% for customerOrder in customerOrders %}
 					<tr>
+						<td>{{ customerOrder.customer.fullName }}</td>
+						<td>{{ phone_number_format(customerOrder.customer.phone) }}</td>
 						<td>{{ customerOrder.status|trans }}</td>
 						<td>{{ customerOrder.company.name }}</td>
 						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>
@@ -33,10 +33,10 @@
 						<td>
 							<ul class="nav nav-pills">
 								<li>
-									<a href="{{ path('showCustomerOrder', { 'id': customerOrder.id }) }}">show</a>
+									<a href="{{ path('show_customer_order', { 'id': customerOrder.id }) }}">show</a>
 								</li>
 								<li>
-									<a href="{{ path('editCustomerOrder', { 'id': customerOrder.id }) }}">edit</a>
+									<a href="{{ path('edit_customer_order_booked', { 'id': customerOrder.id }) }}">edit</a>
 								</li>
 							</ul>
 						</td>
@@ -45,10 +45,5 @@
 				</tbody>
 			</table>
 		</div>
-		<ul class="nav nav-pills nav-stacked">
-			<li>
-				<a href="{{ path('newCustomerOrderForCustomer', { 'customer_id': customer.id }) }}">New Customer Order</a>
-			</li>
-		</ul>
 	</div>
 {% endblock %}

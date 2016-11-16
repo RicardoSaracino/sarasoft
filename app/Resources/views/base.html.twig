@@ -38,6 +38,14 @@
 			vertical-align: middle;
 		}
 
+		.btn-default {
+			min-width: 80px;
+		}
+
+		.btn-default + .btn-default {
+			margin-left: 10px;
+		}
+
 		/* START */
 		div.table .row {
 			margin: 0;
@@ -65,7 +73,7 @@
 {% endjavascripts %}
 
 {% block javascripts %}
-	{#<script type="text/javascript" src="{{ asset('assets/vendor/jquery-ui/jquery-ui.js') }}"></script>  Sortable for collections #}
+	<script type="text/javascript" src="{{ asset('assets/vendor/jquery-ui/jquery-ui.js') }}"></script>  {# Sortable for collections #}
 	<script type="text/javascript" src="{{ asset('assets/vendor/symfony-collection/jquery.collection.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('assets/vendor/moment/min/moment.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
@@ -83,10 +91,16 @@
 			});
 		});
 
+		{# todo fix the add #}
 		$('.js-collection').collection({
-			min: 1,
+			{#init_with_n_elements: 1,#}
+
 			allow_duplicate: true,
-			drag_drop: false {# sortable #}
+			drag_drop: false, {# sortable #}
+			drag_drop_options: {
+				placeholder: 'ui-state-highlight'
+			},
+			add: '<ul class="col-sm-offset-2 col-sm-10 nav nav-pills nav-horizontal small"><li style="padding:0 0 15px 15px; "><a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</a></li></ul>'
 		});
 	</script>
 {% endblock %}

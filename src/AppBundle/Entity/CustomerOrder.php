@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="customer_order", indexes={@ORM\Index(name="customer_id", columns={"customer_id"}), @ORM\Index(name="company_id", columns={"company_id"}), @ORM\Index(name="referral_id", columns={"referral_id"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class CustomerOrder
 {
@@ -50,7 +51,7 @@ class CustomerOrder
 	 * @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=false)
 	 * })
 	 *
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(groups={"StatusBooked"})
 	 */
 	private $company;
 
@@ -93,7 +94,7 @@ class CustomerOrder
 	 *
 	 * @ORM\Column(name="booked_from", type="datetime", nullable=false)
 	 *
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(groups={"StatusBooked"})
 	 */
 	private $bookedFrom;
 
@@ -102,7 +103,7 @@ class CustomerOrder
 	 *
 	 * @ORM\Column(name="booked_until", type="datetime", nullable=false)
 	 *
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(groups={"StatusBooked"})
 	 */
 	private $bookedUntil;
 
@@ -111,9 +112,63 @@ class CustomerOrder
 	 *
 	 * @ORM\Column(name="booking_notes", type="text", length=65535, nullable=false)
 	 *
-	 * @Assert\NotBlank(message="Booking Notes should not be blank")
+	 * @Assert\NotBlank(message="Booking Notes should not be blank", groups={"StatusBooked"})
 	 */
 	private $bookingNotes;
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="progress_started_at", type="datetime", nullable=true)
+	 *
+	 * @Assert\NotBlank(groups={"StatusInProgress"})
+	 */
+	private $progressStartedAt;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="progress_notes", type="text", length=65535, nullable=true)
+	 *
+	 * @Assert\NotBlank(message="Progress Notes should not be blank", groups={"StatusInProgress"})
+	 */
+	private $progressNotes;
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="completed_at", type="datetime", nullable=true)
+	 *
+	 * @Assert\NotBlank(groups={"StatusComplete"})
+	 */
+	private $completedAt;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="completion_notes", type="text", length=65535, nullable=true)
+	 *
+	 * @Assert\NotBlank(message="Completion Notes should not be blank", groups={"StatusComplete"})
+	 */
+	private $completionNotes;
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="cancelled_on", type="datetime", nullable=true)
+	 *
+	 * @Assert\NotBlank(groups={"StatusCancelled"})
+	 */
+	private $cancelledOn;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="cancellation_notes", type="text", length=65535, nullable=true)
+	 *
+	 * @Assert\NotBlank(message="Cancellation Notes should not be blank", groups={"StatusCancelled"})
+	 */
+	private $cancellationNotes;
 
 	/**
 	 *
@@ -143,7 +198,6 @@ class CustomerOrder
 	{
 		return true; # return ($this->bookedFrom >= (new \DateTime('now')));
 	}
-
 
 	/**
 	 * @return integer
@@ -346,12 +400,12 @@ class CustomerOrder
 	}
 
 	/**
-	 * @param $newBookingNotes
+	 * @param $bookingNotes
 	 * @return $this
 	 */
-	public function setBookingNotes($newBookingNotes)
+	public function setBookingNotes($bookingNotes)
 	{
-		$this->bookingNotes = $newBookingNotes;
+		$this->bookingNotes = $bookingNotes;
 
 		return $this;
 	}
@@ -362,5 +416,150 @@ class CustomerOrder
 	public function getBookingNotes()
 	{
 		return $this->bookingNotes;
+	}
+
+ 	####################################################
+
+	/**
+	 * @param $progressStartedAt
+	 * @return $this
+	 */
+	public function setProgressStartedAt($progressStartedAt)
+	{
+		$this->progressStartedAt = $progressStartedAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getProgressStartedAt()
+	{
+		return $this->progressStartedAt;
+	}
+
+	/**
+	 * @param $progressNotes
+	 * @return $this
+	 */
+	public function setProgressNotes($progressNotes)
+	{
+		$this->progressNotes = $progressNotes;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getProgressNotes()
+	{
+		return $this->progressNotes;
+	}
+
+	####################################################
+
+	/**
+	 * @param $completedAt
+	 * @return $this
+	 */
+	public function setCompletedAt($completedAt)
+	{
+		$this->completedAt = $completedAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getCompletedAt()
+	{
+		return $this->completedAt;
+	}
+
+	/**
+	 * @param $completionNotes
+	 * @return $this
+	 */
+	public function setCompletionNotes($completionNotes)
+	{
+		$this->completionNotes = $completionNotes;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCompletionNotes()
+	{
+		return $this->completionNotes;
+	}
+
+ 	####################################################
+
+	/**
+	 * @param $cancelledOn
+	 * @return $this
+	 */
+	public function setCancelledOn($cancelledOn)
+	{
+		$this->cancelledOn = $cancelledOn;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getCancelledOn()
+	{
+		return $this->cancelledOn;
+	}
+
+	/**
+	 * @param $cancellationNotes
+	 * @return $this
+	 */
+	public function setCancellationNotes($cancellationNotes)
+	{
+		$this->cancellationNotes = $cancellationNotes;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCancellationNotes()
+	{
+		return $this->cancellationNotes;
+	}
+
+	####################################################
+
+	/**
+	 * @ORM\PostUpdate
+	 */
+	public function postUpdate(\Doctrine\ORM\Event\LifecycleEventArgs $args)
+	{
+		if ($args->getEntity() instanceof CustomerOrder) {
+
+			$changeSet = $args->getEntityManager()->getUnitOfWork()->getEntityChangeSet($args->getEntity());
+
+			if (array_key_exists('status', $changeSet)) {
+
+				$customerOrderStatusHistory = new CustomerOrderStatusHistory();
+
+				$customerOrderStatusHistory->setCustomerOrder($this);
+				$customerOrderStatusHistory->setOldStatus($changeSet['status'][0]);
+				$customerOrderStatusHistory->setNewStatus($changeSet['status'][1]);
+
+				$args->getEntityManager()->persist($customerOrderStatusHistory);
+				$args->getEntityManager()->flush();
+			}
+		}
 	}
 }

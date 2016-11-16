@@ -27,6 +27,26 @@
 
 	{{ table.row_scrollable('customerOrder.label.bookingNotes', customerOrder.bookingNotes) }}
 
+	{{ table.row('', '') }}
+
+	{{ table.row_user_datetime('customerOrder.label.progressStartedAt', customerOrder.progressStartedAt) }}
+
+	{{ table.row_scrollable('customerOrder.label.progressNotes', customerOrder.progressNotes) }}
+
+	{{ table.row('', '') }}
+
+	{{ table.row_user_datetime('customerOrder.label.completedAt', customerOrder.completedAt) }}
+
+	{{ table.row_scrollable('customerOrder.label.completionNotes', customerOrder.completionNotes) }}
+
+	{{ table.row('', '') }}
+
+	{{ table.row_user_datetime('customerOrder.label.cancelledOn', customerOrder.cancelledOn) }}
+
+	{{ table.row_scrollable('customerOrder.label.cancellationNotes', customerOrder.cancellationNotes) }}
+
+	{{ table.row('', '') }}
+
 	{{ table.row_created(customerOrder) }}
 
 	{{ table.row_updated(customerOrder) }}
