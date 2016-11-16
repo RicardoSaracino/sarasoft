@@ -15,15 +15,6 @@
 
 {% block form_row %}
 	{% if form.vars.compound and 'textarea_prepend' not in form.vars.block_prefixes and 'choice' not in form.vars.block_prefixes %}
-		{% if form.vars.label != false %}
-			<div class="form-group" style="margin: 0">
-				<div class="{{ block('form_label_class') }}"></div>
-				<div class="{{ block('form_group_class') }}">
-					<h3 style="margin: 15px 0 10px 0">{{ form.vars.label|trans }}</h3>
-					<hr style="margin: 0 0 15px 0">
-				</div>
-			</div>
-		{% endif %}
 		{{ form_widget(form) }}
 	{% else %}
 		<div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
