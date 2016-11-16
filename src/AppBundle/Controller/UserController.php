@@ -3,8 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use AppBundle\Form\Type\UserType;
-use AppBundle\Form\Type\ChangePasswordType;
 use AppBundle\Form\Model\ChangePassword;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +29,7 @@ class UserController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$users = $em->getRepository('AppBundle\Entity\User')->findAll();
+		$users = $em->getRepository('AppBundle:User')->findAll();
 
 		return $this->render(
 			'user/index.html.twig',
@@ -51,7 +49,7 @@ class UserController extends Controller
 	{
 		$user = new User();
 
-		$form = $this->createForm('AppBundle\Entity\User', $user, ['validation_groups' => ['Default', 'plain_password']]);
+		$form = $this->createForm('AppBundle\Form\Type\UserType', $user, ['validation_groups' => ['Default', 'plain_password']]);
 
 		$form->handleRequest($request);
 
@@ -101,7 +99,7 @@ class UserController extends Controller
 	 */
 	public function editAction(Request $request, User $user)
 	{
-		$form = $this->createForm('AppBundle\Entity\User', $user);
+		$form = $this->createForm('AppBundle\Form\Type\UserType', $user);
 
 		$form->handleRequest($request);
 
