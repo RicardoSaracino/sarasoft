@@ -20,15 +20,12 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="{{ path('customer_order_list_all') }}">All</a></li>
-						<li><a href="{{ path('customer_order_list_cancelled') }}">Cancelled</a></li>
-
-						<li role="separator" class="divider"></li>
-
 						<li><a href="{{ path('customer_order_list_booked') }}">Booked</a></li>
 						<li><a href="{{ path('customer_order_list_inprogress') }}">In Progress</a></li>
 						<li><a href="{{ path('customer_order_list_complete') }}">Completed</a></li>
 						<li><a href="{{ path('customer_order_list_all') }}">Invoiced</a></li>
 						<li><a href="{{ path('customer_order_list_all') }}">Paid</a></li>
+						<li><a href="{{ path('customer_order_list_cancelled') }}">Cancelled</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
