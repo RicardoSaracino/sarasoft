@@ -61,12 +61,6 @@
 
 	{{ nav.item('List Customer Orders', path('newCustomerOrderForCustomer', { 'customer_id': customerOrder.customer.id })) }}
 
-	{{ nav.item('New Order', path('newCustomerOrderForCustomer', { 'customer_id': customerOrder.customer.id })) }}
-
 	{{ nav.end }}
 {% endblock %}
-
-
-	{#
-	 <a href="{{ path('listCustomerOrdersByCustomer', {'customer_id': customerOrder.customer.id}) }}">List Customer Orders</a> #}
 
