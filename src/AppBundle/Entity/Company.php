@@ -66,7 +66,25 @@ class Company
     private $email;
 
     /**
-     * @var \Address
+     * @var string
+     *
+     * @ORM\Column(name="website_url", type="string", length=256, nullable=true)
+	 *
+	 * @Assert\Url()
+     */
+    private $websiteUrl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook_url", type="string", length=256, nullable=true)
+	 *
+	 * @Assert\Url()
+     */
+    private $facebookUrl;
+
+    /**
+     * @var \AppBundle\Entity\Address
      *
      * @ORM\ManyToOne(targetEntity="Address", cascade={"all"})
      * @ORM\JoinColumns({
@@ -77,48 +95,38 @@ class Company
      */
     private $address;
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+	/**
+	 * @return int
+	 */
+	public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Company
-     */
-    public function setName($name)
+	/**
+	 * @param $name
+	 * @return $this
+	 */
+	public function setName($name)
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+	/**
+	 * @return string
+	 */
+	public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * Set phone
-     *
-     * @param string $phone
-     *
-     * @return Company
-     */
-    public function setPhone($phone)
+	/**
+	 * @param $phone
+	 * @return $this
+	 */
+	public function setPhone($phone)
     {
         $this->phone = $phone;
 
@@ -126,8 +134,6 @@ class Company
     }
 
     /**
-     * Get phone
-     *
      * @return string
      */
     public function getPhone()
@@ -135,14 +141,11 @@ class Company
         return $this->phone;
     }
 
-    /**
-     * Set altPhone
-     *
-     * @param string $altPhone
-     *
-     * @return Company
-     */
-    public function setAltPhone($altPhone)
+	/**
+	 * @param $altPhone
+	 * @return $this
+	 */
+	public function setAltPhone($altPhone)
     {
         $this->altPhone = $altPhone;
 
@@ -150,8 +153,6 @@ class Company
     }
 
     /**
-     * Get altPhone
-     *
      * @return string
      */
     public function getAltPhone()
@@ -159,14 +160,11 @@ class Company
         return $this->altPhone;
     }
 
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return Company
-     */
-    public function setEmail($email)
+	/**
+	 * @param $email
+	 * @return $this
+	 */
+	public function setEmail($email)
     {
 		$this->email = mb_strtolower($email);
 
@@ -174,8 +172,6 @@ class Company
     }
 
     /**
-     * Get email
-     *
      * @return string
      */
     public function getEmail()
@@ -184,11 +180,46 @@ class Company
     }
 
 	/**
-	 * Set address
-	 *
-	 * @param \AppBundle\Entity\Address $address
-	 *
-	 * @return Company
+	 * @param $websiteUrl
+	 * @return $this
+	 */
+	public function setWebsiteUrl($websiteUrl)
+    {
+		$this->websiteUrl = mb_strtolower($websiteUrl);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebsiteUrl()
+    {
+        return $this->websiteUrl;
+    }
+
+	/**
+	 * @param $facebookUrl
+	 * @return $this
+	 */
+	public function setFacebookUrl($facebookUrl)
+    {
+		$this->facebookUrl = mb_strtolower($facebookUrl);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFacebookUrl()
+    {
+        return $this->facebookUrl;
+    }
+
+	/**
+	 * @param Address $address
+	 * @return $this
 	 */
 	public function setAddress(\AppBundle\Entity\Address $address = null)
 	{
@@ -198,9 +229,7 @@ class Company
 	}
 
 	/**
-	 * Get address
-	 *
-	 * @return \AppBundle\Entity\Address
+	 * @return Address
 	 */
 	public function getAddress()
 	{

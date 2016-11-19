@@ -25,6 +25,8 @@ class CompanyType extends AbstractType
 			->add('phone', PhoneNumberType::class, ['label' => 'company.label.phone'])
 			->add('altPhone', PhoneNumberType::class, ['label' => 'company.label.altPhone'])
 			->add('email', Type\EmailType::class, ['label' => 'company.label.email'])
+			->add('websiteUrl', Type\UrlType::class, ['label' => 'company.label.websiteUrl'])
+			->add('facebookUrl', Type\UrlType::class, ['label' => 'company.label.facebookUrl'])
 			->add('address', AddressType::class, ['label' => 'company.label.address', 'compound' => true]); # todo fix label
 		;
     }

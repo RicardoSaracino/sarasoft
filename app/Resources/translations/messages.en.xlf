@@ -65,6 +65,14 @@
                 <source>company.label.email</source>
                 <target>Email</target>
             </trans-unit>
+            <trans-unit id="company.label.websiteUrl">
+                <source>company.label.websiteUrl</source>
+                <target>Website</target>
+            </trans-unit>
+            <trans-unit id="company.label.facebookUrl">
+                <source>company.label.facebookUrl</source>
+                <target>Facebook</target>
+            </trans-unit>
             <trans-unit id="company.label.address">
                 <source>company.label.address</source>
                 <target>Address</target>
