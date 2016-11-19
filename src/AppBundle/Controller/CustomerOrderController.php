@@ -184,6 +184,56 @@ class CustomerOrderController extends Controller
 	}
 
 
+	/**
+	 * Finds and emails an invoiced customerOrder entity.
+	 *
+	 * @Route("/{id}/send/invoice", name="send_invoice_customer_order")
+	 * @Method("GET")
+	 */
+	public function sendEmailInvoiceAction(CustomerOrder $customerOrder)
+	{
+		$message = \Swift_Message::newInstance()
+			->setSubject($customerOrder->getCompany()->getName() . ' ' . 'Invoice')
+			->setFrom($customerOrder->getCompany()->getEmail())
+			->setTo($customerOrder->getCustomer()->getEmail())
+			->setBody(
+				$this->renderView(
+					'customerorder/email_invoice.html.twig',
+					[
+						'customerOrder' => $customerOrder,
+					]
+				),
+				'text/html'
+			);
+
+		$this->get('mailer')->send($message);
+
+		return $this->render(
+			'customerorder/email_invoice.html.twig',
+			[
+				'customerOrder' => $customerOrder,
+			]
+		);
+	}
+
+
+	/**
+	 * Finds and displays an invoiced customerOrder entity.
+	 *
+	 * @Route("/{id}/show/invoice", name="show_invoice_customer_order")
+	 * @Method("GET")
+	 */
+	public function showEmailInvoiceAction(CustomerOrder $customerOrder)
+	{
+		return $this->render(
+			'customerorder/email_invoice.html.twig',
+			[
+				'customerOrder' => $customerOrder,
+			]
+		);
+	}
+
+
 	#################################################
 	## EDIT
 	#################################################
