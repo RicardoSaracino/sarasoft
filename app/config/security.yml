@@ -40,7 +40,7 @@ security:
 
             logout:
                path:                 /logout
-               target:               /welcome
+               target:               /
                #success_handler:      ~
                invalidate_session:   true
                delete_cookies:
