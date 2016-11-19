@@ -98,6 +98,6 @@ class UserTextAreaPrependTransformer implements DataTransformerInterface
 			}
 		}
 
-		return $notes;
+		return trim($notes);
 	}
 }
