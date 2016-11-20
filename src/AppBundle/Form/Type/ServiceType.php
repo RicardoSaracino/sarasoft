@@ -23,6 +23,21 @@ class ServiceType extends AbstractType
 			->add('name', Type\TextType::class, ['label' => 'service.label.name'])
 			->add('description', Type\TextType::class, ['label' => 'service.label.description'])
 		;
+
+			$builder->add(
+				'servicePrices',
+				Type\CollectionType::class,
+				[
+					'entry_type' => ServicePriceType::class,
+					'label' => 'service.label.servicePrices',
+					'prototype' => false,
+					'allow_add' => false,
+					'allow_delete' => false,
+					'attr' => [
+						'class' => 'js-collection',
+					],
+				]
+		);
 	}
 
 	/**

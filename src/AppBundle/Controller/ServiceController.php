@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Service;
+use AppBundle\Entity\ServicePrice;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,8 +46,16 @@ class ServiceController extends Controller
 	 */
 	public function newAction(Request $request)
 	{
+
+		#dump($request); die;
+		#dump($request); die;
+
 		$service = new Service();
+
+		$service->addCustomerOrderService(new ServicePrice());
+
 		$form = $this->createForm('AppBundle\Form\Type\ServiceType', $service);
+
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -54,7 +63,7 @@ class ServiceController extends Controller
 			$em->persist($service);
 			$em->flush($service);
 
-			return $this->redirectToRoute('service_show', array('id' => $service->getId()));
+			return $this->redirectToRoute('service_show', ['id' => $service->getId()]);
 		}
 
 		return $this->render(
@@ -96,7 +105,7 @@ class ServiceController extends Controller
 		if ($form->isSubmitted() && $form->isValid()) {
 			$this->getDoctrine()->getManager()->flush();
 
-			return $this->redirectToRoute('service_show', array('id' => $service->getId()));
+			return $this->redirectToRoute('service_show', ['id' => $service->getId()]);
 		}
 
 		return $this->render(

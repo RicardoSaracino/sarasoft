@@ -11,6 +11,16 @@
 	{{ table.row_created(service) }}
 	{{ table.row_updated(service) }}
 	{{ table.end }}
+
+	{{ table.start }}
+	{{ table.row_title('service.label.servicePrices') }}
+	{% for servicePrice in service.servicePrices %}
+		{{ table.row_money('servicePrice.label.price', servicePrice.price) }}
+		{{ table.row_user_date('servicePrice.label.effectiveFrom', servicePrice.effectiveFrom) }}
+		{{ table.row_created(servicePrice) }}
+	{% endfor %}
+	{{ table.end }}
+
 {% endblock %}
 
 {% block complimentary %}

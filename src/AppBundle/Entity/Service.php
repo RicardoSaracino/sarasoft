@@ -86,7 +86,7 @@ class Service
 	{
 		if (!$this->servicePrices->contains($servicePrice)) {
 			$servicePrice->setService($this);
-			$this->customerOrderServices->add($customerOrderService);
+			$this->servicePrices->add($servicePrice);
 		}
 
 		return $this;

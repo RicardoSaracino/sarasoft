@@ -1,0 +1,13 @@
+{% block tbbc_money_widget -%}
+	<div class="form-group">
+		{% set label_attr = label_attr|merge({'for':form.tbbc_amount.vars.id}) %}
+		{{ block('form_label') }}
+		<div class="{{ block('form_group_class') }}">
+			<div class="input-group">
+				{{ form_widget(form.tbbc_amount) }}
+				<span class="input-group-addon">{{ form.tbbc_currency.vars.data.tbbc_name }}</span>
+			</div>
+			<input type="hidden" name="service[servicePrices][0][price][tbbc_currency][tbbc_name]" value="{{ form.tbbc_currency.vars.data.tbbc_name }}">
+		</div>
+	</div>
+{%- endblock tbbc_money_widget %}

@@ -15,6 +15,11 @@
                 <target>MM/DD/YYYY hh:mm a</target>
             </trans-unit>
 
+            <trans-unit id="MM/DD/YYYY">
+                <source>MM/DD/YYYY</source>
+                <target>MM/DD/YYYY</target>
+            </trans-unit>
+
             <!-- Address -->
 
             <trans-unit id="address.label.line1">
@@ -258,6 +263,21 @@
             <trans-unit id="service.label.description">
                 <source>service.label.description</source>
                 <target>Description</target>
+            </trans-unit>
+            <trans-unit id="service.label.servicePrices">
+                <source>service.label.servicePrices</source>
+                <target>Service Prices</target>
+            </trans-unit>
+
+            <!-- Service Price -->
+
+            <trans-unit id="servicePrice.label.effectiveFrom">
+                <source>servicePrice.label.effectiveFrom</source>
+                <target>Effective From</target>
+            </trans-unit>
+            <trans-unit id="servicePrice.label.price">
+                <source>servicePrice.label.price</source>
+                <target>Price</target>
             </trans-unit>
 
 
