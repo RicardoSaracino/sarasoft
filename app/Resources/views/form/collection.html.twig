@@ -22,7 +22,9 @@ bower install symfony-collection#master -add
 					{% for row in child %}
 						{{ form_row(row) }}
 					{% endfor %}
-					{{ block('collection_options') }}
+					{% if prototype is defined %}
+						{{ block('collection_options') }}
+					{% endif %}
 				</div>
 			</div>
 		{% endfor %}
@@ -52,7 +54,7 @@ bower install symfony-collection#master -add
 					<li><a class="collection-down collection-action" href="#"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> Down</a></li>
 					<li><a class="collection-duplicate collection-action" href="#"><span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate</a></li>
 				</ul>
-				<hr style="margin:10px 0 0 0">
+				{#<hr style="margin:10px 0 0 0">#}
 			</div>
 		</div>
 	{% endspaceless %}
