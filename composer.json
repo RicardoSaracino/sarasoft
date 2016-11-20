@@ -42,6 +42,8 @@
 
 		"misd/phone-number-bundle": "dev-master",
 
+		"tbbc/money-bundle": "dev-master",
+
 		"twig/extensions": "dev-master"
 	},
     "require-dev": {

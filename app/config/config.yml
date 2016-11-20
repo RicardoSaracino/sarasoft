@@ -44,7 +44,11 @@ twig:
     form_themes:
         - "bootstrap_3_layout.html.twig"
         - "bootstrap_3_horizontal_layout.html.twig"
+        #- "TbbcMoneyBundle:Form:fields.html.twig"
+        # user are own for bootstrap
+        - "form/tbbc_money.html.twig"
         - "form/textarea_prepend.html.twig"
+        - "form/date_picker.html.twig"
         - "form/date_time_picker.html.twig"
         - "form/collection.html.twig"
         - "form/compound.html.twig"
@@ -66,10 +70,17 @@ doctrine:
         types:
             datetime: AppBundle\Doctrine\DBAL\Type\UTCDateTimeType
             phone_number: Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType
+            money: Tbbc\MoneyBundle\Type\MoneyType
+
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+
+tbbc_money:
+    currencies: ["CAD"]
+    reference_currency: "CAD"
+    decimals: 2
 
 # Swiftmailer Configuration
 swiftmailer:
