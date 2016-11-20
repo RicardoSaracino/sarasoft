@@ -73,6 +73,7 @@ class CustomerOrder
 	 * @Assert\Valid()
 	 */
 	private $customerOrderProducts;
+
 	/**
 	 * @var \Doctrine\Common\Collections\ArrayCollection
 	 *
@@ -314,7 +315,7 @@ class CustomerOrder
 	 * @param \AppBundle\Entity\CustomerOrderService $customerOrderService
 	 * @return $this
 	 */
-	public function addCustomerOrderService(CustomerOrderService $customerOrderService = null)
+	public function addCustomerOrderService(\AppBundle\Entity\CustomerOrderService $customerOrderService = null)
 	{
 		if (!$this->customerOrderServices->contains($customerOrderService)) {
 			$customerOrderService->setCustomerOrder($this);
@@ -328,7 +329,7 @@ class CustomerOrder
 	 * @param \AppBundle\Entity\CustomerOrderService $customerOrderService
 	 * @return $this
 	 */
-	public function removeCustomerOrderService(CustomerOrderService $customerOrderService = null)
+	public function removeCustomerOrderService(\AppBundle\Entity\CustomerOrderService $customerOrderService = null)
 	{
 		if ($this->customerOrderServices->contains($customerOrderService)) {
 			$this->customerOrderServices->removeElement($customerOrderService);

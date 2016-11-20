@@ -141,8 +141,6 @@ class Address
 	}
 
 	/**
-	 * Get id
-	 *
 	 * @return integer
 	 */
 	public function getId()
@@ -151,11 +149,8 @@ class Address
 	}
 
 	/**
-	 * Set line1
-	 *
-	 * @param string $line1
-	 *
-	 * @return Address
+	 * @param $line1
+	 * @return $this
 	 */
 	public function setLine1($line1)
 	{
@@ -165,8 +160,6 @@ class Address
 	}
 
 	/**
-	 * Get line1
-	 *
 	 * @return string
 	 */
 	public function getLine1()
@@ -175,11 +168,8 @@ class Address
 	}
 
 	/**
-	 * Set line2
-	 *
-	 * @param string $line2
-	 *
-	 * @return Address
+	 * @param $line2
+	 * @return $this
 	 */
 	public function setLine2($line2)
 	{
@@ -189,8 +179,6 @@ class Address
 	}
 
 	/**
-	 * Get line2
-	 *
 	 * @return string
 	 */
 	public function getLine2()
@@ -199,11 +187,8 @@ class Address
 	}
 
 	/**
-	 * Set line3
-	 *
-	 * @param string $line3
-	 *
-	 * @return Address
+	 * @param $line3
+	 * @return $this
 	 */
 	public function setLine3($line3)
 	{
@@ -213,8 +198,6 @@ class Address
 	}
 
 	/**
-	 * Get line3
-	 *
 	 * @return string
 	 */
 	public function getLine3()
@@ -223,11 +206,8 @@ class Address
 	}
 
 	/**
-	 * Set city
-	 *
-	 * @param string $city
-	 *
-	 * @return Address
+	 * @param $city
+	 * @return $this
 	 */
 	public function setCity($city)
 	{
@@ -237,8 +217,6 @@ class Address
 	}
 
 	/**
-	 * Get city
-	 *
 	 * @return string
 	 */
 	public function getCity()
@@ -251,9 +229,8 @@ class Address
 	 *
 	 * Upper case on set
 	 *
-	 * @param string $zipOrPostalcode
-	 *
-	 * @return Address
+	 * @param $zipOrPostalcode
+	 * @return $this
 	 */
 	public function setZipOrPostalcode($zipOrPostalcode)
 	{
@@ -263,8 +240,6 @@ class Address
 	}
 
 	/**
-	 * Get zipOrPostalcode
-	 *
 	 * @return string
 	 */
 	public function getZipOrPostalcode()
@@ -273,11 +248,8 @@ class Address
 	}
 
 	/**
-	 * Set stateOrProvince
-	 *
-	 * @param string $stateOrProvince
-	 *
-	 * @return Address
+	 * @param $stateOrProvince
+	 * @return $this
 	 */
 	public function setStateOrProvince($stateOrProvince)
 	{
@@ -287,8 +259,6 @@ class Address
 	}
 
 	/**
-	 * Get stateOrProvince
-	 *
 	 * @return string
 	 */
 	public function getStateOrProvince()
@@ -297,11 +267,8 @@ class Address
 	}
 
 	/**
-	 * Set country
-	 *
-	 * @param string $country
-	 *
-	 * @return Address
+	 * @param $country
+	 * @return $this
 	 */
 	public function setCountry($country)
 	{
@@ -311,8 +278,6 @@ class Address
 	}
 
 	/**
-	 * Get country
-	 *
 	 * @return string
 	 */
 	public function getCountry()

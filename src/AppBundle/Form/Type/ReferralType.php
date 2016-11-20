@@ -6,8 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-use AppBundle\Entity\Referral;
-
 /**
  * Class ReferralType
  * @package AppBundle\Form\Type
@@ -28,7 +26,7 @@ class ReferralType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults([
-			'data_class' => Referral::class
+			'data_class' => \AppBundle\Entity\Referral::class
 		]);
 	}
 }

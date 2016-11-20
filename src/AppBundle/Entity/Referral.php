@@ -39,7 +39,7 @@ class Referral
 	private $name;
 
 	/**
-	 * @return int
+	 * @return integer
 	 */
 	public function getId()
 	{

@@ -46,8 +46,6 @@ class Product
 	private $description;
 
 	/**
-	 * Get id
-	 *
 	 * @return integer
 	 */
 	public function getId()
@@ -56,10 +54,7 @@ class Product
 	}
 
 	/**
-	 * Set name
-	 *
 	 * @param string $name
-	 *
 	 * @return Product
 	 */
 	public function setName($name)
@@ -70,8 +65,6 @@ class Product
 	}
 
 	/**
-	 * Get name
-	 *
 	 * @return string
 	 */
 	public function getName()
@@ -80,10 +73,7 @@ class Product
 	}
 
 	/**
-	 * Set description
-	 *
 	 * @param string $description
-	 *
 	 * @return Product
 	 */
 	public function setDescription($description)
@@ -94,8 +84,6 @@ class Product
 	}
 
 	/**
-	 * Get description
-	 *
 	 * @return string
 	 */
 	public function getDescription()

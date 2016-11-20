@@ -434,10 +434,4 @@ class User implements UserInterface, \Serializable
 	{
 		return Intl::getLocaleBundle()->getLocaleName($this->language);
 	}
-
-
-	/**
-	 *
-	 *
-	 */
 }

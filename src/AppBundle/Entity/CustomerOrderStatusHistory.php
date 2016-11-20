@@ -59,7 +59,6 @@ class CustomerOrderStatusHistory
 
 	/**
 	 * @param \AppBundle\Entity\CustomerOrder $customerOrder
-	 *
 	 * @return CustomerOrder
 	 */
 	public function setCustomerOrder(CustomerOrder $customerOrder = null)

@@ -26,6 +26,15 @@ class Service
 	private $id;
 
 	/**
+	 * @var \Doctrine\Common\Collections\ArrayCollection
+	 *
+	 * @ORM\OneToMany(targetEntity="ServicePrice", mappedBy="service", orphanRemoval=true, cascade={"persist", "remove"})
+	 *
+	 * @Assert\Valid()
+	 */
+	private $servicePrices;
+
+	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=32, nullable=false)
@@ -46,8 +55,14 @@ class Service
 	private $description;
 
 	/**
-	 * Get id
 	 *
+	 */
+	public function __construct()
+	{
+		$this->servicePrices = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+	/**
 	 * @return integer
 	 */
 	public function getId()
@@ -56,10 +71,29 @@ class Service
 	}
 
 	/**
-	 * Set name
-	 *
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */
+	public function getServicePrices()
+	{
+		return $this->servicePrices;
+	}
+
+	/**
+	 * @param \AppBundle\Entity\ServicePrice $servicePrice
+	 * @return $this
+	 */
+	public function addCustomerOrderService(\AppBundle\Entity\ServicePrice $servicePrice = null)
+	{
+		if (!$this->servicePrices->contains($servicePrice)) {
+			$servicePrice->setService($this);
+			$this->customerOrderServices->add($customerOrderService);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * @param string $name
-	 *
 	 * @return Service
 	 */
 	public function setName($name)
@@ -70,8 +104,6 @@ class Service
 	}
 
 	/**
-	 * Get name
-	 *
 	 * @return string
 	 */
 	public function getName()
@@ -80,10 +112,7 @@ class Service
 	}
 
 	/**
-	 * Set description
-	 *
 	 * @param string $description
-	 *
 	 * @return Service
 	 */
 	public function setDescription($description)
@@ -94,8 +123,6 @@ class Service
 	}
 
 	/**
-	 * Get description
-	 *
 	 * @return string
 	 */
 	public function getDescription()

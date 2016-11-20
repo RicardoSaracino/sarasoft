@@ -26,23 +26,6 @@ class CustomerOrderProduct
 	private $id;
 
 	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="quantity", type="integer", nullable=false)
-	 *
-	 * @Assert\NotBlank()
-	 * @Assert\Range(min="1")
-	 */
-	private $quantity;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="comments", type="string", length=256, nullable=true)
-	 */
-	private $comments;
-
-	/**
 	 * @var \AppBundle\Entity\CustomerOrder
 	 *
 	 * @ORM\ManyToOne(targetEntity="CustomerOrder", inversedBy="customerOrderProducts")
@@ -65,6 +48,24 @@ class CustomerOrderProduct
 	private $product;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="quantity", type="integer", nullable=false)
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\Range(min="1")
+	 */
+	private $quantity;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="comments", type="string", length=256, nullable=true)
+	 */
+	private $comments;
+
+
+	/**
 	 * @return integer
 	 */
 	public function getId()
@@ -73,58 +74,7 @@ class CustomerOrderProduct
 	}
 
 	/**
-	 * Set quantity
-	 *
-	 * @param integer $quantity
-	 *
-	 * @return CustomerOrderProduct
-	 */
-	public function setQuantity($quantity)
-	{
-		$this->quantity = $quantity;
-
-		return $this;
-	}
-
-	/**
-	 * Get quantity
-	 *
-	 * @return integer
-	 */
-	public function getQuantity()
-	{
-		return $this->quantity;
-	}
-
-	/**
-	 * Set comments
-	 *
-	 * @param string $comments
-	 *
-	 * @return CustomerOrderProduct
-	 */
-	public function setComments($comments)
-	{
-		$this->comments = $comments;
-
-		return $this;
-	}
-
-	/**
-	 * Get comments
-	 *
-	 * @return string
-	 */
-	public function getComments()
-	{
-		return $this->comments;
-	}
-
-	/**
-	 * Set customerOrder
-	 *
 	 * @param \AppBundle\Entity\CustomerOrder $customerOrder
-	 *
 	 * @return CustomerOrderProduct
 	 */
 	public function setCustomerOrder(\AppBundle\Entity\CustomerOrder $customerOrder)
@@ -135,8 +85,6 @@ class CustomerOrderProduct
 	}
 
 	/**
-	 * Get customerOrder
-	 *
 	 * @return \AppBundle\Entity\CustomerOrder
 	 */
 	public function getCustomerOrder()
@@ -145,10 +93,7 @@ class CustomerOrderProduct
 	}
 
 	/**
-	 * Set product
-	 *
 	 * @param \AppBundle\Entity\Product $product
-	 *
 	 * @return CustomerOrderProduct
 	 */
 	public function setProduct(\AppBundle\Entity\Product $product)
@@ -159,12 +104,48 @@ class CustomerOrderProduct
 	}
 
 	/**
-	 * Get product
-	 *
 	 * @return \AppBundle\Entity\Product
 	 */
 	public function getProduct()
 	{
 		return $this->product;
+	}
+
+	/**
+	 * @param integer $quantity
+	 * @return CustomerOrderProduct
+	 */
+	public function setQuantity($quantity)
+	{
+		$this->quantity = $quantity;
+
+		return $this;
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function getQuantity()
+	{
+		return $this->quantity;
+	}
+
+	/**
+	 * @param string $comments
+	 * @return CustomerOrderProduct
+	 */
+	public function setComments($comments)
+	{
+		$this->comments = $comments;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getComments()
+	{
+		return $this->comments;
 	}
 }

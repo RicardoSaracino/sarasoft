@@ -25,22 +25,6 @@ class CustomerOrderService
 	 */
 	private $id;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="quantity", type="integer", nullable=false)
-	 *
-	 * @Assert\NotBlank()
-	 * @Assert\Range(min="1")
-	 */
-	private $quantity;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="comments", type="string", length=256, nullable=true)
-	 */
-	private $comments;
 
 	/**
 	 * @var \AppBundle\Entity\CustomerOrder
@@ -65,6 +49,24 @@ class CustomerOrderService
 	private $service;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="quantity", type="integer", nullable=false)
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\Range(min="1")
+	 */
+	private $quantity;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="comments", type="string", length=256, nullable=true)
+	 */
+	private $comments;
+
+
+	/**
 	 * @return integer
 	 */
 	public function getId()
@@ -73,58 +75,7 @@ class CustomerOrderService
 	}
 
 	/**
-	 * Set quantity
-	 *
-	 * @param integer $quantity
-	 *
-	 * @return CustomerOrderService
-	 */
-	public function setQuantity($quantity)
-	{
-		$this->quantity = $quantity;
-
-		return $this;
-	}
-
-	/**
-	 * Get quantity
-	 *
-	 * @return integer
-	 */
-	public function getQuantity()
-	{
-		return $this->quantity;
-	}
-
-	/**
-	 * Set comments
-	 *
-	 * @param string $comments
-	 *
-	 * @return CustomerOrderService
-	 */
-	public function setComments($comments)
-	{
-		$this->comments = $comments;
-
-		return $this;
-	}
-
-	/**
-	 * Get comments
-	 *
-	 * @return string
-	 */
-	public function getComments()
-	{
-		return $this->comments;
-	}
-
-	/**
-	 * Set customerOrder
-	 *
 	 * @param \AppBundle\Entity\CustomerOrder $customerOrder
-	 *
 	 * @return CustomerOrderService
 	 */
 	public function setCustomerOrder(\AppBundle\Entity\CustomerOrder $customerOrder)
@@ -135,8 +86,6 @@ class CustomerOrderService
 	}
 
 	/**
-	 * Get customerOrder
-	 *
 	 * @return \AppBundle\Entity\CustomerOrder
 	 */
 	public function getCustomerOrder()
@@ -145,10 +94,7 @@ class CustomerOrderService
 	}
 
 	/**
-	 * Set service
-	 *
 	 * @param \AppBundle\Entity\Service $service
-	 *
 	 * @return CustomerOrderService
 	 */
 	public function setService(\AppBundle\Entity\Service $service)
@@ -159,12 +105,48 @@ class CustomerOrderService
 	}
 
 	/**
-	 * Get service
-	 *
 	 * @return \AppBundle\Entity\Service
 	 */
 	public function getService()
 	{
 		return $this->service;
+	}
+
+	/**
+	 * @param integer $quantity
+	 * @return CustomerOrderService
+	 */
+	public function setQuantity($quantity)
+	{
+		$this->quantity = $quantity;
+
+		return $this;
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function getQuantity()
+	{
+		return $this->quantity;
+	}
+
+	/**
+	 * @param string $comments
+	 * @return CustomerOrderService
+	 */
+	public function setComments($comments)
+	{
+		$this->comments = $comments;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getComments()
+	{
+		return $this->comments;
 	}
 }

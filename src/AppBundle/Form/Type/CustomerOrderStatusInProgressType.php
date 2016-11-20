@@ -6,7 +6,6 @@ use AppBundle\Entity as Entity;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type as Type;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * Class CustomerOrderStatusInProgressType
