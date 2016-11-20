@@ -6,6 +6,7 @@
 
 {% block main %}
 	{{ table.start }}
+
 	{{ table.row('customer.label.name', customer.fullName) }}
 
 	{{ table.row_phone('customer.label.phone', customer.phone) }}
@@ -13,6 +14,17 @@
 	{{ table.row_phone('customer.label.altPhone', customer.altPhone) }}
 
 	{{ table.row_email('customer.label.email', customer.email) }}
+
+	{{ table.row_created(customer) }}
+
+	{{ table.row_updated(customer) }}
+
+	{{ table.end }}
+
+
+	{{ table.start }}
+
+	{{ table.row_title('customer.label.homeAddress') }}
 
 	{{ table.row('address.label.line1', customer.address.line1) }}
 
@@ -28,9 +40,12 @@
 
 	{{ table.row('address.label.country', customer.address.country|country) }}
 
-	{{ table.row_created(customer) }}
-	{{ table.row_updated(customer) }}
+	{{ table.row_created(customer.address) }}
+
+	{{ table.row_updated(customer.address) }}
+
 	{{ table.end }}
+
 {% endblock %}
 
 {% block complimentary %}

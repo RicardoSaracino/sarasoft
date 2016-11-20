@@ -5,7 +5,9 @@
 {% block header %}<h1>Company</h1>{% endblock %}
 
 {% block main %}
+
 	{{ table.start }}
+
 	{{ table.row('company.label.name', company.name) }}
 
 	{{ table.row_phone('company.label.phone', company.phone) }}
@@ -17,6 +19,17 @@
 	{{ table.row_url('company.label.websiteUrl', company.websiteUrl) }}
 
 	{{ table.row_url('company.label.facebookUrl', company.facebookUrl) }}
+
+	{{ table.row_created(company) }}
+
+	{{ table.row_updated(company) }}
+
+	{{ table.end }}
+
+
+	{{ table.start }}
+
+	{{ table.row_title('company.label.address') }}
 
 	{{ table.row('address.label.line1', company.address.line1) }}
 
@@ -32,9 +45,10 @@
 
 	{{ table.row('address.label.country', company.address.country|country) }}
 
+	{{ table.row_created(company.address) }}
 
-	{{ table.row_created(company) }}
-	{{ table.row_updated(company) }}
+	{{ table.row_updated(company.address) }}
+
 	{{ table.end }}
 {% endblock %}
 
