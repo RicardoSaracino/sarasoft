@@ -46,11 +46,29 @@
 	{% endspaceless %}
 {% endmacro %}
 
+{% macro row_user_date(label, datetime) %}
+	{% spaceless %}
+		<div class="row">
+			<div class="col-sm-2">{{ label|trans }}</div>
+			<div class="col-sm-10">{% if datetime %}{{ datetime|user_date }}{% endif %}</div>
+		</div>
+	{% endspaceless %}
+{% endmacro %}
+
 {% macro row_user_datetime(label, datetime) %}
 	{% spaceless %}
 		<div class="row">
 			<div class="col-sm-2">{{ label|trans }}</div>
 			<div class="col-sm-10">{% if datetime %}{{ datetime|user_datetime }}{% endif %}</div>
+		</div>
+	{% endspaceless %}
+{% endmacro %}
+
+{% macro row_money(label, price) %}
+	{% spaceless %}
+		<div class="row">
+			<div class="col-sm-2">{{ label|trans }}</div>
+			<div class="col-sm-10">{% if price %}{{ price|money_localized_format }}{% endif %}</div>
 		</div>
 	{% endspaceless %}
 {% endmacro %}
