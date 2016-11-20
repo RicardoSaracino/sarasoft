@@ -6,25 +6,29 @@
 
 namespace AppBundle\Form\Type;
 
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-
 /**
  * Class DatePickerType
  * @package AppBundle\Form\Type
  */
-class DatePickerType extends DateType
+class DatePickerType extends \Symfony\Component\Form\Extension\Core\Type\DateType
 {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
+	public function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver)
 	{
-		$options['attr'] = 'single_text';
-		$options['format'] = 'MM/dd/yyyy';
-		$options['attr'] = ['class' => 'js-datepicker', 'placeholder' => 'MM/DD/YYYY'];
-
-		parent::buildForm($builder, $options);
+		$resolver->setDefaults(
+			[
+				'widget' => 'single_text',
+				'html5' => false,
+				'compound' => false,
+				'input' => null,
+				'format' => 'MM/dd/yyyy',
+				'model_timezone' => 'UTC',
+				'view_timezone' => 'UTC',
+				'attr' => ['class' => 'js-datepicker', 'placeholder' => 'MM/DD/YYYY']
+			]
+		);
 	}
 
 	/**

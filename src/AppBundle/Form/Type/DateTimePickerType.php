@@ -6,8 +6,6 @@
 
 namespace AppBundle\Form\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-
 /**
  * Class DatePickerType
  * @package AppBundle\Form\Type
@@ -17,7 +15,7 @@ class DateTimePickerType extends \Symfony\Component\Form\Extension\Core\Type\Dat
 	/**
 	 * {@inheritdoc}
 	 */
-	public function configureOptions(OptionsResolver $resolver)
+	public function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(
 			[
