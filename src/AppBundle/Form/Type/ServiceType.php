@@ -30,6 +30,7 @@ class ServiceType extends AbstractType
 				[
 					'entry_type' => ServicePriceType::class,
 					'label' => 'service.label.servicePrices',
+					'by_reference' => false,
 					'prototype' => false,
 					'allow_add' => false,
 					'allow_delete' => false,

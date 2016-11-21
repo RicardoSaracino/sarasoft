@@ -33,6 +33,7 @@ class CustomerOrderStatusCompleteType extends CustomerOrderType
 			[
 				'entry_type' => CustomerOrderServiceType::class,
 				'label' => 'customerOrder.label.services',
+				'by_reference' => false,
 				'prototype' => true,
 				'allow_add' => true,
 				'allow_delete' => true,
@@ -48,6 +49,7 @@ class CustomerOrderStatusCompleteType extends CustomerOrderType
 			[
 				'entry_type' => CustomerOrderProductType::class,
 				'label' => 'customerOrder.label.products',
+				'by_reference' => false,
 				'prototype' => true,
 				'allow_add' => true,
 				'allow_delete' => true,
