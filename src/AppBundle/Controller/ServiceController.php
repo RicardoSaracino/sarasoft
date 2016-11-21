@@ -46,13 +46,9 @@ class ServiceController extends Controller
 	 */
 	public function newAction(Request $request)
 	{
-
-		#dump($request); die;
-		#dump($request); die;
-
 		$service = new Service();
 
-		$service->addCustomerOrderService(new ServicePrice());
+		$service->addServicePrice(new ServicePrice());
 
 		$form = $this->createForm('AppBundle\Form\Type\ServiceType', $service);
 
