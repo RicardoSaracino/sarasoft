@@ -29,7 +29,8 @@ class Service
 	 * @var \Doctrine\Common\Collections\ArrayCollection
 	 *
 	 * @ORM\OneToMany(targetEntity="ServicePrice", mappedBy="service", orphanRemoval=true, cascade={"persist", "remove"})
-	 *
+	 * @ORM\OrderBy({"effectiveFrom" = "ASC"})
+     *
 	 * @Assert\Valid()
 	 */
 	private $servicePrices;
@@ -79,14 +80,25 @@ class Service
 	}
 
 	/**
+	 * @param \DateTime $effectiveFrom
+	 * @return \AppBundle\Entity\ServicePrice
+	 */
+	public function getEffectiveServicePrice(\DateTime $effectiveFrom)
+	{
+		return $this->getServicePrices()->filter(function($servicePrice) use ($effectiveFrom) {
+			return $servicePrice->getEffectiveFrom() >= $effectiveFrom;
+		})->first();
+	}
+
+	/**
 	 * @param \AppBundle\Entity\ServicePrice $servicePrice
 	 * @return $this
 	 */
-	public function addCustomerOrderService(\AppBundle\Entity\ServicePrice $servicePrice = null)
+	public function addServicePrice(\AppBundle\Entity\ServicePrice $servicePrice = null)
 	{
 		if (!$this->servicePrices->contains($servicePrice)) {
-			$servicePrice->setService($this);
 			$this->servicePrices->add($servicePrice);
+			$servicePrice->setService($this);
 		}
 
 		return $this;
