@@ -44,7 +44,7 @@ class CustomerOrderService
 	 * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
 	 * })
 	 *
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(groups={"StatusComplete"})
 	 */
 	private $service;
 
@@ -53,8 +53,8 @@ class CustomerOrderService
 	 *
 	 * @ORM\Column(name="quantity", type="integer", nullable=false)
 	 *
-	 * @Assert\NotBlank()
-	 * @Assert\Range(min="1")
+	 * @Assert\NotBlank(groups={"StatusComplete"})
+	 * @Assert\Range(min="1", groups={"StatusComplete"})
 	 */
 	private $quantity;
 
@@ -110,6 +110,22 @@ class CustomerOrderService
 	public function getService()
 	{
 		return $this->service;
+	}
+
+	/**
+	 * @return \Money\Money
+	 */
+	public function getEffectivePrice()
+	{
+		return $this->service->getEffectiveServicePrice($this->getCustomerOrder()->getCompletedAt())->getPrice();
+	}
+
+	/**
+	 * @return \Money\Money
+	 */
+	public function getEffectivePriceAmount()
+	{
+		return $this->service->getEffectiveServicePrice($this->getCustomerOrder()->getCompletedAt())->getPrice()->multiply($this->getQuantity());
 	}
 
 	/**

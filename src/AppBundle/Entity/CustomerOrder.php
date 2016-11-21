@@ -298,11 +298,13 @@ class CustomerOrder
 	{
 		if ($this->customerOrderProducts->contains($customerOrderProduct)) {
 			$this->customerOrderProducts->removeElement($customerOrderProduct);
+			$customerOrderProduct->setCustomerOrder(null);
+
 		}
 
 		return $this;
 	}
-	
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection
 	 */
@@ -333,6 +335,7 @@ class CustomerOrder
 	{
 		if ($this->customerOrderServices->contains($customerOrderService)) {
 			$this->customerOrderServices->removeElement($customerOrderService);
+			$customerOrderService->setCustomerOrder(null);
 		}
 
 		return $this;
@@ -419,7 +422,7 @@ class CustomerOrder
 		return $this->bookingNotes;
 	}
 
- 	####################################################
+	####################################################
 
 	/**
 	 * @param $progressStartedAt
@@ -499,7 +502,7 @@ class CustomerOrder
 		return $this->completionNotes;
 	}
 
- 	####################################################
+	####################################################
 
 	/**
 	 * @param $cancelledOn
