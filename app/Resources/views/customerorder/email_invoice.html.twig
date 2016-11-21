@@ -540,7 +540,7 @@ h4, .h4 {
 		<tr>
 			<td align="center" valign="top" style="padding-top:20px;">
 				<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer">
-					<tr>
+					{#<tr>
 						<td align="center" valign="top">
 							<!-- // Begin Template Header \\ -->
 							<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader">
@@ -556,7 +556,7 @@ h4, .h4 {
 							</table>
 							<!-- // End Template Header \\ -->
 						</td>
-					</tr>
+					</tr>#}
 					<tr>
 						<td align="center" valign="top">
 							<!-- // Begin Template Body \\ -->
@@ -571,7 +571,7 @@ h4, .h4 {
 															<td valign="top"><div style="font-size: 23px; font-weight: bold">{{ customerOrder.company.name }} Invoice</div></td>
 
 															{# https://blog.serverdensity.com/handling-timezone-conversion-with-php-datetime/ #}
-															<td valign="bottom"><div style="text-align: right">{{ 'now'|date('r') }}</div></td>
+															<td valign="top"><div style="text-align: right">{{ 'now'|date('r') }}</div></td>
 														</tr>
 													</table>
 												</td>
@@ -606,7 +606,7 @@ h4, .h4 {
 											<tr>
 												<td valign="top" style="padding-top:0;">
 													<div>
-														<strong>Complete</strong> {{ customerOrder.completedAt|date }}<br/>
+														<strong>Completed</strong> {{ customerOrder.completedAt|date }}<br/>
 
 														<p class="dateNotes" style="margin-top: 5px">{{ customerOrder.completionNotes|trim|nl2br }}</p>
 													</div>
@@ -614,10 +614,9 @@ h4, .h4 {
 											</tr>
 											{% if customerOrder.customerOrderServices %}
 											<tr>
-												<td valign="top" style="padding-top:0; padding-bottom:0;">
+												<td valign="top" style="padding-top:0;">
 													<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
-														<tr s
-																>
+														<tr>
 															<th scope="col" valign="top" width="55%" class="dataTableHeading">Service</th>
 															<th scope="col" valign="top" width="15%" class="dataTableHeading">Unit</th>
 															<th scope="col" valign="top" width="15%" class="dataTableHeading">Qty</th>
@@ -627,13 +626,42 @@ h4, .h4 {
 														{% for customerOrderService in customerOrder.customerOrderServices %}
 															<tr>
 																<td valign="top" class="dataTableContent">{{ customerOrderService.service.name }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: center">${{ '0'|number_format }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: center">{{ customerOrderService.getEffectivePrice()|money_localized_format }}</td>
 																<td valign="top" class="dataTableContent" style="text-align: center">{{ customerOrderService.quantity }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: center">${{ '0'|number_format }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: center">{{ customerOrderService.getEffectivePriceAmount()|money_localized_format }}</td>
 															</tr>
 															{% if customerOrderService.comments %}
 																<tr>
 																	<td valign="top" colspan="4" class="dataTableContent dateNotes" style="border-top: 0; padding-top: 0">{{ customerOrderService.comments }}</td>
+																</tr>
+															{% endif %}
+														{% endfor %}
+													</table>
+												</td>
+											</tr>
+											{% endif %}
+
+											{% if customerOrder.customerOrderProducts %}
+											<tr>
+												<td valign="top">
+													<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
+														<tr>
+															<th scope="col" valign="top" width="55%" class="dataTableHeading">Product</th>
+															<th scope="col" valign="top" width="15%" class="dataTableHeading">Unit</th>
+															<th scope="col" valign="top" width="15%" class="dataTableHeading">Qty</th>
+															<th scope="col" valign="top" width="15%" class="dataTableHeading">Amount</th>
+														</tr>
+
+														{% for customerOrderProduct in customerOrder.customerOrderProducts %}
+															<tr>
+																<td valign="top" class="dataTableContent">{{ customerOrderProduct.product.name }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: center">{{ '0' }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: center">{{ customerOrderProduct.quantity }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: center">{{ '0' }}</td>
+															</tr>
+															{% if customerOrderProduct.comments %}
+																<tr>
+																	<td valign="top" colspan="4" class="dataTableContent dateNotes" style="border-top: 0; padding-top: 0">{{ customerOrderProduct.comments }}</td>
 																</tr>
 															{% endif %}
 														{% endfor %}
@@ -658,14 +686,14 @@ h4, .h4 {
 										<!-- // Begin Module: Transactional Footer \\ -->
 										<table border="0" cellpadding="10" cellspacing="0" width="100%">
 											<tr>
-												<td valign="middle" id="utility">
+												<td valign="middle" align="center" id="utility">
 													<div>
 														&nbsp;<a href="{{ customerOrder.company.websiteUrl }}" target="_blank">Website</a> | <a href="{{ customerOrder.company.facebookUrl }}" target="_blank">Facebook</a>&nbsp;
 													</div>
 												</td>
 											</tr>
 											<tr>
-												<td valign="top">
+												<td valign="top" align="center">
 													<div>
 														<em>Copyright &copy; 2016 Sarasoft, All rights reserved.</em>
 													</div>
