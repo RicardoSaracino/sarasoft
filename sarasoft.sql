@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2016 at 01:16 AM
+-- Generation Time: Nov 23, 2016 at 01:10 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -48,7 +48,7 @@ CREATE TABLE `address` (
 --
 
 INSERT INTO `address` (`id`, `line_1`, `line_2`, `line_3`, `city`, `zip_or_postalcode`, `state_or_province`, `country`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'Bikinibottom', NULL, NULL, 'Bikinibottom', 'K1K1K1', 'SK', 'CA', '2016-10-16 23:27:32', NULL, '2016-10-22 21:21:15', 1),
+(1, '1339 Meadowlands Dr', 'Apt 1020', NULL, 'Ottawa', 'K1K1K1', 'ON', 'CA', '2016-10-16 23:27:32', 1, '2016-11-19 01:57:20', 1),
 (2, 'asdfas', 'fsadfdd', 'asdfasd', 'fsadf', 'K1K1K1', 'ON', 'CA', '2016-10-17 23:39:50', 1, '2016-10-30 04:26:54', 1),
 (4, '2990 Islington Ave', '978', NULL, 'North York', 'K2E7B4', 'ON', 'CA', '2016-10-30 01:06:17', 1, '2016-10-30 01:06:17', 1),
 (5, '120 Conch Street', NULL, NULL, 'Bikini Bottom', 'K1K1K1', 'ON', 'CA', '2016-10-30 02:43:35', 1, '2016-10-30 02:43:35', 1);
@@ -66,6 +66,8 @@ CREATE TABLE `company` (
   `phone` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
   `alt_phone` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `website_url` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facebook_url` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -76,8 +78,8 @@ CREATE TABLE `company` (
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`id`, `address_id`, `name`, `phone`, `alt_phone`, `email`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 4, 'Krusty Crab', '+16135555555', NULL, 'crusty.crab@ricardosaracino.com', '2016-10-30 01:06:17', 1, '2016-10-30 01:06:17', 1);
+INSERT INTO `company` (`id`, `address_id`, `name`, `phone`, `alt_phone`, `email`, `website_url`, `facebook_url`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 4, 'Krusty Crab', '+16135555555', NULL, 'crusty.crab@ricardosaracino.com', 'http://www.ytv.com/shows/spongebob-squarepants', 'https://www.facebook.com/spongebob/', '2016-10-30 01:06:17', 1, '2016-11-19 00:39:08', 1);
 
 -- --------------------------------------------------------
 
@@ -104,7 +106,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `address_id`, `first_name`, `last_name`, `phone`, `alt_phone`, `email`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'Spongebob', 'Squarepants', '+16135555555', NULL, NULL, '2016-10-16 23:27:32', 1, '2016-11-12 03:09:15', 1),
+(1, 1, 'Ricardo', 'Saracino', '+16135555555', NULL, NULL, '2016-10-16 23:27:32', 1, '2016-11-19 02:00:08', 1),
 (2, 2, 'Squidward', 'Tenticals', '+16137052563', NULL, 'Squidward.Tenticals@ricardosaracino.com', '2016-10-17 23:39:50', 1, '2016-10-30 04:28:19', 1),
 (3, 5, 'Patrik', 'Star', '+16137257079', NULL, 'patrik.star@ricardosaracino.com', '2016-10-30 02:43:35', 1, '2016-10-30 02:43:35', 1);
 
@@ -142,8 +144,8 @@ CREATE TABLE `customer_order` (
 INSERT INTO `customer_order` (`id`, `customer_id`, `company_id`, `referral_id`, `status`, `booked_from`, `booked_until`, `booking_notes`, `progress_started_at`, `progress_notes`, `completed_at`, `completion_notes`, `cancelled_on`, `cancellation_notes`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (1, 2, 1, 1, 'customerOrder.status.booked', '2016-11-24 02:10:00', '2016-12-01 02:10:00', '\n** 2016-10-30 21:25:05 ** Ricardo Saracino\nvvv\n\n** 2016-10-30 20:39:57 ** Ricardo Saracino\nEven Newer\n\n** 2016-10-30 19:49:51 ** Ricardo Saracino\nNewer Notes\n\n** 2016-10-30 19:49:15 ** Ricardo Saracino\nNew Notewsasdf', NULL, '', NULL, '', '2016-11-17 19:00:00', '\n** 2016-11-15 14:08:23 ** Ricardo Saracino\nasdfasdfasdf', '2016-10-29 01:57:10', 1, '2016-11-15 19:48:14', 1),
 (2, 2, 1, NULL, 'customerOrder.status.complete', '2016-11-15 02:05:00', '2016-11-18 02:05:00', '\n** 2016-10-31 20:50:26 ** Ricardo Saracino\nasdfasdfasdf\r\nasdfasdfasdfasdf\n** 2016-10-31 18:28:00 ** Ricardo Saracino\n** 2016-10-31 18:27:51 ** Ricardo Saracino\n** 2016-10-30 21:09:11 ** Ricardo Saracino\nsdfgdsfgdsfg\n** 2016-10-30 21:09:11 ** Ricardo Saracino\nsdfgdsfgdsfg\n** 2016-10-31 18:27:51 ** Ricardo Saracino\n** 2016-10-30 21:09:11 ** Ricardo Saracino\nsdfgdsfgdsfg\n** 2016-10-30 21:09:11 ** Ricardo Saracino\nsdfgdsfgdsfg', '2016-11-15 21:10:00', '\n** 2016-11-15 16:09:41 ** Ricardo Saracino\ndsfgsdfgdsfg', '2016-11-15 22:00:00', '** 2016-11-15 17:01:48 ** Ricardo Saracino\nCompleted asdfasdf', NULL, '', '2016-10-31 01:09:11', 1, '2016-11-15 22:01:48', 1),
-(18, 1, 1, 1, 'customerOrder.status.inprogress', '2016-11-01 23:05:00', '2016-11-03 23:05:00', '\n** 2016-11-02 19:54:15 ** Ricardo Saracino\nsdfgdsfg', '2016-11-09 00:00:00', '', NULL, '', NULL, '', '2016-11-02 23:54:16', 1, '2016-11-05 04:12:29', 1),
-(19, 1, 1, 1, 'customerOrder.status.cancelled', '2016-11-15 22:50:00', '2016-11-16 22:50:00', '\n** 2016-11-15 17:52:11 ** Ricardo Saracino\ndgdgdg', NULL, NULL, NULL, NULL, '2016-11-17 22:55:00', '** 2016-11-15 17:55:34 ** Ricardo Saracino\nxvxvxv', '2016-11-15 22:52:11', 1, '2016-11-15 22:55:34', 1);
+(18, 1, 1, 1, 'customerOrder.status.complete', '2016-11-01 23:05:00', '2016-11-03 23:05:00', '\n** 2016-11-02 19:54:15 ** Ricardo Saracino\nsdfgdsfg', '2016-11-09 00:00:00', '', '2016-11-17 03:35:00', '** 2016-11-18 23:02:59 ** Ricardo Saracino\nasdfasdf\n** 2016-11-18 22:34:15 ** Ricardo Saracino\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed est mi, laoreet eu mi ac, malesuada egestas velit. Sed eu ornare risus. Mauris erat enim, imperdiet eget neque nec, rutrum viverra nunc. Integer tempor posuere risus, nec scelerisque metus euismod eget. Vestibulum tincidunt est et consectetur elementum.', NULL, '', '2016-11-02 23:54:16', 1, '2016-11-19 04:02:59', 1),
+(19, 1, 1, 1, 'customerOrder.status.cancelled', '2016-11-15 22:50:00', '2016-11-16 22:50:00', '\n** 2016-11-15 17:52:11 ** Ricardo Saracino\ndgdgdg', NULL, NULL, NULL, NULL, '2016-11-17 22:55:00', '\n** 2016-11-15 17:55:34 ** Ricardo Saracino\nxvxvxv', '2016-11-15 22:52:11', 1, '2016-11-16 01:49:57', 1);
 
 -- --------------------------------------------------------
 
@@ -156,12 +158,19 @@ CREATE TABLE `customer_order_product` (
   `customer_order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `comments` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comments` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `updated_at` datetime NOT NULL,
   `updated_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customer_order_product`
+--
+
+INSERT INTO `customer_order_product` (`id`, `customer_order_id`, `product_id`, `quantity`, `comments`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 18, 2, 4, 'asdfasdfasdf', '2016-11-21 01:24:12', 1, '2016-11-21 01:24:12', 1);
 
 -- --------------------------------------------------------
 
@@ -174,7 +183,7 @@ CREATE TABLE `customer_order_service` (
   `customer_order_id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `comments` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comments` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -186,7 +195,8 @@ CREATE TABLE `customer_order_service` (
 --
 
 INSERT INTO `customer_order_service` (`id`, `customer_order_id`, `service_id`, `quantity`, `comments`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 18, 1, 3, '2bdffgdfghdgfs', '2016-11-02 23:54:16', 1, '2016-11-05 04:12:29', 1);
+(2, 18, 3, 3, 'asdfasdfasdf', '2016-11-20 21:30:27', 1, '2016-11-20 21:30:27', 1),
+(4, 18, 3, 1, NULL, '2016-11-21 01:19:23', 1, '2016-11-21 01:19:23', 1);
 
 -- --------------------------------------------------------
 
@@ -215,7 +225,8 @@ INSERT INTO `customer_order_status_history` (`id`, `customer_order_id`, `old_sta
 (3, 1, 'customerOrder.status.booked', 'customerOrder.status.cancelled', '2016-11-15 19:48:14', 1, '2016-11-15 19:48:14', 1),
 (4, 2, 'customerOrder.status.booked', 'customerOrder.status.inprogress', '2016-11-15 21:09:41', 1, '2016-11-15 21:09:41', 1),
 (5, 2, 'customerOrder.status.inprogress', 'customerOrder.status.complete', '2016-11-15 22:01:48', 1, '2016-11-15 22:01:48', 1),
-(6, 19, 'customerOrder.status.booked', 'customerOrder.status.cancelled', '2016-11-15 22:55:34', 1, '2016-11-15 22:55:34', 1);
+(6, 19, 'customerOrder.status.booked', 'customerOrder.status.cancelled', '2016-11-15 22:55:34', 1, '2016-11-15 22:55:34', 1),
+(7, 18, 'customerOrder.status.inprogress', 'customerOrder.status.complete', '2016-11-19 03:34:16', 1, '2016-11-19 03:34:16', 1);
 
 -- --------------------------------------------------------
 
@@ -283,7 +294,34 @@ CREATE TABLE `service` (
 --
 
 INSERT INTO `service` (`id`, `name`, `description`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'Blow Bubble', 'Blow Bubble', '2016-11-02 01:01:54', 1, '2016-11-14 00:53:21', 1);
+(3, 'Hourly', 'Hourly', '2016-11-20 05:03:11', 1, '2016-11-20 05:03:11', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `service_price`
+--
+
+CREATE TABLE `service_price` (
+  `id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+  `effective_from` date NOT NULL,
+  `price_amount` int(11) NOT NULL,
+  `price_currency` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `updated_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `service_price`
+--
+
+INSERT INTO `service_price` (`id`, `service_id`, `effective_from`, `price_amount`, `price_currency`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 3, '2016-11-18', 3000, 'CAD', '2016-11-20 05:03:11', 1, '2016-11-20 05:03:11', 1),
+(2, 3, '2016-11-01', 2500, 'CAD', '2016-11-20 16:07:57', 1, '0000-00-00 00:00:00', 1),
+(3, 3, '2016-11-30', 3500, 'CAD', '2016-11-20 16:07:57', 1, '2016-11-20 16:07:57', 1);
 
 -- --------------------------------------------------------
 
@@ -314,7 +352,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `roles`, `created_at`, `created_by`, `updated_at`, `updated_by`, `updated_password_at`, `salt`, `time_zone`, `language`) VALUES
-(1, 'admin', '$2y$12$X5G9iyRDSEvzZcxW1krlXu.ZD28zzXluQUiqWlg7YjCxRJVoOVwui', 'Ricardo', 'Saracino', 'ricardo.saracino@ricardosaracino.com', '["ROLE_SUPER_ADMIN"]', '2016-10-06 11:24:17', NULL, '2016-11-13 02:31:00', 1, '2016-11-13 02:31:00', 'ÉR$Ÿ‘5Ýè8!o‡h+', 'America/Toronto', 'en'),
+(1, 'admin', '$2a$12$eX9HSPSSR0O6kzLjt.VH0.9cFuMoRfkwfdRIdtmxFbSt54WYV.IIK', 'Ricardo', 'Saracino', 'ricardo.saracino@ricardosaracino.com', '["ROLE_SUPER_ADMIN"]', '2016-10-06 11:24:17', NULL, '2016-11-13 02:31:00', 1, '2016-11-13 02:31:00', 'ÉR$Ÿ‘5Ýè8!o‡h+', 'America/Toronto', 'en'),
 (3, 'asdfasdf', '$2y$12$rwAQkW1HwmdGlJUkQGa85O9syG/4DnniiDJndTBh.qaWmJrJngTbO', 'asdf', 'dddd', 'asdf@asdf.ca', '["ROLE_SUPER_ADMIN"]', '2016-10-29 02:04:03', 1, '2016-10-29 02:04:03', 1, NULL, ' z£Ãõ™ ï0ãðœÌ', 'America/Toronto', 'en');
 
 --
@@ -367,20 +405,20 @@ ALTER TABLE `customer_order`
 --
 ALTER TABLE `customer_order_product`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `customer_order_id` (`customer_order_id`,`product_id`) USING BTREE,
   ADD KEY `updated_by` (`updated_by`),
   ADD KEY `product_id` (`product_id`),
-  ADD KEY `created_by` (`created_by`) USING BTREE;
+  ADD KEY `created_by` (`created_by`) USING BTREE,
+  ADD KEY `customer_order_id` (`customer_order_id`) USING BTREE;
 
 --
 -- Indexes for table `customer_order_service`
 --
 ALTER TABLE `customer_order_service`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `customer_order_id` (`customer_order_id`,`service_id`) USING BTREE,
   ADD KEY `updated_by` (`updated_by`),
   ADD KEY `service_id` (`service_id`),
-  ADD KEY `created_by` (`created_by`) USING BTREE;
+  ADD KEY `created_by` (`created_by`) USING BTREE,
+  ADD KEY `customer_order_id` (`customer_order_id`) USING BTREE;
 
 --
 -- Indexes for table `customer_order_status_history`
@@ -419,6 +457,16 @@ ALTER TABLE `service`
   ADD KEY `updated_by` (`updated_by`);
 
 --
+-- Indexes for table `service_price`
+--
+ALTER TABLE `service_price`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `service_id` (`service_id`,`effective_from`),
+  ADD KEY `updated_by` (`updated_by`),
+  ADD KEY `updated_by_2` (`updated_by`),
+  ADD KEY `created_by` (`created_by`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -450,22 +498,22 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `customer_order`
 --
 ALTER TABLE `customer_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `customer_order_product`
 --
 ALTER TABLE `customer_order_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `customer_order_service`
 --
 ALTER TABLE `customer_order_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `customer_order_status_history`
 --
 ALTER TABLE `customer_order_status_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `product`
 --
@@ -480,7 +528,12 @@ ALTER TABLE `referral`
 -- AUTO_INCREMENT for table `service`
 --
 ALTER TABLE `service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `service_price`
+--
+ALTER TABLE `service_price`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `user`
 --
@@ -569,6 +622,14 @@ ALTER TABLE `referral`
 ALTER TABLE `service`
   ADD CONSTRAINT `service_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `service_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `service_price`
+--
+ALTER TABLE `service_price`
+  ADD CONSTRAINT `service_price_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `service_price_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `service_price_ibfk_3` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);
 
 --
 -- Constraints for table `user`
