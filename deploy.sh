@@ -1,5 +1,7 @@
 #!/bin/bash
 
+php /bin/composer.phar update;
+
 mysql -uroot -p sarasoft  < sarasoft.sql;
 rm -rf var/cache/prod/*;
 php bin/console cache:clear --env prod;
