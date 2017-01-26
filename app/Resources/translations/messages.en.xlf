@@ -165,6 +165,15 @@
                 <target>Completion Notes</target>
             </trans-unit>
 
+            <trans-unit id="customerOrder.label.invoicedAt">
+                <source>customerOrder.label.invoicedAt</source>
+                <target>Invoiced</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.invoiceNotes">
+                <source>customerOrder.label.invoiceNotes</source>
+                <target>Invoice Notes</target>
+            </trans-unit>
+
             <trans-unit id="customerOrder.label.services">
                 <source>customerOrder.label.services</source>
                 <target>Services</target>

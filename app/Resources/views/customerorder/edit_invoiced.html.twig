@@ -1,0 +1,31 @@
+{% extends 'page.html.twig' %}
+
+{% block title %}Invoice Order{% endblock %}
+
+{% block header %}
+	<h1>Invoice Order<br>
+		<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.fullName }}</a></small>
+		<br>
+		<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
+	</h1>
+{% endblock %}
+
+{% block main %}
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'autocomplete':'off' }}) }}
+	{{ form_widget(form) }}
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<input type="submit" class="btn btn-default" value="Save">
+			<a class="btn btn-default" href="{{ path('show_invoice_customer_order', {'id': customerOrder.id}) }}" target="_blank">View</a>
+			<input type="submit" class="btn btn-default" value="Pay" name="{{ constant('STATUS_INVOICED',customerOrder) }}">
+		</div>
+	</div>
+	{{ form_end(form) }}
+{% endblock %}
+
+{% block complimentary %}
+	{{ nav.start }}
+	{{ nav.item('List All Orders', path('customer_order_list_all')) }}
+	{{ nav.item('List Customer Orders', path('listCustomerOrdersByCustomer', {'customer_id': customerOrder.customer.id})) }}
+	{{ nav.end }}
+{% endblock %}

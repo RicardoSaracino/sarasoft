@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Invoiced Orders{% endblock %}
+
+{% block body %}
+	{% include '::nav.html.twig' %}
+	<div class="container">
+		<div class="page-header">
+			<h1>Invoiced Orders</h1>
+		</div>
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+				<tr>
+					<th>Customer</th>
+					<th>Phone</th>
+					<th>Company</th>
+					<th>Referral</th>
+					<th>Invoiced</th>
+					<th>Actions</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for customerOrder in customerOrders %}
+					<tr>
+						<td>{{ customerOrder.customer.fullName }}</td>
+						<td><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></td>
+						<td>{{ customerOrder.company.name }}</td>
+						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>
+						<td>{{ customerOrder.invoicedAt|user_datetime }}</td>
+						<td>{{ customerOrder.invoicedAmount }}</td>
+						<td>
+							<ul class="nav nav-pills">
+								<li>
+									<a href="{{ path('show_customer_order', { 'id': customerOrder.id }) }}">show</a>
+								</li>
+								<li>
+									<a href="{{ path('edit_customer_order_inprogress', { 'id': customerOrder.id }) }}">edit</a>
+								</li>
+							</ul>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
