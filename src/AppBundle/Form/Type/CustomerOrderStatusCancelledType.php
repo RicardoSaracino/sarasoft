@@ -18,7 +18,7 @@ class CustomerOrderStatusCancelledType extends CustomerOrderType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder->add('cancelledOn', UserDateTimePickerType::class, ['label' => 'customerOrder.label.cancelledOn']);
+		$builder->add('cancelledAt', UserDateTimePickerType::class, ['label' => 'customerOrder.label.cancelledAt']);
 
 		if ($builder->getData()->getCancellationNotes()) {
 			$builder->add('cancellationNotes', UserTextAreaPrependType::class, [
