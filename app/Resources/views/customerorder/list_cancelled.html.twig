@@ -12,11 +12,12 @@
 			<table class="table">
 				<thead>
 				<tr>
-					<th>Customer</th>
-					<th>Phone</th>
-					<th>Company</th>
-					<th>Referral</th>
-					<th>Cancelled</th>
+					<th>{{ 'customerOrder.label.customer'|trans }}</th>
+					<th>{{ 'customer.label.phone'|trans }}</th>
+					<th>{{ 'customerOrder.label.company'|trans }}</th>
+					<th>{{ 'customerOrder.label.orderType'|trans }}</th>
+					<th>{{ 'customerOrder.label.referral'|trans }}</th>
+					<th>{{ 'customerOrder.label.cancelledAt'|trans }}</th>
 					<th>Actions</th>
 				</tr>
 				</thead>
@@ -26,8 +27,9 @@
 						<td>{{ customerOrder.customer.fullName }}</td>
 						<td><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></td>
 						<td>{{ customerOrder.company.name }}</td>
+						<td>{{ customerOrder.orderType.name }}</td>
 						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>
-						<td>{{ customerOrder.cancelledOn|user_datetime }}</td>
+						<td>{{ customerOrder.cancelledAt|user_datetime }}</td>
 						<td>
 							<ul class="nav nav-pills">
 								<li>
