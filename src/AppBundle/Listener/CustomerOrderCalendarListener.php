@@ -57,15 +57,18 @@ class CustomerOrderCalendarListener
 		/* @var $customerOrder \AppBundle\Entity\CustomerOrder */
 		foreach ($customerOrders as $customerOrder) {
 
-			switch( $customerOrder->getStatus() )
-			{
+			switch ($customerOrder->getStatus()) {
 				case CustomerOrder::STATUS_BOOKED:
 
-					$title = 'Booked' . "\n" . $customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
+					$title = 'Booked' .
+
+						' - ' .$customerOrder->getOrderType()->getName() ."\n".
+
+						$customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
 
 					$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
 
-					$calEvent->setUrl($this->router->generate('showCustomerOrder', array('id' => $customerOrder->getId())));
+					$calEvent->setUrl($this->router->generate('edit_customer_order_booked', array('id' => $customerOrder->getId())));
 
 					$calEvent->setStartDate($customerOrder->getBookedFrom());
 
@@ -78,11 +81,15 @@ class CustomerOrderCalendarListener
 
 				case CustomerOrder::STATUS_INPROGRESS:
 
-					$title = 'In Progress' . "\n" . $customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
+					$title = 'In Progress' .
+
+						' - ' .$customerOrder->getOrderType()->getName() ."\n".
+
+						$customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
 
 					$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
 
-					$calEvent->setUrl($this->router->generate('showCustomerOrder', array('id' => $customerOrder->getId())));
+					$calEvent->setUrl($this->router->generate('edit_customer_order_inprogress', array('id' => $customerOrder->getId())));
 
 					$calEvent->setStartDate($customerOrder->getBookedFrom());
 
@@ -95,11 +102,75 @@ class CustomerOrderCalendarListener
 
 				case CustomerOrder::STATUS_COMPLETE:
 
-					$title = 'Complete' . "\n" . $customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
+					$title = 'Complete' .
+
+						' - ' .$customerOrder->getOrderType()->getName() ."\n".
+
+						$customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
 
 					$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
 
-					$calEvent->setUrl($this->router->generate('showCustomerOrder', array('id' => $customerOrder->getId())));
+					$calEvent->setUrl($this->router->generate('edit_customer_order_complete', array('id' => $customerOrder->getId())));
+
+					$calEvent->setStartDate($customerOrder->getBookedFrom());
+
+					$calEvent->setEndDate($customerOrder->getBookedUntil());
+
+					$calendarEvent->addEvent($calEvent);
+
+					break;
+
+				case CustomerOrder::STATUS_INVOICED:
+
+					$title = 'Invoiced' .
+
+						' - ' .$customerOrder->getOrderType()->getName() ."\n".
+
+						$customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
+
+					$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
+
+					$calEvent->setUrl($this->router->generate('edit_customer_order_invoice', array('id' => $customerOrder->getId())));
+
+					$calEvent->setStartDate($customerOrder->getBookedFrom());
+
+					$calEvent->setEndDate($customerOrder->getBookedUntil());
+
+					$calendarEvent->addEvent($calEvent);
+
+					break;
+
+				case CustomerOrder::STATUS_PAID:
+
+					$title = 'Paid' .
+
+						' - ' .$customerOrder->getOrderType()->getName() ."\n".
+
+						$customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
+
+					$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
+
+					$calEvent->setUrl($this->router->generate('edit_customer_order_invoice', array('id' => $customerOrder->getId())));
+
+					$calEvent->setStartDate($customerOrder->getBookedFrom());
+
+					$calEvent->setEndDate($customerOrder->getBookedUntil());
+
+					$calendarEvent->addEvent($calEvent);
+
+					break;
+
+				case CustomerOrder::STATUS_CANCELLED:
+
+					$title = 'Cancelled' .
+
+						' - ' .$customerOrder->getOrderType()->getName() ."\n".
+
+						$customerOrder->getCustomer()->getFirstName() . ' ' . $customerOrder->getCustomer()->getLastName();
+
+					$calEvent = new CalEvent($title, $customerOrder->getBookedFrom());
+
+					$calEvent->setUrl($this->router->generate('edit_customer_order_cancelled', array('id' => $customerOrder->getId())));
 
 					$calEvent->setStartDate($customerOrder->getBookedFrom());
 
@@ -109,11 +180,6 @@ class CustomerOrderCalendarListener
 
 					break;
 			}
-
-
 		}
-
-
-		#$startDate = $calendarEvent->getFilters();
 	}
 }
