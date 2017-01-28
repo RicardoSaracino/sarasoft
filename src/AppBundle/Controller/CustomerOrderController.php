@@ -79,7 +79,7 @@ class CustomerOrderController extends Controller
 	/**
 	 * Lists all in progress customerOrder entities.
 	 *
-	 * @Route("/inprogress", name="customer_order_list_inprogress")
+	 * @Route("/list/inprogress", name="customer_order_list_inprogress")
 	 * @Method({"GET", "POST"})
 	 */
 	public function listInProgressAction(Request $request)
@@ -106,6 +106,23 @@ class CustomerOrderController extends Controller
 		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_COMPLETE);
 
 		return $this->render('customerorder/list_complete.html.twig', [
+			'customerOrders' => $customerOrders,
+		]);
+	}
+
+	/**
+	 * Lists all invoiced customerOrder entities.
+	 *
+	 * @Route("/list/invoiced", name="customer_order_list_invoiced")
+	 * @Method({"GET", "POST"})
+	 */
+	public function listInvoicedAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_INVOICED);
+
+		return $this->render('customerorder/list_invoiced.html.twig', [
 			'customerOrders' => $customerOrders,
 		]);
 	}
@@ -391,11 +408,53 @@ class CustomerOrderController extends Controller
 
 			$this->getDoctrine()->getManager()->flush();
 
+			if ($request->request->get('customerOrder_status_invoiced')) {
+				return $this->redirectToRoute('edit_customer_order_invoice', ['id' => $customerOrder->getId()]);
+			}
+
 			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
 		}
 
         return $this->render(
 			'customerorder/edit_completed.html.twig',
+			[
+				'customerOrder' => $customerOrder,
+				'form' => $form->createView()
+			]
+		);
+	}
+
+	/**
+     * Displays a form to edit or complete an existing customerOrder entity.
+     *
+     * @Route("/{id}/edit/invoice", name="edit_customer_order_invoice")
+     * @Method({"GET", "POST"})
+     */
+    public function editInvoiceAction(Request $request, CustomerOrder $customerOrder)
+    {
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusInvoicedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusInvoiced']]);
+
+		$form->handleRequest($request);
+
+		if (!in_array($customerOrder->getStatus(), [CustomerOrder::STATUS_COMPLETE, CustomerOrder::STATUS_INVOICED])) {
+			$form->addError(new \Symfony\Component\Form\FormError('Cannot Invoice Order'));
+		}
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+			$customerOrder->setStatus(CustomerOrder::STATUS_INVOICED);
+
+			$this->getDoctrine()->getManager()->flush();
+
+			if ($request->request->get('customerOrder_status_paid')) {
+				return $this->redirectToRoute('edit_customer_order_paid', ['id' => $customerOrder->getId()]);
+			}
+
+			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
+		}
+
+        return $this->render(
+			'customerorder/edit_invoiced.html.twig',
 			[
 				'customerOrder' => $customerOrder,
 				'form' => $form->createView()
