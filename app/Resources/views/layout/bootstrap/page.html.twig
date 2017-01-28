@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
-{% import 'nav.html.twig' as nav %}
-{% import 'table.html.twig' as table %}
+{% import 'nav.html.twig' as nav %} {# Using the dot notation on an instance of Twig_Template is deprecated since version 1.28 and won't be supported anymore in 2.0 #}
+{% import 'table.html.twig' as table %} {# todo macros are meant to be imported in the same template, not in a parent. #}
 {% block title %}{{ parent() }}{% endblock %}
 {% block body %}
 	{% include '::nav.html.twig' %}
