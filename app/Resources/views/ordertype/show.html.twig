@@ -1,0 +1,23 @@
+{% extends 'page.html.twig' %}
+
+{% block title %}Order Type{% endblock %}
+
+{% block header %}<h1>Order Type</h1>{% endblock %}
+
+{% block main %}
+	{{ table.start }}
+	{{ table.row('orderType.label.name', orderType.name) }}
+	{{ table.row_created(orderType) }}
+	{{ table.row_updated(orderType) }}
+	{{ table.end }}
+{% endblock %}
+
+{% block complimentary %}
+	{{ nav.start }}
+	{{ nav.item('List Order Types', path('order_type_index')) }}
+	{{ nav.item('Edit Order Type', path('order_type_edit', { 'id': orderType.id })) }}
+	{{ nav.item('New Order Type', path('order_type_new')) }}
+	{{ nav.end }}
+{% endblock %}
+
+

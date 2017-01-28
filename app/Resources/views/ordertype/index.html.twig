@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order Types{% endblock %}
+
+{% block body %}
+	{% include '::nav.html.twig' %}
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>Order Types</h1>
+		</div>
+
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Actions</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for orderType in orderTypes %}
+					<tr>
+						<td>{{ orderType.name }}</td>
+						<td>
+							<ul class="nav nav-pills">
+								<li>
+									<a href="{{ path('referral_show', { 'id': orderType.id }) }}">show</a>
+								</li>
+								<li>
+									<a href="{{ path('referral_edit', { 'id': orderType.id }) }}">edit</a>
+								</li>
+							</ul>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<ul class="nav nav-pills nav-stacked">
+			<li>
+				<a href="{{ path('order_type_new') }}">New Order Type</a>
+			</li>
+		</ul>
+	</div>
+{% endblock %}
