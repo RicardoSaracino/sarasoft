@@ -22,3 +22,10 @@ services:
       class: AppBundle\Twig\StateProvinceExtension
       tags:
           - { name: twig.extension }
+
+  twig.CustomerOrderRouting_extension:
+      class: AppBundle\Twig\CustomerOrderRoutingExtension
+      tags:
+          - { name: twig.extension }
+      arguments:
+          - "@router"
