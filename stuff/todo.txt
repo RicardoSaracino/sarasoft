@@ -12,3 +12,18 @@ http://symfony.com/doc/current/configuration/external_parameters.html
 statuses
 http://stackoverflow.com/questions/18062382/right-way-to-define-and-work-with-enum-types-from-symfony2-and-doctrine2
 http://stackoverflow.com/questions/20133638/how-should-i-handle-businesslogic-related-data-definitions-like-status-types-i
+
+
+
+
+
+./composer.json is valid for simple usage with composer but has
+strict errors that make it unable to be published as a package:
+See https://getcomposer.org/doc/04-schema.md for details on the schema
+description : The property description is required
+Defining autoload.psr-4 with an empty namespace prefix is a bad idea for performance
+require.ancarebeca/full-calendar-bundle : exact version constraints (3.0.1) should be avoided if the package follows semantic versioning
+require.gedmo/doctrine-extensions : unbound version constraints (dev-master) should be avoided
+require.misd/phone-number-bundle : unbound version constraints (dev-master) should be avoided
+require.tbbc/money-bundle : unbound version constraints (dev-master) should be avoided
+require.twig/extensions : unbound version constraints (dev-master) should be avoided
