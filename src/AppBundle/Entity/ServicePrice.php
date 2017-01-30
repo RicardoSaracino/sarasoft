@@ -64,7 +64,7 @@ class ServicePrice
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="price_currency", type="string", length=64, nullable=false)
+	 * @ORM\Column(name="price_currency", type="string", length=64, nullable=false, options={"default" : "CAD"})
 	 *
 	 * @Assert\NotBlank()
 	 */

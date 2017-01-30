@@ -5,6 +5,9 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Money\Currency;
+use Money\Money;
+
 /**
  * CustomerOrders
  *
@@ -54,6 +57,18 @@ class CustomerOrder
 	 * @Assert\NotBlank(groups={"StatusBooked"})
 	 */
 	private $company;
+
+	/**
+	 * @var \AppBundle\Entity\OrderType
+	 *
+	 * @ORM\ManyToOne(targetEntity="OrderType")
+	 * @ORM\JoinColumns({
+	 * @ORM\JoinColumn(name="order_type_id", referencedColumnName="id", nullable=false)
+	 * })
+	 *
+	 * @Assert\NotBlank(groups={"StatusBooked"})
+	 */
+	private $orderType;
 
 	/**
 	 * @var \AppBundle\Entity\Referral
@@ -153,14 +168,74 @@ class CustomerOrder
 	 */
 	private $completionNotes;
 
+
+
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="cancelled_on", type="datetime", nullable=true)
+	 * @ORM\Column(name="invoiced_at", type="datetime", nullable=true)
+	 *
+	 * @Assert\NotBlank(groups={"StatusInvoiced"})
+	 */
+	private $invoicedAt;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="invoice_subtotal_amount", type="integer", nullable=true)
+	 */
+	private $invoiceSubtotalAmount;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="invoice_subtotal_currency", type="string", length=64, nullable=true, options={"default" : "CAD"})
+	 *
+	 * @Assert\NotBlank()
+	 */
+	private $invoiceSubtotalCurrency = 'CAD';
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="invoice_notes", type="text", length=65535, nullable=true)
+	 *
+	 * @Assert\NotBlank(message="Invoice Notes should not be blank", groups={"StatusInvoiced"})
+	 */
+	private $invoiceNotes;
+
+
+
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="paid_at", type="datetime", nullable=true)
+	 *
+	 * @Assert\NotBlank(groups={"StatusPaid"})
+	 */
+	private $paidAt;
+
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="payment_notes", type="text", length=65535, nullable=true)
+	 *
+	 * @Assert\NotBlank(message="Payment Notes should not be blank", groups={"StatusPayment"})
+	 */
+	private $paymentNotes;
+
+
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="cancelled_at", type="datetime", nullable=true)
 	 *
 	 * @Assert\NotBlank(groups={"StatusCancelled"})
 	 */
-	private $cancelledOn;
+	private $cancelledAt;
 
 	/**
 	 * @var string
@@ -246,6 +321,26 @@ class CustomerOrder
 	public function getCompany()
 	{
 		return $this->company;
+	}
+
+	/**
+	 * @param \AppBundle\Entity\OrderType $orderType
+	 *
+	 * @return CustomerOrder
+	 */
+	public function setOrderType(OrderType $orderType = null)
+	{
+		$this->orderType = $orderType;
+
+		return $this;
+	}
+
+	/**
+	 * @return \AppBundle\Entity\OrderType
+	 */
+	public function getOrderType()
+	{
+		return $this->orderType;
 	}
 
 	/**
@@ -505,12 +600,12 @@ class CustomerOrder
 	####################################################
 
 	/**
-	 * @param $cancelledOn
+	 * @param $invoicedAt
 	 * @return $this
 	 */
-	public function setCancelledOn($cancelledOn)
+	public function setInvoicedAt($invoicedAt)
 	{
-		$this->cancelledOn = $cancelledOn;
+		$this->invoicedAt = $invoicedAt;
 
 		return $this;
 	}
@@ -518,9 +613,115 @@ class CustomerOrder
 	/**
 	 * @return \DateTime
 	 */
-	public function getCancelledOn()
+	public function getInvoicedAt()
 	{
-		return $this->cancelledOn;
+		return $this->invoicedAt;
+	}
+
+	/**
+	 * @return Money|null
+	 */
+	public function getInvoiceSubtotal()
+	{
+		if (!$this->invoiceSubtotalCurrency) {
+			return null;
+		}
+		if (!$this->invoiceSubtotalAmount) {
+			return new Money(0, new Currency($this->invoiceSubtotalCurrency));
+		}
+		return new Money($this->invoiceSubtotalAmount, new Currency($this->invoiceSubtotalCurrency));
+	}
+
+	/**
+	 * @param Money $invoiceSubtotal
+	 * @return $this
+	 */
+	public function setInvoiceSubtotal(Money $invoiceSubtotal)
+	{
+		$this->invoiceSubtotalAmount = $invoiceSubtotal->getAmount();
+		$this->invoiceSubtotalCurrency = $invoiceSubtotal->getCurrency()->getCode();
+
+		return $this;
+	}
+
+	/**
+	 * @param $invoiceNotes
+	 * @return $this
+	 */
+	public function setInvoiceNotes($invoiceNotes)
+	{
+		$this->invoiceNotes = $invoiceNotes;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getInvoiceNotes()
+	{
+		return $this->invoiceNotes;
+	}
+	
+	####################################################
+
+	/**
+	 * @param $paidAt
+	 * @return $this
+	 */
+	public function setPaidAt($paidAt)
+	{
+		$this->paidAt = $paidAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getPaidAt()
+	{
+		return $this->paidAt;
+	}
+
+	/**
+	 * @param $paidNotes
+	 * @return $this
+	 */
+	public function setPaymentNotes($paymentNotes)
+	{
+		$this->paymentNotes = $paymentNotes;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPaymentNotes()
+	{
+		return $this->paymentNotes;
+	}
+
+	####################################################
+
+	/**
+	 * @param $cancelledAt
+	 * @return $this
+	 */
+	public function setCancelledAt($cancelledAt)
+	{
+		$this->cancelledAt = $cancelledAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getCancelledAt()
+	{
+		return $this->cancelledAt;
 	}
 
 	/**

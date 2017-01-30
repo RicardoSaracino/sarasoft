@@ -17,6 +17,8 @@
 
 	{{ table.row('customerOrder.label.company', customerOrder.company.name) }}
 
+	{{ table.row('customerOrder.label.orderType', customerOrder.orderType.name) }}
+
 	{% if customerOrder.referral %}
 		{{ table.row('customerOrder.label.referral', customerOrder.referral.name) }}
 	{% endif %}
@@ -27,25 +29,27 @@
 
 	{{ table.row_scrollable('customerOrder.label.bookingNotes', customerOrder.bookingNotes) }}
 
-	{{ table.row('', '') }}
+	{% if customerOrder.progressStartedAt %}{{ table.row_user_datetime('customerOrder.label.progressStartedAt', customerOrder.progressStartedAt) }}{% endif %}
 
-	{{ table.row_user_datetime('customerOrder.label.progressStartedAt', customerOrder.progressStartedAt) }}
+	{% if customerOrder.progressNotes %}{{ table.row_scrollable('customerOrder.label.progressNotes', customerOrder.progressNotes) }}{% endif %}
 
-	{{ table.row_scrollable('customerOrder.label.progressNotes', customerOrder.progressNotes) }}
+	{% if customerOrder.completedAt %}{{ table.row_user_datetime('customerOrder.label.completedAt', customerOrder.completedAt) }}{% endif %}
 
-	{{ table.row('', '') }}
+	{% if customerOrder.completionNotes %}{{ table.row_scrollable('customerOrder.label.completionNotes', customerOrder.completionNotes) }}{% endif %}
 
-	{{ table.row_user_datetime('customerOrder.label.completedAt', customerOrder.completedAt) }}
+	{% if customerOrder.invoicedAt %}{{ table.row_user_datetime('customerOrder.label.invoicedAt', customerOrder.invoicedAt) }}{% endif %}
 
-	{{ table.row_scrollable('customerOrder.label.completionNotes', customerOrder.completionNotes) }}
+	{% if customerOrder.invoicedAt %}{{ table.row_user_datetime('customerOrder.label.invoiceSubtotal', customerOrder.invoicedAt) }}{% endif %}
 
-	{{ table.row('', '') }}
+	{% if customerOrder.invoiceNotes %}{{ table.row_scrollable('customerOrder.label.invoiceNotes', customerOrder.invoiceNotes) }}{% endif %}
 
-	{{ table.row_user_datetime('customerOrder.label.cancelledOn', customerOrder.cancelledOn) }}
+	{% if customerOrder.paidAt %}{{ table.row_user_datetime('customerOrder.label.paidAt', customerOrder.paidAt) }}{% endif %}
 
-	{{ table.row_scrollable('customerOrder.label.cancellationNotes', customerOrder.cancellationNotes) }}
+	{% if customerOrder.paymentNotes %}{{ table.row_scrollable('customerOrder.label.paymentNotes', customerOrder.paymentNotes) }}{% endif %}
 
-	{{ table.row('', '') }}
+	{% if customerOrder.cancelledAt %}{{ table.row_user_datetime('customerOrder.label.cancelledAt', customerOrder.cancelledAt) }}{% endif %}
+
+	{% if customerOrder.cancellationNotes %}{{ table.row_scrollable('customerOrder.label.cancellationNotes', customerOrder.cancellationNotes) }}{% endif %}
 
 	{{ table.row_created(customerOrder) }}
 
@@ -60,6 +64,8 @@
 	{{ nav.item('List All Orders', path('customer_order_list_all')) }}
 
 	{{ nav.item('List Customer Orders', path('newCustomerOrderForCustomer', { 'customer_id': customerOrder.customer.id })) }}
+
+	{{ nav.item('Edit Customer Order', customer_order_path(customerOrder)) }}
 
 	{{ nav.end }}
 {% endblock %}

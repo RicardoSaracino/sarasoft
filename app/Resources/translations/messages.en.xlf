@@ -117,13 +117,29 @@
 
             <!-- Customer Order -->
 
+            <trans-unit id="customerOrder.label.customer">
+                <source>customerOrder.label.customer</source>
+                <target>Customer</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.status">
+                <source>customerOrder.label.status</source>
+                <target>Status</target>
+            </trans-unit>
             <trans-unit id="customerOrder.label.company">
                 <source>customerOrder.label.company</source>
                 <target>Company</target>
             </trans-unit>
+            <trans-unit id="customerOrder.label.orderType">
+                <source>customerOrder.label.orderType</source>
+                <target>Type</target>
+            </trans-unit>
             <trans-unit id="customerOrder.label.referral">
                 <source>customerOrder.label.referral</source>
                 <target>Referral</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.booked">
+                <source>customerOrder.label.booked</source>
+                <target>Booked</target>
             </trans-unit>
             <trans-unit id="customerOrder.label.bookedFrom">
                 <source>customerOrder.label.bookedFrom</source>
@@ -138,8 +154,8 @@
                 <target>Booking Notes</target>
             </trans-unit>
 
-            <trans-unit id="customerOrder.label.cancelledOn">
-                <source>customerOrder.label.cancelledOn</source>
+            <trans-unit id="customerOrder.label.cancelledAt">
+                <source>customerOrder.label.cancelledAt</source>
                 <target>Cancelled</target>
             </trans-unit>
             <trans-unit id="customerOrder.label.cancellationNotes">
@@ -169,10 +185,29 @@
                 <source>customerOrder.label.invoicedAt</source>
                 <target>Invoiced</target>
             </trans-unit>
+             <trans-unit id="customerOrder.label.invoiceSubtotal">
+                <source>customerOrder.label.invoiceSubtotal</source>
+                <target>Subtotal</target>
+            </trans-unit>
             <trans-unit id="customerOrder.label.invoiceNotes">
                 <source>customerOrder.label.invoiceNotes</source>
                 <target>Invoice Notes</target>
             </trans-unit>
+
+
+            <trans-unit id="customerOrder.label.paidAt">
+                <source>customerOrder.label.paidAt</source>
+                <target>Paid</target>
+            </trans-unit>
+             <trans-unit id="customerOrder.label.paymentTotal">
+                <source>customerOrder.label.paymentTotal</source>
+                <target>Total</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.paymentNotes">
+                <source>customerOrder.label.paymentNotes</source>
+                <target>Payment Notes</target>
+            </trans-unit>
+
 
             <trans-unit id="customerOrder.label.services">
                 <source>customerOrder.label.services</source>
@@ -252,6 +287,14 @@
             <trans-unit id="product.label.description">
                 <source>product.label.description</source>
                 <target>Description</target>
+            </trans-unit>
+
+
+            <!-- Order Type -->
+
+            <trans-unit id="orderType.label.name">
+                <source>orderType.label.name</source>
+                <target>Name</target>
             </trans-unit>
 
 

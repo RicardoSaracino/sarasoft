@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Invoiced Orders{% endblock %}
+{% block title %}Paid Orders{% endblock %}
 
 {% block body %}
 	{% include '::nav.html.twig' %}
 	<div class="container">
 		<div class="page-header">
-			<h1>Invoiced Orders</h1>
+			<h1>Paid Orders</h1>
 		</div>
 		<div class
 			 ="table-responsive">
@@ -18,8 +18,8 @@
 					<th>{{ 'customerOrder.label.company'|trans }}</th>
 					<th>{{ 'customerOrder.label.orderType'|trans }}</th>
 					<th>{{ 'customerOrder.label.referral'|trans }}</th>
-					<th>{{ 'customerOrder.label.invoicedAt'|trans }}</th>
-					<th>{{ 'customerOrder.label.invoicedAt'|trans }}</th>
+					<th>{{ 'customerOrder.label.paidAt'|trans }}</th>
+					<th>{{ 'customerOrder.label.paymentTotal'|trans }}</th>
 					<th>Actions</th>
 				</tr>
 				</thead>
@@ -31,7 +31,7 @@
 						<td>{{ customerOrder.company.name }}</td>
 						<td>{{ customerOrder.orderType.name }}</td>
 						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>
-						<td>{{ customerOrder.invoicedAt|user_datetime }}</td>
+						<td>{{ customerOrder.paidAt|user_datetime }}</td>
 						<td>{{ 0 }}</td>
 						<td>
 							<ul class="nav nav-pills">
@@ -39,7 +39,7 @@
 									<a href="{{ path('show_customer_order', { 'id': customerOrder.id }) }}">show</a>
 								</li>
 								<li>
-									<a href="{{ path('edit_customer_order_invoice', { 'id': customerOrder.id }) }}">edit</a>
+									<a href="{{ path('edit_customer_order_paid', { 'id': customerOrder.id }) }}">edit</a>
 								</li>
 							</ul>
 						</td>

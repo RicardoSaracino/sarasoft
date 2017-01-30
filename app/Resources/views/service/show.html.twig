@@ -5,6 +5,9 @@
 {% block header %}<h1>Service</h1>{% endblock %}
 
 {% block main %}
+
+	{% import table as table %}
+
 	{{ table.start }}
 	{{ table.row('service.label.name', service.name) }}
 	{{ table.row('service.label.description', service.description) }}
@@ -18,12 +21,18 @@
 		{{ table.row_money('servicePrice.label.price', servicePrice.price) }}
 		{{ table.row_user_date('servicePrice.label.effectiveFrom', servicePrice.effectiveFrom) }}
 		{{ table.row_created(servicePrice) }}
+		{% if not loop.last %}
+			{{ table.row_spacer() }}
+		{% endif %}
 	{% endfor %}
 	{{ table.end }}
 
 {% endblock %}
 
 {% block complimentary %}
+
+	{% import nav as nav %}
+
 	{{ nav.start }}
 	{{ nav.item('List Services', path('service_index')) }}
 	{{ nav.item('Edit Service', path('service_edit', { 'id': service.id })) }}

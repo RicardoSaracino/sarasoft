@@ -105,6 +105,17 @@ class Service
 	}
 
 	/**
+	 * @param \AppBundle\Entity\ServicePrice $servicePrice
+	 * @return $this
+	 */
+	public function removeServicePrice(\AppBundle\Entity\ServicePrice $servicePrice = null)
+	{
+		# todo required for addServicePrice to work in form type
+
+		return $this;
+	}
+
+	/**
 	 * @param string $name
 	 * @return Service
 	 */

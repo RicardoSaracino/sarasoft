@@ -18,13 +18,15 @@ class CustomerOrderStatusInvoicedType extends CustomerOrderType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder->add('invoicedAt', UserDateTimePickerType::class, ['label' => 'customerOrder.label.invoicedAt']);
+		$builder
+			->add('invoicedAt', UserDateTimePickerType::class, ['label' => 'customerOrder.label.invoicedAt'])
+			->add('invoiceSubtotal', \Tbbc\MoneyBundle\Form\Type\MoneyType::class, ['label' => 'customerOrder.label.invoiceSubtotal']);
 
-		if ($builder->getData()->getCompletionNotes()) {
+		if ($builder->getData()->getInvoiceNotes()) {
 			$builder->add('invoiceNotes', UserTextAreaPrependType::class, [
 				'label' => 'customerOrder.label.invoiceNotes', 'trim' => true, 'data' => $builder->getData(), 'data_class' => Entity\CustomerOrder::class]);
 		} else {
-			$builder->add('completionNotes', UserTextAreaType::class, ['label' => 'customerOrder.label.invoiceNotes', 'trim' => true]);
+			$builder->add('invoiceNotes', UserTextAreaType::class, ['label' => 'customerOrder.label.invoiceNotes', 'trim' => true]);
 		}
 	}
 }

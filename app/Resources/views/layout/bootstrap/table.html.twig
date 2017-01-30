@@ -19,6 +19,12 @@
 	{% endspaceless %}
 {% endmacro %}
 
+{% macro row_spacer() %}
+	{% spaceless %}
+		<div class="row" style="border-top: none; padding-bottom: 15px"></div>
+	{% endspaceless %}
+{% endmacro %}
+
 {% macro row_email(label, email) %}
 	{% spaceless %}
 		<div class="row">

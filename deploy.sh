@@ -1,6 +1,8 @@
 #!/bin/bash
 
-php /bin/composer.phar update;
+php /bin/composer.phar clear-cache;
+
+php /bin/composer.phar install;
 
 mysql -uroot -p sarasoft  < sarasoft.sql;
 rm -rf var/cache/prod/*;

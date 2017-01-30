@@ -626,9 +626,9 @@ h4, .h4 {
 														{% for customerOrderService in customerOrder.customerOrderServices %}
 															<tr>
 																<td valign="top" class="dataTableContent">{{ customerOrderService.service.name }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: center">{{ customerOrderService.getEffectivePrice()|money_localized_format }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: center">{{ customerOrderService.quantity }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: center">{{ customerOrderService.getEffectivePriceAmount()|money_localized_format }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right">{{ customerOrderService.getEffectivePrice()|money_localized_format }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right">{{ customerOrderService.quantity }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right">{{ customerOrderService.getEffectivePriceAmount()|money_localized_format }}</td>
 															</tr>
 															{% if customerOrderService.comments %}
 																<tr>
@@ -655,9 +655,9 @@ h4, .h4 {
 														{% for customerOrderProduct in customerOrder.customerOrderProducts %}
 															<tr>
 																<td valign="top" class="dataTableContent">{{ customerOrderProduct.product.name }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: center">{{ '0' }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: center">{{ customerOrderProduct.quantity }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: center">{{ '0' }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right">{{ '0' }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right">{{ customerOrderProduct.quantity }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right">{{ '0' }}</td>
 															</tr>
 															{% if customerOrderProduct.comments %}
 																<tr>
@@ -669,6 +669,30 @@ h4, .h4 {
 												</td>
 											</tr>
 											{% endif %}
+
+
+											<tr>
+												<td valign="top">
+													<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
+
+															<tr>
+																<td valign="top" class="dataTableContent" style="">Subtotal</td>
+																<td valign="top" class="dataTableContent" style="text-align: center">{{ '0' }}</td>
+															</tr>
+
+															<tr>
+																<td valign="top" class="dataTableContent">Tax</td>
+																<td valign="top" class="dataTableContent" style="text-align: center">{{ '0' }}</td>
+															</tr>
+
+															<tr>
+																<td valign="top" class="dataTableContent">Total</td>
+																<td valign="top" class="dataTableContent" style="text-align: center">{{ '0' }}</td>
+															</tr>
+
+													</table>
+												</td>
+											</tr>
 										</table>
 										<!-- // End Module: Standard Content \\ -->
 									</td>

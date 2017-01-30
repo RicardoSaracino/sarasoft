@@ -127,6 +127,23 @@ class CustomerOrderController extends Controller
 		]);
 	}
 
+	/**
+	 * Lists all paid customerOrder entities.
+	 *
+	 * @Route("/list/paid", name="customer_order_list_paid")
+	 * @Method({"GET", "POST"})
+	 */
+	public function listPaidAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_PAID);
+
+		return $this->render('customerorder/list_paid.html.twig', [
+			'customerOrders' => $customerOrders,
+		]);
+	}
+
     /**
      * Lists all customerOrder entities for the given customer.
 	 *
@@ -174,8 +191,23 @@ class CustomerOrderController extends Controller
             $em->persist($customerOrder);
             $em->flush($customerOrder);
 
-            return $this->redirectToRoute('show_customer_order', array('id' => $customerOrder->getId()));
-        }
+			if ($form->isSubmitted() && $form->isValid()) {
+
+				$customerOrder->setStatus(CustomerOrder::STATUS_BOOKED);
+
+				$this->getDoctrine()->getManager()->flush();
+
+				if ($request->request->get('customerOrder_status_inprogress')) {
+					return $this->redirectToRoute('edit_customer_order_inprogress', ['id' => $customerOrder->getId()]);
+				} else {
+					if ($request->request->get('customerOrder_status_complete')) {
+						return $this->redirectToRoute('edit_customer_order_complete', ['id' => $customerOrder->getId()]);
+					}
+				}
+
+				return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
+			}
+		}
 
         return $this->render('customerorder/new.html.twig', array(
             'customerOrder' => $customerOrder,
@@ -307,40 +339,6 @@ class CustomerOrderController extends Controller
 	/**
 	 * Displays a form to edit or cancel an existing customerOrder entity.
 	 *
-	 * @Route("/{id}/edit/cancel", name="edit_customer_order_cancelled")
-	 * @Method({"GET", "POST"})
-	 */
-	public function editCancelAction(Request $request, CustomerOrder $customerOrder)
-	{
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusCancelledType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusCancelled']]);
-
-		$form->handleRequest($request);
-
-		if (!in_array($customerOrder->getStatus(), [CustomerOrder::STATUS_BOOKED, CustomerOrder::STATUS_CANCELLED])) {
-			$form->addError(new \Symfony\Component\Form\FormError('Cannot Cancel Order'));
-		}
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-			$customerOrder->setStatus(CustomerOrder::STATUS_CANCELLED);
-
-			$this->getDoctrine()->getManager()->flush();
-
-			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
-		}
-
-        return $this->render(
-			'customerorder/edit_cancelled.html.twig',
-			[
-				'customerOrder' => $customerOrder,
-				'form' => $form->createView()
-			]
-		);
-	}
-
-	/**
-	 * Displays a form to edit or cancel an existing customerOrder entity.
-	 *
 	 * @Route("/{id}/edit/inprogress", name="edit_customer_order_inprogress")
 	 * @Method({"GET", "POST"})
 	 */
@@ -455,6 +453,74 @@ class CustomerOrderController extends Controller
 
         return $this->render(
 			'customerorder/edit_invoiced.html.twig',
+			[
+				'customerOrder' => $customerOrder,
+				'form' => $form->createView()
+			]
+		);
+	}
+
+	/**
+     * Displays a form to edit or pay an existing customerOrder entity.
+     *
+     * @Route("/{id}/edit/paid", name="edit_customer_order_paid")
+     * @Method({"GET", "POST"})
+     */
+    public function editPaidAction(Request $request, CustomerOrder $customerOrder)
+    {
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusPaidType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusPaid']]);
+
+		$form->handleRequest($request);
+
+		if (!in_array($customerOrder->getStatus(), [CustomerOrder::STATUS_COMPLETE, CustomerOrder::STATUS_INVOICED, CustomerOrder::STATUS_PAID])) {
+			$form->addError(new \Symfony\Component\Form\FormError('Cannot Invoice Order'));
+		}
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+			$customerOrder->setStatus(CustomerOrder::STATUS_PAID);
+
+			$this->getDoctrine()->getManager()->flush();
+
+			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
+		}
+
+        return $this->render(
+			'customerorder/edit_paid.html.twig',
+			[
+				'customerOrder' => $customerOrder,
+				'form' => $form->createView()
+			]
+		);
+	}
+
+	/**
+	 * Displays a form to edit or cancel an existing customerOrder entity.
+	 *
+	 * @Route("/{id}/edit/cancel", name="edit_customer_order_cancelled")
+	 * @Method({"GET", "POST"})
+	 */
+	public function editCancelAction(Request $request, CustomerOrder $customerOrder)
+	{
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusCancelledType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusCancelled']]);
+
+		$form->handleRequest($request);
+
+		if (!in_array($customerOrder->getStatus(), [CustomerOrder::STATUS_BOOKED, CustomerOrder::STATUS_CANCELLED])) {
+			$form->addError(new \Symfony\Component\Form\FormError('Cannot Cancel Order'));
+		}
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+			$customerOrder->setStatus(CustomerOrder::STATUS_CANCELLED);
+
+			$this->getDoctrine()->getManager()->flush();
+
+			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
+		}
+
+        return $this->render(
+			'customerorder/edit_cancelled.html.twig',
 			[
 				'customerOrder' => $customerOrder,
 				'form' => $form->createView()

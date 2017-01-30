@@ -1,9 +1,9 @@
 {% extends 'page.html.twig' %}
 
-{% block title %}Invoice Order{% endblock %}
+{% block title %}Pay Order{% endblock %}
 
 {% block header %}
-	<h1>Invoice Order<br>
+	<h1>Pay Order<br>
 		<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.fullName }}</a></small>
 		<br>
 		<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
@@ -16,7 +16,6 @@
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<input type="submit" class="btn btn-default" value="Save">
-			<input type="submit" class="btn btn-default" value="Pay" name="{{ constant('STATUS_PAID',customerOrder) }}">
 			<a class="btn btn-default" href="{{ path('show_invoice_customer_order', {'id': customerOrder.id}) }}" target="_blank">View Invoice</a>
 		</div>
 	</div>
