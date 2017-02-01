@@ -169,7 +169,6 @@ class CustomerOrder
 	private $completionNotes;
 
 
-
 	/**
 	 * @var \DateTime
 	 *
@@ -205,8 +204,6 @@ class CustomerOrder
 	private $invoiceNotes;
 
 
-
-
 	/**
 	 * @var \DateTime
 	 *
@@ -225,7 +222,6 @@ class CustomerOrder
 	 * @Assert\NotBlank(message="Payment Notes should not be blank", groups={"StatusPayment"})
 	 */
 	private $paymentNotes;
-
 
 
 	/**
@@ -629,6 +625,7 @@ class CustomerOrder
 		if (!$this->invoiceSubtotalAmount) {
 			return new Money(0, new Currency($this->invoiceSubtotalCurrency));
 		}
+
 		return new Money($this->invoiceSubtotalAmount, new Currency($this->invoiceSubtotalCurrency));
 	}
 
@@ -662,7 +659,7 @@ class CustomerOrder
 	{
 		return $this->invoiceNotes;
 	}
-	
+
 	####################################################
 
 	/**
@@ -742,6 +739,64 @@ class CustomerOrder
 	{
 		return $this->cancellationNotes;
 	}
+
+	####################################################
+
+
+	/**
+	 * @return Money
+	 */
+	public function getCalculatedServiceTotal()
+	{
+		$serviceTotal = new \Money\Money(0, new \Money\Currency('CAD'));
+
+		/** @var CustomerOrderService $customerOrderService */
+		foreach ($this->getCustomerOrderServices() as $customerOrderService) {
+			$serviceTotal = $serviceTotal->add($customerOrderService->getEffectivePriceAmount());
+		}
+
+		return $serviceTotal;
+	}
+
+	/**
+	 * @return Money
+	 */
+	public function getCalculatedProductTotal()
+	{
+		$productTotal = new \Money\Money(0, new \Money\Currency('CAD'));
+
+		/** @var CustomerOrderProduct $customerOrderProduct */
+		foreach ($this->getCustomerOrderProducts() as $customerOrderProduct) {
+			$productTotal = $productTotal->add($customerOrderProduct->getEffectivePriceAmount());
+		}
+
+		return $productTotal;
+	}
+
+	/**
+	 * @return Money
+	 */
+	public function getCalculatedSubtotal()
+	{
+		return $this->getCalculatedServiceTotal()->add($this->getCalculatedProductTotal());
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCalculatedTax()
+	{
+		return new \Money\Money(3000, new \Money\Currency('CAD'));
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCalculatedTotal()
+	{
+		return new \Money\Money(300000, new \Money\Currency('CAD'));
+	}
+
 
 	####################################################
 

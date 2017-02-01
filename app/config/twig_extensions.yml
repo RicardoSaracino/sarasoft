@@ -8,6 +8,13 @@ services:
       arguments:
           - "@security.token_storage"
 
+  twig.user_money_extension:
+      class: AppBundle\Twig\UserMoneyExtension
+      tags:
+          - { name: twig.extension }
+      arguments:
+          - "@security.token_storage"
+
   twig.country_extension:
       class: AppBundle\Twig\CountryExtension
       tags:
@@ -23,7 +30,7 @@ services:
       tags:
           - { name: twig.extension }
 
-  twig.CustomerOrderRouting_extension:
+  twig.customerOrderRouting_extension:
       class: AppBundle\Twig\CustomerOrderRoutingExtension
       tags:
           - { name: twig.extension }

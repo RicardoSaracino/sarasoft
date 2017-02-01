@@ -1,0 +1,67 @@
+-- phpMyAdmin SQL Dump
+-- version 4.5.1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Feb 01, 2017 at 12:17 AM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 7.0.9
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `sarasoft`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_price`
+--
+
+CREATE TABLE `product_price` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `effective_from` date NOT NULL,
+  `price_amount` int(11) NOT NULL,
+  `price_currency` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `updated_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `product_price`
+--
+ALTER TABLE `product_price`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `product_id` (`product_id`,`effective_from`),
+  ADD KEY `updated_by` (`updated_by`),
+  ADD KEY `created_by` (`created_by`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `product_price`
+--
+ALTER TABLE `product_price`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `product_price`
+--
+ALTER TABLE `product_price`
+  ADD CONSTRAINT `product_price_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `product_price_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `product_price_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);

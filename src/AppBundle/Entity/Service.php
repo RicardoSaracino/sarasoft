@@ -30,7 +30,7 @@ class Service
 	 *
 	 * @ORM\OneToMany(targetEntity="ServicePrice", mappedBy="service", orphanRemoval=true, cascade={"persist", "remove"})
 	 * @ORM\OrderBy({"effectiveFrom" = "ASC"})
-     *
+	 *
 	 * @Assert\Valid()
 	 */
 	private $servicePrices;
@@ -85,9 +85,12 @@ class Service
 	 */
 	public function getEffectiveServicePrice(\DateTime $effectiveFrom)
 	{
-		return $this->getServicePrices()->filter(function($servicePrice) use ($effectiveFrom) {
-			return $servicePrice->getEffectiveFrom() >= $effectiveFrom;
-		})->first();
+		# todo efficiency
+		return $this->getServicePrices()->filter(
+			function ($servicePrice) use ($effectiveFrom) {
+				return $servicePrice->getEffectiveFrom() <= $effectiveFrom;
+			}
+		)->first();
 	}
 
 	/**

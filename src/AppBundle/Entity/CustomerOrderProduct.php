@@ -112,6 +112,34 @@ class CustomerOrderProduct
 	}
 
 	/**
+	 * @return \Money\Money
+	 * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+	 */
+	public function getEffectivePrice()
+	{
+		if( $productPrice = $this->product->getEffectiveProductPrice($this->getCustomerOrder()->getCompletedAt())){
+			return $productPrice->getPrice();
+		}
+
+		# todo handle not finding a price for the date
+		throw new \Symfony\Component\HttpKernel\Exception\HttpException(500, sprintf('Product "%s" has no effective price before "%s"', $this->product->getName(), $this->customerOrder->getCompletedAt()->format('Y-m-d')));
+	}
+
+	/**
+	 * @return \Money\Money
+	 * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+	 */
+	public function getEffectivePriceAmount()
+	{
+		if( $productPrice = $this->product->getEffectiveProductPrice($this->getCustomerOrder()->getCompletedAt())){
+			return $productPrice->getPrice()->multiply($this->getQuantity());
+		}
+
+		# todo handle not finding a price for the date
+		throw new \Symfony\Component\HttpKernel\Exception\HttpException(500, sprintf('Product "%s" has no effective price before "%s"', $this->product->getName(), $this->customerOrder->getCompletedAt()->format('Y-m-d')));
+	}
+
+	/**
 	 * @param integer $quantity
 	 * @return CustomerOrderProduct
 	 */

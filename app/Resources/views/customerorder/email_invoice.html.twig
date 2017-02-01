@@ -536,99 +536,103 @@ h4, .h4 {
 
 <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
 <center>
-	<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable">
-		<tr>
-			<td align="center" valign="top" style="padding-top:20px;">
-				<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer">
-					{#<tr>
-						<td align="center" valign="top">
-							<!-- // Begin Template Header \\ -->
-							<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader">
-								<tr>
-									<td class="headerContent">
+<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable">
+	<tr>
+		<td align="center" valign="top" style="padding-top:20px;">
+			<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer">
+				{#<tr>
+					<td align="center" valign="top">
+						<!-- // Begin Template Header \\ -->
+						<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader">
+							<tr>
+								<td class="headerContent">
 
-										<!-- // Begin Module: Standard Header Image \\ -->
-										<img src="http://gallery.mailchimp.com/653153ae841fd11de66ad181a/images/placeholder_600.gif" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext/>
-										<!-- // End Module: Standard Header Image \\ -->
+									<!-- // Begin Module: Standard Header Image \\ -->
+									<img src="http://gallery.mailchimp.com/653153ae841fd11de66ad181a/images/placeholder_600.gif" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext/>
+									<!-- // End Module: Standard Header Image \\ -->
 
-									</td>
-								</tr>
-							</table>
-							<!-- // End Template Header \\ -->
-						</td>
-					</tr>#}
-					<tr>
-						<td align="center" valign="top">
-							<!-- // Begin Template Body \\ -->
-							<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateBody">
-								<tr>
-									<td valign="top" class="bodyContent">
-										<table border="0" cellpadding="20" cellspacing="0" width="100%">
-											<tr>
-												<td valign="top" style="padding-bottom:10px;">
-													<table border="0" cellpadding="0" cellspacing="0" width="100%">
-														<tr>
-															<td valign="top"><div style="font-size: 23px; font-weight: bold">{{ customerOrder.company.name }} Invoice</div></td>
+								</td>
+							</tr>
+						</table>
+						<!-- // End Template Header \\ -->
+					</td>
+				</tr>#}
+				<tr>
+					<td align="center" valign="top">
+						<!-- // Begin Template Body \\ -->
+						<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateBody">
+							<tr>
+								<td valign="top" class="bodyContent">
+									<table border="0" cellpadding="20" cellspacing="0" width="100%">
+										<tr>
+											<td valign="top" style="padding-bottom:10px;">
+												<table border="0" cellpadding="0" cellspacing="0" width="100%">
+													<tr>
+														<td valign="top">
+															<div style="font-size: 23px; font-weight: bold">{{ customerOrder.company.name }} Invoice</div>
+														</td>
 
-															{# https://blog.serverdensity.com/handling-timezone-conversion-with-php-datetime/ #}
-															<td valign="top"><div style="text-align: right">{{ 'now'|date('r') }}</div></td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-											<tr>
-												<td valign="top" style="padding-top:0;">
-													<div>
-														{{ customerOrder.company.address.line1 }}<br/>
-														{% if customerOrder.company.address.line2 %}{{ customerOrder.company.address.line2 }}<br/>{% endif %}
-														{% if customerOrder.company.address.line3 %}{{ customerOrder.company.address.line3 }}<br/>{% endif %}
-														{{ customerOrder.company.address.city }}
-														{{ customerOrder.company.address.stateOrProvince|stateProvince }}
-														{{ customerOrder.company.address.zipOrPostalcode }}<br/>
-														{{ customerOrder.company.address.country|country }}<br/>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td valign="top" style="padding-top:0;">
-													<div>
-														{{ customerOrder.customer.fullName }}<br/>
-														{{ customerOrder.customer.address.line1 }}<br/>
-														{% if customerOrder.customer.address.line2 %}{{ customerOrder.customer.address.line2 }}<br/>{% endif %}
-														{% if customerOrder.customer.address.line3 %}{{ customerOrder.customer.address.line3 }}<br/>{% endif %}
-														{{ customerOrder.customer.address.city }}
-														{{ customerOrder.customer.address.stateOrProvince|stateProvince }}
-														{{ customerOrder.customer.address.zipOrPostalcode }}<br/>
-														{{ customerOrder.customer.address.country|country }}<br/>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td valign="top" style="padding-top:0;">
-													<div>
-														<strong>Completed</strong> {{ customerOrder.completedAt|date }}<br/>
+														{# https://blog.serverdensity.com/handling-timezone-conversion-with-php-datetime/ #}
+														<td valign="top">
+															<div style="text-align: right">{{ 'now'|date('r') }}</div>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td valign="top" style="padding-top:0;">
+												<div>
+													{{ customerOrder.company.address.line1 }}<br/>
+													{% if customerOrder.company.address.line2 %}{{ customerOrder.company.address.line2 }}<br/>{% endif %}
+													{% if customerOrder.company.address.line3 %}{{ customerOrder.company.address.line3 }}<br/>{% endif %}
+													{{ customerOrder.company.address.city }}
+													{{ customerOrder.company.address.stateOrProvince|stateProvince }}
+													{{ customerOrder.company.address.zipOrPostalcode }}<br/>
+													{{ customerOrder.company.address.country|country }}<br/>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td valign="top" style="padding-top:0;">
+												<div>
+													{{ customerOrder.customer.fullName }}<br/>
+													{{ customerOrder.customer.address.line1 }}<br/>
+													{% if customerOrder.customer.address.line2 %}{{ customerOrder.customer.address.line2 }}<br/>{% endif %}
+													{% if customerOrder.customer.address.line3 %}{{ customerOrder.customer.address.line3 }}<br/>{% endif %}
+													{{ customerOrder.customer.address.city }}
+													{{ customerOrder.customer.address.stateOrProvince|stateProvince }}
+													{{ customerOrder.customer.address.zipOrPostalcode }}<br/>
+													{{ customerOrder.customer.address.country|country }}<br/>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td valign="top" style="padding-top:0;">
+												<div>
+													<strong>Completed</strong> {{ customerOrder.completedAt|date }}<br/>
 
-														<p class="dateNotes" style="margin-top: 5px">{{ customerOrder.completionNotes|trim|nl2br }}</p>
-													</div>
-												</td>
-											</tr>
-											{% if customerOrder.customerOrderServices %}
+													<p class="dateNotes" style="margin-top: 5px">{{ customerOrder.completionNotes|trim|nl2br }}</p>
+												</div>
+											</td>
+										</tr>
+										{% if customerOrder.customerOrderServices %}
 											<tr>
 												<td valign="top" style="padding-top:0;">
 													<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
 														<tr>
-															<th scope="col" valign="top" width="55%" class="dataTableHeading">Service</th>
-															<th scope="col" valign="top" width="15%" class="dataTableHeading">Unit</th>
-															<th scope="col" valign="top" width="15%" class="dataTableHeading">Qty</th>
-															<th scope="col" valign="top" width="15%" class="dataTableHeading">Amount</th>
+															<th scope="col" valign="top" width="50%" class="dataTableHeading">Service</th>
+															<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Unit Price
+															</th>
+															<th scope="col" valign="top" width="10%" class="dataTableHeading" style="text-align: right;">Qty</th>
+															<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Amount</th>
 														</tr>
-
 														{% for customerOrderService in customerOrder.customerOrderServices %}
 															<tr>
 																<td valign="top" class="dataTableContent">{{ customerOrderService.service.name }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right">{{ customerOrderService.getEffectivePrice()|money_localized_format }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right">{{ customerOrderService.quantity }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right">{{ customerOrderService.getEffectivePriceAmount()|money_localized_format }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.getEffectivePrice()|user_money }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.quantity }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.getEffectivePriceAmount()|user_money }}</td>
 															</tr>
 															{% if customerOrderService.comments %}
 																<tr>
@@ -639,25 +643,24 @@ h4, .h4 {
 													</table>
 												</td>
 											</tr>
-											{% endif %}
+										{% endif %}
 
-											{% if customerOrder.customerOrderProducts %}
+										{% if customerOrder.customerOrderProducts %}
 											<tr>
 												<td valign="top">
 													<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
 														<tr>
-															<th scope="col" valign="top" width="55%" class="dataTableHeading">Product</th>
-															<th scope="col" valign="top" width="15%" class="dataTableHeading">Unit</th>
-															<th scope="col" valign="top" width="15%" class="dataTableHeading">Qty</th>
-															<th scope="col" valign="top" width="15%" class="dataTableHeading">Amount</th>
+															<th scope="col" valign="top" width="50%" class="dataTableHeading">Product</th>
+															<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Unit Price</th>
+															<th scope="col" valign="top" width="10%" class="dataTableHeading" style="text-align: right;">Qty</th>
+															<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Amount</th>
 														</tr>
-
 														{% for customerOrderProduct in customerOrder.customerOrderProducts %}
 															<tr>
 																<td valign="top" class="dataTableContent">{{ customerOrderProduct.product.name }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right">{{ '0' }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right">{{ customerOrderProduct.quantity }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right">{{ '0' }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.getEffectivePrice|user_money }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.quantity }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.getEffectivePriceAmount|user_money }}</td>
 															</tr>
 															{% if customerOrderProduct.comments %}
 																<tr>
@@ -668,74 +671,70 @@ h4, .h4 {
 													</table>
 												</td>
 											</tr>
-											{% endif %}
+										{% endif %}
 
 
-											<tr>
-												<td valign="top">
-													<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
-
-															<tr>
-																<td valign="top" class="dataTableContent" style="">Subtotal</td>
-																<td valign="top" class="dataTableContent" style="text-align: center">{{ '0' }}</td>
-															</tr>
-
-															<tr>
-																<td valign="top" class="dataTableContent">Tax</td>
-																<td valign="top" class="dataTableContent" style="text-align: center">{{ '0' }}</td>
-															</tr>
-
-															<tr>
-																<td valign="top" class="dataTableContent">Total</td>
-																<td valign="top" class="dataTableContent" style="text-align: center">{{ '0' }}</td>
-															</tr>
-
-													</table>
-												</td>
-											</tr>
-										</table>
-										<!-- // End Module: Standard Content \\ -->
-									</td>
-								</tr>
-							</table>
-							<!-- // End Template Body \\ -->
-						</td>
-					</tr>
-					<tr>
-						<td align="center" valign="top">
-							<!-- // Begin Template Footer \\ -->
-							<table border="0" cellpadding="10" cellspacing="0" width="600" id="templateFooter">
-								<tr>
-									<td valign="top" class="footerContent">
-										<!-- // Begin Module: Transactional Footer \\ -->
-										<table border="0" cellpadding="10" cellspacing="0" width="100%">
-											<tr>
-												<td valign="middle" align="center" id="utility">
-													<div>
-														&nbsp;<a href="{{ customerOrder.company.websiteUrl }}" target="_blank">Website</a> | <a href="{{ customerOrder.company.facebookUrl }}" target="_blank">Facebook</a>&nbsp;
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td valign="top" align="center">
-													<div>
-														<em>Copyright &copy; 2016 Sarasoft, All rights reserved.</em>
-													</div>
-												</td>
-											</tr>
-										</table>
-										<!-- // End Module: Transactional Footer \\ -->
-									</td>
-								</tr>
-							</table>
-							<!-- // End Template Footer \\ -->
-						</td>
-					</tr>
-				</table>
-				<br/>
-			</td>
-		</tr>
-	</table>
+										<tr>
+											<td valign="top">
+												<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
+													<tr>
+														<td valign="top" width="80%" class="dataTableContent" style="text-align: right;">Subtotal</td>
+														<td valign="top" width="20%" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrder.getCalculatedSubtotal|user_money }}</td>
+													</tr>
+													<tr>
+														<td valign="top" width="80%" class="dataTableContent" style="text-align: right;">Tax</td>
+														<td valign="top" width="20%" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrder.getCalculatedTax|user_money }}</td>
+													</tr>
+													<tr>
+														<td valign="top" width="80%" class="dataTableContent" style="text-align: right;">Total</td>
+														<td valign="top" width="20%" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrder.getCalculatedTotal|user_money }}</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+									<!-- // End Module: Standard Content \\ -->
+								</td>
+							</tr>
+						</table>
+						<!-- // End Template Body \\ -->
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="top">
+						<!-- // Begin Template Footer \\ -->
+						<table border="0" cellpadding="10" cellspacing="0" width="600" id="templateFooter">
+							<tr>
+								<td valign="top" class="footerContent">
+									<!-- // Begin Module: Transactional Footer \\ -->
+									<table border="0" cellpadding="10" cellspacing="0" width="100%">
+										<tr>
+											<td valign="middle" align="center" id="utility">
+												<div>
+													&nbsp;<a href="{{ customerOrder.company.websiteUrl }}" target="_blank">Website</a> | <a href="{{ customerOrder.company.facebookUrl }}" target="_blank">Facebook</a>&nbsp;
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td valign="top" align="center">
+												<div>
+													<em>Copyright &copy; 2016 Sarasoft, All rights reserved.</em>
+												</div>
+											</td>
+										</tr>
+									</table>
+									<!-- // End Module: Transactional Footer \\ -->
+								</td>
+							</tr>
+						</table>
+						<!-- // End Template Footer \\ -->
+					</td>
+				</tr>
+			</table>
+			<br/>
+		</td>
+	</tr>
+</table>
 </center>
 </body>
 </html>

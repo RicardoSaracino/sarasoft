@@ -6,9 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-use Money\Currency;
-use Money\Money;
-
 /**
  * ServicePrice
  *
@@ -16,13 +13,14 @@ use Money\Money;
  * @ORM\Entity
  *
  * todo UniqueEntity(
- *	fields={service_id,effective_from}
- *	errorPath="effective_from",
- *	message="This service is already effective on this date."
+ *    fields={service_id,effective_from}
+ *    errorPath="effective_from",
+ *    message="This service is already effective on this date."
  * )
  */
 class ServicePrice
 {
+	use \AppBundle\Entity\Traits\Priceable;
 	use \AppBundle\Entity\Traits\Timestampable;
 	use \AppBundle\Entity\Traits\Blameable;
 
@@ -45,30 +43,6 @@ class ServicePrice
 	 */
 	private $service;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="effective_from", type="date", nullable=false)
-	 *
-	 * @Assert\NotBlank()
-	 */
-	private $effectiveFrom;
-
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="price_amount", type="integer", nullable=false)
-	 */
-	private $priceAmount;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="price_currency", type="string", length=64, nullable=false, options={"default" : "CAD"})
-	 *
-	 * @Assert\NotBlank()
-	 */
-	private $priceCurrency = 'CAD';
 
 	/**
 	 * @return int
@@ -95,50 +69,5 @@ class ServicePrice
 	public function getService()
 	{
 		return $this->service;
-	}
-
-	/**
-	 * @param $effectiveFrom
-	 * @return $this
-	 */
-	public function setEffectiveFrom($effectiveFrom)
-	{
-		$this->effectiveFrom = $effectiveFrom;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getEffectiveFrom()
-	{
-		return $this->effectiveFrom;
-	}
-
-	/**
-	 * @return Money|null
-	 */
-	public function getPrice()
-	{
-		if (!$this->priceCurrency) {
-			return null;
-		}
-		if (!$this->priceAmount) {
-			return new Money(0, new Currency($this->priceCurrency));
-		}
-		return new Money($this->priceAmount, new Currency($this->priceCurrency));
-	}
-
-	/**
-	 * @param Money $price
-	 * @return $this
-	 */
-	public function setPrice(Money $price)
-	{
-		$this->priceAmount = $price->getAmount();
-		$this->priceCurrency = $price->getCurrency()->getCode();
-
-		return $this;
 	}
 }
