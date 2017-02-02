@@ -1,16 +1,19 @@
 {% extends 'page.html.twig' %}
 
-{% block title %}Edit Service{% endblock %}
+{% block title %}Add Service Price{% endblock %}
 
-{% block header %}<h1>Edit Service</h1>{% endblock %}
-
+{% block header %}
+	<h1>Add Service Price<br>
+		<br>
+		<small>{{ servicePrice.service.name }}</small>
+	</h1>
+{% endblock %}
 {% block main %}
 	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'autocomplete':'off' }}) }}
 	{{ form_widget(form) }}
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<input type="submit" class="btn btn-default" value="Save">
-			<input type="submit" class="btn btn-default" name="addServicePrice" value="Add Price">
 		</div>
 	</div>
 	{{ form_end(form) }}

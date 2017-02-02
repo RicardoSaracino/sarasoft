@@ -9,10 +9,10 @@ use Symfony\Component\Form\Extension\Core\Type as Type;
 
 
 /**
- * Class ServiceType
+ * Class ServiceNewType
  * @package AppBundle\Form\Type
  */
-class ServiceType extends AbstractType
+class ServiceNewType extends AbstractType
 {
 	/**
 	 * {@inheritdoc}

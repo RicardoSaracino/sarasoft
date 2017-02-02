@@ -24,6 +24,8 @@ bower install symfony-collection#master -add
 					{% endfor %}
 					{% if prototype is defined %}
 						{{ block('collection_options') }}
+					{% else %}
+						<br>
 					{% endif %}
 				</div>
 			</div>
