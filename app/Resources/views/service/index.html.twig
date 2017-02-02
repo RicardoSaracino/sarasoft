@@ -17,6 +17,8 @@
 				<tr>
 					<th>Name</th>
 					<th>Description</th>
+					<th>Current Price</th>
+					<th>Effective</th>
 					<th>Actions</th>
 				</tr>
 				</thead>
@@ -25,6 +27,8 @@
 					<tr>
 						<td>{{ service.name }}</td>
 						<td>{{ service.description }}</td>
+						<td>{{ service.getCurrentServicePrice.price|user_money }}</td>
+						<td>{{ service.getCurrentServicePrice.effectiveFrom|user_date }}</td>
 						<td>
 							<ul class="nav nav-pills">
 								<li>

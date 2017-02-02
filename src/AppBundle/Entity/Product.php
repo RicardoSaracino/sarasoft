@@ -82,7 +82,15 @@ class Product
 			function ($productPrice) use ($effectiveFrom) {
 				return $productPrice->getEffectiveFrom() <= $effectiveFrom;
 			}
-		)->first();
+		)->last();
+	}
+
+	/**
+	 * @return \AppBundle\Entity\ProductPrice
+	 */
+	public function getCurrentProductPrice()
+	{
+		return $this->getEffectiveProductPrice(new \DateTime('now'));
 	}
 
 	/**

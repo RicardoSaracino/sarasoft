@@ -90,7 +90,15 @@ class Service
 			function ($servicePrice) use ($effectiveFrom) {
 				return $servicePrice->getEffectiveFrom() <= $effectiveFrom;
 			}
-		)->first();
+		)->last();
+	}
+
+	/**
+	 * @return \AppBundle\Entity\ServicePrice
+	 */
+	public function getCurrentServicePrice()
+	{
+		return $this->getEffectiveServicePrice(new \DateTime('now'));
 	}
 
 	/**
