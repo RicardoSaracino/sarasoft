@@ -47,17 +47,17 @@ class CustomerOrderRoutingExtension extends \Twig_Extension
 	{
 		switch ($customerOrder->getStatus()) {
 			case CustomerOrder::STATUS_BOOKED:
-				return $this->generator->generate('edit_customer_order_booked', ['id' => $customerOrder->getId()]);
+				return $this->generator->generate('customer_order_edit_booked', ['id' => $customerOrder->getId()]);
 			case CustomerOrder::STATUS_INPROGRESS:
-				return $this->generator->generate('edit_customer_order_inprogress', ['id' => $customerOrder->getId()]);
+				return $this->generator->generate('customer_order_edit_inprogress', ['id' => $customerOrder->getId()]);
 			case CustomerOrder::STATUS_COMPLETE:
-				return $this->generator->generate('edit_customer_order_complete', ['id' => $customerOrder->getId()]);
+				return $this->generator->generate('customer_order_edit_complete', ['id' => $customerOrder->getId()]);
 			case CustomerOrder::STATUS_INVOICED:
-				return $this->generator->generate('edit_customer_order_invoice', ['id' => $customerOrder->getId()]);
+				return $this->generator->generate('customer_order_edit_invoice', ['id' => $customerOrder->getId()]);
 			case CustomerOrder::STATUS_PAID:
-				return $this->generator->generate('edit_customer_order_paid', ['id' => $customerOrder->getId()]);
+				return $this->generator->generate('customer_order_edit_paid', ['id' => $customerOrder->getId()]);
 			case CustomerOrder::STATUS_CANCELLED:
-				return $this->generator->generate('edit_customer_order_cancelled', ['id' => $customerOrder->getId()]);
+				return $this->generator->generate('customer_order_edit_cancelled', ['id' => $customerOrder->getId()]);
 		}
 	}
 }

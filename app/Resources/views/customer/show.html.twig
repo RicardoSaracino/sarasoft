@@ -53,7 +53,7 @@
 	{{ nav.item('List Companies', path('customer_index')) }}
 	{{ nav.item('Edit Customer', path('customer_edit', { 'id': customer.id })) }}
 	{{ nav.item('New Customer', path('customer_new')) }}
-	{{ nav.item('List Customer Orders', path('listCustomerOrdersByCustomer', { 'customer_id': customer.id })) }}
-	{{ nav.item('New Customer Order', path('newCustomerOrderForCustomer', { 'customer_id': customer.id })) }}
+	{{ nav.item('List Customer Orders', path('customer_list_customer_orders', { 'customer_id': customer.id })) }}
+	{{ nav.item('New Customer Order', path('customer_order_new', { 'customer_id': customer.id })) }}
 	{{ nav.end }}
 {% endblock %}

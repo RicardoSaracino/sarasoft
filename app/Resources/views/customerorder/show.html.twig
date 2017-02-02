@@ -63,7 +63,7 @@
 
 	{{ nav.item('List All Orders', path('customer_order_list_all')) }}
 
-	{{ nav.item('List Customer Orders', path('newCustomerOrderForCustomer', { 'customer_id': customerOrder.customer.id })) }}
+	{{ nav.item('List Customer Orders', path('customer_order_new', { 'customer_id': customerOrder.customer.id })) }}
 
 	{{ nav.item('Edit Customer Order', customer_order_path(customerOrder)) }}
 

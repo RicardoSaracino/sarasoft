@@ -147,7 +147,7 @@ class CustomerOrderController extends Controller
     /**
      * Lists all customerOrder entities for the given customer.
 	 *
-	 * @Route("/customer/{customer_id}", name="listCustomerOrdersByCustomer")
+	 * @Route("/customer/{customer_id}", name="customer_list_customer_orders")
 	 *
 	 * @ParamConverter("customer", options={"mapping": {"customer_id" : "id"}})
 	 *
@@ -168,7 +168,7 @@ class CustomerOrderController extends Controller
     /**
      * Creates a new booked customerOrder entity.
      *
-     * @Route("/customer/{customer_id}/new", name="newCustomerOrderForCustomer")
+     * @Route("/customer/{customer_id}/new", name="customer_order_new")
 	 *
 	 * @ParamConverter("customer", options={"mapping": {"customer_id" : "id"}})
 	 *
@@ -198,10 +198,10 @@ class CustomerOrderController extends Controller
 				$this->getDoctrine()->getManager()->flush();
 
 				if ($request->request->get('customerOrder_status_inprogress')) {
-					return $this->redirectToRoute('edit_customer_order_inprogress', ['id' => $customerOrder->getId()]);
+					return $this->redirectToRoute('customer_order_edit_inprogress', ['id' => $customerOrder->getId()]);
 				} else {
 					if ($request->request->get('customerOrder_status_complete')) {
-						return $this->redirectToRoute('edit_customer_order_complete', ['id' => $customerOrder->getId()]);
+						return $this->redirectToRoute('customer_order_edit_complete', ['id' => $customerOrder->getId()]);
 					}
 				}
 
@@ -290,7 +290,7 @@ class CustomerOrderController extends Controller
     /**
      * Displays a form to edit an existing booked customerOrder entity.
      *
-     * @Route("/{id}/edit/book", name="edit_customer_order_booked")
+     * @Route("/{id}/edit/book", name="customer_order_edit_booked")
      * @Method({"GET", "POST"})
      */
     public function editBookedAction(Request $request, CustomerOrder $customerOrder)
@@ -311,15 +311,15 @@ class CustomerOrderController extends Controller
 			$this->getDoctrine()->getManager()->flush();
 
 			if ($request->request->get('customerOrder_status_inprogress')) {
-				return $this->redirectToRoute('edit_customer_order_inprogress', ['id' => $customerOrder->getId()]);
+				return $this->redirectToRoute('customer_order_edit_inprogress', ['id' => $customerOrder->getId()]);
 
 			} else {
 				if ($request->request->get('customerOrder_status_complete')) {
-					return $this->redirectToRoute('edit_customer_order_complete', ['id' => $customerOrder->getId()]);
+					return $this->redirectToRoute('customer_order_edit_complete', ['id' => $customerOrder->getId()]);
 
 				} else {
 					if ($request->request->get('customerOrder_status_cancelled')) {
-						return $this->redirectToRoute('edit_customer_order_cancelled', ['id' => $customerOrder->getId()]);
+						return $this->redirectToRoute('customer_order_edit_cancelled', ['id' => $customerOrder->getId()]);
 					}
 				}
 			}
@@ -339,7 +339,7 @@ class CustomerOrderController extends Controller
 	/**
 	 * Displays a form to edit or cancel an existing customerOrder entity.
 	 *
-	 * @Route("/{id}/edit/inprogress", name="edit_customer_order_inprogress")
+	 * @Route("/{id}/edit/inprogress", name="customer_order_edit_inprogress")
 	 * @Method({"GET", "POST"})
 	 */
 	public function editInProgressAction(Request $request, CustomerOrder $customerOrder)
@@ -359,7 +359,7 @@ class CustomerOrderController extends Controller
 			$this->getDoctrine()->getManager()->flush();
 
 			if ($request->request->get('customerOrder_status_complete')) {
-				return $this->redirectToRoute('edit_customer_order_complete', ['id' => $customerOrder->getId()]);
+				return $this->redirectToRoute('customer_order_edit_complete', ['id' => $customerOrder->getId()]);
 			}
 
 			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
@@ -377,7 +377,7 @@ class CustomerOrderController extends Controller
 	/**
      * Displays a form to edit or complete an existing customerOrder entity.
      *
-     * @Route("/{id}/edit/complete", name="edit_customer_order_complete")
+     * @Route("/{id}/edit/complete", name="customer_order_edit_complete")
      * @Method({"GET", "POST"})
      */
     public function editCompleteAction(Request $request, CustomerOrder $customerOrder)
@@ -407,7 +407,7 @@ class CustomerOrderController extends Controller
 			$this->getDoctrine()->getManager()->flush();
 
 			if ($request->request->get('customerOrder_status_invoiced')) {
-				return $this->redirectToRoute('edit_customer_order_invoice', ['id' => $customerOrder->getId()]);
+				return $this->redirectToRoute('customer_order_edit_invoice', ['id' => $customerOrder->getId()]);
 			}
 
 			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
@@ -425,7 +425,7 @@ class CustomerOrderController extends Controller
 	/**
      * Displays a form to edit or complete an existing customerOrder entity.
      *
-     * @Route("/{id}/edit/invoice", name="edit_customer_order_invoice")
+     * @Route("/{id}/edit/invoice", name="customer_order_edit_invoice")
      * @Method({"GET", "POST"})
      */
     public function editInvoiceAction(Request $request, CustomerOrder $customerOrder)
@@ -445,7 +445,7 @@ class CustomerOrderController extends Controller
 			$this->getDoctrine()->getManager()->flush();
 
 			if ($request->request->get('customerOrder_status_paid')) {
-				return $this->redirectToRoute('edit_customer_order_paid', ['id' => $customerOrder->getId()]);
+				return $this->redirectToRoute('customer_order_edit_paid', ['id' => $customerOrder->getId()]);
 			}
 
 			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
@@ -463,7 +463,7 @@ class CustomerOrderController extends Controller
 	/**
      * Displays a form to edit or pay an existing customerOrder entity.
      *
-     * @Route("/{id}/edit/paid", name="edit_customer_order_paid")
+     * @Route("/{id}/edit/paid", name="customer_order_edit_paid")
      * @Method({"GET", "POST"})
      */
     public function editPaidAction(Request $request, CustomerOrder $customerOrder)

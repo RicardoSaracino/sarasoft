@@ -78,7 +78,7 @@ class CustomerOrderCalendarListener
 
 					$calEvent = new CustomerOrderCalendarEvent('Booked', $customerOrder->getBookedFrom());
 
-					$calEvent->setUrl($this->router->generate('edit_customer_order_booked', array('id' => $customerOrder->getId())));
+					$calEvent->setUrl($this->router->generate('customer_order_edit_booked', array('id' => $customerOrder->getId())));
 
 					$calEvent->setStartDate($customerOrder->getBookedFrom());
 
@@ -93,7 +93,7 @@ class CustomerOrderCalendarListener
 
 					$calEvent = new CustomerOrderCalendarEvent('In Progress', $customerOrder->getProgressStartedAt());
 
-					$calEvent->setUrl($this->router->generate('edit_customer_order_inprogress', array('id' => $customerOrder->getId())));
+					$calEvent->setUrl($this->router->generate('customer_order_edit_inprogress', array('id' => $customerOrder->getId())));
 
 					$calEvent->setStartDate($customerOrder->getProgressStartedAt());
 
@@ -108,7 +108,7 @@ class CustomerOrderCalendarListener
 
 					$calEvent = new CustomerOrderCalendarEvent('Complete', $customerOrder->getCompletedAt());
 
-					$calEvent->setUrl($this->router->generate('edit_customer_order_complete', array('id' => $customerOrder->getId())));
+					$calEvent->setUrl($this->router->generate('customer_order_edit_complete', array('id' => $customerOrder->getId())));
 
 					$calEvent->setNotes($customerOrder->getCompletionNotes());
 
@@ -118,7 +118,7 @@ class CustomerOrderCalendarListener
 
 					$calEvent = new CustomerOrderCalendarEvent('Invoiced', $customerOrder->getInvoicedAt());
 
-					$calEvent->setUrl($this->router->generate('edit_customer_order_invoice', array('id' => $customerOrder->getId())));
+					$calEvent->setUrl($this->router->generate('customer_order_edit_invoice', array('id' => $customerOrder->getId())));
 
 					$calEvent->setNotes($customerOrder->getInvoiceNotes());
 
@@ -128,7 +128,7 @@ class CustomerOrderCalendarListener
 
 					$calEvent = new CustomerOrderCalendarEvent('Paid', $customerOrder->getInvoicedAt());
 
-					$calEvent->setUrl($this->router->generate('edit_customer_order_invoice', array('id' => $customerOrder->getId())));
+					$calEvent->setUrl($this->router->generate('customer_order_edit_invoice', array('id' => $customerOrder->getId())));
 
 					$calEvent->setNotes($customerOrder->getPaymentNotes());
 
@@ -138,7 +138,7 @@ class CustomerOrderCalendarListener
 
 					$calEvent = new CustomerOrderCalendarEvent('Cancelled', $customerOrder->getCancelledAt());
 
-					$calEvent->setUrl($this->router->generate('edit_customer_order_cancelled', array('id' => $customerOrder->getId())));
+					$calEvent->setUrl($this->router->generate('customer_order_edit_cancelled', array('id' => $customerOrder->getId())));
 
 					$calEvent->setNotes($customerOrder->getCancellationNotes());
 
