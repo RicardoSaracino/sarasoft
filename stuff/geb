@@ -1,0 +1,4 @@
+php bin\console doctrine:mapping:convert annotation ./src/App/MyBundle/Resources/config/doctrine --from-database --filter="tax_rate"
+
+
+php bin\console orm:convert:mapping --force --from-database annotation ./src/App/Entities

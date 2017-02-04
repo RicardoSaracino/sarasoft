@@ -786,7 +786,9 @@ class CustomerOrder
 	 */
 	public function getCalculatedTax()
 	{
-		return new \Money\Money(3000, new \Money\Currency('CAD'));
+
+
+		return $this->getCalculatedSubtotal();
 	}
 
 	/**

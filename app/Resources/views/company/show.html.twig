@@ -31,19 +31,17 @@
 
 	{{ table.row_title('company.label.address') }}
 
-	{{ table.row('address.label.line1', company.address.line1) }}
+	{{ table.row('address.label.countryCode', company.address.countryCode|country) }}
 
-	{{ table.row('address.label.line2', company.address.line2) }}
+	{{ table.row('address.label.administrativeArea', company.address.administrativeArea|administrative_area) }}
 
-	{{ table.row('address.label.line3', company.address.line3) }}
+	{{ table.row('address.label.locality', company.address.locality) }}
 
-	{{ table.row('address.label.city', company.address.city) }}
+	{{ table.row('address.label.postalCode', company.address.postalCode) }}
 
-	{{ table.row('address.label.zipOrPostalcode', company.address.zipOrPostalcode) }}
+	{{ table.row('address.label.addressLine1', company.address.addressLine1) }}
 
-	{{ table.row('address.label.stateOrProvince', company.address.stateOrProvince|stateProvince) }}
-
-	{{ table.row('address.label.country', company.address.country|country) }}
+	{{ table.row('address.label.addressLine2', company.address.addressLine2) }}
 
 	{{ table.row_created(company.address) }}
 

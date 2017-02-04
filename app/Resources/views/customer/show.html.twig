@@ -26,19 +26,17 @@
 
 	{{ table.row_title('customer.label.homeAddress') }}
 
-	{{ table.row('address.label.line1', customer.address.line1) }}
+	{{ table.row('address.label.countryCode', customer.address.countryCode|country) }}
 
-	{{ table.row('address.label.line2', customer.address.line2) }}
+	{{ table.row('address.label.administrativeArea', customer.address.administrativeArea|administrative_area) }}
 
-	{{ table.row('address.label.line3', customer.address.line3) }}
+	{{ table.row('address.label.locality', customer.address.locality) }}
 
-	{{ table.row('address.label.city', customer.address.city) }}
+	{{ table.row('address.label.postalCode', customer.address.postalCode) }}
 
-	{{ table.row('address.label.zipOrPostalcode', customer.address.zipOrPostalcode) }}
+	{{ table.row('address.label.addressLine1', customer.address.addressLine1) }}
 
-	{{ table.row('address.label.stateOrProvince', customer.address.stateOrProvince|stateProvince) }}
-
-	{{ table.row('address.label.country', customer.address.country|country) }}
+	{{ table.row('address.label.addressLine2', customer.address.addressLine2) }}
 
 	{{ table.row_created(customer.address) }}
 

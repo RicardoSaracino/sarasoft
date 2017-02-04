@@ -21,13 +21,13 @@ class AddressType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('line1', Type\TextType::class, ['label' => 'address.label.line1'])
-			->add('line2', Type\TextType::class, ['label' => 'address.label.line2'])
-			->add('line3', Type\TextType::class, ['label' => 'address.label.line3'])
-			->add('city', Type\TextType::class, ['label' => 'address.label.city'])
-			->add('zipOrPostalcode', Type\TextType::class, ['label' => 'address.label.zipOrPostalcode'])
-			->add('stateOrProvince',StateProvinceType::class, ['label' => 'address.label.stateOrProvince', 'preferred_choices' => ['ON']])
-			->add('country',Type\CountryType::class, ['label' => 'address.label.country', 'preferred_choices' => ['CA','US']]);
+			->add('addressLine1', Type\TextType::class, ['label' => 'address.label.addressLine1'])
+			->add('addressLine2', Type\TextType::class, ['label' => 'address.label.addressLine2'])
+			->add('postalCode', Type\TextType::class, ['label' => 'address.label.postalCode'])
+			->add('locality', Type\TextType::class, ['label' => 'address.label.locality'])
+			->add('administrativeArea',AdministrativeAreaType::class, ['label' => 'address.label.administrativeArea', 'preferred_choices' => ['ON']])
+			->add('countryCode',Type\CountryType::class, ['label' => 'address.label.countryCode', 'preferred_choices' => ['CA','US']])
+		;
     }
 
     /**

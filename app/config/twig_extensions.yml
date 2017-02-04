@@ -25,8 +25,8 @@ services:
       tags:
           - { name: twig.extension }
 
-  twig.stateProvince_extension:
-      class: AppBundle\Twig\StateProvinceExtension
+  twig.AdministrativeArea_extension:
+      class: AppBundle\Twig\AdministrativeAreaExtension
       tags:
           - { name: twig.extension }
 

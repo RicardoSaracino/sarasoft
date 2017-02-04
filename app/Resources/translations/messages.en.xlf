@@ -22,33 +22,29 @@
 
             <!-- Address -->
 
-            <trans-unit id="address.label.line1">
-                <source>address.label.line1</source>
-                <target>Line 1</target>
+            <trans-unit id="address.label.countryCode">
+                <source>address.label.countryCode</source>
+                <target>Country</target>
             </trans-unit>
-            <trans-unit id="address.label.line2">
-                <source>address.label.line2</source>
-                <target>Line 2</target>
-            </trans-unit>
-            <trans-unit id="address.label.line3">
-                <source>address.label.line3</source>
-                <target>Line 3</target>
-            </trans-unit>
-            <trans-unit id="address.label.city">
-                <source>address.label.city</source>
-                <target>City</target>
-            </trans-unit>
-            <trans-unit id="address.label.zipOrPostalcode">
-                <source>address.label.zipOrPostalcode</source>
-                <target>Postal Code</target>
-            </trans-unit>
-            <trans-unit id="address.label.stateOrProvince">
-                <source>address.label.stateOrProvince</source>
+            <trans-unit id="address.label.administrativeArea">
+                <source>address.label.administrativeArea</source>
                 <target>Province</target>
             </trans-unit>
-            <trans-unit id="address.label.country">
-                <source>address.label.country</source>
-                <target>Country</target>
+            <trans-unit id="address.label.locality">
+                <source>address.label.locality</source>
+                <target>City</target>
+            </trans-unit>
+            <trans-unit id="address.label.postalCode">
+                <source>address.label.postalCode</source>
+                <target>Postal Code</target>
+            </trans-unit>
+            <trans-unit id="address.label.addressLine1">
+                <source>address.label.addressLine1</source>
+                <target>Line 1</target>
+            </trans-unit>
+            <trans-unit id="address.label.addressLine2">
+                <source>address.label.addressLine2</source>
+                <target>Line 2</target>
             </trans-unit>
 
 

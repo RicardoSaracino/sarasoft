@@ -12,10 +12,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use \Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
- * Class StateProvinceType
+ * Class AdministrativeAreaType
  * @package AppBundle\Form\Type
  */
-class StateProvinceType extends ChoiceType
+class AdministrativeAreaType extends ChoiceType
 {
 	/**
 	 * {@inheritdoc}
@@ -23,7 +23,7 @@ class StateProvinceType extends ChoiceType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults([
-				'choices' => \AppBundle\Util\StateProvince::getOptions(),
+				'choices' => \AppBundle\Util\AdministrativeArea::getOptions(),
 				'choice_translation_domain' => false,
 		]);
 	}
@@ -41,6 +41,6 @@ class StateProvinceType extends ChoiceType
 	 */
 	public function getBlockPrefix()
 	{
-		return 'state_province';
+		return 'administrative_are';
 	}
 }

@@ -112,8 +112,8 @@ class CustomerOrderService
 	}
 
 	/**
-	 * @return \Money\Money
-	 * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+	 * @return \Money\Money|null
+	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
 	 */
 	public function getEffectivePrice()
 	{
@@ -122,12 +122,12 @@ class CustomerOrderService
 		}
 
 		# todo handle not finding a price for the date
-		throw new \Symfony\Component\HttpKernel\Exception\HttpException(500, sprintf('Service "%s" has no effective price before "%s"', $this->service->getName(), $this->customerOrder->getCompletedAt()->format('Y-m-d')));
+		throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException(sprintf('Service "%s" has no effective price before "%s"', $this->service->getName(), $this->customerOrder->getCompletedAt()->format('Y-m-d')));
 	}
 
 	/**
 	 * @return \Money\Money
-	 * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
 	 */
 	public function getEffectivePriceAmount()
 	{
@@ -136,7 +136,7 @@ class CustomerOrderService
 		}
 
 		# todo handle not finding a price for the date
-		throw new \Symfony\Component\HttpKernel\Exception\HttpException(500, sprintf('Service "%s" has no effective price before "%s"', $this->service->getName(), $this->customerOrder->getCompletedAt()->format('Y-m-d')));
+		throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException(sprintf('Service "%s" has no effective price before "%s"', $this->service->getName(), $this->customerOrder->getCompletedAt()->format('Y-m-d')));
 	}
 
 	/**

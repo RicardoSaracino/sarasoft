@@ -7,10 +7,10 @@
 namespace AppBundle\Util;
 
 /**
- * Class StateProvince
+ * Class AdministrativeArea
  * @package AppBundle\Util
  */
-class StateProvince
+class AdministrativeArea
 {
 	/**
 	 * @param string $lang

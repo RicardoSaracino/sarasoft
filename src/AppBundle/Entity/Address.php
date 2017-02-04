@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Util\StateProvince;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -20,7 +19,7 @@ class Address
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Column(name="id", type="integer", nullable=false)
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="IDENTITY")
 	 */
@@ -29,63 +28,75 @@ class Address
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="line_1", type="string", length=32, nullable=false)
+	 * @ORM\Column(name="country_code", type="string", length=8, nullable=false)
 	 *
 	 * @Assert\NotBlank()
-	 * @Assert\Length(min=3)
 	 */
-	private $line1;
+	private $countryCode;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="line_2", type="string", length=32, nullable=true)
-	 */
-	private $line2;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="line_3", type="string", length=32, nullable=true)
-	 */
-	private $line3;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="city", type="string", length=32, nullable=false)
+	 * @ORM\Column(name="administrative_area", type="string", length=64, nullable=true)
 	 *
 	 * @Assert\NotBlank()
-	 * @Assert\Length(min=3)
 	 */
-	private $city;
+	private $administrativeArea;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="zip_or_postalcode", type="string", length=32, nullable=false)
+	 * @ORM\Column(name="locality", type="string", length=64, nullable=true)
 	 *
-	 * todo validate with county
+	 * @Assert\NotBlank()
 	 */
-	private $zipOrPostalcode;
+	private $locality;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="state_or_province", type="string", length=32, nullable=false)
-	 *
-	 * todo validate with county
+	 * @ORM\Column(name="dependent_locality", type="string", length=64, nullable=true)
 	 */
-	private $stateOrProvince;
+	private $dependentLocality;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="country", type="string", length=6, nullable=false)
+	 * @ORM\Column(name="postal_code", type="string", length=64, nullable=false)
 	 *
-	 * @Assert\Country()
+	 * @Assert\NotBlank()
 	 */
-	private $country;
+	private $postalCode;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="sorting_code", type="string", length=64, nullable=true)
+	 */
+	private $sortingCode;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="address_line_1", type="string", length=64, nullable=false)
+	 *
+	 * @Assert\NotBlank()
+	 */
+	private $addressLine1;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="address_line_2", type="string", length=64, nullable=true)
+	 */
+	private $addressLine2;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="locale", type="string", length=64, nullable=false)
+	 */
+	private $locale = 'und';
 
 	/**
 	 * @return bool
@@ -94,13 +105,12 @@ class Address
 	 */
 	public function isStateOrProvinceValid()
 	{
-		if ($this->getCountry() == 'CA') {
-
-			return array_key_exists($this->getStateOrProvince(), StateProvince::getProvinces());
+		if ($this->getCountryCode() == 'CA') {
+			return array_key_exists($this->getAdministrativeArea(), \AppBundle\Util\AdministrativeArea::getProvinces());
 		} else {
-			if ($this->getCountry() == 'US') {
+			if ($this->getCountryCode() == 'US') {
 
-				return array_key_exists($this->getStateOrProvince(), StateProvince::getStates());
+				return array_key_exists($this->getAdministrativeArea(), \AppBundle\Util\AdministrativeArea::getStates());
 			}
 		}
 
@@ -110,9 +120,9 @@ class Address
 	/**
 	 * @return bool
 	 *
-	 * @Assert\IsTrue(message="The zip or postal code does not match country")
+	 * @Assert\IsTrue(message="Invalid Postal Code")
 	 */
-	public function isZipOrPostalcodeValid()
+	public function isPostalCodeValid()
 	{
 		## more comprehensive list http://unicode.org/cldr/trac/browser/tags/release-26-0-1/common/supplemental/postalCodeData.xml
 		$ZIPREG = array(
@@ -131,10 +141,10 @@ class Address
 			'IN' => '^\d{6}$'
 		);
 
-		if (array_key_exists($this->getCountry(), $ZIPREG)) {
-			$reg = $ZIPREG[$this->getCountry()];
+		if (array_key_exists($this->getCountryCode(), $ZIPREG)) {
+			$reg = $ZIPREG[$this->getCountryCode()];
 
-			return 1 === preg_match('/' . $reg . '/i', $this->getZipOrPostalcode());
+			return 1 === preg_match('/' . $reg . '/i', $this->getPostalCode());
 		}
 
 		return true;
@@ -149,139 +159,164 @@ class Address
 	}
 
 	/**
-	 * @param $line1
+	 * @return string
+	 */
+	public function getCountryCode()
+	{
+		return $this->countryCode;
+	}
+
+	/**
+	 * @param $countryCode
 	 * @return $this
 	 */
-	public function setLine1($line1)
+	public function setCountryCode($countryCode)
 	{
-		$this->line1 = $line1;
-
+		$this->countryCode = $countryCode;
 		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getLine1()
+	public function getAdministrativeArea()
 	{
-		return $this->line1;
+		return $this->administrativeArea;
 	}
 
 	/**
-	 * @param $line2
+	 * @param $administrativeArea
 	 * @return $this
 	 */
-	public function setLine2($line2)
+	public function setAdministrativeArea($administrativeArea)
 	{
-		$this->line2 = $line2;
-
+		$this->administrativeArea = $administrativeArea;
 		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getLine2()
+	public function getLocality()
 	{
-		return $this->line2;
+		return $this->locality;
 	}
 
 	/**
-	 * @param $line3
+	 * @param $locality
 	 * @return $this
 	 */
-	public function setLine3($line3)
+	public function setLocality($locality)
 	{
-		$this->line3 = $line3;
-
+		$this->locality = $locality;
 		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getLine3()
+	public function getDependentLocality()
 	{
-		return $this->line3;
+		return $this->dependentLocality;
 	}
 
 	/**
-	 * @param $city
+	 * @param $dependentLocality
 	 * @return $this
 	 */
-	public function setCity($city)
+	public function setDependentLocality($dependentLocality)
 	{
-		$this->city = $city;
-
+		$this->dependentLocality = $dependentLocality;
 		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getCity()
+	public function getPostalCode()
 	{
-		return $this->city;
+		return $this->postalCode;
 	}
 
 	/**
-	 * Set zipOrPostalcode
-	 *
-	 * Upper case on set
-	 *
-	 * @param $zipOrPostalcode
+	 * @param $postalCode
 	 * @return $this
 	 */
-	public function setZipOrPostalcode($zipOrPostalcode)
+	public function setPostalCode($postalCode)
 	{
-		$this->zipOrPostalcode = mb_strtoupper($zipOrPostalcode);
-
+		$this->postalCode = mb_strtoupper($postalCode);
 		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getZipOrPostalcode()
+	public function getSortingCode()
 	{
-		return $this->zipOrPostalcode;
+		return $this->sortingCode;
 	}
 
 	/**
-	 * @param $stateOrProvince
+	 * @param $sortingCode
 	 * @return $this
 	 */
-	public function setStateOrProvince($stateOrProvince)
+	public function setSortingCode($sortingCode)
 	{
-		$this->stateOrProvince = $stateOrProvince;
-
+		$this->sortingCode = $sortingCode;
 		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getStateOrProvince()
+	public function getAddressLine1()
 	{
-		return $this->stateOrProvince;
+		return $this->addressLine1;
 	}
 
 	/**
-	 * @param $country
+	 * @param $addressLine1
 	 * @return $this
 	 */
-	public function setCountry($country)
+	public function setAddressLine1($addressLine1)
 	{
-		$this->country = $country;
-
+		$this->addressLine1 = $addressLine1;
 		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getCountry()
+	public function getAddressLine2()
 	{
-		return $this->country;
+		return $this->addressLine2;
+	}
+
+	/**
+	 * @param $addressLine2
+	 * @return $this
+	 */
+	public function setAddressLine2($addressLine2)
+	{
+		$this->addressLine2 = $addressLine2;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLocale()
+	{
+		return $this->locale;
+	}
+
+	/**
+	 * @param $locale
+	 * @return $this
+	 */
+	public function setLocale($locale)
+	{
+		$this->locale = $locale;
+		return $this;
 	}
 }

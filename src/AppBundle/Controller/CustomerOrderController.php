@@ -274,6 +274,13 @@ class CustomerOrderController extends Controller
 	 */
 	public function showEmailInvoiceAction(CustomerOrder $customerOrder)
 	{
+		/** @var $repo \AppBundle\Repository\TaxRateRepository */
+		$repo = $this->getDoctrine()->getRepository('AppBundle:TaxRate');
+
+		$taxRate = $repo->getTaxRateForDate($customerOrder->getCompletedAt(), $customerOrder->getCustomer()->getAddress()->getStateOrProvince());
+
+		dump($taxRate);die;
+
 		return $this->render(
 			'customerorder/email_invoice.html.twig',
 			[

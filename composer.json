@@ -31,7 +31,6 @@
 
 		"symfony/assetic-bundle": "2.8.*",
 
-
 		"phpunit/phpunit": "5.5.*",
 		"components/jquery": "3.1.*",
 		"twitter/bootstrap": "3.3.*",
@@ -44,7 +43,12 @@
 
 		"tbbc/money-bundle": "dev-master",
 
-		"twig/extensions": "dev-master"
+		"twig/extensions": "dev-master",
+
+		"commerceguys/enum": "1.0",
+		"commerceguys/addressing": "^0.8.4",
+		"commerceguys/zone": "^0.7.1",
+		"commerceguys/tax":  "^0.7.1"
 	},
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
