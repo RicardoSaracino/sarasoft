@@ -4,14 +4,17 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use CommerceGuys\Addressing\Validator\Constraints as AddressAssert;
 
 /**
  * Address
  *
  * @ORM\Table(name="address", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
  * @ORM\Entity
+ *
+ * AddressAssert\AddressFormat
  */
-class Address
+class Address implements \CommerceGuys\Addressing\Model\AddressInterface
 {
 	use \AppBundle\Entity\Traits\Timestampable;
 	use \AppBundle\Entity\Traits\Blameable;
@@ -31,6 +34,7 @@ class Address
 	 * @ORM\Column(name="country_code", type="string", length=8, nullable=false)
 	 *
 	 * @Assert\NotBlank()
+	 * @AddressAssert\Country
 	 */
 	private $countryCode;
 
@@ -101,7 +105,7 @@ class Address
 	/**
 	 * @return bool
 	 *
-	 * @Assert\IsTrue(message="The state or province does not match country")
+	 * @Assert\IsTrue(message="Invalid Province")
 	 */
 	public function isStateOrProvinceValid()
 	{
@@ -159,7 +163,7 @@ class Address
 	}
 
 	/**
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	public function getCountryCode()
 	{
@@ -173,11 +177,12 @@ class Address
 	public function setCountryCode($countryCode)
 	{
 		$this->countryCode = $countryCode;
+
 		return $this;
 	}
 
 	/**
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	public function getAdministrativeArea()
 	{
@@ -191,11 +196,12 @@ class Address
 	public function setAdministrativeArea($administrativeArea)
 	{
 		$this->administrativeArea = $administrativeArea;
+
 		return $this;
 	}
 
 	/**
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	public function getLocality()
 	{
@@ -209,11 +215,12 @@ class Address
 	public function setLocality($locality)
 	{
 		$this->locality = $locality;
+
 		return $this;
 	}
 
 	/**
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	public function getDependentLocality()
 	{
@@ -227,11 +234,12 @@ class Address
 	public function setDependentLocality($dependentLocality)
 	{
 		$this->dependentLocality = $dependentLocality;
+
 		return $this;
 	}
 
 	/**
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	public function getPostalCode()
 	{
@@ -245,11 +253,12 @@ class Address
 	public function setPostalCode($postalCode)
 	{
 		$this->postalCode = mb_strtoupper($postalCode);
+
 		return $this;
 	}
 
 	/**
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	public function getSortingCode()
 	{
@@ -263,11 +272,12 @@ class Address
 	public function setSortingCode($sortingCode)
 	{
 		$this->sortingCode = $sortingCode;
+
 		return $this;
 	}
 
 	/**
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	public function getAddressLine1()
 	{
@@ -281,11 +291,12 @@ class Address
 	public function setAddressLine1($addressLine1)
 	{
 		$this->addressLine1 = $addressLine1;
+
 		return $this;
 	}
 
 	/**
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	public function getAddressLine2()
 	{
@@ -299,11 +310,12 @@ class Address
 	public function setAddressLine2($addressLine2)
 	{
 		$this->addressLine2 = $addressLine2;
+
 		return $this;
 	}
 
 	/**
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	public function getLocale()
 	{
@@ -317,6 +329,23 @@ class Address
 	public function setLocale($locale)
 	{
 		$this->locale = $locale;
+
 		return $this;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getRecipient()
+	{
+		return '';
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getOrganization()
+	{
+		return '';
 	}
 }

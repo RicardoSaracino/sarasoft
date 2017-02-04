@@ -35,20 +35,20 @@
 		"components/jquery": "3.1.*",
 		"twitter/bootstrap": "3.3.*",
 
-		"ancarebeca/full-calendar-bundle":"3.0.1",
+		"ancarebeca/full-calendar-bundle":"^3.0",
 
-		"gedmo/doctrine-extensions": "dev-master",
+		"gedmo/doctrine-extensions": "^2.4",
 
-		"misd/phone-number-bundle": "dev-master",
+		"misd/phone-number-bundle": "^1.2",
 
-		"tbbc/money-bundle": "dev-master",
+		"tbbc/money-bundle": "^3.1",
 
-		"twig/extensions": "dev-master",
+		"twig/extensions": "^1.4",
 
 		"commerceguys/enum": "1.0",
-		"commerceguys/addressing": "^0.8.4",
-		"commerceguys/zone": "^0.7.1",
-		"commerceguys/tax":  "^0.7.1"
+		"commerceguys/addressing": "^0.8",
+		"commerceguys/zone": "^0.7",
+		"commerceguys/tax":  "^0.7"
 	},
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
