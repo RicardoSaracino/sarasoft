@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use CommerceGuys\Tax\TaxableInterface;
+
 use Money\Currency;
 use Money\Money;
 
@@ -15,7 +17,7 @@ use Money\Money;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class CustomerOrder
+class CustomerOrder implements TaxableInterface
 {
 	use Traits\Timestampable;
 	use Traits\Blameable;
@@ -26,6 +28,8 @@ class CustomerOrder
 	const STATUS_INVOICED = 'customerOrder.status.invoiced';
 	const STATUS_PAID = 'customerOrder.status.paid';
 	const STATUS_CANCELLED = 'customerOrder.status.cancelled';
+
+	public function isPhysical(){return true;}
 
 	/**
 	 * @var integer

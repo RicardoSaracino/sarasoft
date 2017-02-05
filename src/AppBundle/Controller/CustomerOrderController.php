@@ -2,6 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use CommerceGuys\Tax\Resolver\TaxType\ChainTaxTypeResolver;
+use CommerceGuys\Tax\Resolver\TaxType\CanadaTaxTypeResolver;
+use CommerceGuys\Tax\Resolver\TaxType\DefaultTaxTypeResolver;
+use CommerceGuys\Tax\Resolver\TaxRate\ChainTaxRateResolver;
+use CommerceGuys\Tax\Resolver\TaxRate\DefaultTaxRateResolver;
+use CommerceGuys\Tax\Resolver\TaxResolver;
+use CommerceGuys\Tax\Resolver\Context;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\CustomerOrder;
 
-use AppBundle\Form\Type\CustomerOrderType;
 use AppBundle\Form\Type\HiddenEntityType;
 
 /**
@@ -159,7 +165,7 @@ class CustomerOrderController extends Controller
 
         $customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByCustomer($customer);
 
-		return $this->render('customerorder/list.html.twig', [
+		return $this->render('customerorder/list_all.html.twig', [
 			'customer' => $customer,
             'customerOrders' => $customerOrders,
         ]);
@@ -274,12 +280,27 @@ class CustomerOrderController extends Controller
 	 */
 	public function showEmailInvoiceAction(CustomerOrder $customerOrder)
 	{
-		/** @var $repo \AppBundle\Repository\TaxRateRepository */
-		$repo = $this->getDoctrine()->getRepository('AppBundle:TaxRate');
+		# https://github.com/commerceguys/tax/
+		$taxTypeRepository = $this->getDoctrine()->getRepository('AppBundle:TaxType');
 
-		$taxRate = $repo->getTaxRateForDate($customerOrder->getCompletedAt(), $customerOrder->getCustomer()->getAddress()->getStateOrProvince());
+		$chainTaxTypeResolver = new ChainTaxTypeResolver();
+		$chainTaxTypeResolver->addResolver(new CanadaTaxTypeResolver($taxTypeRepository));
+		$chainTaxTypeResolver->addResolver(new DefaultTaxTypeResolver($taxTypeRepository));
+		$chainTaxRateResolver = new ChainTaxRateResolver();
+		$chainTaxRateResolver->addResolver(new DefaultTaxRateResolver());
+		$resolver = new TaxResolver($chainTaxTypeResolver, $chainTaxRateResolver);
 
-		dump($taxRate);die;
+		$context = new Context($customerOrder->getCustomer()->getAddress(), $customerOrder->getCompany()->getAddress());
+
+		$context->setDate($customerOrder->getCompletedAt());
+
+		$amounts = $resolver->resolveAmounts($customerOrder, $context);
+
+		// More rarely, if only the types or rates are needed:
+		$rates = $resolver->resolveRates($customerOrder, $context);
+		$types = $resolver->resolveTypes($customerOrder, $context);
+
+		dump($amounts);die;
 
 		return $this->render(
 			'customerorder/email_invoice.html.twig',
@@ -504,7 +525,7 @@ class CustomerOrderController extends Controller
 	/**
 	 * Displays a form to edit or cancel an existing customerOrder entity.
 	 *
-	 * @Route("/{id}/edit/cancel", name="edit_customer_order_cancelled")
+	 * @Route("/{id}/edit/cancel", name="customer_order_edit_cancelled")
 	 * @Method({"GET", "POST"})
 	 */
 	public function editCancelAction(Request $request, CustomerOrder $customerOrder)

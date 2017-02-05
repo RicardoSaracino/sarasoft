@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use CommerceGuys\Addressing\Validator\Constraints as AddressAssert;
+use CommerceGuys\Addressing\Model\AddressInterface;
 
 /**
  * Address
@@ -14,7 +15,7 @@ use CommerceGuys\Addressing\Validator\Constraints as AddressAssert;
  *
  * AddressAssert\AddressFormat
  */
-class Address implements \CommerceGuys\Addressing\Model\AddressInterface
+class Address implements AddressInterface
 {
 	use \AppBundle\Entity\Traits\Timestampable;
 	use \AppBundle\Entity\Traits\Blameable;
