@@ -42,7 +42,13 @@
 
 	{% if customerOrder.invoicedAt %}{{ table.row_user_datetime('customerOrder.label.invoicedAt', customerOrder.invoicedAt) }}{% endif %}
 
-	{% if customerOrder.invoicedAt %}{{ table.row_user_datetime('customerOrder.label.invoiceSubtotal', customerOrder.invoicedAt) }}{% endif %}
+	{% if customerOrder.invoiceSubtotal %}{{ table.row_user_money('customerOrder.label.invoiceSubtotal', customerOrder.invoiceSubtotal) }}{% endif %}
+
+	{% for cutomerOrderTaxRateAmounts in customerOrder.customerOrderTaxRateAmounts %}
+		{% if customerOrder.invoiceSubtotal %}{{ table.row_user_money(cutomerOrderTaxRateAmounts.taxRateAmount.rate.name, cutomerOrderTaxRateAmounts.taxes) }}{% endif %}
+	{%  endfor %}
+
+	{% if customerOrder.invoiceTotal %}{{ table.row_user_money('customerOrder.label.invoiceTotal', customerOrder.invoiceTotal) }}{% endif %}
 
 	{% if customerOrder.invoiceNotes %}{{ table.row_scrollable('customerOrder.label.invoiceNotes', customerOrder.invoiceNotes) }}{% endif %}
 

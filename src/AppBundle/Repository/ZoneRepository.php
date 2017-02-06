@@ -9,6 +9,7 @@ namespace AppBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use CommerceGuys\Zone\Repository\ZoneRepositoryInterface;
+use CommerceGuys\Zone\Model\ZoneInterface;
 
 /**
  * Class ZoneRepository
@@ -18,7 +19,7 @@ class ZoneRepository extends EntityRepository implements ZoneRepositoryInterface
 {
 	/**
 	 * @param string $id
-	 * @return \CommerceGuys\Zone\Repository\ZoneInterface
+	 * @return \CommerceGuys\Zone\Model\ZoneInterface
 	 * @throws NotFoundHttpException
 	 */
 	public function get($id)
@@ -28,7 +29,7 @@ class ZoneRepository extends EntityRepository implements ZoneRepositoryInterface
 
 	/**
 	 * @param null $scope
-	 * @return \CommerceGuys\Zone\Repository\ZoneInterface[]
+	 * @return \CommerceGuys\Zone\Model\ZoneInterface[]
 	 * @throws NotFoundHttpException
 	 */
 	public function getAll($scope = null)
@@ -41,16 +42,6 @@ class ZoneRepository extends EntityRepository implements ZoneRepositoryInterface
 
 		if (null === $zones) {
 			throw new NotFoundHttpException('No tax types available for');
-		}
-
-		foreach ($zones as $zone) {
-
-			## todo this a fucking mess
-			$zone->setMembers(new \Doctrine\Common\Collections\ArrayCollection());
-			$zoneMemberCanadaOntario = new \CommerceGuys\Zone\Model\ZoneMemberCountry();
-			$zoneMemberCanadaOntario->setCountryCode('CA');
-			$zoneMemberCanadaOntario->setAdministrativeArea('ON');
-			$zone->addMember($zoneMemberCanadaOntario);
 		}
 
 		return $zones;

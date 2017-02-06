@@ -181,9 +181,13 @@
                 <source>customerOrder.label.invoicedAt</source>
                 <target>Invoiced</target>
             </trans-unit>
-             <trans-unit id="customerOrder.label.invoiceSubtotal">
+             <trans-unit id="customerOrder.label.invoiceTotal">
+                <source>customerOrder.label.invoiceTotal</source>
+                <target>Invoice Total</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.invoiceSubtotal">
                 <source>customerOrder.label.invoiceSubtotal</source>
-                <target>Subtotal</target>
+                <target>Invoice Subtotal</target>
             </trans-unit>
             <trans-unit id="customerOrder.label.invoiceNotes">
                 <source>customerOrder.label.invoiceNotes</source>

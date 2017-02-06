@@ -207,6 +207,15 @@ class TaxType implements TaxTypeEntityInterface
 		return $this;
 	}
 
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getMoneyRoundingMode()
+	{
+		return $this->roundingMode;
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */

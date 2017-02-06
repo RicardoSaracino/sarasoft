@@ -98,7 +98,7 @@ class TaxRateAmount implements TaxRateAmountEntityInterface
 	 */
 	public function getAmount()
 	{
-		return $this->amount;
+		return floatval($this->amount);
 	}
 
 	/**

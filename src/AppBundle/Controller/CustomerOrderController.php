@@ -30,6 +30,73 @@ use AppBundle\Form\Type\HiddenEntityType;
 class CustomerOrderController extends Controller
 {
 	/**
+	 * @param CustomerOrder $customerOrder
+	 * @return \AppBundle\Entity\TaxRateAmount[]
+	 */
+	protected function getTaxRateAmounts(CustomerOrder $customerOrder)
+	 {
+		 /** @var \AppBundle\Repository\TaxTypeRepository $taxTypeRepository */
+		 $taxTypeRepository = $this->getDoctrine()->getRepository('AppBundle:TaxType');
+
+		 $chainTaxTypeResolver = new ChainTaxTypeResolver();
+		 $chainTaxTypeResolver->addResolver(new DefaultTaxTypeResolver($taxTypeRepository));
+		 $chainTaxRateResolver = new ChainTaxRateResolver();
+		 $chainTaxRateResolver->addResolver(new DefaultTaxRateResolver());
+		 $resolver = new TaxResolver($chainTaxTypeResolver, $chainTaxRateResolver);
+
+		 $context = new Context($customerOrder->getCustomer()->getAddress(), $customerOrder->getCompany()->getAddress());
+		 $context->setDate($customerOrder->getCompletedAt());
+
+		 /** @var \AppBundle\Entity\TaxRateAmount $taxRateAmounts */
+		 return $resolver->resolveAmounts($customerOrder, $context);
+	 }
+
+	/**
+	 * @param CustomerOrder $customerOrder
+	 */
+	protected function calculateInvoiceAmounts(CustomerOrder &$customerOrder)
+	{
+		$serviceTotal = new \Money\Money(0, new \Money\Currency('CAD'));
+
+		/** @var \AppBundle\Entity\CustomerOrderService $customerOrderService */
+		foreach ($customerOrder->getCustomerOrderServices() as $customerOrderService) {
+			$serviceTotal = $serviceTotal->add($customerOrderService->getEffectivePriceAmount());
+		}
+
+
+		$productTotal = new \Money\Money(0, new \Money\Currency('CAD'));
+
+		/** @var \AppBundle\Entity\CustomerOrderProduct $customerOrderProduct */
+		foreach ($customerOrder->getCustomerOrderProducts() as $customerOrderProduct) {
+			$productTotal = $productTotal->add($customerOrderProduct->getEffectivePriceAmount());
+		}
+
+
+		$invoiceSubtotal = $productTotal->add($serviceTotal);
+		$invoiceTotal = $invoiceSubtotal;
+
+		$customerOrderTaxRateAmounts = new \Doctrine\Common\Collections\ArrayCollection();
+
+		foreach ($this->getTaxRateAmounts($customerOrder) as $taxRateAmount) {
+
+			$taxes = $invoiceSubtotal->divide($taxRateAmount->getAmount());
+
+			$customerOrderTaxRateAmount = new \AppBundle\Entity\CustomerOrderTaxRateAmount();
+			$customerOrderTaxRateAmount->setTaxes($taxes);
+			$customerOrderTaxRateAmount->setTaxRateAmount($taxRateAmount);
+			$customerOrderTaxRateAmount->setCustomerOrder($customerOrder);
+			$customerOrderTaxRateAmounts->add($customerOrderTaxRateAmount);
+
+			## Add tax to subtotal
+			$invoiceTotal = $invoiceTotal->add($taxes);
+		}
+
+		$customerOrder->setCustomerOrderTaxRateAmounts($customerOrderTaxRateAmounts);
+		$customerOrder->setInvoiceSubtotal($invoiceSubtotal);
+		$customerOrder->setInvoiceTotal($invoiceTotal);
+	}
+
+	/**
 	 * Lists all customerOrder entities.
 	 *
 	 * @Route("/", name="customer_order_list_all")
@@ -280,32 +347,12 @@ class CustomerOrderController extends Controller
 	 */
 	public function showEmailInvoiceAction(CustomerOrder $customerOrder)
 	{
-		# https://github.com/commerceguys/tax/
-		$taxTypeRepository = $this->getDoctrine()->getRepository('AppBundle:TaxType');
-
-		$chainTaxTypeResolver = new ChainTaxTypeResolver();
-		$chainTaxTypeResolver->addResolver(new CanadaTaxTypeResolver($taxTypeRepository));
-		$chainTaxTypeResolver->addResolver(new DefaultTaxTypeResolver($taxTypeRepository));
-		$chainTaxRateResolver = new ChainTaxRateResolver();
-		$chainTaxRateResolver->addResolver(new DefaultTaxRateResolver());
-		$resolver = new TaxResolver($chainTaxTypeResolver, $chainTaxRateResolver);
-
-		$context = new Context($customerOrder->getCustomer()->getAddress(), $customerOrder->getCompany()->getAddress());
-
-		$context->setDate($customerOrder->getCompletedAt());
-
-		$amounts = $resolver->resolveAmounts($customerOrder, $context);
-
-		// More rarely, if only the types or rates are needed:
-		$rates = $resolver->resolveRates($customerOrder, $context);
-		$types = $resolver->resolveTypes($customerOrder, $context);
-
-		dump($amounts);die;
+		 $this->calculateInvoiceAmounts($customerOrder);
 
 		return $this->render(
 			'customerorder/email_invoice.html.twig',
 			[
-				'customerOrder' => $customerOrder,
+				'customerOrder' => $customerOrder
 			]
 		);
 	}
@@ -458,6 +505,8 @@ class CustomerOrderController extends Controller
      */
     public function editInvoiceAction(Request $request, CustomerOrder $customerOrder)
     {
+		$this->calculateInvoiceAmounts($customerOrder);
+
 		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusInvoicedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusInvoiced']]);
 
 		$form->handleRequest($request);

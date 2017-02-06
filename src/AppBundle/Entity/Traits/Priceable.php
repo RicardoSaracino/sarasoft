@@ -34,11 +34,11 @@ trait Priceable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="price_currency", type="string", length=64, nullable=false, options={"default" : "CAD"})
+	 * @ORM\Column(name="price_currency", type="string", length=64, nullable=false)
 	 *
 	 * @Assert\NotBlank()
 	 */
-	private $priceCurrency = 'CAD';
+	private $priceCurrency;
 
 	/**
 	 * @param $effectiveFrom
@@ -81,7 +81,7 @@ trait Priceable
 	public function setPrice(Money $price)
 	{
 		$this->priceAmount = $price->getAmount();
-		$this->priceCurrency = $price->getCurrency()->getCode();
+		$this->priceCurrency = $price->getCurrency()->getName();
 
 		return $this;
 	}

@@ -29,8 +29,6 @@ class CustomerOrder implements TaxableInterface
 	const STATUS_PAID = 'customerOrder.status.paid';
 	const STATUS_CANCELLED = 'customerOrder.status.cancelled';
 
-	public function isPhysical(){return true;}
-
 	/**
 	 * @var integer
 	 *
@@ -101,6 +99,13 @@ class CustomerOrder implements TaxableInterface
 	 * @Assert\Valid()
 	 */
 	private $customerOrderServices;
+
+	/**
+	 * @var \Doctrine\Common\Collections\ArrayCollection
+	 *
+	 * @ORM\OneToMany(targetEntity="CustomerOrderTaxRateAmount", mappedBy="customerOrder", orphanRemoval=true, cascade={"persist", "remove"})
+	 */
+	private $customerOrderTaxRateAmounts;
 
 	/**
 	 * @var string
@@ -192,11 +197,23 @@ class CustomerOrder implements TaxableInterface
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="invoice_subtotal_currency", type="string", length=64, nullable=true, options={"default" : "CAD"})
-	 *
-	 * @Assert\NotBlank()
+	 * @ORM\Column(name="invoice_subtotal_currency", type="string", length=64, nullable=true)
 	 */
-	private $invoiceSubtotalCurrency = 'CAD';
+	private $invoiceSubtotalCurrency;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="invoice_total_amount", type="integer", nullable=true)
+	 */
+	private $invoiceTotalAmount;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="invoice_total_currency", type="string", length=64, nullable=true)
+	 */
+	private $invoiceTotalCurrency;
 
 	/**
 	 * @var string
@@ -253,6 +270,7 @@ class CustomerOrder implements TaxableInterface
 	{
 		$this->customerOrderProducts = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->customerOrderServices = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->customerOrderTaxRateAmounts = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 	/**
@@ -600,6 +618,15 @@ class CustomerOrder implements TaxableInterface
 	####################################################
 
 	/**
+	 * TaxableInterface
+	 * @return bool
+	 */
+	public function isPhysical()
+	{
+		return true;
+	}
+
+	/**
 	 * @param $invoicedAt
 	 * @return $this
 	 */
@@ -640,7 +667,34 @@ class CustomerOrder implements TaxableInterface
 	public function setInvoiceSubtotal(Money $invoiceSubtotal)
 	{
 		$this->invoiceSubtotalAmount = $invoiceSubtotal->getAmount();
-		$this->invoiceSubtotalCurrency = $invoiceSubtotal->getCurrency()->getCode();
+		$this->invoiceSubtotalCurrency = $invoiceSubtotal->getCurrency()->getName();
+
+		return $this;
+	}
+
+	/**
+	 * @return Money|null
+	 */
+	public function getInvoiceTotal()
+	{
+		if (!$this->invoiceTotalCurrency) {
+			return null;
+		}
+		if (!$this->invoiceTotalAmount) {
+			return new Money(0, new Currency($this->invoiceTotalCurrency));
+		}
+
+		return new Money($this->invoiceTotalAmount, new Currency($this->invoiceTotalCurrency));
+	}
+
+	/**
+	 * @param Money $invoiceTotal
+	 * @return $this
+	 */
+	public function setInvoiceTotal(Money $invoiceTotal)
+	{
+		$this->invoiceTotalAmount = $invoiceTotal->getAmount();
+		$this->invoiceTotalCurrency = $invoiceTotal->getCurrency()->getName();
 
 		return $this;
 	}
@@ -662,6 +716,70 @@ class CustomerOrder implements TaxableInterface
 	public function getInvoiceNotes()
 	{
 		return $this->invoiceNotes;
+	}
+
+	/**
+	 * @param \Doctrine\Common\Collections\ArrayCollection|CustomerOrderTaxRateAmount[] $customerOrderTaxRateAmounts
+	 * @return $this
+	 */
+	public function setCustomerOrderTaxRateAmounts(\Doctrine\Common\Collections\ArrayCollection $customerOrderTaxRateAmounts)
+	{
+		## todo remove tax rate?
+
+		foreach ($customerOrderTaxRateAmounts as $newCustomerOrderTaxRateAmount) {
+			$found = false;
+
+			/** @var CustomerOrderTaxRateAmount $thisCustomerOrderTaxRateAmount */
+			foreach ($this->customerOrderTaxRateAmounts as $thisCustomerOrderTaxRateAmount) {
+				if ($thisCustomerOrderTaxRateAmount->getTaxRateAmount() == $newCustomerOrderTaxRateAmount->getTaxRateAmount()) {
+					$thisCustomerOrderTaxRateAmount->setTaxes($newCustomerOrderTaxRateAmount->getTaxes());
+					$found = true;
+					break;
+				}
+			}
+
+			if (!$found) {
+				$this->addCustomerOrderTaxRateAmount($newCustomerOrderTaxRateAmount);
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */
+	public function getCustomerOrderTaxRateAmounts()
+	{
+		return $this->customerOrderTaxRateAmounts;
+	}
+
+	/**
+	 * @param \AppBundle\Entity\CustomerOrderTaxRateAmount $customerOrderTaxRateAmount
+	 * @return $this
+	 */
+	public function addCustomerOrderTaxRateAmount(CustomerOrderTaxRateAmount $customerOrderTaxRateAmount = null)
+	{
+		if (!$this->customerOrderTaxRateAmounts->contains($customerOrderTaxRateAmount)) {
+			$customerOrderTaxRateAmount->setCustomerOrder($this);
+			$this->customerOrderTaxRateAmounts->add($customerOrderTaxRateAmount);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param \AppBundle\Entity\CustomerOrderTaxRateAmount $customerOrderTaxRateAmount
+	 * @return $this
+	 */
+	public function removeCustomerOrderTaxRateAmount(CustomerOrderTaxRateAmount $customerOrderTaxRateAmount = null)
+	{
+		if ($this->customerOrderTaxRateAmounts->contains($customerOrderTaxRateAmount)) {
+			$this->customerOrderTaxRateAmounts->removeElement($customerOrderTaxRateAmount);
+			$customerOrderTaxRateAmount->setCustomerOrder(null);
+		}
+
+		return $this;
 	}
 
 	####################################################
@@ -686,7 +804,7 @@ class CustomerOrder implements TaxableInterface
 	}
 
 	/**
-	 * @param $paidNotes
+	 * @param $paymentNotes
 	 * @return $this
 	 */
 	public function setPaymentNotes($paymentNotes)
@@ -743,66 +861,6 @@ class CustomerOrder implements TaxableInterface
 	{
 		return $this->cancellationNotes;
 	}
-
-	####################################################
-
-
-	/**
-	 * @return Money
-	 */
-	public function getCalculatedServiceTotal()
-	{
-		$serviceTotal = new \Money\Money(0, new \Money\Currency('CAD'));
-
-		/** @var CustomerOrderService $customerOrderService */
-		foreach ($this->getCustomerOrderServices() as $customerOrderService) {
-			$serviceTotal = $serviceTotal->add($customerOrderService->getEffectivePriceAmount());
-		}
-
-		return $serviceTotal;
-	}
-
-	/**
-	 * @return Money
-	 */
-	public function getCalculatedProductTotal()
-	{
-		$productTotal = new \Money\Money(0, new \Money\Currency('CAD'));
-
-		/** @var CustomerOrderProduct $customerOrderProduct */
-		foreach ($this->getCustomerOrderProducts() as $customerOrderProduct) {
-			$productTotal = $productTotal->add($customerOrderProduct->getEffectivePriceAmount());
-		}
-
-		return $productTotal;
-	}
-
-	/**
-	 * @return Money
-	 */
-	public function getCalculatedSubtotal()
-	{
-		return $this->getCalculatedServiceTotal()->add($this->getCalculatedProductTotal());
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCalculatedTax()
-	{
-
-
-		return $this->getCalculatedSubtotal();
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCalculatedTotal()
-	{
-		return new \Money\Money(300000, new \Money\Currency('CAD'));
-	}
-
 
 	####################################################
 
