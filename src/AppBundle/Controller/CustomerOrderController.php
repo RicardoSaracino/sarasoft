@@ -56,23 +56,32 @@ class CustomerOrderController extends Controller
 	 */
 	protected function calculateInvoiceAmounts(CustomerOrder &$customerOrder)
 	{
-		$serviceTotal = new \Money\Money(0, new \Money\Currency('CAD'));
+		$invoiceSubtotal = new \Money\Money(0, new \Money\Currency('CAD'));
 
-		/** @var \AppBundle\Entity\CustomerOrderService $customerOrderService */
+		/** @var \AppBundle\Repository\ServicePriceRepository $servicePriceRepository */
+		$servicePriceRepository = $this->getDoctrine()->getRepository('AppBundle:ServicePrice');
+
 		foreach ($customerOrder->getCustomerOrderServices() as $customerOrderService) {
-			$serviceTotal = $serviceTotal->add($customerOrderService->getEffectivePriceAmount());
+
+			$servicePrice = $servicePriceRepository->findEffective($customerOrderService->getService(),$customerOrder->getCompletedAt());
+
+			$customerOrderService->setInvoicePrice($servicePrice->getPrice());
+
+			$invoiceSubtotal = $invoiceSubtotal->add($servicePrice->getPrice()->multiply($customerOrderService->getQuantity()));
 		}
 
+		/** @var \AppBundle\Repository\ProductPriceRepository $productPriceRepository */
+		$productPriceRepository = $this->getDoctrine()->getRepository('AppBundle:ProductPrice');
 
-		$productTotal = new \Money\Money(0, new \Money\Currency('CAD'));
-
-		/** @var \AppBundle\Entity\CustomerOrderProduct $customerOrderProduct */
 		foreach ($customerOrder->getCustomerOrderProducts() as $customerOrderProduct) {
-			$productTotal = $productTotal->add($customerOrderProduct->getEffectivePriceAmount());
+
+			$productPrice = $productPriceRepository->findEffective($customerOrderProduct->getProduct(),$customerOrder->getCompletedAt());
+
+			$customerOrderProduct->setInvoicePrice($productPrice->getPrice());
+
+			$invoiceSubtotal = $invoiceSubtotal->add($productPrice->getPrice()->multiply($customerOrderProduct->getQuantity()));
 		}
 
-
-		$invoiceSubtotal = $productTotal->add($serviceTotal);
 		$invoiceTotal = $invoiceSubtotal;
 
 		$customerOrderTaxRateAmounts = new \Doctrine\Common\Collections\ArrayCollection();
@@ -95,6 +104,33 @@ class CustomerOrderController extends Controller
 		$customerOrder->setInvoiceSubtotal($invoiceSubtotal);
 		$customerOrder->setInvoiceTotal($invoiceTotal);
 	}
+
+	/**
+	 * @param CustomerOrder $customerOrder
+	 * @return mixed
+	 */
+	protected function emailInvoice(CustomerOrder $customerOrder)
+	{
+		$message = \Swift_Message::newInstance()
+			->setSubject($customerOrder->getCompany()->getName() . ' ' . 'Invoice')
+			->setFrom($customerOrder->getCompany()->getEmail())
+			->setTo($customerOrder->getCustomer()->getEmail())
+			->setBody(
+				$this->renderView(
+					'customerorder/email_invoice.html.twig',
+					[
+						'customerOrder' => $customerOrder,
+					]
+				),
+				'text/html'
+			);
+
+		return $this->get('mailer')->send($message);
+	}
+
+	#################################################
+	## LIST
+	#################################################
 
 	/**
 	 * Lists all customerOrder entities.
@@ -305,40 +341,6 @@ class CustomerOrderController extends Controller
 		);
 	}
 
-
-	/**
-	 * Finds and emails an invoiced customerOrder entity.
-	 *
-	 * @Route("/{id}/send/invoice", name="send_invoice_customer_order")
-	 * @Method("GET")
-	 */
-	public function sendEmailInvoiceAction(CustomerOrder $customerOrder)
-	{
-		$message = \Swift_Message::newInstance()
-			->setSubject($customerOrder->getCompany()->getName() . ' ' . 'Invoice')
-			->setFrom($customerOrder->getCompany()->getEmail())
-			->setTo($customerOrder->getCustomer()->getEmail())
-			->setBody(
-				$this->renderView(
-					'customerorder/email_invoice.html.twig',
-					[
-						'customerOrder' => $customerOrder,
-					]
-				),
-				'text/html'
-			);
-
-		$this->get('mailer')->send($message);
-
-		return $this->render(
-			'customerorder/email_invoice.html.twig',
-			[
-				'customerOrder' => $customerOrder,
-			]
-		);
-	}
-
-
 	/**
 	 * Finds and displays an invoiced customerOrder entity.
 	 *
@@ -518,6 +520,12 @@ class CustomerOrderController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
 			$customerOrder->setStatus(CustomerOrder::STATUS_INVOICED);
+
+			if($request->request->get('customerOrder_sendInvoice')) {
+				$customerOrder->setInvoiceEmailedAt(new \DateTime());
+				#$customerOrder->
+			}
+
 
 			$this->getDoctrine()->getManager()->flush();
 

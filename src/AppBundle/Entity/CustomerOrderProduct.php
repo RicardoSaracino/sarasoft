@@ -5,6 +5,9 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Money\Currency;
+use Money\Money;
+
 /**
  * CustomerOrderProduct
  *
@@ -64,6 +67,19 @@ class CustomerOrderProduct
 	 */
 	private $comments;
 
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="invoice_price_amount", type="integer", nullable=true)
+	 */
+	private $invoicePriceAmount;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="invoice_price_currency", type="string", length=64, nullable=true)
+	 */
+	private $invoicePriceCurrency;
 
 	/**
 	 * @return integer
@@ -112,34 +128,6 @@ class CustomerOrderProduct
 	}
 
 	/**
-	 * @return \Money\Money|null
-	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-	 */
-	public function getEffectivePrice()
-	{
-		if( $productPrice = $this->product->getEffectiveProductPrice($this->getCustomerOrder()->getCompletedAt())){
-			return $productPrice->getPrice();
-		}
-
-		# todo handle not finding a price for the date
-		throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException(sprintf('Product "%s" has no effective price before "%s"', $this->product->getName(), $this->customerOrder->getCompletedAt()->format('Y-m-d')));
-	}
-
-	/**
-	 * @return \Money\Money
-	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-	 */
-	public function getEffectivePriceAmount()
-	{
-		if( $productPrice = $this->product->getEffectiveProductPrice($this->getCustomerOrder()->getCompletedAt())){
-			return $productPrice->getPrice()->multiply($this->getQuantity());
-		}
-
-		# todo handle not finding a price for the date
-		throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException(sprintf('Product "%s" has no effective price before "%s"', $this->product->getName(), $this->customerOrder->getCompletedAt()->format('Y-m-d')));
-	}
-
-	/**
 	 * @param integer $quantity
 	 * @return CustomerOrderProduct
 	 */
@@ -175,5 +163,41 @@ class CustomerOrderProduct
 	public function getComments()
 	{
 		return $this->comments;
+	}
+
+	/**
+	 * @return Money|null
+	 */
+	public function getInvoicePrice()
+	{
+		if (!$this->invoicePriceCurrency) {
+			return null;
+		}
+
+		if (!$this->invoicePriceAmount) {
+			return new Money(0, new Currency($this->invoicePriceCurrency));
+		}
+
+		return new Money($this->invoicePriceAmount, new Currency($this->invoicePriceCurrency));
+	}
+
+	/**
+	 * @param Money $invoicePrice
+	 * @return $this
+	 */
+	public function setInvoicePrice(Money $invoicePrice)
+	{
+		$this->invoicePriceAmount = $invoicePrice->getAmount();
+		$this->invoicePriceCurrency = $invoicePrice->getCurrency()->getName();
+
+		return $this;
+	}
+
+	/**
+	 * @return Money
+	 */
+	public function getInvoiceAmount()
+	{
+		return $this->getInvoicePrice()->multiply($this->getQuantity());
 	}
 }

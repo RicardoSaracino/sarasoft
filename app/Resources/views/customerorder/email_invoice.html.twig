@@ -628,9 +628,9 @@ h4, .h4 {
 														{% for customerOrderService in customerOrder.customerOrderServices %}
 															<tr>
 																<td valign="top" class="dataTableContent">{{ customerOrderService.service.name }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.getEffectivePrice()|user_money }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.invoicePrice|user_money }}</td>
 																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.quantity }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.getEffectivePriceAmount()|user_money }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.invoiceAmount|user_money }}</td>
 															</tr>
 															{% if customerOrderService.comments %}
 																<tr>
@@ -656,9 +656,9 @@ h4, .h4 {
 														{% for customerOrderProduct in customerOrder.customerOrderProducts %}
 															<tr>
 																<td valign="top" class="dataTableContent">{{ customerOrderProduct.product.name }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.getEffectivePrice|user_money }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.invoicePrice|user_money }}</td>
 																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.quantity }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.getEffectivePriceAmount|user_money }}</td>
+																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.invoiceAmount|user_money }}</td>
 															</tr>
 															{% if customerOrderProduct.comments %}
 																<tr>

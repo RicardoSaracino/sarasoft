@@ -188,6 +188,36 @@ class CustomerOrder implements TaxableInterface
 	private $invoicedAt;
 
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="invoice_notes", type="text", length=65535, nullable=true)
+	 *
+	 * @Assert\NotBlank(message="Invoice Notes should not be blank", groups={"StatusInvoiced"})
+	 */
+	private $invoiceNotes;
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="invoice_emailed_at", type="datetime", nullable=true)
+	 */
+	private $invoiceEmailedAt;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="invoice_emailed_to", type="string", length=191, nullable=true)
+	 */
+	private $invoiceEmailedTo;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="invoice_emailed_cc", type="string", length=191, nullable=true)
+	 */
+	private $invoiceEmailedCc;
+
+	/**
 	 * @var integer
 	 *
 	 * @ORM\Column(name="invoice_subtotal_amount", type="integer", nullable=true)
@@ -214,16 +244,6 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\Column(name="invoice_total_currency", type="string", length=64, nullable=true)
 	 */
 	private $invoiceTotalCurrency;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="invoice_notes", type="text", length=65535, nullable=true)
-	 *
-	 * @Assert\NotBlank(message="Invoice Notes should not be blank", groups={"StatusInvoiced"})
-	 */
-	private $invoiceNotes;
-
 
 	/**
 	 * @var \DateTime
@@ -382,7 +402,7 @@ class CustomerOrder implements TaxableInterface
 	}
 
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\AppBundle\Entity\CustomerOrderProduct[]
 	 */
 	public function getCustomerOrderProducts()
 	{
@@ -419,7 +439,7 @@ class CustomerOrder implements TaxableInterface
 	}
 
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\AppBundle\Entity\CustomerOrderService[]
 	 */
 	public function getCustomerOrderServices()
 	{
@@ -627,10 +647,10 @@ class CustomerOrder implements TaxableInterface
 	}
 
 	/**
-	 * @param $invoicedAt
+	 * @param \DateTime $invoicedAt
 	 * @return $this
 	 */
-	public function setInvoicedAt($invoicedAt)
+	public function setInvoicedAt(\DateTime $invoicedAt)
 	{
 		$this->invoicedAt = $invoicedAt;
 
@@ -644,6 +664,28 @@ class CustomerOrder implements TaxableInterface
 	{
 		return $this->invoicedAt;
 	}
+
+	/**
+	 * @param \DateTime $invoiceEmailedAt
+	 * @return $this
+	 */
+	public function setInvoiceEmailedAt(\DateTime $invoiceEmailedAt)
+	{
+		$this->invoiceEmailedAt = $invoiceEmailedAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getInvoiceEmailedAt()
+	{
+		return $this->invoiceEmailedAt;
+	}
+
+
+	#private $invoiceEmailedTo;
 
 	/**
 	 * @return Money|null
