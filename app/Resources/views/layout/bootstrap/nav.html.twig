@@ -2,10 +2,10 @@
 
 {% macro end() %}</ul>{% endmacro %}
 
-{% macro item(label, path) %}
+{% macro item(label, path, params) %}
 	{% spaceless %}
 		<li>
-			<a href="{{ path }}">{{ label }}</a>
+			<a href="{{ path }}" target="{{ params.target|default('_self') }}">{{ label }}</a>
 		</li>
 	{% endspaceless %}
 {% endmacro %}

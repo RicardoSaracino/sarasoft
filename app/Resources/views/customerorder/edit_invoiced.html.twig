@@ -19,7 +19,8 @@
 		<div class="col-sm-offset-2 col-sm-10">
 			<input type="submit" class="btn btn-default" value="Save">
 			<input type="submit" class="btn btn-default" value="Pay" name="{{ constant('STATUS_PAID',customerOrder) }}">
-			<a class="btn btn-default" href="{{ path('show_invoice_customer_order', {'id': customerOrder.id}) }}" target="_blank">View Invoice</a>
+			<input type="submit" class="btn btn-default" value="Send Invoice" name="customerOrder.sendInvoice">
+			<a class="btn btn-default" href="{{ path('customer_order_show_invoice', {'id': customerOrder.id}) }}" target="_blank">View Invoice</a>
 		</div>
 	</div>
 	{{ form_end(form) }}

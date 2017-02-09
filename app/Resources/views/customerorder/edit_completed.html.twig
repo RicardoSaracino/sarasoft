@@ -19,6 +19,7 @@
 		<div class="col-sm-offset-2 col-sm-10">
 			<input type="submit" class="btn btn-default" value="Save">
 			<input type="submit" class="btn btn-default" value="Invoice" name="{{ constant('STATUS_INVOICED',customerOrder) }}">
+			<a class="btn btn-default" href="{{ path('customer_order_show_invoice', {'id': customerOrder.id}) }}" target="_blank">View Invoice</a>
 		</div>
 	</div>
 	{{ form_end(form) }}

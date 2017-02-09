@@ -46,7 +46,7 @@
 
 	{% for cutomerOrderTaxRateAmounts in customerOrder.customerOrderTaxRateAmounts %}
 		{% if customerOrder.invoiceSubtotal %}{{ table.row_user_money(cutomerOrderTaxRateAmounts.taxRateAmount.rate.name, cutomerOrderTaxRateAmounts.taxes) }}{% endif %}
-	{%  endfor %}
+	{% endfor %}
 
 	{% if customerOrder.invoiceTotal %}{{ table.row_user_money('customerOrder.label.invoiceTotal', customerOrder.invoiceTotal) }}{% endif %}
 
@@ -75,6 +75,10 @@
 	{{ nav.item('List Customer Orders', path('customer_order_new', { 'customer_id': customerOrder.customer.id })) }}
 
 	{{ nav.item('Edit Customer Order', customer_order_path(customerOrder)) }}
+
+	{% if customerOrder.completedAt %}
+		{{ nav.item('View Invoice', path('customer_order_show_invoice', { 'id': customerOrder.id }), {'target': '_blank'}) }}
+	{% endif %}
 
 	{{ nav.end }}
 {% endblock %}

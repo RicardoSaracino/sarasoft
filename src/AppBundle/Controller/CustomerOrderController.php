@@ -344,7 +344,7 @@ class CustomerOrderController extends Controller
 	/**
 	 * Finds and displays an invoiced customerOrder entity.
 	 *
-	 * @Route("/{id}/show/invoice", name="show_invoice_customer_order")
+	 * @Route("/{id}/show/invoice", name="customer_order_show_invoice")
 	 * @Method("GET")
 	 */
 	public function showEmailInvoiceAction(CustomerOrder $customerOrder)
