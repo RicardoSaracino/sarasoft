@@ -8,10 +8,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type as Type;
 
 /**
- * Class CustomerOrderStatusPaidType
+ * Class CustomerOrderEditStatusPaidType
  * @package AppBundle\Form\Type
  */
-class CustomerOrderStatusPaidType extends CustomerOrderType
+class CustomerOrderEditStatusPaidType extends CustomerOrderType
 {
 	/**
 	 * {@inheritdoc}

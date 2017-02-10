@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Ricardo Saracino
+ * @since 2/8/17
+ */
 
 namespace AppBundle\Form\Type;
 
@@ -6,26 +10,26 @@ use AppBundle\Entity as Entity;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type as Type;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
- * Class CustomerOrderStatusCompleteType
+ * Class CustomerOrderNewStatusCompleteType
  * @package AppBundle\Form\Type
  */
-class CustomerOrderStatusCompleteType extends CustomerOrderType
+class CustomerOrderNewStatusCompleteType extends CustomerOrderType
 {
 	/**
 	 * {@inheritdoc}
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder->add('completedAt', UserDateTimePickerType::class, ['label' => 'customerOrder.label.completedAt']);
+		$builder
+			->add('company', EntityType::class, ['label' => 'customerOrder.label.company', 'class' => Entity\Company::class, 'choice_label' => 'name', 'placeholder' => 'label.choose'])
+			->add('orderType', EntityType::class, ['label' => 'customerOrder.label.orderType', 'class' => Entity\OrderType::class, 'choice_label' => 'name', 'placeholder' => 'label.choose'])
+			->add('referral', EntityType::class, ['label' => 'customerOrder.label.referral', 'class' => Entity\Referral::class, 'choice_label' => 'name', 'placeholder' => 'label.choose'])
 
-		if ($builder->getData()->getCompletionNotes()) {
-			$builder->add('completionNotes', UserTextAreaPrependType::class, [
-				'label' => 'customerOrder.label.completionNotes', 'trim' => true, 'data' => $builder->getData(), 'data_class' => Entity\CustomerOrder::class]);
-		} else {
-			$builder->add('completionNotes', UserTextAreaType::class, ['label' => 'customerOrder.label.completionNotes', 'trim' => true]);
-		}
+			->add('completedAt', UserDateTimePickerType::class, ['label' => 'customerOrder.label.completedAt'])
+			->add('completionNotes', UserTextAreaType::class, ['label' => 'customerOrder.label.completionNotes', 'trim' => true]);
 
 		$builder->add(
 			'customerOrderServices',

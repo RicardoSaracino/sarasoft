@@ -2,10 +2,10 @@
 
 {% import 'nav.html.twig' as nav %}
 
-{% block title %}Book Order{% endblock %}
+{% block title %}New Inprogress Order{% endblock %}
 
 {% block header %}
-	<h1>Book Order<br>
+	<h1>New Inprogress Order<br>
 		<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.fullName }}</a></small>
 		<br>
 		<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
@@ -18,8 +18,6 @@
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<input type="submit" class="btn btn-default" value="Save">
-			<input type="submit" class="btn btn-default" value="Start Progress" name="{{ constant('STATUS_INPROGRESS',customerOrder) }}">
-			<input type="submit" class="btn btn-default" value="Complete" name="{{ constant('STATUS_COMPLETE',customerOrder) }}">
 		</div>
 	</div>
 	{{ form_end(form) }}
@@ -28,6 +26,22 @@
 {% block complimentary %}
 	{{ nav.start }}
 	{{ nav.item('List All Orders', path('customer_order_list_all')) }}
-	{{ nav.item('List Customer Orders', path('listCustomerOrdersByCustomer', {'customer_id': customerOrder.customer.id})) }}
+	{{ nav.item('List Customer Orders', path('customer_order_list_all_customer', { 'customer_id': customerOrder.customer.id })) }}
 	{{ nav.end }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$('.js-collection').collection({
+			{#init_with_n_elements: 1,#}
+
+			allow_duplicate: true,
+			drag_drop: false, {# sortable #}
+			drag_drop_options: {
+				placeholder: 'ui-state-highlight'
+			},
+			add: '<ul class="col-sm-offset-2 col-sm-10 nav nav-pills nav-horizontal small"><li style="padding:0 0 15px 5px; "><a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</a></li></ul>'
+		});
+	</script>
 {% endblock %}

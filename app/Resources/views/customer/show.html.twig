@@ -51,10 +51,13 @@
 
 {% block complimentary %}
 	{{ nav.start }}
-	{{ nav.item('List Companies', path('customer_index')) }}
+	{{ nav.item('List Customers', path('customer_index')) }}
 	{{ nav.item('Edit Customer', path('customer_edit', { 'id': customer.id })) }}
 	{{ nav.item('New Customer', path('customer_new')) }}
-	{{ nav.item('List Customer Orders', path('customer_list_customer_orders', { 'customer_id': customer.id })) }}
-	{{ nav.item('New Customer Order', path('customer_order_new', { 'customer_id': customer.id })) }}
+	<hr>
+	{{ nav.item('List Orders', path('customer_order_list_all_customer', { 'customer_id': customer.id })) }}
+	{{ nav.item('New Booked Order', path('customer_order_new_booked', { 'customer_id': customer.id })) }}
+	{{ nav.item('New In Progress Order', path('customer_order_new_inprogress', { 'customer_id': customer.id })) }}
+	{{ nav.item('New Complete Order', path('customer_order_new_complete', { 'customer_id': customer.id })) }}
 	{{ nav.end }}
 {% endblock %}

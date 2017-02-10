@@ -19,7 +19,7 @@
 					<th>{{ 'customerOrder.label.company'|trans }}</th>
 					<th>{{ 'customerOrder.label.orderType'|trans }}</th>
 					<th>{{ 'customerOrder.label.referral'|trans }}</th>
-					<th>{{ 'customerOrder.label.progressStartedAt'|trans }}</th>
+					<th>{{ 'customerOrder.label.progress'|trans }}</th>
 					<th>Actions</th>
 				</tr>
 				</thead>
@@ -31,14 +31,15 @@
 						<td>{{ customerOrder.company.name }}</td>
 						<td>{{ customerOrder.orderType.name }}</td>
 						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>
-						<td>{{ customerOrder.progressStartedAt|user_datetime }}</td>
+						<td>{% if customerOrder.progressStartedAt %}{{ customerOrder.progressStartedAt|user_datetime }}{% endif %} to<br>{% if customerOrder.progressEstimatedCompletionAt %}{{ customerOrder.progressEstimatedCompletionAt|user_datetime }}{% endif %}</td>
+
 						<td>
 							<ul class="nav nav-pills">
 								<li>
 									<a href="{{ path('show_customer_order', { 'id': customerOrder.id }) }}">show</a>
 								</li>
 								<li>
-									<a href="{{ path('edit_customer_order_inprogress', { 'id': customerOrder.id }) }}">edit</a>
+									<a href="{{ path('customer_order_edit_inprogress', { 'id': customerOrder.id }) }}">edit</a>
 								</li>
 							</ul>
 						</td>

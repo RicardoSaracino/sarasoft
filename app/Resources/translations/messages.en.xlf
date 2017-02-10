@@ -159,9 +159,17 @@
                 <target>Cancellation Notes</target>
             </trans-unit>
 
+            <trans-unit id="customerOrder.label.progress">
+                <source>customerOrder.label.progress</source>
+                <target>Progress</target>
+            </trans-unit>
             <trans-unit id="customerOrder.label.progressStartedAt">
                 <source>customerOrder.label.progressStartedAt</source>
                 <target>Started</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.progressEstimatedCompletionAt">
+                <source>customerOrder.label.progressEstimatedCompletionAt</source>
+                <target>Est. Completion</target>
             </trans-unit>
             <trans-unit id="customerOrder.label.progressNotes">
                 <source>customerOrder.label.progressNotes</source>

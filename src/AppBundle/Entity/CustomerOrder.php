@@ -14,7 +14,7 @@ use Money\Money;
  * CustomerOrders
  *
  * @ORM\Table(name="customer_order", indexes={@ORM\Index(name="customer_id", columns={"customer_id"}), @ORM\Index(name="company_id", columns={"company_id"}), @ORM\Index(name="referral_id", columns={"referral_id"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CustomerOrderRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class CustomerOrder implements TaxableInterface
@@ -56,7 +56,7 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=false)
 	 * })
 	 *
-	 * @Assert\NotBlank(groups={"StatusBooked"})
+	 * @Assert\NotBlank()
 	 */
 	private $company;
 
@@ -68,7 +68,7 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\JoinColumn(name="order_type_id", referencedColumnName="id", nullable=false)
 	 * })
 	 *
-	 * @Assert\NotBlank(groups={"StatusBooked"})
+	 * @Assert\NotBlank()
 	 */
 	private $orderType;
 
@@ -117,7 +117,7 @@ class CustomerOrder implements TaxableInterface
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="booked_from", type="datetime", nullable=false)
+	 * @ORM\Column(name="booked_from", type="datetime", nullable=true)
 	 *
 	 * @Assert\NotBlank(groups={"StatusBooked"})
 	 */
@@ -126,7 +126,7 @@ class CustomerOrder implements TaxableInterface
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="booked_until", type="datetime", nullable=false)
+	 * @ORM\Column(name="booked_until", type="datetime", nullable=true)
 	 *
 	 * @Assert\NotBlank(groups={"StatusBooked"})
 	 */
@@ -135,7 +135,7 @@ class CustomerOrder implements TaxableInterface
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="booking_notes", type="text", length=65535, nullable=false)
+	 * @ORM\Column(name="booking_notes", type="text", length=65535, nullable=true)
 	 *
 	 * @Assert\NotBlank(message="Booking Notes should not be blank", groups={"StatusBooked"})
 	 */
@@ -149,6 +149,15 @@ class CustomerOrder implements TaxableInterface
 	 * @Assert\NotBlank(groups={"StatusInProgress"})
 	 */
 	private $progressStartedAt;
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="progress_estimated_completion_at", type="datetime", nullable=true)
+	 *
+	 * @Assert\NotBlank(groups={"StatusInProgress"})
+	 */
+	private $progressEstimatedCompletionAt;
 
 	/**
 	 * @var string
@@ -176,7 +185,6 @@ class CustomerOrder implements TaxableInterface
 	 * @Assert\NotBlank(message="Completion Notes should not be blank", groups={"StatusComplete"})
 	 */
 	private $completionNotes;
-
 
 	/**
 	 * @var \DateTime
@@ -574,6 +582,25 @@ class CustomerOrder implements TaxableInterface
 	public function getProgressStartedAt()
 	{
 		return $this->progressStartedAt;
+	}
+
+	/**
+	 * @param $progressEstimatedCompletionAt
+	 * @return $this
+	 */
+	public function setProgressEstimatedCompletionAt($progressEstimatedCompletionAt)
+	{
+		$this->progressEstimatedCompletionAt = $progressEstimatedCompletionAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getProgressEstimatedCompletionAt()
+	{
+		return $this->progressEstimatedCompletionAt;
 	}
 
 	/**

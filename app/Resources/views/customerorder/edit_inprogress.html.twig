@@ -27,6 +27,22 @@
 {% block complimentary %}
 	{{ nav.start }}
 	{{ nav.item('List All Orders', path('customer_order_list_all')) }}
-	{{ nav.item('List Customer Orders', path('customer_list_customer_orders', {'customer_id': customerOrder.customer.id})) }}
+	{{ nav.item('List Customer Orders', path('customer_order_list_all_customer', { 'customer_id': customerOrder.customer.id })) }}
 	{{ nav.end }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$('.js-collection').collection({
+			{#init_with_n_elements: 1,#}
+
+			allow_duplicate: true,
+			drag_drop: false, {# sortable #}
+			drag_drop_options: {
+				placeholder: 'ui-state-highlight'
+			},
+			add: '<ul class="col-sm-offset-2 col-sm-10 nav nav-pills nav-horizontal small"><li style="padding:0 0 15px 5px; "><a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</a></li></ul>'
+		});
+	</script>
 {% endblock %}

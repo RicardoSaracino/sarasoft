@@ -144,9 +144,29 @@ class CustomerOrderController extends Controller
 
 		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findAll();
 
-		return $this->render('customerorder/list_all.html.twig', [
-			'customerOrders' => $customerOrders,
-		]);
+		return $this->render(
+			'customerorder/list_all.html.twig',
+			[
+				'customerOrders' => $customerOrders,
+			]
+		);
+	}
+
+	/**
+	 * Lists all customerOrder entities.
+	 *
+	 * @Route("/customer/{customer_id}/list", name="customer_order_list_all_customer")
+	 * @ParamConverter("customer", options={"mapping": {"customer_id" : "customer_id"}})
+	 * @Method({"GET", "POST"})
+	 */
+	public function listCustomerAllAction(Request $request, Customer $customer)
+	{
+		return $this->render(
+			'customerorder/list_all.html.twig',
+			[
+				'customerOrders' => $this->getDoctrine()->getManager()->getRepository('AppBundle:CustomerOrder')->findByCustomer($customer)
+			]
+		);
 	}
 
 	/**
@@ -157,33 +177,13 @@ class CustomerOrderController extends Controller
 	 */
 	public function listBookedAction(Request $request)
 	{
-		$em = $this->getDoctrine()->getManager();
-
-		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_BOOKED);
-
-		return $this->render('customerorder/list_booked.html.twig', [
-			'customerOrders' => $customerOrders,
-		]);
+		return $this->render(
+			'customerorder/list_booked.html.twig',
+			[
+				'customerOrders' => $this->getDoctrine()->getManager()->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_BOOKED)
+			]
+		);
 	}
-
-
-	/**
-	 * Lists all booked customerOrder entities.
-	 *
-	 * @Route("/list/cancelled", name="customer_order_list_cancelled")
-	 * @Method({"GET", "POST"})
-	 */
-	public function listCancelledAction(Request $request)
-	{
-		$em = $this->getDoctrine()->getManager();
-
-		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_CANCELLED);
-
-		return $this->render('customerorder/list_cancelled.html.twig', [
-			'customerOrders' => $customerOrders,
-		]);
-	}
-
 
 	/**
 	 * Lists all in progress customerOrder entities.
@@ -193,13 +193,12 @@ class CustomerOrderController extends Controller
 	 */
 	public function listInProgressAction(Request $request)
 	{
-		$em = $this->getDoctrine()->getManager();
-
-		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_INPROGRESS);
-
-		return $this->render('customerorder/list_inprogress.html.twig', [
-			'customerOrders' => $customerOrders,
-		]);
+		return $this->render(
+			'customerorder/list_inprogress.html.twig',
+			[
+				'customerOrders' => $this->getDoctrine()->getManager()->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_INPROGRESS)
+			]
+		);
 	}
 
 	/**
@@ -210,13 +209,12 @@ class CustomerOrderController extends Controller
 	 */
 	public function listCompleteAction(Request $request)
 	{
-		$em = $this->getDoctrine()->getManager();
-
-		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_COMPLETE);
-
-		return $this->render('customerorder/list_complete.html.twig', [
-			'customerOrders' => $customerOrders,
-		]);
+		return $this->render(
+			'customerorder/list_complete.html.twig',
+			[
+				'customerOrders' => $this->getDoctrine()->getManager()->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_COMPLETE)
+			]
+		);
 	}
 
 	/**
@@ -227,13 +225,13 @@ class CustomerOrderController extends Controller
 	 */
 	public function listInvoicedAction(Request $request)
 	{
-		$em = $this->getDoctrine()->getManager();
 
-		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_INVOICED);
-
-		return $this->render('customerorder/list_invoiced.html.twig', [
-			'customerOrders' => $customerOrders,
-		]);
+		return $this->render(
+			'customerorder/list_invoiced.html.twig',
+			[
+				'customerOrders' => $this->getDoctrine()->getManager()->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_INVOICED)
+			]
+		);
 	}
 
 	/**
@@ -244,86 +242,33 @@ class CustomerOrderController extends Controller
 	 */
 	public function listPaidAction(Request $request)
 	{
-		$em = $this->getDoctrine()->getManager();
-
-		$customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_PAID);
-
-		return $this->render('customerorder/list_paid.html.twig', [
-			'customerOrders' => $customerOrders,
-		]);
+		return $this->render(
+			'customerorder/list_paid.html.twig',
+			[
+				'customerOrders' => $this->getDoctrine()->getManager()->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_PAID)
+			]
+		);
 	}
 
-    /**
-     * Lists all customerOrder entities for the given customer.
+	/**
+	 * Lists all booked customerOrder entities.
 	 *
-	 * @Route("/customer/{customer_id}", name="customer_list_customer_orders")
-	 *
-	 * @ParamConverter("customer", options={"mapping": {"customer_id" : "id"}})
-	 *
+	 * @Route("/list/cancelled", name="customer_order_list_cancelled")
 	 * @Method({"GET", "POST"})
 	 */
-    public function listByCustomerAction(Request $request, Customer $customer)
-    {
-        $em = $this->getDoctrine()->getManager();
+	public function listCancelledAction(Request $request)
+	{
+		return $this->render(
+			'customerorder/list_cancelled.html.twig',
+			[
+				'customerOrders' => $this->getDoctrine()->getManager()->getRepository('AppBundle:CustomerOrder')->findByStatus(CustomerOrder::STATUS_CANCELLED)
+			]
+		);
+	}
 
-        $customerOrders = $em->getRepository('AppBundle:CustomerOrder')->findByCustomer($customer);
-
-		return $this->render('customerorder/list_all.html.twig', [
-			'customer' => $customer,
-            'customerOrders' => $customerOrders,
-        ]);
-    }
-
-    /**
-     * Creates a new booked customerOrder entity.
-     *
-     * @Route("/customer/{customer_id}/new", name="customer_order_new")
-	 *
-	 * @ParamConverter("customer", options={"mapping": {"customer_id" : "id"}})
-	 *
-	 * @Method({"GET", "POST"})
-     */
-    public function newAction(Request $request, Customer $customer)
-    {
-        $customerOrder = new CustomerOrder();
-
-		$customerOrder->setCustomer($customer);
-
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusBookedType::class, $customerOrder, ['validation_groups' => ['StatusBooked']]);
-
-		$form->add('customer', HiddenEntityType::class, ['class' => Customer::class, 'data' => $customer]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($customerOrder);
-            $em->flush($customerOrder);
-
-			if ($form->isSubmitted() && $form->isValid()) {
-
-				$customerOrder->setStatus(CustomerOrder::STATUS_BOOKED);
-
-				$this->getDoctrine()->getManager()->flush();
-
-				if ($request->request->get('customerOrder_status_inprogress')) {
-					return $this->redirectToRoute('customer_order_edit_inprogress', ['id' => $customerOrder->getId()]);
-				} else {
-					if ($request->request->get('customerOrder_status_complete')) {
-						return $this->redirectToRoute('customer_order_edit_complete', ['id' => $customerOrder->getId()]);
-					}
-				}
-
-				return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
-			}
-		}
-
-        return $this->render('customerorder/new.html.twig', array(
-            'customerOrder' => $customerOrder,
-            'form' => $form->createView(),
-        ));
-    }
-
+	#################################################
+	## SHOW
+	#################################################
 
 	/**
 	 * Finds and displays a customerOrder entity.
@@ -349,7 +294,7 @@ class CustomerOrderController extends Controller
 	 */
 	public function showEmailInvoiceAction(CustomerOrder $customerOrder)
 	{
-		 $this->calculateInvoiceAmounts($customerOrder);
+		$this->calculateInvoiceAmounts($customerOrder);
 
 		return $this->render(
 			'customerorder/email_invoice.html.twig',
@@ -359,6 +304,157 @@ class CustomerOrderController extends Controller
 		);
 	}
 
+	#################################################
+	## NEW
+	#################################################
+
+	/**
+     * Creates a new booked customerOrder entity.
+     *
+     * @Route("/customer/{customer_id}/new/booked", name="customer_order_new_booked")
+	 *
+	 * @ParamConverter("customer", options={"mapping": {"customer_id" : "id"}})
+	 *
+	 * @Method({"GET", "POST"})
+     */
+    public function newBookedAction(Request $request, Customer $customer)
+    {
+        $customerOrder = new CustomerOrder();
+
+		$customerOrder->setCustomer($customer);
+
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderNewStatusBookedType::class, $customerOrder, ['validation_groups' => ['StatusBooked']]);
+
+		$form->add('customer', HiddenEntityType::class, ['class' => Customer::class, 'data' => $customer]);
+
+        $form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+
+			$customerOrder->setStatus(CustomerOrder::STATUS_BOOKED);
+
+			$em = $this->getDoctrine()->getManager();
+
+			$em->persist($customerOrder);
+
+			$em->flush();
+
+			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
+		}
+
+        return $this->render(
+			'customerorder/new_inprogress.html.twig',
+			[
+				'customerOrder' => $customerOrder,
+				'form' => $form->createView(),
+			]
+		);
+    }
+	/**
+     * Creates a new inprogress customerOrder entity.
+     *
+     * @Route("/customer/{customer_id}/new/inprogress", name="customer_order_new_inprogress")
+	 *
+	 * @ParamConverter("customer", options={"mapping": {"customer_id" : "id"}})
+	 *
+	 * @Method({"GET", "POST"})
+     */
+    public function newInProgressAction(Request $request, Customer $customer)
+    {
+        $customerOrder = new CustomerOrder();
+
+		## make sure we have at least one
+		if( $customerOrder->getCustomerOrderProducts()->isEmpty() ){
+			$customerOrder->addCustomerOrderProduct(new \AppBundle\Entity\CustomerOrderProduct());
+		}
+
+		## make sure we have at least one
+		if( $customerOrder->getCustomerOrderServices()->isEmpty() ){
+			$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
+		}
+
+		$customerOrder->setCustomer($customer);
+
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderNewStatusInProgressType::class, $customerOrder, ['validation_groups' => ['StatusInProgress']]);
+
+		$form->add('customer', HiddenEntityType::class, ['class' => Customer::class, 'data' => $customer]);
+
+        $form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+
+			$customerOrder->setStatus(CustomerOrder::STATUS_INPROGRESS);
+
+			$em = $this->getDoctrine()->getManager();
+
+			$em->persist($customerOrder);
+
+			$em->flush();
+
+			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
+		}
+
+        return $this->render(
+			'customerorder/new_inprogress.html.twig',
+			[
+				'customerOrder' => $customerOrder,
+				'form' => $form->createView(),
+			]
+		);
+    }
+
+	/**
+     * Creates a new booked customerOrder entity.
+     *
+     * @Route("/customer/{customer_id}/new/complete", name="customer_order_new_complete")
+	 *
+	 * @ParamConverter("customer", options={"mapping": {"customer_id" : "id"}})
+	 *
+	 * @Method({"GET", "POST"})
+     */
+    public function newCompleteAction(Request $request, Customer $customer)
+    {
+        $customerOrder = new CustomerOrder();
+
+		## make sure we have at least one
+		if( $customerOrder->getCustomerOrderProducts()->isEmpty() ){
+			$customerOrder->addCustomerOrderProduct(new \AppBundle\Entity\CustomerOrderProduct());
+		}
+
+		## make sure we have at least one
+		if( $customerOrder->getCustomerOrderServices()->isEmpty() ){
+			$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
+		}
+
+		$customerOrder->setCustomer($customer);
+
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderNewStatusCompleteType::class, $customerOrder, ['validation_groups' => ['StatusComplete']]);
+
+		$form->add('customer', HiddenEntityType::class, ['class' => Customer::class, 'data' => $customer]);
+
+        $form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+
+			$customerOrder->setStatus(CustomerOrder::STATUS_COMPLETE);
+
+			$em = $this->getDoctrine()->getManager();
+
+			$em->persist($customerOrder);
+
+			$em->flush();
+
+			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
+		}
+
+        return $this->render(
+			'customerorder/new_inprogress.html.twig',
+			[
+				'customerOrder' => $customerOrder,
+				'form' => $form->createView(),
+			]
+		);
+    }
 
 	#################################################
 	## EDIT
@@ -372,7 +468,7 @@ class CustomerOrderController extends Controller
      */
     public function editBookedAction(Request $request, CustomerOrder $customerOrder)
     {
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusBookedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusBooked']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusBookedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusBooked']]);
 
         $form->handleRequest($request);
 
@@ -421,7 +517,7 @@ class CustomerOrderController extends Controller
 	 */
 	public function editInProgressAction(Request $request, CustomerOrder $customerOrder)
 	{
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusInProgressType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusInProgress']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusInProgressType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusInProgress']]);
 
 		$form->handleRequest($request);
 
@@ -469,7 +565,7 @@ class CustomerOrderController extends Controller
 			$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
 		}
 
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusCompleteType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusComplete']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusCompleteType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusComplete']]);
 
 		$form->handleRequest($request);
 
@@ -509,7 +605,7 @@ class CustomerOrderController extends Controller
     {
 		$this->calculateInvoiceAmounts($customerOrder);
 
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusInvoicedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusInvoiced']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusInvoicedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusInvoiced']]);
 
 		$form->handleRequest($request);
 
@@ -553,7 +649,7 @@ class CustomerOrderController extends Controller
      */
     public function editPaidAction(Request $request, CustomerOrder $customerOrder)
     {
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusPaidType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusPaid']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusPaidType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusPaid']]);
 
 		$form->handleRequest($request);
 
@@ -587,7 +683,7 @@ class CustomerOrderController extends Controller
 	 */
 	public function editCancelAction(Request $request, CustomerOrder $customerOrder)
 	{
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderStatusCancelledType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusCancelled']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusCancelledType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusCancelled']]);
 
 		$form->handleRequest($request);
 

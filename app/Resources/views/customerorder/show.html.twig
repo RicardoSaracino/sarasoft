@@ -26,13 +26,15 @@
 		{{ table.row('customerOrder.label.referral', customerOrder.referral.name) }}
 	{% endif %}
 
-	{{ table.row_user_datetime('customerOrder.label.bookedFrom', customerOrder.bookedFrom) }}
+	{% if customerOrder.bookedFrom %}{{ table.row_user_datetime('customerOrder.label.bookedFrom', customerOrder.bookedFrom) }}{% endif %}
 
-	{{ table.row_user_datetime('customerOrder.label.bookedUntil', customerOrder.bookedUntil) }}
+	{% if customerOrder.bookedUntil %}{{ table.row_user_datetime('customerOrder.label.bookedUntil', customerOrder.bookedUntil) }}{% endif %}
 
-	{{ table.row_scrollable('customerOrder.label.bookingNotes', customerOrder.bookingNotes) }}
+	{% if customerOrder.bookingNotes %}{{ table.row_scrollable('customerOrder.label.bookingNotes', customerOrder.bookingNotes) }}{% endif %}
 
 	{% if customerOrder.progressStartedAt %}{{ table.row_user_datetime('customerOrder.label.progressStartedAt', customerOrder.progressStartedAt) }}{% endif %}
+
+	{% if customerOrder.progressEstimatedCompletionAt %}{{ table.row_user_datetime('customerOrder.label.progressEstimatedCompletionAt', customerOrder.progressEstimatedCompletionAt) }}{% endif %}
 
 	{% if customerOrder.progressNotes %}{{ table.row_scrollable('customerOrder.label.progressNotes', customerOrder.progressNotes) }}{% endif %}
 
@@ -72,7 +74,7 @@
 
 	{{ nav.item('List All Orders', path('customer_order_list_all')) }}
 
-	{{ nav.item('List Customer Orders', path('customer_order_new', { 'customer_id': customerOrder.customer.id })) }}
+	{{ nav.item('List Customer Orders', path('customer_order_list_all_customer', { 'customer_id': customerOrder.customer.id })) }}
 
 	{{ nav.item('Edit Customer Order', customer_order_path(customerOrder)) }}
 
