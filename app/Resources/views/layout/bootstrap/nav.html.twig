@@ -1,11 +1,15 @@
+
+
 {% macro start() %}<ul class="nav nav-pills nav-stacked">{% endmacro %}
 
 {% macro end() %}</ul>{% endmacro %}
 
 {% macro item(label, path, params) %}
+{% if path %}
 	{% spaceless %}
 		<li>
 			<a href="{{ path }}" target="{{ params.target|default('_self') }}">{{ label }}</a>
 		</li>
 	{% endspaceless %}
+{% endif %}
 {% endmacro %}
