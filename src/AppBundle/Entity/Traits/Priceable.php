@@ -38,7 +38,7 @@ trait Priceable
 	 *
 	 * @Assert\NotBlank()
 	 */
-	private $priceCurrency;
+	private $priceCurrency = 'CAD';
 
 	/**
 	 * @param $effectiveFrom
