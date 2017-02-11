@@ -31,13 +31,15 @@ class ServicePriceEffectiveFromValidator extends ConstraintValidator
 	}
 
 	/**
-	 * @param \DateTime $effectiveFrom
+	 * @param mixed $effectiveFrom
 	 * @param Constraint $constraint
+	 * @throws \Symfony\Component\Validator\Exception\MappingException
 	 */
 	public function validate($effectiveFrom, Constraint $constraint)
 	{
-		#dump($this->context->getObject()->getService()); die;
-
+		if (!($this->context->getObject() instanceof \AppBundle\Entity\ServicePrice)) {
+			throw new \Symfony\Component\Validator\Exception\MappingException('Context Object not instance of ServicePrice');
+		}
 
 		/** @var \AppBundle\Repository\ServicePriceRepository $servicePriceRepository */
 		$servicePriceRepository = $this->manager->getRepository('AppBundle:ServicePrice');
@@ -45,10 +47,9 @@ class ServicePriceEffectiveFromValidator extends ConstraintValidator
 		/** @var \AppBundle\Entity\ServicePrice $servicePrice */
 		$servicePrice = $servicePriceRepository->findMaxEffective($this->context->getObject()->getService());
 
-
-		if($servicePrice && $effectiveFrom <= $servicePrice->getEffectiveFrom()){
+		if ($servicePrice && $effectiveFrom <= $servicePrice->getEffectiveFrom()) {
 			$this->context->buildViolation($constraint->message)
-				->setParameter('%string%', $servicePrice->getEffectiveFrom()->format('F jS, Y'))
+				->setParameter('%date%', $servicePrice->getEffectiveFrom()->format('F jS, Y'))
 				->addViolation();
 		}
 	}

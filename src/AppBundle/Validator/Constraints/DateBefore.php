@@ -9,12 +9,14 @@ namespace AppBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class ServicePriceEffectiveFrom
+ * Class DateBefore
  * @package AppBundle\Validator\Constraints
  *
  * @Annotation
  */
-class ServicePriceEffectiveFrom extends Constraint
+class DateBefore extends Constraint
 {
-	public $message = 'Effective from date must be after %date%';
+	public $field = null;
+
+	public $message = 'This value is not dated before %date%';
 }
