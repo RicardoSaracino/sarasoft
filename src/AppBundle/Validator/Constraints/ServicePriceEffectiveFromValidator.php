@@ -36,14 +36,17 @@ class ServicePriceEffectiveFromValidator extends ConstraintValidator
 	 */
 	public function validate($effectiveFrom, Constraint $constraint)
 	{
+		#dump($this->context->getObject()->getService()); die;
+
+
 		/** @var \AppBundle\Repository\ServicePriceRepository $servicePriceRepository */
 		$servicePriceRepository = $this->manager->getRepository('AppBundle:ServicePrice');
 
 		/** @var \AppBundle\Entity\ServicePrice $servicePrice */
-		$servicePrice = $servicePriceRepository->findMaxEffective();
+		$servicePrice = $servicePriceRepository->findMaxEffective($this->context->getObject()->getService());
 
 
-		if($effectiveFrom <= $servicePrice->getEffectiveFrom()){
+		if($servicePrice && $effectiveFrom <= $servicePrice->getEffectiveFrom()){
 			$this->context->buildViolation($constraint->message)
 				->setParameter('%string%', $servicePrice->getEffectiveFrom()->format('F jS, Y'))
 				->addViolation();

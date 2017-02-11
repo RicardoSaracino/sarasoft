@@ -46,11 +46,16 @@ class ServicePriceRepository extends EntityRepository
 
 
 	/**
-	 * @return \AppBundle\Entity\ServicePrice
+	 * @param \AppBundle\Entity\Service $service
+	 * @return mixed
 	 */
-	public function findMaxEffective()
+	public function findMaxEffective(\AppBundle\Entity\Service $service)
 	{
-		return $this->createQueryBuilder('sp')
+		$qb = $this->createQueryBuilder('sp');
+
+		return $qb
+			->where($qb->expr()->eq('sp.service', ':service'))
+			->setParameter('service', $service->getId())
 			->orderBy('sp.effectiveFrom', 'DESC')
 			->setMaxResults(1)
 			->getQuery()
