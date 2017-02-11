@@ -6,9 +6,9 @@
 
 namespace AppBundle\Listener;
 
-use AncaRebeca\FullCalendarBundle\Event\CalendarEvent;
 use AppBundle\Entity\CustomerOrder;
 use AppBundle\Event\CustomerOrderCalendarEvent;
+use AncaRebeca\FullCalendarBundle\Event\CalendarEvent;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
