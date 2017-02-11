@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Ricardo Saracino
- * @since 10/16/16
+ * @since 02/10/17
  */
 
 namespace AppBundle\Validator\Constraints;
@@ -9,12 +9,12 @@ namespace AppBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class ContainsAlphanumeric
+ * Class Decimal
  * @package AppBundle\Validator\Constraints
  *
  * @Annotation
  */
-class ContainsAlphanumeric extends Constraint
+class Decimal extends Constraint
 {
-	public $message = 'The value should contain only letters or numbers.';
+	public $message = 'This value is not a proper decimal.';
 }

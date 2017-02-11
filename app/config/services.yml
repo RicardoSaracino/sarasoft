@@ -4,15 +4,11 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-
     app_bundle.service.listener:
         class: AppBundle\Listener\CustomerOrderCalendarListener
         arguments: ["@doctrine.orm.entity_manager", "@router"]
         tags:
-            - { name: 'kernel.event_listener', event: 'fullcalendar.set_data', method: loadData }
+          - { name: 'kernel.event_listener', event: 'fullcalendar.set_data', method: loadData }
 
     app_bundle.type.hidden_entity:
         class: AppBundle\Form\Type\HiddenEntityType
@@ -37,3 +33,9 @@ services:
         arguments: ["@doctrine.orm.entity_manager","@security.token_storage"]
         tags:
           - { name: form.type, alias: user_text_area_prepend_type }
+
+    app_bundle.validator.service_price_effective_from:
+        class: AppBundle\Validator\Constraints\ServicePriceEffectiveFromValidator
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+          - { name: validator.constraint_validator }

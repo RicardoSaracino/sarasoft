@@ -43,4 +43,17 @@ class ServicePriceRepository extends EntityRepository
 
 		return $price;
 	}
+
+
+	/**
+	 * @return \AppBundle\Entity\ServicePrice
+	 */
+	public function findMaxEffective()
+	{
+		return $this->createQueryBuilder('sp')
+			->orderBy('sp.effectiveFrom', 'DESC')
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+	}
 }

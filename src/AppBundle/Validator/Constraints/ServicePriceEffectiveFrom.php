@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Ricardo Saracino
- * @since 10/16/16
+ * @since 02/10/17
  */
 
 namespace AppBundle\Validator\Constraints;
@@ -9,12 +9,12 @@ namespace AppBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class ContainsAlphanumeric
+ * Class ServicePriceEffectiveFrom
  * @package AppBundle\Validator\Constraints
  *
  * @Annotation
  */
-class ContainsAlphanumeric extends Constraint
+class ServicePriceEffectiveFrom extends Constraint
 {
-	public $message = 'The value should contain only letters or numbers.';
+	public $message = 'Effective from date must be after %string%';
 }
