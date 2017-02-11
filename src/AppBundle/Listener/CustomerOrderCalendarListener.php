@@ -56,6 +56,10 @@ class CustomerOrderCalendarListener
 
 				OR :endDate BETWEEN o.bookedFrom AND o.bookedUntil
 
+				OR :startDate BETWEEN o.progressStartedAt AND o.progressEstimatedCompletionAt
+
+				OR :startDate BETWEEN o.progressStartedAt AND o.progressEstimatedCompletionAt
+
 				OR o.completedAt BETWEEN :startDate AND :endDate
 
 				OR o.invoicedAt BETWEEN :startDate AND :endDate
@@ -97,7 +101,7 @@ class CustomerOrderCalendarListener
 
 					$calEvent->setStartDate($customerOrder->getProgressStartedAt());
 
-					$calEvent->setEndDate($customerOrder->getBookedUntil());
+					$calEvent->setEndDate($customerOrder->getProgressEstimatedCompletionAt());
 
 					$calEvent->setNotes($customerOrder->getProgressNotes());
 
@@ -111,6 +115,8 @@ class CustomerOrderCalendarListener
 					$calEvent->setUrl($this->router->generate('customer_order_edit_complete', array('id' => $customerOrder->getId())));
 
 					$calEvent->setNotes($customerOrder->getCompletionNotes());
+
+					$calEvent->setAllDay(false);
 
 					break;
 
