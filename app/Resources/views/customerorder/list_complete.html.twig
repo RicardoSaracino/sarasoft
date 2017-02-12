@@ -20,6 +20,7 @@
 					<th>{{ 'customerOrder.label.orderType'|trans }}</th>
 					<th>{{ 'customerOrder.label.referral'|trans }}</th>
 					<th>{{ 'customerOrder.label.completedAt'|trans }}</th>
+					<th>Created</th>
 					<th>Actions</th>
 				</tr>
 				</thead>
@@ -32,6 +33,7 @@
 						<td>{{ customerOrder.orderType.name }}</td>
 						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>
 						<td>{{ customerOrder.completedAt|user_datetime }}</td>
+						<td>{{ customerOrder.createdAt|user_datetime }}</td>
 						<td>
 							<ul class="nav nav-pills">
 								<li>
