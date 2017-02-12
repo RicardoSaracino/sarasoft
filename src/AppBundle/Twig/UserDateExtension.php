@@ -31,6 +31,14 @@ class UserDateExtension extends \Twig_Extension
 	}
 
 	/**
+	 * @return mixed
+	 */
+	public function getUser()
+	{
+		return $this->tokenStorage->getToken()->getUser();
+	}
+
+	/**
 	 * @return array
 	 */
 	public function getFilters()
@@ -39,14 +47,6 @@ class UserDateExtension extends \Twig_Extension
 			new \Twig_SimpleFilter('user_date', array($this, 'formatUserDate')),
 			new \Twig_SimpleFilter('user_datetime', array($this, 'formatUserDateTime')),
 		];
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getUser()
-	{
-		return $this->tokenStorage->getToken()->getUser();
 	}
 
 	/**

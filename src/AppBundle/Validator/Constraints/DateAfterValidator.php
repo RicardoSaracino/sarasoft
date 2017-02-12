@@ -11,10 +11,10 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
- * Class DateBeforeValidator
+ * Class DateAfterValidator
  * @package AppBundle\Validator\Constraints
  */
-class DateBeforeValidator extends ConstraintValidator
+class DateAfterValidator extends ConstraintValidator
 {
 	/**
 	 * @var TokenStorage
@@ -66,7 +66,7 @@ class DateBeforeValidator extends ConstraintValidator
 			throw new \Symfony\Component\Validator\Exception\MappingException($constraint->field.' not instance of DateTime or null');
 		}
 
-		if ($date && $value && $date < $value) {
+		if ($date && $value && $date > $value) {
 			$this->context->buildViolation($constraint->message)
 				->setParameter('%date%', $date->setTimezone(new \DateTimeZone($this->getUser()->getTimeZone()))->format('F jS, Y g:i A'))
 				->addViolation();

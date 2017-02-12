@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Validator\Constraints as AppAssert;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -129,6 +131,8 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\Column(name="booked_until", type="datetime", nullable=true)
 	 *
 	 * @Assert\NotBlank(groups={"StatusBooked"})
+	 *
+	 * @AppAssert\DateAfter(field="bookedFrom", message="Booked Until date must be after Booked From date %date%", groups={"StatusBooked"})
 	 */
 	private $bookedUntil;
 
@@ -137,7 +141,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="booking_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Booking Notes should not be blank", groups={"StatusBooked"})
+	 * @Assert\NotBlank(message="Booking Notes should not be blank", groups={"New"})
 	 */
 	private $bookingNotes;
 
@@ -156,6 +160,8 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\Column(name="progress_estimated_completion_at", type="datetime", nullable=true)
 	 *
 	 * @Assert\NotBlank(groups={"StatusInProgress"})
+	 *
+	 * @AppAssert\DateAfter(field="progressStartedAt", message="Est. Completion date must be after Start date %date%", groups={"StatusInProgress"})
 	 */
 	private $progressEstimatedCompletionAt;
 
@@ -164,7 +170,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="progress_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Progress Notes should not be blank", groups={"StatusInProgress"})
+	 * @Assert\NotBlank(message="Progress Notes should not be blank", groups={"New"})
 	 */
 	private $progressNotes;
 
@@ -182,7 +188,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="completion_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Completion Notes should not be blank", groups={"StatusComplete"})
+	 * @Assert\NotBlank(message="Completion Notes should not be blank", groups={"New"})
 	 */
 	private $completionNotes;
 
@@ -192,6 +198,8 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\Column(name="invoiced_at", type="datetime", nullable=true)
 	 *
 	 * @Assert\NotBlank(groups={"StatusInvoiced"})
+	 *
+	 * @AppAssert\DateAfter(field="completedAt", message="Invoice date must be after Completion date %date%", groups={"StatusInvoiced"})
 	 */
 	private $invoicedAt;
 
@@ -259,6 +267,8 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\Column(name="paid_at", type="datetime", nullable=true)
 	 *
 	 * @Assert\NotBlank(groups={"StatusPaid"})
+	 *
+	 * @AppAssert\DateAfter(field="invoicedAt", message="Payment date must be after Invoice date %date%", groups={"StatusInvoiced"})
 	 */
 	private $paidAt;
 
@@ -299,26 +309,6 @@ class CustomerOrder implements TaxableInterface
 		$this->customerOrderProducts = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->customerOrderServices = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->customerOrderTaxRateAmounts = new \Doctrine\Common\Collections\ArrayCollection();
-	}
-
-	/**
-	 * @return bool
-	 *
-	 * @Assert\IsTrue(message="Booked From must be before Booked Until")
-	 */
-	public function isBookedFromUntilLegal()
-	{
-		return ($this->bookedFrom <= $this->bookedUntil);
-	}
-
-	/**
-	 * @return bool
-	 *
-	 * @Assert\IsTrue(message="Booking must be in the future")
-	 */
-	public function isBookedFromLegal()
-	{
-		return true; # return ($this->bookedFrom >= (new \DateTime('now')));
 	}
 
 	/**
@@ -482,6 +472,9 @@ class CustomerOrder implements TaxableInterface
 		return $this;
 	}
 
+
+	####################################################
+
 	/**
 	 * @return string
 	 */
@@ -505,6 +498,50 @@ class CustomerOrder implements TaxableInterface
 
 		return $this;
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function isStatusBooked(){
+		return $this->getStatus() == self::STATUS_BOOKED;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isStatusInProgress(){
+		return $this->getStatus() == self::STATUS_INPROGRESS;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isStatusComplete(){
+		return $this->getStatus() == self::STATUS_COMPLETE;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isStatusInvoiced(){
+		return $this->getStatus() == self::STATUS_INVOICED;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isStatusPaid(){
+		return $this->getStatus() == self::STATUS_PAID;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isStatusCancelled(){
+		return $this->getStatus() == self::STATUS_CANCELLED;
+	}
+
+	####################################################
 
 	/**
 	 * @param $bookedFrom
