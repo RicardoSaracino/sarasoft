@@ -39,3 +39,15 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
           - { name: validator.constraint_validator }
+
+    app_bundle.validator.date_after:
+        class: AppBundle\Validator\Constraints\DateAfterValidator
+        arguments: ["@security.token_storage"]
+        tags:
+          - { name: validator.constraint_validator }
+
+    app_bundle.validator.date_before:
+        class: AppBundle\Validator\Constraints\DateBeforeValidator
+        arguments: ["@security.token_storage"]
+        tags:
+          - { name: validator.constraint_validator }
