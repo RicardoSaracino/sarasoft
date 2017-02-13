@@ -21,6 +21,7 @@
 					<th>Description</th>
 					<th>Current Price</th>
 					<th>Effective</th>
+					<th>Created</th>
 					<th>Actions</th>
 				</tr>
 				</thead>
@@ -31,6 +32,7 @@
 						<td>{{ service.description }}</td>
 						<td>{{ service.getCurrentServicePrice.price|user_money }}</td>
 						<td>{{ service.getCurrentServicePrice.effectiveFrom|user_date }}</td>
+						<td>{{ service.createdAt|user_datetime }}</td>
 						<td>
 							<ul class="nav nav-pills">
 								<li>

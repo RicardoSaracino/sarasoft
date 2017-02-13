@@ -20,6 +20,7 @@
 					<th>Name</th>
 					<th>Phone</th>
 					<th>Alt Phone</th>
+					<th>Created</th>
 					<th>Actions</th>
 				</tr>
 				</thead>
@@ -29,6 +30,7 @@
 						<td>{{ company.name }}</td>
 						<td><a href="{{ phone_number_format(company.phone,'RFC3966') }}">{{ phone_number_format(company.phone) }}</a></td>
 						<td>{% if company.altPhone %}<a href="{{ phone_number_format(company.altPhone,'RFC3966') }}">{{ phone_number_format(company.altPhone) }}</a>{% endif %}</td>
+						<td>{{ company.createdAt|user_datetime }}</td>
 						<td>
 							<ul class="nav nav-pills">
 								<li>

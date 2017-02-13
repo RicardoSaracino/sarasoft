@@ -19,6 +19,7 @@
 				<tr>
 					<th>Name</th>
 					<th>Description</th>
+					<th>Created</th>
 					<th>Actions</th>
 				</tr>
 				</thead>
@@ -27,6 +28,7 @@
 					<tr>
 						<td>{{ product.name }}</td>
 						<td>{{ product.description }}</td>
+						<td>{{ product.createdAt|user_datetime }}</td>
 						<td>
 							<ul class="nav nav-pills">
 								<li>

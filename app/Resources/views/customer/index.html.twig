@@ -17,6 +17,7 @@
 					<th>Name</th>
 					<th>Phone</th>
 					<th>Alt Phone</th>
+					<th>Created</th>
 					<th>Actions</th>
 				</tr>
 				</thead>
@@ -26,6 +27,7 @@
 						<td>{{ customer.fullName }}</td>
 						<td><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></td>
 						<td>{% if customer.altPhone %}<a href="{{ phone_number_format(customer.altPhone,'RFC3966') }}">{{ phone_number_format(customer.altPhone) }}</a>{% endif %}</td>
+						<td>{{ customer.createdAt|user_datetime }}</td>
 						<td>
 							<ul class="nav nav-pills">
 								<li>
