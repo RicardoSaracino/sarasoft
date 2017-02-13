@@ -56,6 +56,8 @@
 
 	{% if customerOrder.paidAt %}{{ table.row_user_datetime('customerOrder.label.paidAt', customerOrder.paidAt) }}{% endif %}
 
+	{% if customerOrder.payment %}{{ table.row_user_money('customerOrder.label.payment', customerOrder.payment) }}{% endif %}
+
 	{% if customerOrder.paymentNotes %}{{ table.row_scrollable('customerOrder.label.paymentNotes', customerOrder.paymentNotes) }}{% endif %}
 
 	{% if customerOrder.cancelledAt %}{{ table.row_user_datetime('customerOrder.label.cancelledAt', customerOrder.cancelledAt) }}{% endif %}
