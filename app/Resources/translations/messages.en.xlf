@@ -202,20 +202,18 @@
                 <target>Invoice Notes</target>
             </trans-unit>
 
-
             <trans-unit id="customerOrder.label.paidAt">
                 <source>customerOrder.label.paidAt</source>
                 <target>Paid</target>
             </trans-unit>
-             <trans-unit id="customerOrder.label.paymentTotal">
-                <source>customerOrder.label.paymentTotal</source>
-                <target>Total</target>
+             <trans-unit id="customerOrder.label.payment">
+                <source>customerOrder.label.payment</source>
+                <target>Payment</target>
             </trans-unit>
             <trans-unit id="customerOrder.label.paymentNotes">
                 <source>customerOrder.label.paymentNotes</source>
                 <target>Payment Notes</target>
             </trans-unit>
-
 
             <trans-unit id="customerOrder.label.services">
                 <source>customerOrder.label.services</source>

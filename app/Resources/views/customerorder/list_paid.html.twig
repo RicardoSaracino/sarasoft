@@ -21,7 +21,7 @@
 					<th>{{ 'customerOrder.label.orderType'|trans }}</th>
 					<th>{{ 'customerOrder.label.referral'|trans }}</th>
 					<th>{{ 'customerOrder.label.paidAt'|trans }}</th>
-					<th>{{ 'customerOrder.label.paymentTotal'|trans }}</th>
+					<th>{{ 'customerOrder.label.payment'|trans }}</th>
 					<th>Created</th>
 					<th>Actions</th>
 				</tr>
@@ -35,7 +35,7 @@
 						<td>{{ customerOrder.orderType.name }}</td>
 						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>
 						<td>{{ customerOrder.paidAt|user_datetime }}</td>
-						<td>{{ 0 }}</td>
+						<td>{{ customerOrder.payment|user_money }}</td>
 						<td>{{ customerOrder.createdAt|user_datetime }}</td>
 						<td>
 							<ul class="nav nav-pills">
