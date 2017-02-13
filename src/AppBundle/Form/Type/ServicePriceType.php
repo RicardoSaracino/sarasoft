@@ -18,7 +18,7 @@ class ServicePriceType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('price', \Tbbc\MoneyBundle\Form\Type\MoneyType::class, ['label' => 'servicePrice.label.price'])
+			->add('price', \Tbbc\MoneyBundle\Form\Type\MoneyType::class, ['error_bubbling' => false, 'label' => 'servicePrice.label.price'])
 			->add('effectiveFrom', DatePickerType::class, ['label' => 'servicePrice.label.effectiveFrom'])
 		;
 	}
