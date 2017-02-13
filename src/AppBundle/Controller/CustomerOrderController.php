@@ -323,7 +323,7 @@ class CustomerOrderController extends Controller
 
 		$customerOrder->setCustomer($customer);
 
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderNewStatusBookedType::class, $customerOrder, ['validation_groups' => ['StatusBooked']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderNewStatusBookedType::class, $customerOrder, ['validation_groups' => ['NewStatusBooked']]);
 
 		$form->add('customer', HiddenEntityType::class, ['class' => Customer::class, 'data' => $customer]);
 
@@ -375,7 +375,7 @@ class CustomerOrderController extends Controller
 
 		$customerOrder->setCustomer($customer);
 
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderNewStatusInProgressType::class, $customerOrder, ['validation_groups' => ['StatusInProgress']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderNewStatusInProgressType::class, $customerOrder, ['validation_groups' => ['NewStatusInProgress']]);
 
 		$form->add('customer', HiddenEntityType::class, ['class' => Customer::class, 'data' => $customer]);
 
@@ -428,7 +428,7 @@ class CustomerOrderController extends Controller
 
 		$customerOrder->setCustomer($customer);
 
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderNewStatusCompleteType::class, $customerOrder, ['validation_groups' => ['StatusComplete']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderNewStatusCompleteType::class, $customerOrder, ['validation_groups' => ['NewStatusComplete']]);
 
 		$form->add('customer', HiddenEntityType::class, ['class' => Customer::class, 'data' => $customer]);
 
@@ -468,7 +468,7 @@ class CustomerOrderController extends Controller
      */
     public function editBookedAction(Request $request, CustomerOrder $customerOrder)
     {
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusBookedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusBooked']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusBookedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusBooked']]);
 
         $form->handleRequest($request);
 
@@ -509,15 +509,26 @@ class CustomerOrderController extends Controller
 		);
 	}
 
+
 	/**
-	 * Displays a form to edit or cancel an existing customerOrder entity.
+	 * Displays a form to edit or set inprogress an existing customerOrder entity.
 	 *
 	 * @Route("/{id}/edit/inprogress", name="customer_order_edit_inprogress")
 	 * @Method({"GET", "POST"})
 	 */
 	public function editInProgressAction(Request $request, CustomerOrder $customerOrder)
 	{
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusInProgressType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusInProgress']]);
+		## make sure we have at least one
+		if( $customerOrder->getCustomerOrderProducts()->isEmpty() ){
+			$customerOrder->addCustomerOrderProduct(new \AppBundle\Entity\CustomerOrderProduct());
+		}
+
+		## make sure we have at least one
+		if( $customerOrder->getCustomerOrderServices()->isEmpty() ){
+			$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
+		}
+
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusInProgressType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusInProgress']]);
 
 		$form->handleRequest($request);
 
@@ -565,7 +576,7 @@ class CustomerOrderController extends Controller
 			$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
 		}
 
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusCompleteType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusComplete']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusCompleteType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusComplete']]);
 
 		$form->handleRequest($request);
 
@@ -605,7 +616,7 @@ class CustomerOrderController extends Controller
     {
 		$this->calculateInvoiceAmounts($customerOrder);
 
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusInvoicedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusInvoiced']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusInvoicedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusInvoiced']]);
 
 		$form->handleRequest($request);
 
@@ -649,7 +660,9 @@ class CustomerOrderController extends Controller
      */
     public function editPaidAction(Request $request, CustomerOrder $customerOrder)
     {
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusPaidType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusPaid']]);
+
+
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusPaidType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusPaid']]);
 
 		$form->handleRequest($request);
 
@@ -657,7 +670,9 @@ class CustomerOrderController extends Controller
 			$form->addError(new \Symfony\Component\Form\FormError('Cannot Invoice Order'));
 		}
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+			dump($form); die;
 
 			$customerOrder->setStatus(CustomerOrder::STATUS_PAID);
 
@@ -683,7 +698,7 @@ class CustomerOrderController extends Controller
 	 */
 	public function editCancelAction(Request $request, CustomerOrder $customerOrder)
 	{
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusCancelledType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['StatusCancelled']]);
+		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusCancelledType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusCancelled']]);
 
 		$form->handleRequest($request);
 
