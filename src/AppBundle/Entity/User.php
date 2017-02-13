@@ -36,12 +36,8 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(name="username", type="string", length=32, unique=true)
 	 *
-	 * @Assert\NotBlank()
-	 * @Assert\Type(type="alnum")
-	 * @Assert\Length(min=3)
-	 *
-	 * todo make sure the contraint works correctly
-	 * @AppAssert\ContainsAlphanumeric
+	 * @Assert\Length(min=6)
+	 * @AppAssert\UserName
 	 */
 	private $username;
 

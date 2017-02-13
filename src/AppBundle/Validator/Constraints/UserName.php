@@ -9,12 +9,12 @@ namespace AppBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class ContainsAlphanumeric
+ * Class UserName
  * @package AppBundle\Validator\Constraints
  *
  * @Annotation
  */
-class ContainsAlphanumeric extends Constraint
+class UserName extends Constraint
 {
-	public $message = 'The value should contain only letters or numbers.';
+	public $message = 'This value should contain only letters or numbers or certain punctuation.';
 }
