@@ -18,9 +18,9 @@ class UserDateExtension extends \Twig_Extension
 {
 	private $tokenStorage;
 
-	const FORMAT_DATE = 'F j, Y';
+	const FORMAT_DATE = 'M j, Y';
 
-	const FORMAT_DATETIME = 'F j, Y g:i A';
+	const FORMAT_DATETIME = 'M j, Y g:i A';
 
 	/**
 	 * @param TokenStorage $tokenStorage
