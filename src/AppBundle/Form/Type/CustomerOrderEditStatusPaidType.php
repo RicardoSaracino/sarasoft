@@ -20,7 +20,7 @@ class CustomerOrderEditStatusPaidType extends CustomerOrderType
 	{
 		$builder
 			->add('paidAt', UserDateTimePickerType::class, ['label' => 'customerOrder.label.paidAt'])
-			#->add('invoiceSubtotal', \Tbbc\MoneyBundle\Form\Type\MoneyType::class, ['label' => 'customerOrder.label.invoiceSubtotal'])
+			->add('payment', \Tbbc\MoneyBundle\Form\Type\MoneyType::class, ['error_bubbling' => false, 'label' => 'customerOrder.label.payment'])
 		;
 
 		if ($builder->getData()->getPaymentNotes()) {
