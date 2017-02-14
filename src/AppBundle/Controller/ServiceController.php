@@ -5,17 +5,18 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\ServicePrice;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Service controller.
  *
  * @Route("service")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class ServiceController extends Controller
 {

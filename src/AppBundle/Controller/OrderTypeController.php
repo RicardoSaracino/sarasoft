@@ -9,11 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Refferal controller.
  *
- * @Route("/ordertype")
+ * @Route("ordertype")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class OrderTypeController extends Controller
 {

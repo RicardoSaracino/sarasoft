@@ -58,7 +58,7 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=false)
 	 * })
 	 *
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
 	 */
 	private $company;
 
@@ -70,7 +70,7 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\JoinColumn(name="order_type_id", referencedColumnName="id", nullable=false)
 	 * })
 	 *
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
 	 */
 	private $orderType;
 
@@ -121,7 +121,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="booked_from", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"NewStatusBooked, EditStatusBooked"})
+	 * @Assert\NotBlank(groups={"NewStatusBooked", "EditStatusBooked"})
 	 */
 	private $bookedFrom;
 
@@ -130,9 +130,8 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="booked_until", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"StatusBooked"})
-	 *
-	 * @AppAssert\DateAfter(field="bookedFrom", message="Booked Until date must be after Booked From date %date%", groups={"NewStatusBooked, EditStatusBooked"})
+	 * @Assert\NotBlank(groups={"NewStatusBooked", "EditStatusBooked"})
+	 * @AppAssert\DateAfter(field="bookedFrom", message="Booked Until date must be after Booked From date %date%", groups={"NewStatusBooked", "EditStatusBooked"})
 	 */
 	private $bookedUntil;
 
@@ -141,16 +140,18 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="booking_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Booking Notes should not be blank", groups={"NewStatusInProgress"})
+	 * @Assert\NotBlank(message="Booking Notes should not be blank", groups={"NewStatusBooked"})
 	 */
 	private $bookingNotes;
+
+
 
 	/**
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="progress_started_at", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"EditStatusInProgress, NewStatusInProgress"})
+	 * @Assert\NotBlank(groups={"NewStatusInProgress", "EditStatusInProgress"})
 	 */
 	private $progressStartedAt;
 
@@ -159,9 +160,9 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="progress_estimated_completion_at", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"EditStatusInProgress, NewStatusInProgress"})
+	 * @Assert\NotBlank(groups={"NewStatusInProgress", "EditStatusInProgress"})
 	 *
-	 * @AppAssert\DateAfter(field="progressStartedAt", message="Est. Completion date must be after Start date %date%", groups={"EditStatusInProgress, NewStatusInProgress"})
+	 * @AppAssert\DateAfter(field="progressStartedAt", message="Est. Completion date must be after Start date %date%", groups={"NewStatusInProgress", "EditStatusInProgress"})
 	 */
 	private $progressEstimatedCompletionAt;
 
@@ -174,12 +175,14 @@ class CustomerOrder implements TaxableInterface
 	 */
 	private $progressNotes;
 
+
+
 	/**
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="completed_at", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"NewStatusComplete,EditStatusComplete"})
+	 * @Assert\NotBlank(groups={"NewStatusComplete", "EditStatusComplete"})
 	 */
 	private $completedAt;
 
@@ -191,6 +194,7 @@ class CustomerOrder implements TaxableInterface
 	 * @Assert\NotBlank(message="Completion Notes should not be blank", groups={"NewStatusComplete"})
 	 */
 	private $completionNotes;
+
 
 	/**
 	 * @var \DateTime
@@ -486,7 +490,6 @@ class CustomerOrder implements TaxableInterface
 
 		return $this;
 	}
-
 
 	####################################################
 

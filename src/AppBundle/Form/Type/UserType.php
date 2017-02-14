@@ -43,10 +43,10 @@ class UserType extends AbstractType
 			])
 			->add(
 				'roles', Type\ChoiceType::class, [
-					'choices' => \AppBundle\Entity\User::GetRoleOptions(),
+					'choices' => $builder->getData()->getRoleOptions(),
 					'expanded' => true,
 					'multiple' => true,
-					'label' => 'Roles'
+					'label' => 'user.label.roles'
 				]
 			);
 	}

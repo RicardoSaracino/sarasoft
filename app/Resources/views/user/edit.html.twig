@@ -20,6 +20,8 @@
 {% block complimentary %}
 	{{ nav.start }}
 	{{ nav.item('Change Password', path('user_change_password', {'id':user.id})) }}
-	{{ nav.item('List Users', path('user_index')) }}
+	{% if app.user.adminRole %}
+		{{ nav.item('List Users', path('user_index')) }}
+	{% endif %}
 	{{ nav.end }}
 {% endblock %}

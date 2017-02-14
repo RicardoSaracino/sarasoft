@@ -36,7 +36,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(name="username", type="string", length=32, unique=true)
 	 *
-	 * @Assert\Length(min=6)
+	 * @Assert\Length(min=5)
 	 * @AppAssert\UserName
 	 */
 	private $username;
@@ -233,6 +233,8 @@ class User implements UserInterface, \Serializable
 		return $this->salt;
 	}
 
+	####################################################
+
 	/**
 	 * @param array $roles
 	 * @return $this
@@ -253,6 +255,40 @@ class User implements UserInterface, \Serializable
 	{
 		return json_decode($this->roles);
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasAdminRole()
+	{
+		return in_array('ROLE_ADMIN', $this->getRoles()) || in_array('ROLE_SUPER_ADMIN', $this->getRoles());
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasSuperAdminRole()
+	{
+		return in_array('ROLE_SUPER_ADMIN', $this->getRoles());
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getRoleOptions()
+	{
+		if ($this->hasSuperAdminRole()) {
+			return ['Super Admin' => 'ROLE_SUPER_ADMIN', 'Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'];
+		} else {
+			if ($this->hasAdminRole()) {
+				return ['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'];
+			}
+		}
+
+		return ['User' => 'ROLE_USER'];
+	}
+
+	####################################################
 
 	/**
 	 * @param $firstName
@@ -297,7 +333,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function getFullName()
 	{
-		return $this->firstName.' '.$this->lastName;
+		return $this->firstName . ' ' . $this->lastName;
 	}
 
 	/**
@@ -409,19 +445,6 @@ class User implements UserInterface, \Serializable
 			// $this->salt
 			) = unserialize($serialized);
 	}
-
-
-	#### REMOVE THIS ####
-
-	/**
-	 * @return array
-	 */
-	public static function GetRoleOptions()
-	{
-		return ['Super Admin' => 'ROLE_SUPER_ADMIN', 'Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'];
-	}
-
-	### m ake extension out of this
 
 	/**
 	 * @return null|string
