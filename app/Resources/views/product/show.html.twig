@@ -8,15 +8,34 @@
 {% block header %}<h1>Product</h1>{% endblock %}
 
 {% block main %}
+
+	{% import table as table %}
+
 	{{ table.start }}
 	{{ table.row('product.label.name', product.name) }}
 	{{ table.row('product.label.description', product.description) }}
 	{{ table.row_created(product) }}
 	{{ table.row_updated(product) }}
 	{{ table.end }}
+
+	{{ table.start }}
+	{{ table.row_title('product.label.productPrices') }}
+	{% for productPrice in product.productPrices %}
+		{{ table.row_user_money('productPrice.label.price', productPrice.price) }}
+		{{ table.row_user_date('productPrice.label.effectiveFrom', productPrice.effectiveFrom) }}
+		{{ table.row_created(productPrice) }}
+		{% if not loop.last %}
+			{{ table.row_spacer() }}
+		{% endif %}
+	{% endfor %}
+	{{ table.end }}
+
 {% endblock %}
 
 {% block complimentary %}
+
+	{% import nav as nav %}
+
 	{{ nav.start }}
 	{{ nav.item('List Products', path('product_index')) }}
 	{{ nav.item('Edit Product', path('product_edit', { 'id': product.id })) }}

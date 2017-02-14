@@ -19,6 +19,8 @@
 				<tr>
 					<th>Name</th>
 					<th>Description</th>
+					<th>Current Price</th>
+					<th>Effective</th>
 					<th>Created</th>
 					<th>Actions</th>
 				</tr>
@@ -28,6 +30,8 @@
 					<tr>
 						<td>{{ product.name }}</td>
 						<td>{{ product.description }}</td>
+						<td>{{ product.getCurrentProductPrice.price|user_money }}</td>
+						<td>{{ product.getCurrentProductPrice.effectiveFrom|user_date }}</td>
 						<td>{{ product.createdAt|user_datetime }}</td>
 						<td>
 							<ul class="nav nav-pills">

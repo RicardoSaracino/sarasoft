@@ -23,13 +23,13 @@ class ProductPriceRepository extends EntityRepository
 	 */
 	public function findEffective(\AppBundle\Entity\Product $product, \DateTime $effectiveFrom)
 	{
-		$qb = $this->createQueryBuilder('pp');
+		$qb = $this->createQueryBuilder('sp');
 
 		$price = $qb
-			->where($qb->expr()->eq('pp.product', ':product'),$qb->expr()->lte('pp.effectiveFrom', ':effectiveFrom'))
+			->where($qb->expr()->eq('sp.product', ':product'),$qb->expr()->lte('sp.effectiveFrom', ':effectiveFrom'))
 			->setParameter('product', $product)
 			->setParameter('effectiveFrom', $effectiveFrom)
-			->orderBy('pp.effectiveFrom', 'DESC')
+			->orderBy('sp.effectiveFrom', 'DESC')
 			->setMaxResults(1)
 			->getQuery()
 			->getSingleResult();
@@ -42,5 +42,22 @@ class ProductPriceRepository extends EntityRepository
 		}
 
 		return $price;
+	}
+
+	/**
+	 * @param \AppBundle\Entity\Product $product
+	 * @return mixed
+	 */
+	public function findMaxEffective(\AppBundle\Entity\Product $product)
+	{
+		$qb = $this->createQueryBuilder('sp');
+
+		return $qb
+			->where($qb->expr()->eq('sp.product', ':product'))
+			->setParameter('product', $product->getId())
+			->orderBy('sp.effectiveFrom', 'DESC')
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
 	}
 }

@@ -294,7 +294,21 @@
                 <source>product.label.description</source>
                 <target>Description</target>
             </trans-unit>
+            <trans-unit id="product.label.productPrices">
+                <source>product.label.productPrices</source>
+                <target>Product Prices</target>
+            </trans-unit>
 
+            <!-- Product Price -->
+
+            <trans-unit id="productPrice.label.effectiveFrom">
+                <source>productPrice.label.effectiveFrom</source>
+                <target>Effective From</target>
+            </trans-unit>
+            <trans-unit id="productPrice.label.price">
+                <source>productPrice.label.price</source>
+                <target>Price</target>
+            </trans-unit>
 
             <!-- Order Type -->
 

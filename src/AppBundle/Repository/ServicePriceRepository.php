@@ -44,7 +44,6 @@ class ServicePriceRepository extends EntityRepository
 		return $price;
 	}
 
-
 	/**
 	 * @param \AppBundle\Entity\Service $service
 	 * @return mixed

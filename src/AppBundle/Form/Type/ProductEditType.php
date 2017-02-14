@@ -8,10 +8,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type as Type;
 
 /**
- * Class ServiceEditType
+ * Class ProductEditType
  * @package AppBundle\Form\Type
  */
-class ServiceEditType extends AbstractType
+class ProductEditType extends AbstractType
 {
 	/**
 	 * {@inheritdoc}
@@ -19,16 +19,16 @@ class ServiceEditType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('name', Type\TextType::class, ['label' => 'service.label.name'])
-			->add('description', Type\TextType::class, ['label' => 'service.label.description'])
+			->add('name', Type\TextType::class, ['label' => 'product.label.name'])
+			->add('description', Type\TextType::class, ['label' => 'product.label.description'])
 		;
 
 		$builder->add(
-			'servicePrices',
+			'productPrices',
 			Type\CollectionType::class,
 			[
-				'entry_type' => ServicePriceType::class,
-				'label' => 'service.label.servicePrices',
+				'entry_type' => ProductPriceType::class,
+				'label' => 'product.label.productPrices',
 				'by_reference' => false,
 				'prototype' => false,
 				'allow_add' => false,
@@ -44,7 +44,7 @@ class ServiceEditType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults([
-			'data_class' => \AppBundle\Entity\Service::class
+			'data_class' => \AppBundle\Entity\Product::class
 		]);
 	}
 }

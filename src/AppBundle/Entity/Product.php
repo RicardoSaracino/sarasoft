@@ -56,6 +56,14 @@ class Product
 	private $description;
 
 	/**
+	 *
+	 */
+	public function __construct()
+	{
+		$this->productPrices = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+	/**
 	 * @return integer
 	 */
 	public function getId()
@@ -76,8 +84,8 @@ class Product
 	 * @return \AppBundle\Entity\ProductPrice
 	 */
 	public function getEffectiveProductPrice(\DateTime $effectiveFrom)
-	{ # todo efficiency
-
+	{
+		# todo efficiency
 		return $this->getProductPrices()->filter(
 			function ($productPrice) use ($effectiveFrom) {
 				return $productPrice->getEffectiveFrom() <= $effectiveFrom;

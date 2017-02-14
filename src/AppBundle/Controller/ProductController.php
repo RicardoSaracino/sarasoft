@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
+use AppBundle\Entity\ProductPrice;
+
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,7 +48,11 @@ class ProductController extends Controller
 	public function newAction(Request $request)
 	{
 		$product = new Product();
-		$form = $this->createForm('AppBundle\Form\Type\ProductType', $product);
+
+		$product->addProductPrice(new ProductPrice());
+
+		$form = $this->createForm('AppBundle\Form\Type\ProductNewType', $product);
+
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -54,7 +60,7 @@ class ProductController extends Controller
 			$em->persist($product);
 			$em->flush($product);
 
-			return $this->redirectToRoute('product_show', array('id' => $product->getId()));
+			return $this->redirectToRoute('product_show', ['id' => $product->getId()]);
 		}
 
 		return $this->render(
@@ -90,19 +96,60 @@ class ProductController extends Controller
 	 */
 	public function editAction(Request $request, Product $product)
 	{
-		$form = $this->createForm('AppBundle\Form\Type\ProductType', $product);
+		$form = $this->createForm('AppBundle\Form\Type\ProductEditType', $product);
+
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$this->getDoctrine()->getManager()->flush();
 
-			return $this->redirectToRoute('product_show', array('id' => $product->getId()));
+			if ($request->request->get('addProductPrice')) {
+				return $this->redirectToRoute('product_price_add', ['id' => $product->getId()]);
+			}
+
+			return $this->redirectToRoute('product_show', ['id' => $product->getId()]);
 		}
 
 		return $this->render(
 			'product/edit.html.twig',
 			[
 				'product' => $product,
+				'form' => $form->createView(),
+			]
+		);
+	}
+
+
+	/**
+	 * Displays a form to add a product price to an existing product entity.
+	 *
+	 * @Route("/{id}/new/price", name="product_price_add")
+	 * @Method({"GET", "POST"})
+	 */
+	public function addProductPriceAction(Request $request, Product $product)
+	{
+		$productPrice = new ProductPrice;
+
+		$productPrice->setProduct($product);
+
+		$form = $this->createForm('AppBundle\Form\Type\ProductPriceType', $productPrice);
+
+		$form->add('product', \AppBundle\Form\Type\HiddenEntityType::class, ['class' => Product::class, 'data' => $product]);
+
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($productPrice);
+			$em->flush($productPrice);
+
+			return $this->redirectToRoute('product_show', ['id' => $productPrice->getProduct()->getId()]);
+		}
+
+		return $this->render(
+			'product/add_product_price.html.twig',
+			[
+				'productPrice' => $productPrice,
 				'form' => $form->createView(),
 			]
 		);

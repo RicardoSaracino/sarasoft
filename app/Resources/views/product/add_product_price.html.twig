@@ -2,17 +2,20 @@
 
 {% import 'nav.html.twig' as nav %}
 
-{% block title %}Edit Product{% endblock %}
+{% block title %}Add Product Price{% endblock %}
 
-{% block header %}<h1>Edit Product</h1>{% endblock %}
-
+{% block header %}
+	<h1>Add Product Price<br>
+		<br>
+		<small>{{ productPrice.product.name }}</small>
+	</h1>
+{% endblock %}
 {% block main %}
 	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'autocomplete':'off' }}) }}
 	{{ form_widget(form) }}
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<input type="submit" class="btn btn-default" value="Save">
-			<input type="submit" class="btn btn-default" name="addProductPrice" value="Add Price">
 		</div>
 	</div>
 	{{ form_end(form) }}
