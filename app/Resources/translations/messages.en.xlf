@@ -384,6 +384,19 @@
                 <target>Roles</target>
             </trans-unit>
 
+            <trans-unit id="user.label.password">
+                <source>user.label.password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="user.label.newPassword">
+                <source>user.label.newPassword</source>
+                <target>New Password</target>
+            </trans-unit>
+            <trans-unit id="user.label.repeatPassword">
+                <source>user.label.repeatPassword</source>
+                <target>Repeat Password</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

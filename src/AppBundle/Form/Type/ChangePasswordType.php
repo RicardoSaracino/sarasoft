@@ -32,8 +32,8 @@ class ChangePasswordType extends AbstractType
 				'type' => PasswordType::class,
 				'invalid_message' => 'The password fields must match.',
 				'required' => true,
-				'first_options'  => ['label' => 'Password'],
-				'second_options' => ['label' => 'Repeat'],
+				'first_options'  => ['label' => 'user.label.newPassword'],
+				'second_options' => ['label' => 'user.label.repeatPassword'],
 			]);
 	}
 }

@@ -253,7 +253,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function getRoles()
 	{
-		return json_decode($this->roles);
+		return $this->roles ? json_decode($this->roles) : [];
 	}
 
 	/**
@@ -273,14 +273,15 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
+	 * @param User $user
 	 * @return array
 	 */
-	public function getRoleOptions()
+	public static function GetRoleOptions(User $user)
 	{
-		if ($this->hasSuperAdminRole()) {
+		if ($user->hasSuperAdminRole()) {
 			return ['Super Admin' => 'ROLE_SUPER_ADMIN', 'Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'];
 		} else {
-			if ($this->hasAdminRole()) {
+			if ($user->hasAdminRole()) {
 				return ['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'];
 			}
 		}

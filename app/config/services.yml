@@ -22,6 +22,12 @@ services:
         tags:
           - { name: form.type, alias: user_date_time_picker }
 
+    app_bundle.type.user:
+        class: AppBundle\Form\Type\UserType
+        arguments: ["@security.token_storage"]
+        tags:
+          - { name: form.type, alias: user_type }
+
     app_bundle.type.user_text_area_type:
         class: AppBundle\Form\Type\UserTextAreaType
         arguments: ["@security.token_storage"]

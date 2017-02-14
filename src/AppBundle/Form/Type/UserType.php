@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type as Type;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Class UserType
@@ -13,6 +14,20 @@ use Symfony\Component\Form\Extension\Core\Type as Type;
  */
 class UserType extends AbstractType
 {
+	/**
+	 * @var TokenStorage
+	 */
+	protected $tokenStorage;
+
+	/**
+	 * @param TokenStorage $tokenStorage
+	 */
+	public function __construct(TokenStorage $tokenStorage)
+	{
+		$this->tokenStorage = $tokenStorage;
+	}
+
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -26,8 +41,8 @@ class UserType extends AbstractType
 				'type' => Type\PasswordType::class,
 					'invalid_message' => 'The password fields must match.',
 					'required' => true,
-					'first_options'  => ['label' => 'Password'],
-					'second_options' => ['label' => 'Repeat Password'],
+					'first_options'  => ['label' => 'user.label.password'],
+					'second_options' => ['label' => 'user.label.repeatPassword'],
 				]);
 		}
 
@@ -43,7 +58,7 @@ class UserType extends AbstractType
 			])
 			->add(
 				'roles', Type\ChoiceType::class, [
-					'choices' => $builder->getData()->getRoleOptions(),
+					'choices' => \AppBundle\Entity\User::GetRoleOptions($this->tokenStorage->getToken()->getUser()),
 					'expanded' => true,
 					'multiple' => true,
 					'label' => 'user.label.roles'
