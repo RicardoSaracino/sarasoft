@@ -14,7 +14,7 @@
 
 	{{ table.row_phone('customer.label.phone', customer.phone) }}
 
-	{{ table.row_phone('customer.label.altPhone', customer.altPhone) }}
+	{% if customer.altPhone %}{{ table.row_phone('customer.label.altPhone', customer.altPhone) }}{% endif %}
 
 	{{ table.row_email('customer.label.email', customer.email) }}
 
@@ -39,7 +39,7 @@
 
 	{{ table.row('address.label.addressLine1', customer.address.addressLine1) }}
 
-	{{ table.row('address.label.addressLine2', customer.address.addressLine2) }}
+	{% if customer.address.addressLine2 %}{{ table.row('address.label.addressLine2', customer.address.addressLine2) }}{% endif %}
 
 	{{ table.row_created(customer.address) }}
 
