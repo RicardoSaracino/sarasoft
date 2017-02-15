@@ -16,16 +16,9 @@ use Money\Money;
  *
  * @ORM\Table(name="product_price", uniqueConstraints={@ORM\UniqueConstraint(name="product_effective_from", columns={"product_id,effective_from"})}, indexes={@ORM\Index(name="product_id", columns={"product_id"}), @ORM\Index(name="effective_from", columns={"effective_from"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductPriceRepository")
- *
- * todo UniqueEntity(
- *    fields={product_id,effective_from}
- *    errorPath="effective_from",
- *    message="This product is already effective on this date."
- * )
  */
 class ProductPrice
 {
-	use \AppBundle\Entity\Traits\Priceable;
 	use \AppBundle\Entity\Traits\Timestampable;
 	use \AppBundle\Entity\Traits\Blameable;
 

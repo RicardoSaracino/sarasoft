@@ -16,16 +16,9 @@ use Money\Money;
  *
  * @ORM\Table(name="service_price", uniqueConstraints={@ORM\UniqueConstraint(name="service_effective_from", columns={"service_id,effective_from"})}, indexes={@ORM\Index(name="service_id", columns={"service_id"}), @ORM\Index(name="effective_from", columns={"effective_from"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ServicePriceRepository")
- *
- * todo UniqueEntity(
- *    fields={service_id,effective_from}
- *    errorPath="effective_from",
- *    message="This service is already effective on this date."
- * )
  */
 class ServicePrice
 {
-	use \AppBundle\Entity\Traits\Priceable;
 	use \AppBundle\Entity\Traits\Timestampable;
 	use \AppBundle\Entity\Traits\Blameable;
 
