@@ -51,7 +51,7 @@ class UserController extends Controller
 	{
 		$user = new User();
 
-		$form = $this->createForm('AppBundle\Form\Type\UserType', $user, ['validation_groups' => ['Default', 'plain_password']]);
+		$form = $this->createForm('AppBundle\Form\Type\UserNewType', $user, ['validation_groups' => ['plain_password']]);
 
 		$form->handleRequest($request);
 
@@ -101,7 +101,11 @@ class UserController extends Controller
 	 */
 	public function editAction(Request $request, User $user)
 	{
-		$form = $this->createForm('AppBundle\Form\Type\UserType', $user);
+		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+			$form = $this->createForm('AppBundle\Form\Type\UserEditType', $user);
+		} else {
+			$form = $this->createForm('AppBundle\Form\Type\UserEditRoleUserType', $user);
+		}
 
 		$form->handleRequest($request);
 
