@@ -33,7 +33,7 @@ security:
               login_path: /login
               check_path: /login
               always_use_default_target_path: false
-              default_target_path: /welcome
+              default_target_path: /
               # form params defined in LoginType.php and SecurityController.php
               username_parameter: login[username]
               password_parameter: login[password]
