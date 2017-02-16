@@ -51,7 +51,7 @@ class Customer
 	private $lastName;
 
 	/**
-	 * @var string
+	 * @var \libphonenumber\PhoneNumber
 	 *
 	 * @ORM\Column(name="phone", type="phone_number", length=35, nullable=false)
 	 *
@@ -61,7 +61,7 @@ class Customer
 	private $phone;
 
 	/**
-	 * @var string
+	 * @var \libphonenumber\PhoneNumber
 	 *
 	 * @ORM\Column(name="alt_phone", type="phone_number", length=35, nullable=true)
 	 *
