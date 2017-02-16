@@ -22,8 +22,8 @@ class CompanyType extends AbstractType
     {
         $builder
 			->add('name', Type\TextType::class, ['label' => 'company.label.name'])
-			->add('phone', PhoneNumberType::class, ['label' => 'company.label.phone'])
-			->add('altPhone', PhoneNumberType::class, ['label' => 'company.label.altPhone'])
+			->add('phone', PhoneNumberType::class, ['label' => 'company.label.phone', 'default_region' => 'CA'])  ## todo use user region?
+			->add('altPhone', PhoneNumberType::class, ['label' => 'company.label.altPhone', 'default_region' => 'CA'])  ## todo use user region?
 			->add('email', Type\EmailType::class, ['label' => 'company.label.email'])
 			->add('websiteUrl', Type\UrlType::class, ['label' => 'company.label.websiteUrl'])
 			->add('facebookUrl', Type\UrlType::class, ['label' => 'company.label.facebookUrl'])
