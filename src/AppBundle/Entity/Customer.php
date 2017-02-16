@@ -13,7 +13,7 @@ use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumbe
  * @ORM\Table(name="customer", indexes={@ORM\Index(name="updated_by", columns={"updated_by"}), @ORM\Index(name="created_by", columns={"created_by"})})
  * @ORM\Entity
  *
- * # todo UniqueEntity("phone")
+ * @UniqueEntity("phone")
  * @UniqueEntity("email")
  */
 class Customer
@@ -74,6 +74,7 @@ class Customer
 	 *
 	 * @ORM\Column(name="email", type="string", length=64, nullable=true)
 	 *
+	 * @Assert\NotBlank()
 	 * @Assert\Email()
 	 */
 	private $email;
