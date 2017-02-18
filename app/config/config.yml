@@ -55,6 +55,14 @@ twig:
     paths:
       - "%kernel.root_dir%/Resources/views/layout/bootstrap"
 
+    globals:
+        global:
+          site:
+            {name: "%site_name%"}
+          meta:
+            {description: "sarasoft", author: "Ricardo Saracino", application_name: "sarasoft"}
+
+
 # Doctrine Configuration
 doctrine:
     dbal:

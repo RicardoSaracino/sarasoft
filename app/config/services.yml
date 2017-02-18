@@ -22,11 +22,17 @@ services:
         tags:
           - { name: form.type, alias: user_date_time_picker }
 
-    app_bundle.type.user:
-        class: AppBundle\Form\Type\UserType
-        arguments: ["@security.token_storage"]
+    app_bundle.type.user_new:
+        class: AppBundle\Form\Type\UserNewType
+        arguments: ["@security.token_storage", "@app_bundle.helper.role"]
         tags:
-          - { name: form.type, alias: user_type }
+          - { name: form.type, alias: user_new_type }
+
+    app_bundle.type.user_edit:
+        class: AppBundle\Form\Type\UserEditType
+        arguments: ["@security.token_storage", "@app_bundle.helper.role"]
+        tags:
+          - { name: form.type, alias: user_edit_type }
 
     app_bundle.type.user_text_area_type:
         class: AppBundle\Form\Type\UserTextAreaType
@@ -63,3 +69,17 @@ services:
         arguments: ["@security.token_storage"]
         tags:
           - { name: validator.constraint_validator }
+
+
+    app_bundle.helper.role:
+       class: AppBundle\Util\RoleHelper
+       arguments: ["%security.role_hierarchy.roles%","@doctrine.orm.entity_manager"]
+       tags:
+         - { name: util.helper }
+
+    app_bundle.voter.user:
+       class: AppBundle\Security\UserVoter
+       arguments: ['@security.access.decision_manager']
+       public: false
+       tags:
+         - { name: security.voter}

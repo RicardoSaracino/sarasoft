@@ -383,6 +383,10 @@
                 <source>user.label.roles</source>
                 <target>Roles</target>
             </trans-unit>
+            <trans-unit id="user.label.role">
+                <source>user.label.role</source>
+                <target>Role</target>
+            </trans-unit>
 
             <trans-unit id="user.label.password">
                 <source>user.label.password</source>
@@ -395,6 +399,19 @@
             <trans-unit id="user.label.repeatPassword">
                 <source>user.label.repeatPassword</source>
                 <target>Repeat Password</target>
+            </trans-unit>
+
+            <trans-unit id="userRole.name.superAdmin">
+                <source>userRole.name.superAdmin</source>
+                <target>Super Admin</target>
+            </trans-unit>
+            <trans-unit id="userRole.name.admin">
+                <source>userRole.name.admin</source>
+                <target>Admin</target>
+            </trans-unit>
+            <trans-unit id="userRole.name.user">
+                <source>userRole.name.user</source>
+                <target>User</target>
             </trans-unit>
 
         </body>

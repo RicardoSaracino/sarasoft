@@ -32,12 +32,21 @@ class User implements UserInterface, \Serializable
 	private $id;
 
 	/**
+	 * @var \Doctrine\Common\Collections\ArrayCollection|\AppBundle\Entity\Role[]
+	 *
+	 * @ORM\ManyToMany(targetEntity="Role", fetch="EAGER", orphanRemoval=true, cascade={"persist", "remove"})
+	 *
+	 * @Assert\NotBlank(groups={"new","edit"})
+	 */
+	private $roles;
+
+	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="username", type="string", length=32, unique=true)
 	 *
-	 * @Assert\Length(min=5)
-	 * @AppAssert\UserName
+	 * @Assert\Length(min=5, max=32, groups={"new","edit"})
+	 * @AppAssert\UserName(groups={"new","edit"})
 	 */
 	private $username;
 
@@ -51,8 +60,8 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @Assert\NotBlank(groups={"plain_password"})
-	 * @Assert\Length(min=8,groups={"plain_password"})
+	 * @Assert\NotBlank(groups={"new"})
+	 * @Assert\Length(min=8, groups={"new"})
 	 */
 	private $plainPassword;
 
@@ -64,24 +73,12 @@ class User implements UserInterface, \Serializable
 	private $salt;
 
 	/**
-	 * json encoded string
-	 *
-	 * @var string
-	 *
-	 * @ORM\Column(name="roles", type="string", length=60)
-	 *
-	 * @Assert\NotBlank()
-	 * @Assert\Length(min=8)
-	 */
-	private $roles;
-
-	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="first_name", type="string", length=32)
 	 *
-	 * @Assert\NotBlank()
-	 * @Assert\Length(min=3)
+	 * @Assert\NotBlank(groups={"new","edit"})
+	 * @Assert\Length(min=3, max=32, groups={"new","edit"})
 	 */
 	private $firstName;
 
@@ -90,8 +87,8 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(name="last_name", type="string", length=32)
 	 *
-	 * @Assert\NotBlank()
-	 * @Assert\Length(min=3)
+	 * @Assert\NotBlank(groups={"new","edit"})
+	 * @Assert\Length(min=3, max=32, groups={"new","edit"})
 	 */
 	private $lastName;
 
@@ -100,8 +97,8 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(name="email", type="string", length=64)
 	 *
-	 * @Assert\NotBlank()
-	 * @Assert\Email()
+	 * @Assert\NotBlank(groups={"new","edit"})
+	 * @Assert\Email(groups={"new","edit"})
 	 */
 	private $email;
 
@@ -110,7 +107,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(name="language", type="string", length=16)
 	 *
-	 * @Assert\Language()
+	 * @Assert\Language(groups={"new","edit"})
 	 */
 	private $language;
 
@@ -119,7 +116,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(name="time_zone", type="string", length=32)
 	 *
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(groups={"new","edit"})
 	 */
 	private $timeZone;
 
@@ -236,13 +233,22 @@ class User implements UserInterface, \Serializable
 	####################################################
 
 	/**
-	 * @param array $roles
+	 * @param \AppBundle\Entity\Role[] $roles
 	 * @return $this
 	 */
-	public function setRoles(array $roles)
+	public function setRoles($roles)
 	{
-		$this->roles = json_encode(array_values($roles));
+		$this->roles = $roles;
+		return $this;
+	}
 
+	/**
+	 * @param \AppBundle\Entity\Role[] $roles
+	 * @return $this
+	 */
+	public function addRole($roles)
+	{
+	   	$this->roles->add($roles);
 		return $this;
 	}
 
@@ -253,7 +259,11 @@ class User implements UserInterface, \Serializable
 	 */
 	public function getRoles()
 	{
-		return $this->roles ? json_decode($this->roles) : [];
+		if($this->roles){
+			return $this->roles->getValues();
+		}
+
+		return [];
 	}
 
 	/**
@@ -261,7 +271,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function hasAdminRole()
 	{
-		return in_array('ROLE_ADMIN', $this->getRoles()) || in_array('ROLE_SUPER_ADMIN', $this->getRoles());
+		return true;
 	}
 
 	/**
@@ -269,24 +279,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function hasSuperAdminRole()
 	{
-		return in_array('ROLE_SUPER_ADMIN', $this->getRoles());
-	}
-
-	/**
-	 * @param User $user
-	 * @return array
-	 */
-	public static function GetRoleOptions(User $user)
-	{
-		if ($user->hasSuperAdminRole()) {
-			return ['Super Admin' => 'ROLE_SUPER_ADMIN', 'Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'];
-		} else {
-			if ($user->hasAdminRole()) {
-				return ['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'];
-			}
-		}
-
-		return ['User' => 'ROLE_USER'];
+		return true;
 	}
 
 	####################################################

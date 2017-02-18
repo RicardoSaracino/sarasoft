@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 
 /**
  * User controller.
@@ -51,7 +53,7 @@ class UserController extends Controller
 	{
 		$user = new User();
 
-		$form = $this->createForm('AppBundle\Form\Type\UserNewType', $user, ['validation_groups' => ['plain_password']]);
+		$form = $this->createForm('AppBundle\Form\Type\UserNewType', $user, ['validation_groups' => ['new']]);
 
 		$form->handleRequest($request);
 
@@ -101,9 +103,23 @@ class UserController extends Controller
 	 */
 	public function editAction(Request $request, User $user)
 	{
+		## todo should admin be able to create/edit other admins
+
+		## todo admins should not be able to edit super admins
 		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-			$form = $this->createForm('AppBundle\Form\Type\UserEditType', $user);
+			$form = $this->createForm('AppBundle\Form\Type\UserEditType', $user, ['validation_groups' => ['edit']]);
+
+			## todo users should not be able to edit other users
 		} else {
+
+			## todo test this
+
+			$tokenUser = $this->get('security.token_storage.user');
+
+			if ($tokenUser->getId() != $user->getId()) {
+				throw new AccessDeniedException();
+			}
+
 			$form = $this->createForm('AppBundle\Form\Type\UserEditRoleUserType', $user);
 		}
 
@@ -137,6 +153,10 @@ class UserController extends Controller
 	 */
 	public function changePasswordAction(Request $request, User $user)
 	{
+		## todo admins should not be able to edit super admins
+
+		## todo users should not be able to edit other users
+
 		$changePasswordModel = new ChangePassword();
 		$changePasswordForm = $this->createForm('AppBundle\Form\Type\ChangePasswordType', $changePasswordModel);
 		$changePasswordForm->handleRequest($request);

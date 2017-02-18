@@ -15,16 +15,32 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 class UserNewType extends UserType
 {
 	/**
-	 * @var TokenStorage
+	 * @var \AppBundle\Entity\User
 	 */
-	protected $tokenStorage;
+	protected $user;
+
+	/**
+	 * @var \AppBundle\Util\RoleHelper
+	 */
+	protected $roleHelper;
 
 	/**
 	 * @param TokenStorage $tokenStorage
+	 * @param \AppBundle\Util\RoleHelper $roleHelper
 	 */
-	public function __construct(TokenStorage $tokenStorage)
+	public function __construct(TokenStorage $tokenStorage, \AppBundle\Util\RoleHelper $roleHelper)
 	{
-		$this->tokenStorage = $tokenStorage;
+		$this->user = $tokenStorage->getToken()->getUser();
+
+		$this->roleHelper = $roleHelper;
+	}
+
+	/**
+	 * @return \AppBundle\Entity\Role[]
+	 */
+	protected function getRoleChoices()
+	{
+		return $this->roleHelper->getUserAllRoles($this->user);
 	}
 
 	/**
@@ -32,31 +48,14 @@ class UserNewType extends UserType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder
-			->add('username', Type\TextType::class, ['label' => 'user.label.username'])
-			->add('plainPassword', Type\RepeatedType::class, [
-				'type' => Type\PasswordType::class,
-					'invalid_message' => 'The password fields must match.',
-					'required' => true,
-					'first_options'  => ['label' => 'user.label.password'],
-					'second_options' => ['label' => 'user.label.repeatPassword'],
-				])
-			->add('firstName', Type\TextType::class, ['label' => 'user.label.firstName'])
-			->add('lastName', Type\TextType::class, ['label' => 'user.label.lastName'])
-			->add('email', Type\EmailType::class, ['label' => 'user.label.email'])
-			->add('language', Type\LanguageType::class, ['label' => 'user.label.language', 'preferred_choices' => ['en','fr'],'data'=>'en'])
-			->add('timeZone', Type\TimezoneType::class, [
-				'label' => 'user.label.timeZone',
-				'preferred_choices' => ['America/Edmonton','America/Halifax','America/Thunder_Bay','America/Toronto','America/Vancouver'],
-				'data'=>'America/Toronto'
-			])
-			->add(
-				'roles', Type\ChoiceType::class, [
-					'choices' => \AppBundle\Entity\User::GetRoleOptions($this->tokenStorage->getToken()->getUser()),
-					'expanded' => true,
-					'multiple' => true,
-					'label' => 'user.label.roles'
-				]
-			);
+		$this
+			->addUsername($builder)
+			->addPassword($builder)
+			->addFirstName($builder)
+			->addLastName($builder)
+			->addEmail($builder)
+			->addLanguage($builder)
+			->addTimeZone($builder)
+			->addRoles($builder);
 	}
 }

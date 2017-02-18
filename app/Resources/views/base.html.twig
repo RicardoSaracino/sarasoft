@@ -11,13 +11,13 @@
 
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 
-	<meta name="application-name" content="sarasoft">
+	<meta name="application-name" content="{{ global.meta.application_name }}">
 
-	<meta name="author" content="Ricardo Saracino">
+	<meta name="author" content="{{ global.meta.author }}">
 
-	<meta name="description" content="sarasoft">
+	<meta name="description" content="{{ global.meta.description }}">
 
-	<title>{% block title %}Sarasoft{% endblock %}</title>
+	<title>{% block title %}{{ global.site.name }}{% endblock %}</title>
 
 	<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 
