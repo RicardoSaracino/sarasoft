@@ -6,6 +6,9 @@
 
 namespace AppBundle\Util;
 
+
+## todo do something better with this class
+
 /**
  * Class AdministrativeArea
  * @package AppBundle\Util
