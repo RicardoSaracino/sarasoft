@@ -46,7 +46,7 @@ class ServicePriceRepository extends EntityRepository
 
 	/**
 	 * @param \AppBundle\Entity\Service $service
-	 * @return mixed
+	 * @return \AppBundle\Entity\ServicePrice|null
 	 */
 	public function findMaxEffective(\AppBundle\Entity\Service $service)
 	{

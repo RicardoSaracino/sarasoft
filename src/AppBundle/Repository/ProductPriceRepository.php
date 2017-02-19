@@ -46,7 +46,7 @@ class ProductPriceRepository extends EntityRepository
 
 	/**
 	 * @param \AppBundle\Entity\Product $product
-	 * @return mixed
+	 * @return \AppBundle\Entity\ProductPrice|null
 	 */
 	public function findMaxEffective(\AppBundle\Entity\Product $product)
 	{
