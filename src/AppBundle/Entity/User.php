@@ -14,8 +14,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  *
- * @UniqueEntity("username")
- * @UniqueEntity("email")
+ * @UniqueEntity("username",groups={"new","edit"})
+ * @UniqueEntity("email",groups={"new","edit"})
  */
 class User implements UserInterface, \Serializable
 {
@@ -271,7 +271,14 @@ class User implements UserInterface, \Serializable
 	 */
 	public function hasAdminRole()
 	{
-		return true;
+		foreach($this->roles as $role){
+			if($role->getRole() == 'ROLE_SUPER_ADMIN' || $role->getRole() == 'ROLE_ADMIN')
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -279,7 +286,14 @@ class User implements UserInterface, \Serializable
 	 */
 	public function hasSuperAdminRole()
 	{
-		return true;
+		foreach($this->roles as $role){
+			if($role->getRole() == 'ROLE_SUPER_ADMIN')
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	####################################################

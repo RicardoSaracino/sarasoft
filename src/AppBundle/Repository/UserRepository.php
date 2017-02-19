@@ -25,4 +25,35 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 			->getQuery()
 			->getOneOrNullResult();
 	}
+
+	/**
+	 * @param \AppBundle\Entity\User $user
+	 * @return \AppBundle\Entity\User[]
+	 */
+	public function findAllowedUsers(\AppBundle\Entity\User $user)
+	{
+		$qb = $this->createQueryBuilder('u');
+
+		$notRoles = [];
+
+		## if user just has admin role and not
+		if (!$user->hasSuperAdminRole()) {
+			$notRoles = ['ROLE_SUPER_ADMIN'];
+		}
+
+		## if user just has admin role and not
+		if (!$user->hasAdminRole()) {
+			$notRoles = ['ROLE_ADMIN'];
+		}
+
+		if ($notRoles) {
+			$qb->innerJoin('AppBundle\Entity\UserRole', 'ur', 'WITH', 'u = ur.user')
+				->innerJoin('AppBundle\Entity\Role', 'r', 'WITH', 'r = ur.role')
+				->where($qb->expr()->notIn('r.role', ':roles'))
+				->setParameter('roles', $notRoles);
+		}
+
+		return $qb->getQuery()
+			->getResult();
+	}
 }

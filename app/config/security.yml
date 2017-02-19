@@ -23,7 +23,6 @@ security:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
-
     firewalls:
         secured_area:
             pattern: ^/
@@ -47,7 +46,6 @@ security:
                    name:
                        path:                 null
                        domain:               null
-
 
     access_decision_manager:
         strategy: unanimous

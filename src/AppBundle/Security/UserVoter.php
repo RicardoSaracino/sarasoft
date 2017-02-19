@@ -20,17 +20,28 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
  */
 class UserVoter extends Voter
 {
+	const VIEW = 'VOTER_USER_VIEW';
+	const EDIT = 'VOTER_USER_EDIT';
+
 	/**
 	 * @var \Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 	 */
 	private $decisionManager;
 
 	/**
-	 * @param AccessDecisionManagerInterface $decisionManager
+	 * @var \AppBundle\Util\RoleHelper
 	 */
-	public function __construct(AccessDecisionManagerInterface $decisionManager)
+	protected $roleHelper;
+
+	/**
+	 * @param AccessDecisionManagerInterface $decisionManager
+	 * @param \AppBundle\Util\RoleHelper $roleHelper
+	 */
+	public function __construct(AccessDecisionManagerInterface $decisionManager, \AppBundle\Util\RoleHelper $roleHelper)
 	{
 		$this->decisionManager = $decisionManager;
+
+		$this->roleHelper = $roleHelper;
 	}
 
 	/**
@@ -40,7 +51,17 @@ class UserVoter extends Voter
 	 */
 	protected function supports($attribute, $subject)
 	{
+		# if the attribute isn't one we support, return false
+		if (!in_array($attribute, array(self::VIEW, self::EDIT))) {
+			return false;
+		}
 
+		# only vote on Users objects inside this voter
+		if (!$subject instanceof User) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -48,16 +69,79 @@ class UserVoter extends Voter
 	 * @param mixed $subject
 	 * @param TokenInterface $token
 	 * @return bool
+	 * @throws \LogicException
 	 */
 	protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
 	{
-		// ...
+		if (!$token->getUser() instanceof User) {
+			# the user must be logged in; if not, deny access
+			return false;
+		}
 
-		// ROLE_SUPER_ADMIN can do anything! The power!
-		if ($this->decisionManager->decide($token, array('ROLE_SUPER_ADMIN'))) {
+		if ($this->decisionManager->decide($token, ['ROLE_SUPER_ADMIN'])) {
+			dump('ROLE_SUPER_ADMIN');
+
 			return true;
 		}
 
-		// ... all the normal voter logic
+		/** @var User $post */
+		$user = $subject;
+
+		switch ($attribute) {
+			case self::VIEW:
+				return $this->canView($user, $token);
+			case self::EDIT:
+				return $this->canEdit($user, $token);
+		}
+
+		throw new \LogicException('This code should not be reached!');
+	}
+
+	/**
+	 * @param User $user
+	 * @param TokenInterface $token
+	 * @return bool
+	 */
+	public function canView(User $user, TokenInterface $token)
+	{
+		if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
+
+			dump('ROLE_ADMIN');
+
+			return ! $user->hasSuperAdminRole();
+		}
+
+		if ($this->decisionManager->decide($token, ['ROLE_USER'])) {
+
+			dump(sprintf('ROLE_USER UserID: %d Token UserID %d',$user->getId(), $token->getUser()->getId()));
+
+			return $user->getId() == $token->getUser()->getId();
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param User $user
+	 * @param TokenInterface $token
+	 * @return bool
+	 */
+	public function canEdit(User $user, TokenInterface $token)
+	{
+		if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
+
+			dump('ROLE_ADMIN');
+
+			return ! $user->hasSuperAdminRole();
+		}
+
+		if ($this->decisionManager->decide($token, ['ROLE_USER'])) {
+
+			dump(sprintf('ROLE_USER UserID: %d Token UserID %d',$user->getId(), $token->getUser()->getId()));
+
+			return $user->getId() == $token->getUser()->getId();
+		}
+
+		return true;
 	}
 }

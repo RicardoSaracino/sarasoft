@@ -30,9 +30,7 @@ class UserController extends Controller
 	 */
 	public function indexAction()
 	{
-		$em = $this->getDoctrine()->getManager();
-
-		$users = $em->getRepository('AppBundle:User')->findAll();
+		$users = $this->getDoctrine()->getRepository('AppBundle:User')->findAllowedUsers($this->get('security.token_storage')->getToken()->getUser());
 
 		return $this->render(
 			'user/index.html.twig',
@@ -87,6 +85,8 @@ class UserController extends Controller
 	 */
 	public function showAction(User $user)
 	{
+		$this->denyAccessUnlessGranted(\AppBundle\Security\UserVoter::VIEW, $user);
+
 		return $this->render(
 			'user/show.html.twig',
 			[
@@ -103,23 +103,11 @@ class UserController extends Controller
 	 */
 	public function editAction(Request $request, User $user)
 	{
-		## todo should admin be able to create/edit other admins
+		$this->denyAccessUnlessGranted(\AppBundle\Security\UserVoter::EDIT, $user);
 
-		## todo admins should not be able to edit super admins
 		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
 			$form = $this->createForm('AppBundle\Form\Type\UserEditType', $user, ['validation_groups' => ['edit']]);
-
-			## todo users should not be able to edit other users
 		} else {
-
-			## todo test this
-
-			$tokenUser = $this->get('security.token_storage.user');
-
-			if ($tokenUser->getId() != $user->getId()) {
-				throw new AccessDeniedException();
-			}
-
 			$form = $this->createForm('AppBundle\Form\Type\UserEditRoleUserType', $user);
 		}
 
@@ -153,9 +141,7 @@ class UserController extends Controller
 	 */
 	public function changePasswordAction(Request $request, User $user)
 	{
-		## todo admins should not be able to edit super admins
-
-		## todo users should not be able to edit other users
+		$this->denyAccessUnlessGranted(\AppBundle\Security\UserVoter::EDIT, $user);
 
 		$changePasswordModel = new ChangePassword();
 		$changePasswordForm = $this->createForm('AppBundle\Form\Type\ChangePasswordType', $changePasswordModel);

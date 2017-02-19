@@ -4,82 +4,82 @@ parameters:
     doctrine.orm.validator.unique.class: AppBundle\Validator\UniqueEntityValidator
 
 services:
-    app_bundle.service.listener:
+    app.service.listener:
         class: AppBundle\Listener\CustomerOrderCalendarListener
         arguments: ["@doctrine.orm.entity_manager", "@router"]
         tags:
           - { name: 'kernel.event_listener', event: 'fullcalendar.set_data', method: loadData }
 
-    app_bundle.type.hidden_entity:
+    app.type.hidden_entity:
         class: AppBundle\Form\Type\HiddenEntityType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
           - { name: form.type, alias: hidden_entity }
 
-    app_bundle.type.user_date_time_picker:
+    app.type.user_date_time_picker:
         class: AppBundle\Form\Type\UserDateTimePickerType
         arguments: ["@security.token_storage"]
         tags:
           - { name: form.type, alias: user_date_time_picker }
 
-    app_bundle.type.user_new:
+    app.type.user_new:
         class: AppBundle\Form\Type\UserNewType
-        arguments: ["@security.token_storage", "@app_bundle.helper.role"]
+        arguments: ["@security.token_storage", "@app.helper.role"]
         tags:
           - { name: form.type, alias: user_new_type }
 
-    app_bundle.type.user_edit:
+    app.type.user_edit:
         class: AppBundle\Form\Type\UserEditType
-        arguments: ["@security.token_storage", "@app_bundle.helper.role"]
+        arguments: ["@security.token_storage", "@app.helper.role"]
         tags:
           - { name: form.type, alias: user_edit_type }
 
-    app_bundle.type.user_text_area_type:
+    app.type.user_text_area_type:
         class: AppBundle\Form\Type\UserTextAreaType
         arguments: ["@security.token_storage"]
         tags:
           - { name: form.type, alias: user_text_area_type }
 
-    app_bundle.type.user_text_area_prepend_type:
+    app.type.user_text_area_prepend_type:
         class: AppBundle\Form\Type\UserTextAreaPrependType
         arguments: ["@doctrine.orm.entity_manager","@security.token_storage"]
         tags:
           - { name: form.type, alias: user_text_area_prepend_type }
 
-    app_bundle.validator.service_price_effective_from:
+    app.validator.service_price_effective_from:
         class: AppBundle\Validator\Constraints\ServicePriceEffectiveFromValidator
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
           - { name: validator.constraint_validator }
 
-    app_bundle.validator.product_price_effective_from:
+    app.validator.product_price_effective_from:
         class: AppBundle\Validator\Constraints\ProductPriceEffectiveFromValidator
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
           - { name: validator.constraint_validator }
 
-    app_bundle.validator.date_after:
+    app.validator.date_after:
         class: AppBundle\Validator\Constraints\DateAfterValidator
         arguments: ["@security.token_storage"]
         tags:
           - { name: validator.constraint_validator }
 
-    app_bundle.validator.date_before:
+    app.validator.date_before:
         class: AppBundle\Validator\Constraints\DateBeforeValidator
         arguments: ["@security.token_storage"]
         tags:
           - { name: validator.constraint_validator }
 
 
-    app_bundle.helper.role:
+    app.helper.role:
        class: AppBundle\Util\RoleHelper
        arguments: ["%security.role_hierarchy.roles%","@doctrine.orm.entity_manager"]
        tags:
          - { name: util.helper }
 
-    app_bundle.voter.user:
+    app.voter.user:
        class: AppBundle\Security\UserVoter
-       arguments: ['@security.access.decision_manager']
+       arguments: ["@security.access.decision_manager", "@app.helper.role"]
        public: false
        tags:
          - { name: security.voter}
