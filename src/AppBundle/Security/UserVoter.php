@@ -9,9 +9,9 @@ namespace AppBundle\Security;
 
 use AppBundle\Entity\User;
 
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
 /**
@@ -29,19 +29,11 @@ class UserVoter extends Voter
 	private $decisionManager;
 
 	/**
-	 * @var \AppBundle\Util\RoleHelper
-	 */
-	protected $roleHelper;
-
-	/**
 	 * @param AccessDecisionManagerInterface $decisionManager
-	 * @param \AppBundle\Util\RoleHelper $roleHelper
 	 */
-	public function __construct(AccessDecisionManagerInterface $decisionManager, \AppBundle\Util\RoleHelper $roleHelper)
+	public function __construct(AccessDecisionManagerInterface $decisionManager)
 	{
 		$this->decisionManager = $decisionManager;
-
-		$this->roleHelper = $roleHelper;
 	}
 
 	/**
@@ -79,8 +71,6 @@ class UserVoter extends Voter
 		}
 
 		if ($this->decisionManager->decide($token, ['ROLE_SUPER_ADMIN'])) {
-			dump('ROLE_SUPER_ADMIN');
-
 			return true;
 		}
 
@@ -101,47 +91,41 @@ class UserVoter extends Voter
 	 * @param User $user
 	 * @param TokenInterface $token
 	 * @return bool
+	 * @throws \LogicException
 	 */
 	public function canView(User $user, TokenInterface $token)
 	{
 		if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
 
-			dump('ROLE_ADMIN');
-
-			return ! $user->hasSuperAdminRole();
+			return ! $this->decisionManager->decide(new UsernamePasswordToken($user, 'none', 'none', $user->getRoles()), ['ROLE_SUPER_ADMIN']);
 		}
 
 		if ($this->decisionManager->decide($token, ['ROLE_USER'])) {
 
-			dump(sprintf('ROLE_USER UserID: %d Token UserID %d',$user->getId(), $token->getUser()->getId()));
-
 			return $user->getId() == $token->getUser()->getId();
 		}
 
-		return true;
+		throw new \LogicException('This code should not be reached!');
 	}
 
 	/**
 	 * @param User $user
 	 * @param TokenInterface $token
 	 * @return bool
+	 * @throws \LogicException
 	 */
 	public function canEdit(User $user, TokenInterface $token)
 	{
 		if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
 
-			dump('ROLE_ADMIN');
-
-			return ! $user->hasSuperAdminRole();
+			return ! $this->decisionManager->decide(new UsernamePasswordToken($user, 'none', 'none', $user->getRoles()), ['ROLE_SUPER_ADMIN']);
 		}
 
 		if ($this->decisionManager->decide($token, ['ROLE_USER'])) {
 
-			dump(sprintf('ROLE_USER UserID: %d Token UserID %d',$user->getId(), $token->getUser()->getId()));
-
 			return $user->getId() == $token->getUser()->getId();
 		}
 
-		return true;
+		throw new \LogicException('This code should not be reached!');
 	}
 }

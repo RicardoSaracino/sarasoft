@@ -79,7 +79,7 @@ services:
 
     app.voter.user:
        class: AppBundle\Security\UserVoter
-       arguments: ["@security.access.decision_manager", "@app.helper.role"]
+       arguments: ["@security.access.decision_manager"]
        public: false
        tags:
          - { name: security.voter}

@@ -30,7 +30,13 @@ class UserController extends Controller
 	 */
 	public function indexAction()
 	{
-		$users = $this->getDoctrine()->getRepository('AppBundle:User')->findAllowedUsers($this->get('security.token_storage')->getToken()->getUser());
+		$notRoles = [];
+
+		if (!$this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+			$notRoles = ['ROLE_SUPER_ADMIN'];
+		}
+
+		$users = $this->getDoctrine()->getRepository('AppBundle:User')->findByNotRoles($notRoles);
 
 		return $this->render(
 			'user/index.html.twig',

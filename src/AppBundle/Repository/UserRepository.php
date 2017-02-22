@@ -2,8 +2,9 @@
 
 namespace AppBundle\Repository;
 
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 /**
  * UserRepository
@@ -27,24 +28,12 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 	}
 
 	/**
-	 * @param \AppBundle\Entity\User $user
+	 * @param array $notRoles
 	 * @return \AppBundle\Entity\User[]
 	 */
-	public function findAllowedUsers(\AppBundle\Entity\User $user)
+	public function findByNotRoles(array $notRoles)
 	{
 		$qb = $this->createQueryBuilder('u');
-
-		$notRoles = [];
-
-		## if user just has admin role and not
-		if (!$user->hasSuperAdminRole()) {
-			$notRoles = ['ROLE_SUPER_ADMIN'];
-		}
-
-		## if user just has admin role and not
-		if (!$user->hasAdminRole()) {
-			$notRoles = ['ROLE_ADMIN'];
-		}
 
 		if ($notRoles) {
 			$qb->innerJoin('AppBundle\Entity\UserRole', 'ur', 'WITH', 'u = ur.user')

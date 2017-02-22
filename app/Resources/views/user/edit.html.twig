@@ -20,7 +20,7 @@
 {% block complimentary %}
 	{{ nav.start }}
 	{{ nav.item('Change Password', path('user_change_password', {'id':user.id})) }}
-	{% if app.user.adminRole %}
+	{% if is_granted('ROLE_ADMIN') %}
 		{{ nav.item('List Users', path('user_index')) }}
 	{% endif %}
 	{{ nav.end }}
