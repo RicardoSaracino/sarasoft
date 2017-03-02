@@ -13,7 +13,8 @@ use Symfony\Component\Validator\ConstraintValidator;
  * Class UserNameValidator
  * @package AppBundle\Validator\Constraints
  */
-class UserNameValidator extends ConstraintValidator{
+class UserNameValidator extends ConstraintValidator
+{
 
 	/**
 	 * @param mixed $value

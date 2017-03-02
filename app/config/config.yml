@@ -58,7 +58,7 @@ twig:
     globals:
         global:
           site:
-            {name: "%site_name%"}
+            {name: "SaraSoft"}
           meta:
             {description: "sarasoft", author: "Ricardo Saracino", application_name: "sarasoft"}
 

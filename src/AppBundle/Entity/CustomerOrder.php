@@ -21,8 +21,8 @@ use Money\Money;
  */
 class CustomerOrder implements TaxableInterface
 {
-	use Traits\Timestampable;
-	use Traits\Blameable;
+	use \AppBundle\Entity\Traits\Timestampable;
+	use \AppBundle\Entity\Traits\Blameable;
 
 	const STATUS_BOOKED = 'customerOrder.status.booked';
 	const STATUS_INPROGRESS = 'customerOrder.status.inprogress';
@@ -58,7 +58,8 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=false)
 	 * })
 	 *
-	 * @Assert\NotBlank(groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
+	 *
+	 * @Assert\NotBlank(message="Select an option", groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
 	 */
 	private $company;
 
@@ -70,7 +71,7 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\JoinColumn(name="order_type_id", referencedColumnName="id", nullable=false)
 	 * })
 	 *
-	 * @Assert\NotBlank(groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
+	 * @Assert\NotBlank(message="Select an option", groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
 	 */
 	private $orderType;
 
@@ -145,7 +146,6 @@ class CustomerOrder implements TaxableInterface
 	private $bookingNotes;
 
 
-
 	/**
 	 * @var \DateTime
 	 *
@@ -174,7 +174,6 @@ class CustomerOrder implements TaxableInterface
 	 * @Assert\NotBlank(message="Progress Notes should not be blank", groups={"NewStatusInProgress"})
 	 */
 	private $progressNotes;
-
 
 
 	/**

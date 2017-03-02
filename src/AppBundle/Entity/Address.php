@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use CommerceGuys\Addressing\Validator\Constraints as AddressAssert;
 use CommerceGuys\Addressing\Model\AddressInterface;
+use ZipCodeValidator\Constraints\ZipCode as ZipCodeAssert;
+use AppBundle\Validator\Constraints\Subdivision as SubdivisionAssert;
+
 
 /**
  * Address
@@ -13,7 +16,7 @@ use CommerceGuys\Addressing\Model\AddressInterface;
  * @ORM\Table(name="address", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
  * @ORM\Entity
  *
- * AddressAssert\AddressFormat
+ * @see https://github.com/commerceguys/addressing
  */
 class Address implements AddressInterface
 {
@@ -35,7 +38,7 @@ class Address implements AddressInterface
 	 * @ORM\Column(name="country_code", type="string", length=8, nullable=false)
 	 *
 	 * @Assert\NotBlank()
-	 * @AddressAssert\Country
+	 * @AddressAssert\Country(message="This value is not a valid province.")
 	 */
 	private $countryCode;
 
@@ -45,6 +48,7 @@ class Address implements AddressInterface
 	 * @ORM\Column(name="administrative_area", type="string", length=64, nullable=true)
 	 *
 	 * @Assert\NotBlank()
+	 * @SubdivisionAssert(message="This value is not a valid province.", field="countryCode")
 	 */
 	private $administrativeArea;
 
@@ -69,7 +73,7 @@ class Address implements AddressInterface
 	 *
 	 * @ORM\Column(name="postal_code", type="string", length=64, nullable=false)
 	 *
-	 * @Assert\NotBlank()
+	 * @ZipCodeAssert(message="This value is not a valid postal code.", getter="getCountryCode")
 	 */
 	private $postalCode;
 
@@ -102,58 +106,6 @@ class Address implements AddressInterface
 	 * @ORM\Column(name="locale", type="string", length=64, nullable=false)
 	 */
 	private $locale = 'und';
-
-	/**
-	 * @return bool
-	 *
-	 * @Assert\IsTrue(message="Invalid Province")
-	 */
-	public function isStateOrProvinceValid()
-	{
-		if ($this->getCountryCode() == 'CA') {
-			return array_key_exists($this->getAdministrativeArea(), \AppBundle\Util\AdministrativeArea::getProvinces());
-		} else {
-			if ($this->getCountryCode() == 'US') {
-
-				return array_key_exists($this->getAdministrativeArea(), \AppBundle\Util\AdministrativeArea::getStates());
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * @return bool
-	 *
-	 * @Assert\IsTrue(message="Invalid Postal Code")
-	 */
-	public function isPostalCodeValid()
-	{
-		## more comprehensive list http://unicode.org/cldr/trac/browser/tags/release-26-0-1/common/supplemental/postalCodeData.xml
-		$ZIPREG = array(
-			'US' => '^\d{5}([\-]?\d{4})?$',
-			'UK' => '^(GIR|[A-Z]\d[A-Z\d]??|[A-Z]{2}\d[A-Z\d]??)[ ]??(\d[A-Z]{2})$',
-			'DE' => '\b((?:0[1-46-9]\d{3})|(?:[1-357-9]\d{4})|(?:[4][0-24-9]\d{3})|(?:[6][013-9]\d{3}))\b',
-			'CA' => '^([ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ])\ {0,1}(\d[ABCEGHJKLMNPRSTVWXYZ]\d)$',
-			'FR' => '^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$',
-			'IT' => '^(V-|I-)?[0-9]{5}$',
-			'AU' => '^(0[289][0-9]{2})|([1345689][0-9]{3})|(2[0-8][0-9]{2})|(290[0-9])|(291[0-4])|(7[0-4][0-9]{2})|(7[8-9][0-9]{2})$',
-			'NL' => '^[1-9][0-9]{3}\s?([a-zA-Z]{2})?$',
-			'ES' => '^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$',
-			'DK' => '^([D|d][K|k]( |-))?[1-9]{1}[0-9]{3}$',
-			'SE' => '^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$',
-			'BE' => '^[1-9]{1}[0-9]{3}$',
-			'IN' => '^\d{6}$'
-		);
-
-		if (array_key_exists($this->getCountryCode(), $ZIPREG)) {
-			$reg = $ZIPREG[$this->getCountryCode()];
-
-			return 1 === preg_match('/' . $reg . '/i', $this->getPostalCode());
-		}
-
-		return true;
-	}
 
 	/**
 	 * @return integer

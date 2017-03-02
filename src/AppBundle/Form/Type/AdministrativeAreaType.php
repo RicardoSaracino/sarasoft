@@ -23,7 +23,7 @@ class AdministrativeAreaType extends ChoiceType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults([
-				'choices' => \AppBundle\Util\AdministrativeArea::getOptions(),
+				'choices' => \AppBundle\Util\AddressHelper::getSubdivisionOptions(),
 				'choice_translation_domain' => false,
 		]);
 	}

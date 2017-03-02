@@ -32,9 +32,11 @@ class UserRole
 	/**
 	 * @var \AppBundle\Entity\User
 	 *
-	 * @ORM\ManyToOne(targetEntity="User", inversedBy="userRoles")
-	 * @ORM\JoinColumns({
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 * The association AppBundle\Entity\UserRole#user refers to the inverse side field AppBundle\Entity\User#userRoles which does not exist.
+	 *
+	 * ORM\ManyToOne(targetEntity="User", inversedBy="userRoles")
+	 * ORM\JoinColumns({
+	 * ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 * })
 	 */
 	private $user;

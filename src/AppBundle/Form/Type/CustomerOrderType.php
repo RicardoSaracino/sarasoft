@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Class CustomerOrderType
  * @package AppBundle\Form\Type
  */
-class CustomerOrderType extends AbstractType
+abstract class CustomerOrderType extends AbstractType
 {
 	/**
 	 * {@inheritdoc}

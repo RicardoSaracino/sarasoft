@@ -70,6 +70,11 @@ services:
         tags:
           - { name: validator.constraint_validator }
 
+    app.validator.subdivision:
+        class: AppBundle\Validator\Constraints\SubdivisionValidator
+        tags:
+          - { name: validator.constraint_validator }
+
 
     app.helper.role:
        class: AppBundle\Util\RoleHelper

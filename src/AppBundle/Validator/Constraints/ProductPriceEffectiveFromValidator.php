@@ -41,7 +41,7 @@ class ProductPriceEffectiveFromValidator extends ConstraintValidator
 			throw new \Symfony\Component\Validator\Exception\MappingException('Context Object not instance of ProductPrice');
 		}
 
-		if(!is_null($effectiveFrom) && !($effectiveFrom instanceof \DateTime)) {
+		if (!is_null($effectiveFrom) && !($effectiveFrom instanceof \DateTime)) {
 			throw new \Symfony\Component\Validator\Exception\MappingException('effectiveFrom not instance of DateTime or null');
 		}
 
