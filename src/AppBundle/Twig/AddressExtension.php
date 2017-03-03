@@ -6,6 +6,8 @@
 
 namespace AppBundle\Twig;
 
+use AppBundle\Entity\Address;
+
 /**
  * Class AdministrativeAreaExtension
  * @package AppBundle\Twig
@@ -24,15 +26,15 @@ class AddressExtension extends \Twig_Extension
 	}
 
 	/**
-	 * @param $administrativeArea
+	 * @param Address $address
 	 * @param string $locale
 	 * @return string
 	 */
-	public function administrativeAreaFilter($administrativeArea, $locale = 'en')
+	public function administrativeAreaFilter(Address $address, $locale = 'en')
 	{
 		$subdivisionRepository = new \CommerceGuys\Addressing\Repository\SubdivisionRepository();
 
-		if($subdivision = $subdivisionRepository->get($administrativeArea,$locale)){
+		if($subdivision = $subdivisionRepository->get($address->getAdministrativeArea(),$locale)){
 
 			dump($subdivision);
 
@@ -42,14 +44,13 @@ class AddressExtension extends \Twig_Extension
 		return '';
 	}
 
-
 	/**
-	 * @param $countryCode
+	 * @param Address $address
 	 * @param string $locale
 	 * @return null|string
 	 */
-	public function countryFilter($countryCode, $locale = 'en')
+	public function countryFilter(Address $address, $locale = 'en')
 	{
-		return \Symfony\Component\Intl\Intl::getRegionBundle()->getCountryName($countryCode, $locale);
+		return \Symfony\Component\Intl\Intl::getRegionBundle()->getCountryName($address->getCountryCode(), $locale);
 	}
 }

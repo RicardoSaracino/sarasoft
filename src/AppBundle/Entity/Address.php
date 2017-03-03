@@ -6,9 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use CommerceGuys\Addressing\Validator\Constraints as AddressAssert;
 use CommerceGuys\Addressing\Model\AddressInterface;
-use ZipCodeValidator\Constraints\ZipCode as ZipCodeAssert;
 use AppBundle\Validator\Constraints\Subdivision as SubdivisionAssert;
-
+use AppBundle\Validator\Constraints\PostalCode as PostalCodeAssert;
 
 /**
  * Address
@@ -48,7 +47,7 @@ class Address implements AddressInterface
 	 * @ORM\Column(name="administrative_area", type="string", length=64, nullable=true)
 	 *
 	 * @Assert\NotBlank()
-	 * @SubdivisionAssert(message="This value is not a valid province.", field="countryCode")
+	 * @SubdivisionAssert(message="This value is not a valid province.")
 	 */
 	private $administrativeArea;
 
@@ -73,7 +72,7 @@ class Address implements AddressInterface
 	 *
 	 * @ORM\Column(name="postal_code", type="string", length=64, nullable=false)
 	 *
-	 * @ZipCodeAssert(message="This value is not a valid postal code.", getter="getCountryCode")
+	 * @PostalCodeAssert(message="This value is not a valid postal code.")
 	 */
 	private $postalCode;
 

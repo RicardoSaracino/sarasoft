@@ -75,6 +75,10 @@ services:
         tags:
           - { name: validator.constraint_validator }
 
+    app.validator.postal_code:
+        class: AppBundle\Validator\Constraints\PostalCodeValidator
+        tags:
+          - { name: validator.constraint_validator }
 
     app.helper.role:
        class: AppBundle\Util\RoleHelper

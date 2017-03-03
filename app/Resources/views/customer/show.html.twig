@@ -29,13 +29,13 @@
 
 	{{ table.row_title('customer.label.homeAddress') }}
 
-	{{ table.row('address.label.countryCode', customer.address.countryCode|country) }}
+	{{ table.row('address.label.countryCode', customer.address|country) }}
 
-	{{ table.row('address.label.administrativeArea', customer.address.administrativeArea|administrative_area) }}
+	{{ table.row('address.label.administrativeArea', customer.address|administrative_area) }}
 
 	{{ table.row('address.label.locality', customer.address.locality) }}
 
-	{{ table.row('address.label.postalCode', customer.address.postalCode) }}
+	{{ table.row('address.label.postalCode', customer.address|postal_code) }}
 
 	{{ table.row('address.label.addressLine1', customer.address.addressLine1) }}
 

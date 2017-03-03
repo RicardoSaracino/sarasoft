@@ -36,7 +36,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\ManyToMany(targetEntity="Role", fetch="EAGER", orphanRemoval=true, cascade={"persist", "remove"})
 	 *
-	 * @Assert\NotBlank(message="Select an option", groups={"new","edit"})
+	 * @Assert\NotBlank(message="Select an option.", groups={"new","edit"})
 	 */
 	private $roles;
 

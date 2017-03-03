@@ -59,7 +59,7 @@ class CustomerOrder implements TaxableInterface
 	 * })
 	 *
 	 *
-	 * @Assert\NotBlank(message="Select an option", groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
+	 * @Assert\NotBlank(message="Select an option.", groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
 	 */
 	private $company;
 
@@ -71,7 +71,7 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\JoinColumn(name="order_type_id", referencedColumnName="id", nullable=false)
 	 * })
 	 *
-	 * @Assert\NotBlank(message="Select an option", groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
+	 * @Assert\NotBlank(message="Select an option.", groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
 	 */
 	private $orderType;
 
@@ -86,7 +86,7 @@ class CustomerOrder implements TaxableInterface
 	private $referral;
 
 	/**
-	 * @var \Doctrine\Common\Collections\ArrayCollection
+	 * @var \Doctrine\Common\Collections\ArrayCollection|CustomerOrderProduct[]
 	 *
 	 * @ORM\OneToMany(targetEntity="CustomerOrderProduct", mappedBy="customerOrder", orphanRemoval=true, cascade={"persist", "remove"})
 	 *
@@ -95,7 +95,7 @@ class CustomerOrder implements TaxableInterface
 	private $customerOrderProducts;
 
 	/**
-	 * @var \Doctrine\Common\Collections\ArrayCollection
+	 * @var \Doctrine\Common\Collections\ArrayCollection|CustomerOrderService[]
 	 *
 	 * @ORM\OneToMany(targetEntity="CustomerOrderService", mappedBy="customerOrder", orphanRemoval=true, cascade={"persist", "remove"})
 	 *
@@ -104,7 +104,7 @@ class CustomerOrder implements TaxableInterface
 	private $customerOrderServices;
 
 	/**
-	 * @var \Doctrine\Common\Collections\ArrayCollection
+	 * @var \Doctrine\Common\Collections\ArrayCollection|CustomerOrderTaxRateAmount[]
 	 *
 	 * @ORM\OneToMany(targetEntity="CustomerOrderTaxRateAmount", mappedBy="customerOrder", orphanRemoval=true, cascade={"persist", "remove"})
 	 */

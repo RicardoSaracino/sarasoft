@@ -34,9 +34,9 @@
 
 	{{ table.row_title('company.label.address') }}
 
-	{{ table.row('address.label.countryCode', company.address.countryCode|country) }}
+	{{ table.row('address.label.countryCode', company.address|country) }}
 
-	{{ table.row('address.label.administrativeArea', company.address.administrativeArea|administrative_area) }}
+	{{ table.row('address.label.administrativeArea', company.address|administrative_area) }}
 
 	{{ table.row('address.label.locality', company.address.locality) }}
 
