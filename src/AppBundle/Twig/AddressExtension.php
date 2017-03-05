@@ -9,7 +9,7 @@ namespace AppBundle\Twig;
 use AppBundle\Entity\Address;
 
 /**
- * Class AdministrativeAreaExtension
+ * Class AddressExtension
  * @package AppBundle\Twig
  */
 class AddressExtension extends \Twig_Extension

@@ -8,7 +8,7 @@ use Money\Currency;
 use Money\Money;
 
 /**
- * Class LanguageExtension
+ * Class UserMoneyExtension
  * @package AppBundle\Twig
  */
 class UserMoneyExtension extends \Twig_Extension

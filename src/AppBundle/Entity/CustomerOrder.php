@@ -13,7 +13,8 @@ use Money\Currency;
 use Money\Money;
 
 /**
- * CustomerOrders
+ * Class CustomerOrder
+ * @package AppBundle\Entity
  *
  * @ORM\Table(name="customer_order", indexes={@ORM\Index(name="customer_id", columns={"customer_id"}), @ORM\Index(name="company_id", columns={"company_id"}), @ORM\Index(name="referral_id", columns={"referral_id"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CustomerOrderRepository")
