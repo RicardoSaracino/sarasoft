@@ -32,7 +32,7 @@ class CustomerOrderTaxRateAmount
 	/**
 	 * @var \AppBundle\Entity\CustomerOrder
 	 *
-	 * @ORM\ManyToOne(targetEntity="CustomerOrder")
+	 * @ORM\ManyToOne(targetEntity="CustomerOrder", inversedBy="customerOrderTaxRateAmounts")
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="customer_order_id", referencedColumnName="id")
 	 * })
