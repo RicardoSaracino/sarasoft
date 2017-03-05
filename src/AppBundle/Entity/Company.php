@@ -4,7 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
+use AppBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
 /**
  * Company
@@ -42,7 +42,7 @@ class Company
 	 * @ORM\Column(name="phone", type="phone_number", length=35, nullable=false)
 	 *
 	 * @Assert\NotBlank()
-	 * @AssertPhoneNumber
+	 * @AssertPhoneNumber(getter="getCountryCode")
 	 */
 	private $phone;
 
@@ -51,7 +51,7 @@ class Company
 	 *
 	 * @ORM\Column(name="alt_phone", type="phone_number", length=35, nullable=true)
 	 *
-	 * @AssertPhoneNumber
+	 * @AssertPhoneNumber(getter="getCountryCode")
 	 */
 	private $altPhone;
 

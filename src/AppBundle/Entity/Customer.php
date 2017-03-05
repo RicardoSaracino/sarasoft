@@ -5,7 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
+use AppBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
+
 
 /**
  * Customer
@@ -38,6 +39,7 @@ class Customer
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min=3)
 	 */
+
 	private $firstName;
 
 	/**
@@ -56,7 +58,7 @@ class Customer
 	 * @ORM\Column(name="phone", type="phone_number", length=35, nullable=false)
 	 *
 	 * @Assert\NotBlank()
-	 * @AssertPhoneNumber
+	 * @AssertPhoneNumber(getter="getCountryCode")
 	 */
 	private $phone;
 
@@ -65,7 +67,7 @@ class Customer
 	 *
 	 * @ORM\Column(name="alt_phone", type="phone_number", length=35, nullable=true)
 	 *
-	 * @AssertPhoneNumber
+	 * @AssertPhoneNumber(getter="getCountryCode")
 	 */
 	private $altPhone;
 
@@ -97,6 +99,14 @@ class Customer
 	public function getId()
 	{
 		return $this->id;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCountryCode()
+	{
+		return $this->getAddress()->getCountryCode();
 	}
 
 	/**
