@@ -21,7 +21,7 @@ class CustomerOrderCalendarListener
 	/**
 	 * @var \Doctrine\ORM\EntityManager
 	 */
-	private $manager;
+	private $entityManager;
 
 	/**
 	 * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
@@ -29,12 +29,12 @@ class CustomerOrderCalendarListener
 	private $router;
 
 	/**
-	 * @param EntityManager $manager
+	 * @param EntityManager $entityManager
 	 * @param Router $router
 	 */
-	public function __construct(EntityManager $manager, Router $router)
+	public function __construct(EntityManager $entityManager, Router $router)
 	{
-		$this->manager = $manager;
+		$this->entityManager = $entityManager;
 
 		$this->router = $router;
 	}
@@ -46,8 +46,7 @@ class CustomerOrderCalendarListener
 	{
 		#				OR (:endDate BETWEEN o.bookedFrom AND o.bookedUntil AND status = "'.CustomerOrder::STATUS_BOOKED.'")
 
-
-		$query = $this->manager->createQuery(
+		$query = $this->entityManager->createQuery(
 			'SELECT o
 
 			FROM AppBundle:CustomerOrder o
