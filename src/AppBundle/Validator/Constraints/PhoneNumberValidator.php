@@ -18,13 +18,12 @@ class PhoneNumberValidator extends \Misd\PhoneNumberBundle\Validator\Constraints
 
 			$object = $this->context->getObject();
 
-			if (!is_callable([$object, $constraint->getter])) {
-				throw new \Symfony\Component\Validator\Exception\MappingException('Context Object does not have getter ' . $constraint->getter);
+			if (is_callable([$object, $constraint->getter])) {
+
+				$constraint->defaultRegion = call_user_func([$object, $constraint->getter]);
+
+				dump($constraint->defaultRegion);
 			}
-
-			$constraint->defaultRegion = call_user_func([$object, $constraint->getter]);
-
-			dump($constraint->defaultRegion);
 		}
 
 		return parent::validate($value, $constraint);
