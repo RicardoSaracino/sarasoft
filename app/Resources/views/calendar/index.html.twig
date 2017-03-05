@@ -24,8 +24,12 @@
 		}
 
 		@keyframes spin {
-			0% { transform: rotate(0deg); }
-			100% { transform: rotate(360deg); }
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
 		}
 	</style>
 {% endblock %}
@@ -51,7 +55,7 @@
 					'': 'h:mmt'
 				},
 				loading: function (isLoading) {
-					if(isLoading) {// isLoading gives boolean value
+					if (isLoading) {// isLoading gives boolean value
 						$('body').append('<div class="loader" id="loader"></div>');
 						console.log('loading');
 					} else {
@@ -70,14 +74,14 @@
 					}
 				],
 
-				eventRender: function(event, element, view) {
+				eventRender: function (event, element, view) {
 					//console.log(event);
 					//console.log(element);
 					//console.log(view);
 
 					$(element).prop('title', event.notes);
 
-					$(element).find('.fc-title').html(event.statusName + ' - ' + event.orderTypeName + '<br>' + event.customerName );
+					$(element).find('.fc-title').html(event.statusName + ' - ' + event.orderTypeName + '<br>' + event.customerName);
 				}
 
 			});

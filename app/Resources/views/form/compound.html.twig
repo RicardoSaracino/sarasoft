@@ -15,7 +15,7 @@
 
 {% block form_row %}
 	{% if form.vars.compound and 'textarea_prepend' not in form.vars.block_prefixes and 'choice' not in form.vars.block_prefixes %}
-		{% if form.vars.label != false  and 'collection' in form.vars.block_prefixes%}
+		{% if form.vars.label != false  and 'collection' in form.vars.block_prefixes %}
 			<div class="form-group" style="margin: 0">
 				<div class="{{ block('form_label_class') }}"></div>
 				<div class="{{ block('form_group_class') }}">

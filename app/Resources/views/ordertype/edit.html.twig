@@ -19,5 +19,6 @@
 
 {% block complimentary %}
 	{{ nav.start }}
-	orderType	{{ nav.end }}
+	{{ nav.item('List Order Types', path('order_type_index')) }}
+	{{ nav.end }}
 {% endblock %}

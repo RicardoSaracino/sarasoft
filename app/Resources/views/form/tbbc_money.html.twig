@@ -4,7 +4,7 @@
 		{{ block('form_label') }}
 		<div class="{{ block('form_group_class') }}">
 			<div class="input-group">
-                {{ form_widget(form.tbbc_amount) }}
+				{{ form_widget(form.tbbc_amount) }}
 				<input type="hidden" name="{{ form.vars.full_name }}[tbbc_currency][tbbc_name]" value="{{ form.tbbc_currency.vars.data.tbbc_name }}">
 				<span class="input-group-addon">{{ form.tbbc_currency.vars.data.tbbc_name }}</span>
 			</div>
