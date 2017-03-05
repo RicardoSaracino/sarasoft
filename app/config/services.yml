@@ -80,6 +80,11 @@ services:
         tags:
           - { name: validator.constraint_validator }
 
+    app.validator.phone_number:
+        class: AppBundle\Validator\Constraints\PhoneNumberValidator
+        tags:
+          - { name: validator.constraint_validator }
+
     app.helper.role:
        class: AppBundle\Util\RoleHelper
        arguments: ["%security.role_hierarchy.roles%","@doctrine.orm.entity_manager"]
