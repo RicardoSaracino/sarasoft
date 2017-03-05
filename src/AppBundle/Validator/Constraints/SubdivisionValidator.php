@@ -22,19 +22,17 @@ class SubdivisionValidator extends ConstraintValidator
 	 */
 	public function validate($value, Constraint $constraint)
 	{
-		if (!property_exists($constraint, 'field')) {
-			throw new \Symfony\Component\Validator\Exception\MappingException('Constraint object requires field to be defined');
+		if (!property_exists($constraint, 'getter')) {
+			throw new \Symfony\Component\Validator\Exception\MappingException('Constraint object requires getter to be defined');
 		}
 
 		$object = $this->context->getObject();
 
-		$getter = 'get' . ucwords($constraint->field);
-
-		if (!is_callable([$object, $getter])) {
-			throw new \Symfony\Component\Validator\Exception\MappingException('Context Object does not have getter ' . $getter);
+		if (!is_callable([$object, $constraint->getter])) {
+			throw new \Symfony\Component\Validator\Exception\MappingException('Context Object does not have getter ' . $constraint->getter);
 		}
 
-		$countryCode = call_user_func([$object, $getter]);
+		$countryCode = call_user_func([$object, $constraint->getter]);
 
 		$subdivisionRepository = new \CommerceGuys\Addressing\Repository\SubdivisionRepository();
 

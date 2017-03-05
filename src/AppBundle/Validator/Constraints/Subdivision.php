@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class Subdivision extends Constraint
 {
-	public $field = 'countryCode';
+	public $getter = 'getCountryCode';
 
 	public $message = 'This value is not a valid subdivision.';
 }

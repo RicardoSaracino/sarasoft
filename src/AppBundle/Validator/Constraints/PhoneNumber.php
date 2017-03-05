@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Ricardo Saracino
- * @since 3/2/17
+ * @since 02/10/17
  */
 
 namespace AppBundle\Validator\Constraints;
@@ -9,14 +9,14 @@ namespace AppBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class PostalCode
+ * Class PhoneNumber
  * @package AppBundle\Validator\Constraints
  *
  * @Annotation
  */
-class PostalCode extends Constraint
+class PhoneNumber extends \Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber
 {
 	public $getter = 'getCountryCode';
 
-	public $message = 'This value is not a valid postal code.';
+	public $message = 'This value is not a proper decimal.';
 }
