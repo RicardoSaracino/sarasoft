@@ -14,4 +14,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class CustomerOrderRepository extends EntityRepository
 {
+	/**
+	 * @return array
+	 */
+	public function getStatusCounts(){
+
+		return $this->createQueryBuilder('co')
+
+			->select('co.status, count(1) as statusCount')
+
+			->indexBy('co', 'co.status')
+
+			->groupBy('co.status')
+
+			->getQuery()
+
+			->getResult();
+	}
 }

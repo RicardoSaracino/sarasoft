@@ -3,17 +3,17 @@
 services:
   twig.user_date_extension:
       class: AppBundle\Twig\UserDateExtension
-      tags:
-          - { name: twig.extension }
       arguments:
           - "@security.token_storage"
+      tags:
+          - { name: twig.extension }
 
   twig.user_money_extension:
       class: AppBundle\Twig\UserMoneyExtension
-      tags:
-          - { name: twig.extension }
       arguments:
           - "@security.token_storage"
+      tags:
+          - { name: twig.extension }
 
   twig.address_extension:
       class: AppBundle\Twig\AddressExtension
@@ -24,9 +24,17 @@ services:
       class: AppBundle\Twig\LanguageExtension
       tags:
           - { name: twig.extension }
+
   twig.customerOrderRouting_extension:
       class: AppBundle\Twig\CustomerOrderRoutingExtension
-      tags:
-          - { name: twig.extension }
       arguments:
           - "@router"
+      tags:
+          - { name: twig.extension }
+
+  twig.customerOrderEntityManager_extension:
+      class: AppBundle\Twig\CustomerOrderEntityManagerExtension
+      arguments:
+          - "@doctrine.orm.entity_manager"
+      tags:
+          - { name: twig.extension }

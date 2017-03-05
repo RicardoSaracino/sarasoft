@@ -20,10 +20,11 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="{{ path('customer_order_list_all') }}">All</a></li>
-						<li><a href="{{ path('customer_order_list_booked') }}">Booked</a></li>
-						<li><a href="{{ path('customer_order_list_inprogress') }}">In Progress</a></li>
-						<li><a href="{{ path('customer_order_list_complete') }}">Completed</a></li>
-						<li><a href="{{ path('customer_order_list_invoiced') }}">Invoiced</a></li>
+						<li><a href="{{ path('customer_order_list_booked') }}">Booked {% if statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_BOOKED')) %}<span style="float: right" class="badge">{{ statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_BOOKED')) }}</span>{% endif %}</a></li>
+						<li><a href="{{ path('customer_order_list_inprogress') }}">In Progress {% if statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_INPROGRESS')) %}<span style="float: right" class="badge">{{ statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_INPROGRESS')) }}</span>{% endif %}</a></li>
+						<li><a href="{{ path('customer_order_list_complete') }}">Completed {% if statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_COMPLETE')) %}<span style="float: right" class="badge">{{ statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_COMPLETE')) }}</span>{% endif %}</a></li>
+						<li><a href="{{ path('customer_order_list_invoiced') }}">Invoiced {% if statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_INVOICED')) %}<span style="float: right" class="badge">{{ statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_INVOICED
+						')) }}</span>{% endif %}</a></li>
 						<li><a href="{{ path('customer_order_list_paid') }}">Paid</a></li>
 						<li><a href="{{ path('customer_order_list_cancelled') }}">Cancelled</a></li>
 					</ul>
