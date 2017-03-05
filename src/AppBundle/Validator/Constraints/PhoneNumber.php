@@ -17,6 +17,4 @@ use Symfony\Component\Validator\Constraint;
 class PhoneNumber extends \Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber
 {
 	public $getter = 'getCountryCode';
-
-	public $message = 'This value is not a proper decimal.';
 }

@@ -58,7 +58,7 @@ class Customer
 	 * @ORM\Column(name="phone", type="phone_number", length=35, nullable=false)
 	 *
 	 * @Assert\NotBlank()
-	 * @AssertPhoneNumber(getter="getCountryCode")
+	 * @AssertPhoneNumber
 	 */
 	private $phone;
 
@@ -67,7 +67,7 @@ class Customer
 	 *
 	 * @ORM\Column(name="alt_phone", type="phone_number", length=35, nullable=true)
 	 *
-	 * @AssertPhoneNumber(getter="getCountryCode")
+	 * @AssertPhoneNumber
 	 */
 	private $altPhone;
 
@@ -102,6 +102,7 @@ class Customer
 	}
 
 	/**
+	 * For AssertPhoneNumber
 	 * @return string
 	 */
 	public function getCountryCode()
