@@ -103,6 +103,15 @@ class Company
         return $this->id;
     }
 
+
+	/**
+	 * @return string
+	 */
+	public function getCountryCode()
+	{
+		return $this->getAddress()->getCountryCode();
+	}
+
 	/**
 	 * @param $name
 	 * @return $this
