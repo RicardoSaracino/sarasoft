@@ -46,7 +46,7 @@ class CustomerOrderProduct
 	 * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
 	 * })
 	 *
-	 * @Assert\NotBlank(groups={"StatusComplete"})
+	 * @Assert\NotBlank(message="Select an option.", groups={"NewStatusInProgress", "EditStatusInProgress", "EditStatusComplete"})
 	 */
 	private $product;
 
@@ -55,8 +55,8 @@ class CustomerOrderProduct
 	 *
 	 * @ORM\Column(name="quantity", type="integer", nullable=false)
 	 *
-	 * @Assert\NotBlank(groups={"StatusComplete"})
-	 * @Assert\Range(min="1", groups={"StatusComplete"})
+	 * @Assert\NotBlank(groups={"NewStatusInProgress", "EditStatusInProgress", "EditStatusComplete"})
+	 * @Assert\Range(min="1", groups={"NewStatusInProgress", "EditStatusInProgress", "EditStatusComplete"})
 	 */
 	private $quantity;
 
