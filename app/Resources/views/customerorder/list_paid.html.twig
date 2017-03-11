@@ -30,7 +30,7 @@
 				{% for customerOrder in customerOrders %}
 					<tr>
 						<td>{{ customerOrder.customer.fullName }}</td>
-						<td><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></td>
+						<td><a href="{{ customerOrder.customer.phone|phone_number_format('RFC3966') }}">{{ customerOrder.customer.phone|phone_number_format }}</a></td>
 						<td>{{ customerOrder.company.name }}</td>
 						<td>{{ customerOrder.orderType.name }}</td>
 						<td>{% if customerOrder.referral %}{{ customerOrder.referral.name }}{% endif %}</td>

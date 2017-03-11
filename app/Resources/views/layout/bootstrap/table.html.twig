@@ -47,7 +47,7 @@
 	{% spaceless %}
 		<div class="row">
 			<div class="col-sm-2">{{ label|trans }}</div>
-			<div class="col-sm-10">{% if phone %}<a href="{{ phone_number_format(phone,'RFC3966') }}">{{ phone_number_format(phone) }}</a>{% endif %}</div>
+			<div class="col-sm-10">{% if phone %}<a href="{{ phone|phone_number_format('RFC3966') }}">{{ phone|phone_number_format }}</a>{% endif %}</div>
 		</div>
 	{% endspaceless %}
 {% endmacro %}
@@ -90,10 +90,10 @@
 	{% endspaceless %}
 {% endmacro %}
 
-{% macro row_created(entity) %}
+{% macro row_created(entity, label = null) %}
 	{% spaceless %}
 		<div class="row">
-			<div class="col-sm-2">Created</div>
+			<div class="col-sm-2">{% if label is not null %}{{ label|trans }}{% else %}Created{% endif %}</div>
 			<div class="col-sm-10">{{ entity.createdAt|user_datetime }}{% if entity.createdBy %} by {{ entity.createdBy.fullName }}{% endif %}</div>
 		</div>
 	{% endspaceless %}
