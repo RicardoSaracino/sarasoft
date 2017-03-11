@@ -278,6 +278,8 @@ class CustomerOrderController extends Controller
 	 */
 	public function showAction(CustomerOrder $customerOrder)
 	{
+		$this->calculateInvoiceAmounts($customerOrder);
+
 		return $this->render(
 			'customerorder/show.html.twig',
 			[
@@ -363,16 +365,6 @@ class CustomerOrderController extends Controller
     {
         $customerOrder = new CustomerOrder();
 
-		## make sure we have at least one
-		if( $customerOrder->getCustomerOrderProducts()->isEmpty() ){
-			$customerOrder->addCustomerOrderProduct(new \AppBundle\Entity\CustomerOrderProduct());
-		}
-
-		## make sure we have at least one
-		if( $customerOrder->getCustomerOrderServices()->isEmpty() ){
-			$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
-		}
-
 		$customerOrder->setCustomer($customer);
 
 		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderNewStatusInProgressType::class, $customerOrder, ['validation_groups' => ['NewStatusInProgress']]);
@@ -416,16 +408,6 @@ class CustomerOrderController extends Controller
     {
         $customerOrder = new CustomerOrder();
 
-		## make sure we have at least one
-		if( $customerOrder->getCustomerOrderProducts()->isEmpty() ){
-			$customerOrder->addCustomerOrderProduct(new \AppBundle\Entity\CustomerOrderProduct());
-		}
-
-		## make sure we have at least one
-		if( $customerOrder->getCustomerOrderServices()->isEmpty() ){
-			$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
-		}
-
 		$customerOrder->setCustomer($customer);
 
 		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderNewStatusCompleteType::class, $customerOrder, ['validation_groups' => ['NewStatusComplete']]);
@@ -463,7 +445,7 @@ class CustomerOrderController extends Controller
     /**
      * Displays a form to edit an existing booked customerOrder entity.
      *
-     * @Route("/{id}/edit/book", name="customer_order_edit_booked")
+     * @Route("/{id}/edit/booked", name="customer_order_edit_booked")
      * @Method({"GET", "POST"})
      */
     public function editBookedAction(Request $request, CustomerOrder $customerOrder)
@@ -509,7 +491,6 @@ class CustomerOrderController extends Controller
 		);
 	}
 
-
 	/**
 	 * Displays a form to edit or set inprogress an existing customerOrder entity.
 	 *
@@ -518,16 +499,6 @@ class CustomerOrderController extends Controller
 	 */
 	public function editInProgressAction(Request $request, CustomerOrder $customerOrder)
 	{
-		## make sure we have at least one
-		if( $customerOrder->getCustomerOrderProducts()->isEmpty() ){
-			$customerOrder->addCustomerOrderProduct(new \AppBundle\Entity\CustomerOrderProduct());
-		}
-
-		## make sure we have at least one
-		if( $customerOrder->getCustomerOrderServices()->isEmpty() ){
-			$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
-		}
-
 		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusInProgressType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusInProgress']]);
 
 		$form->handleRequest($request);
@@ -566,16 +537,6 @@ class CustomerOrderController extends Controller
      */
     public function editCompleteAction(Request $request, CustomerOrder $customerOrder)
     {
-    	## make sure we have at least one
-		if( $customerOrder->getCustomerOrderProducts()->isEmpty() ){
-			$customerOrder->addCustomerOrderProduct(new \AppBundle\Entity\CustomerOrderProduct());
-		}
-
-		## make sure we have at least one
-		if( $customerOrder->getCustomerOrderServices()->isEmpty() ){
-			$customerOrder->addCustomerOrderService(new \AppBundle\Entity\CustomerOrderService());
-		}
-
 		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusCompleteType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusComplete']]);
 
 		$form->handleRequest($request);
@@ -618,6 +579,10 @@ class CustomerOrderController extends Controller
 
 		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusInvoicedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusInvoiced']]);
 
+
+		## todo this good here
+		$form->add('checkbox', \Symfony\Component\Form\Extension\Core\Type\CheckboxType::class, ['mapped' => false,'label' => 'CC Company']);
+
 		$form->handleRequest($request);
 
 		if (!in_array($customerOrder->getStatus(), [CustomerOrder::STATUS_COMPLETE, CustomerOrder::STATUS_INVOICED])) {
@@ -632,7 +597,6 @@ class CustomerOrderController extends Controller
 				$customerOrder->setInvoiceEmailedAt(new \DateTime());
 				#$customerOrder->
 			}
-
 
 			$this->getDoctrine()->getManager()->flush();
 
@@ -660,8 +624,6 @@ class CustomerOrderController extends Controller
      */
     public function editPaidAction(Request $request, CustomerOrder $customerOrder)
     {
-
-
 		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusPaidType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusPaid']]);
 
 		$form->handleRequest($request);
@@ -670,10 +632,7 @@ class CustomerOrderController extends Controller
 			$form->addError(new \Symfony\Component\Form\FormError('Cannot Invoice Order'));
 		}
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-			dump($form); die;
-
 			$customerOrder->setStatus(CustomerOrder::STATUS_PAID);
 
 			$this->getDoctrine()->getManager()->flush();
