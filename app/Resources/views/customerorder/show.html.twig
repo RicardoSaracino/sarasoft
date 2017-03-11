@@ -9,7 +9,7 @@
 	<h1>Order<br>
 		<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.fullName }}</a></small>
 		<br>
-		<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
+		<small><a href="{{ customerOrder.customer.phone|phone_number_format }}">{{ customerOrder.customer.phone|phone_number_format }}</a></small>
 	</h1>
 {% endblock %}
 
@@ -69,6 +69,43 @@
 	{{ table.row_updated(customerOrder) }}
 
 	{{ table.end }}
+
+	{% if not customerOrder.customerOrderServices.empty %}
+		{{ table.start }}
+		{{ table.row_title('customerOrder.label.services') }}
+		{% for customerOrderService in customerOrder.customerOrderServices %}
+			{{ table.row('customerOrderService.label.service', customerOrderService.service.name) }}
+			{{ table.row('customerOrderProduct.label.invoiceAmount', customerOrderService.quantity ~ ' × ' ~ customerOrderService.invoiceAmount|user_money ) }}
+			{% if customerOrderService.comments %}{{ table.row('customerOrderService.label.comments', customerOrderService.comments) }}{% endif %}
+			{% if not loop.last %}
+				{{ table.row_spacer() }}
+			{% endif %}
+		{% endfor %}
+		{{ table.end }}
+	{% endif %}
+
+	{% if not customerOrder.customerOrderProducts.empty %}
+		{{ table.start }}
+		{{ table.row_title('customerOrder.label.products') }}
+		{% for customerOrderProduct in customerOrder.customerOrderProducts %}
+			{{ table.row('customerOrderProduct.label.product', customerOrderProduct.product.name) }}
+			{{ table.row('customerOrderProduct.label.invoiceAmount', customerOrderProduct.quantity ~ ' × ' ~ customerOrderProduct.invoiceAmount|user_money ) }}
+			{% if customerOrderProduct.comments %}{{ table.row('customerOrderProduct.label.comments', customerOrderProduct.comments) }}{% endif %}
+			{% if not loop.last %}
+				{{ table.row_spacer() }}
+			{% endif %}
+		{% endfor %}
+		{{ table.end }}
+	{% endif %}
+
+	{% if not customerOrder.customerOrderStatusHistories.empty %}
+		{{ table.start }}
+		{{ table.row_title('History') }}
+		{% for customerOrderStatusHistory in customerOrder.customerOrderStatusHistories %}
+			{{ table.row_created(customerOrderStatusHistory, customerOrderStatusHistory.newStatus) }}
+		{% endfor %}
+		{{ table.end }}
+	{% endif %}
 {% endblock %}
 
 {% block complimentary %}

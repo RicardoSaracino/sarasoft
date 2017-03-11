@@ -262,6 +262,10 @@
                 <source>customerOrderProduct.label.quantity</source>
                 <target>Quantity</target>
             </trans-unit>
+            <trans-unit id="customerOrderProduct.label.invoiceAmount">
+                <source>customerOrderProduct.label.invoiceAmount</source>
+                <target>Amount</target>
+            </trans-unit>
             <trans-unit id="customerOrderProduct.label.comments">
                 <source>customerOrderProduct.label.comments</source>
                 <target>Comments</target>
@@ -277,6 +281,10 @@
             <trans-unit id="customerOrderService.label.quantity">
                 <source>customerOrderService.label.quantity</source>
                 <target>Quantity</target>
+            </trans-unit>
+            <trans-unit id="customerOrderService.label.invoiceAmount">
+                <source>customerOrderService.label.invoiceAmount</source>
+                <target>Amount</target>
             </trans-unit>
             <trans-unit id="customerOrderService.label.comments">
                 <source>customerOrderService.label.comments</source>
