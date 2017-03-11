@@ -13,10 +13,6 @@ use Symfony\Component\Form\FormError;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-
-use \AppBundle\Form\Type\LoginType;
-
-
 /**
  * Class SecurityController
  * @package AppBundle\Controller
@@ -29,7 +25,7 @@ class SecurityController extends Controller
 	 */
 	public function loginAction(Request $request)
 	{
-		$loginForm = $this->createForm(LoginType::class);
+		$loginForm = $this->createForm(\AppBundle\Form\Type\LoginType::class);
 
 		$loginForm->handleRequest($request);
 
