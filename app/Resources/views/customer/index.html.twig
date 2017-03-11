@@ -25,8 +25,8 @@
 				{% for customer in customers %}
 					<tr>
 						<td>{{ customer.fullName }}</td>
-						<td><a href="{{ phone_number_format(customer.phone,'RFC3966') }}">{{ phone_number_format(customer.phone) }}</a></td>
-						<td>{% if customer.altPhone %}<a href="{{ phone_number_format(customer.altPhone,'RFC3966') }}">{{ phone_number_format(customer.altPhone) }}</a>{% endif %}</td>
+						<td><a href="{{ customer.phone|phone_number_format('RFC3966') }}">{{ customer.phone|phone_number_format }}</a></td>
+						<td>{% if customer.altPhone %}<a href="{{ customer.altPhone|phone_number_format('RFC3966') }}">{{ customer.altPhone|phone_number_format }}</a>{% endif %}</td>
 						<td>{{ customer.createdAt|user_datetime }}</td>
 						<td>
 							<ul class="nav nav-pills">

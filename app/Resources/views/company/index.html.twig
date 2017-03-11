@@ -28,8 +28,8 @@
 				{% for company in companies %}
 					<tr>
 						<td>{{ company.name }}</td>
-						<td><a href="{{ phone_number_format(company.phone,'RFC3966') }}">{{ phone_number_format(company.phone) }}</a></td>
-						<td>{% if company.altPhone %}<a href="{{ phone_number_format(company.altPhone,'RFC3966') }}">{{ phone_number_format(company.altPhone) }}</a>{% endif %}</td>
+						<td><a href="{{ company.phone|phone_number_format('RFC3966') }}">{{ company.phone|phone_number_format }}</a></td>
+						<td>{% if company.altPhone %}<a href="{{ company.altPhone|phone_number_format('RFC3966') }}">{{ company.altPhone|phone_number_format }}</a>{% endif %}</td>
 						<td>{{ company.createdAt|user_datetime }}</td>
 						<td>
 							<ul class="nav nav-pills">

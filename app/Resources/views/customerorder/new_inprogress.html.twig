@@ -8,7 +8,7 @@
 	<h1>New Inprogress Order<br>
 		<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.fullName }}</a></small>
 		<br>
-		<small><a href="{{ phone_number_format(customerOrder.customer.phone,'RFC3966') }}">{{ phone_number_format(customerOrder.customer.phone) }}</a></small>
+		<small><a href="{{ customerOrder.customer.phone|phone_number_format('RFC3966') }}">{{ customerOrder.customer.phone|phone_number_format }}</a></small>
 	</h1>
 {% endblock %}
 
@@ -19,6 +19,7 @@
 		<div class="col-sm-offset-2 col-sm-10">
 			<input type="submit" class="btn btn-default" value="Save">
 		</div>
+
 	</div>
 	{{ form_end(form) }}
 {% endblock %}
@@ -34,8 +35,6 @@
 	{{ parent() }}
 	<script>
 		$('.js-collection').collection({
-			{#init_with_n_elements: 1,#}
-
 			allow_duplicate: true,
 			drag_drop: false, {# sortable #}
 			drag_drop_options: {
