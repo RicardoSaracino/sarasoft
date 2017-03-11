@@ -11,11 +11,15 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li {% if app.request.get('_route') == 'welcome' %}class="active"{% endif %}>
-					<a href="{{ path('welcome') }}"><span class="glyphicon glyphicon-home" aria-hidden="true" aria-label="Home"></span></a>
+				<li {% if app.request.get('_route') == 'home' %}class="active"{% endif %}>
+					<a href="{{ path('home') }}"><span class="glyphicon glyphicon-home" aria-hidden="true" aria-label="Home"></span></a>
 				</li>
-				<li><a href="{{ path('calendar_index') }}"><span class="glyphicon glyphicon-calendar" aria-hidden="true" aria-label="Calendar"></span></a></li>
-				<li><a href="{{ path('customer_index') }}"><span class="glyphicon glyphicon-user" aria-hidden="true" aria-label="Customers"></span> Customers</a></li>
+				<li {% if app.request.get('_route') == 'calendar_index' %}class="active"{% endif %}>
+					<a href="{{ path('calendar_index') }}"><span class="glyphicon glyphicon-calendar" aria-hidden="true" aria-label="Calendar"></span></a>
+				</li>
+				<li {% if app.request.get('_route') == 'customer_index' %}class="active"{% endif %}>
+					<a href="{{ path('customer_index') }}"><span class="glyphicon glyphicon-user" aria-hidden="true" aria-label="Customers"></span> Customers</a>
+				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -23,8 +27,7 @@
 						<li><a href="{{ path('customer_order_list_booked') }}">Booked {% if statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_BOOKED')) %}<span style="float: right" class="badge">{{ statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_BOOKED')) }}</span>{% endif %}</a></li>
 						<li><a href="{{ path('customer_order_list_inprogress') }}">In Progress {% if statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_INPROGRESS')) %}<span style="float: right" class="badge">{{ statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_INPROGRESS')) }}</span>{% endif %}</a></li>
 						<li><a href="{{ path('customer_order_list_complete') }}">Completed {% if statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_COMPLETE')) %}<span style="float: right" class="badge">{{ statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_COMPLETE')) }}</span>{% endif %}</a></li>
-						<li><a href="{{ path('customer_order_list_invoiced') }}">Invoiced {% if statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_INVOICED')) %}<span style="float: right" class="badge">{{ statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_INVOICED
-						')) }}</span>{% endif %}</a></li>
+						<li><a href="{{ path('customer_order_list_invoiced') }}">Invoiced {% if statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_INVOICED')) %}<span style="float: right" class="badge">{{ statusCounts(constant('AppBundle\\Entity\\CustomerOrder::STATUS_INVOICED')) }}</span>{% endif %}</a></li>
 						<li><a href="{{ path('customer_order_list_paid') }}">Paid</a></li>
 						<li><a href="{{ path('customer_order_list_cancelled') }}">Cancelled</a></li>
 					</ul>
@@ -49,6 +52,8 @@
 					<ul class="dropdown-menu">
 						<li class="dropdown-header">{{ app.user.firstName }} {{ app.user.lastName }}</li>
 						<li><a href="{{ path('user_edit',{'id': app.user.id}) }}">Account</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="{{  path('support') }}">Support</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="{{ logout_url() }}">Logout</a></li>
 					</ul>
