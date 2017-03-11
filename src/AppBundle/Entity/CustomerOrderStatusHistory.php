@@ -28,7 +28,7 @@ class CustomerOrderStatusHistory
 	/**
 	 * @var \AppBundle\Entity\CustomerOrder
 	 *
-	 * @ORM\ManyToOne(targetEntity="CustomerOrder")
+	 * @ORM\ManyToOne(targetEntity="CustomerOrder", inversedBy="customerOrderStatusHistories")
 	 * @ORM\JoinColumns({
 	 * @ORM\JoinColumn(name="customer_order_id", referencedColumnName="id", nullable=false)
 	 * })
@@ -109,7 +109,7 @@ class CustomerOrderStatusHistory
 	/**
 	 * @return string
 	 */
-	public function getName()
+	public function getNewStatus()
 	{
 		return $this->newStatus;
 	}

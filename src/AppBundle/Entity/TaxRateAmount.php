@@ -31,7 +31,7 @@ class TaxRateAmount implements TaxRateAmountEntityInterface
 	/**
 	 * @var \AppBundle\Entity\TaxRate
 	 *
-	 * @ORM\ManyToOne(targetEntity="TaxRate")
+	 * @ORM\ManyToOne(targetEntity="TaxRate", inversedBy="taxRateAmounts")
 	 * @ORM\JoinColumns({
 	 *   @ORM\JoinColumn(name="tax_rate_id", referencedColumnName="id")
 	 * })
