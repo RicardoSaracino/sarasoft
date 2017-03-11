@@ -44,8 +44,9 @@ class CustomerOrderEntityManagerExtension extends \Twig_Extension
 		static $statusCounts = null;
 
 		if (is_null($statusCounts)) {
-			dump($statusCounts = $this->entityManager->getRepository('AppBundle:CustomerOrder')->getStatusCounts());
+			$statusCounts = $this->entityManager->getRepository('AppBundle:CustomerOrder')->getStatusCounts();
 		}
+
 		if (array_key_exists($status, $statusCounts)) {
 			return $statusCounts[$status]['statusCount'];
 		}
