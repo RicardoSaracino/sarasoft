@@ -1,0 +1,27 @@
+{% extends 'page.html.twig' %}
+
+{% import 'nav.html.twig' as nav %}
+
+{% block title %}Support{% endblock %}
+
+{% block header %}<h1>Support</h1>{% endblock %}
+
+{% block main %}
+
+	{% for flash_message in app.session.flashBag.get('success') %}
+		<div class="alert alert-success">
+			{{ flash_message }}
+		</div>
+	{% endfor %}
+
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'autocomplete':'off' }}) }}
+	{{ form_widget(form) }}
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<input type="submit" class="btn btn-default" value="Send">
+		</div>
+	</div>
+	{{ form_end(form) }}
+{% endblock %}
+
+{% block complimentary %}{% endblock %}

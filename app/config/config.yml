@@ -58,9 +58,9 @@ twig:
     globals:
         global:
           site:
-            {name: "SaraSoft", version: "1.0.0"}
+            {name: "%site_name%", version: "%site_version%"}
           support:
-            {email: support.sarasoft@ricardosaracino.com}
+            {email: "%support_email%"}
           meta:
             {description: "sarasoft", author: "Ricardo Saracino", application_name: "sarasoft"}
 
