@@ -20,7 +20,8 @@ class CustomerOrderEditStatusInvoicedType extends CustomerOrderType
 	{
 		$builder
 			->add('invoicedAt', UserDateTimePickerType::class, ['label' => 'customerOrder.label.invoicedAt'])
-			->add('invoiceSubtotal', \Tbbc\MoneyBundle\Form\Type\MoneyType::class, ['label' => 'customerOrder.label.invoiceSubtotal']);
+			->add('invoiceSubtotal', \Tbbc\MoneyBundle\Form\Type\MoneyType::class, ['disabled' => true, 'label' => 'customerOrder.label.invoiceSubtotal'])
+			->add('invoiceTotal', \Tbbc\MoneyBundle\Form\Type\MoneyType::class, ['disabled' => true, 'label' => 'customerOrder.label.invoiceTotal']);
 
 		if ($builder->getData()->getInvoiceNotes()) {
 			$builder->add('invoiceNotes', UserTextAreaPrependType::class, [

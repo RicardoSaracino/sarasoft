@@ -59,7 +59,6 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=false)
 	 * })
 	 *
-	 *
 	 * @Assert\NotBlank(message="Select an option.", groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
 	 */
 	private $company;
@@ -111,6 +110,14 @@ class CustomerOrder implements TaxableInterface
 	 */
 	private $customerOrderTaxRateAmounts;
 
+
+	/**
+	 * @var \Doctrine\Common\Collections\ArrayCollection|CustomerOrderStatusHistory[]
+	 *
+	 * @ORM\OneToMany(targetEntity="CustomerOrderStatusHistory", mappedBy="customerOrder", orphanRemoval=true, cascade={"persist", "remove"})
+	 */
+	private $customerOrderStatusHistories;
+
 	/**
 	 * @var string
 	 *
@@ -133,7 +140,7 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\Column(name="booked_until", type="datetime", nullable=true)
 	 *
 	 * @Assert\NotBlank(groups={"NewStatusBooked", "EditStatusBooked"})
-	 * @AppAssert\DateAfter(field="bookedFrom", message="Booked Until date must be after Booked From date %date%", groups={"NewStatusBooked", "EditStatusBooked"})
+	 * @AppAssert\DateAfter(field="bookedFrom", message="Booked Until date must be after Booked From date.", groups={"NewStatusBooked", "EditStatusBooked"})
 	 */
 	private $bookedUntil;
 
@@ -142,7 +149,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="booking_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Booking Notes should not be blank", groups={"NewStatusBooked"})
+	 * @Assert\NotBlank(message="Booking Notes should not be blank.", groups={"NewStatusBooked"})
 	 */
 	private $bookingNotes;
 
@@ -163,7 +170,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @Assert\NotBlank(groups={"NewStatusInProgress", "EditStatusInProgress"})
 	 *
-	 * @AppAssert\DateAfter(field="progressStartedAt", message="Est. Completion date must be after Start date %date%", groups={"NewStatusInProgress", "EditStatusInProgress"})
+	 * @AppAssert\DateAfter(field="progressStartedAt", message="Est. Completion date must be after Start date.", groups={"NewStatusInProgress", "EditStatusInProgress"})
 	 */
 	private $progressEstimatedCompletionAt;
 
@@ -172,7 +179,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="progress_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Progress Notes should not be blank", groups={"NewStatusInProgress"})
+	 * @Assert\NotBlank(message="Progress Notes should not be blank.", groups={"NewStatusInProgress"})
 	 */
 	private $progressNotes;
 
@@ -191,7 +198,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="completion_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Completion Notes should not be blank", groups={"NewStatusComplete"})
+	 * @Assert\NotBlank(message="Completion Notes should not be blank.", groups={"NewStatusComplete"})
 	 */
 	private $completionNotes;
 
@@ -201,9 +208,9 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="invoiced_at", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"StatusInvoiced"})
+	 * @Assert\NotBlank(groups={"EditStatusInvoiced"})
 	 *
-	 * @AppAssert\DateAfter(field="completedAt", message="Invoice date must be after Completion date %date%", groups={"EditStatusInvoiced"})
+	 * @AppAssert\DateAfter(field="completedAt", message="Invoice date must be after Completion date %date%.", groups={"EditStatusInvoiced"})
 	 */
 	private $invoicedAt;
 
@@ -212,7 +219,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="invoice_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Invoice Notes should not be blank", groups={"EditStatusInvoiced"})
+	 * Assert\NotBlank(message="Invoice Notes should not be blank.", groups={"EditStatusInvoiced"})
 	 */
 	private $invoiceNotes;
 
@@ -272,7 +279,8 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @Assert\NotBlank(groups={"EditStatusPaid"})
 	 *
-	 * @AppAssert\DateAfter(field="invoicedAt", message="Payment date must be after Invoice date %date%", groups={"EditStatusPaid"})
+	 * @AppAssert\DateAfter(field="invoicedAt", message="Payment date must be after Invoice date
+	 * %date%.", groups={"EditStatusPaid"})
 	 */
 	private $paidAt;
 
@@ -298,7 +306,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="payment_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Payment Notes should not be blank", groups={"NewStatusPaid"})
+	 * @Assert\NotBlank(message="Payment Notes should not be blank.", groups={"NewStatusPaid"})
 	 */
 	private $paymentNotes;
 
@@ -316,7 +324,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="cancellation_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Cancellation Notes should not be blank", groups={"EditStatusCancelled"})
+	 * @Assert\NotBlank(message="Cancellation Notes should not be blank.", groups={"EditStatusCancelled"})
 	 */
 	private $cancellationNotes;
 
@@ -328,6 +336,7 @@ class CustomerOrder implements TaxableInterface
 		$this->customerOrderProducts = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->customerOrderServices = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->customerOrderTaxRateAmounts = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->customerOrderStatusHistories = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 	/**
@@ -772,8 +781,43 @@ class CustomerOrder implements TaxableInterface
 		return $this->invoiceEmailedAt;
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getInvoiceEmailedTo()
+	{
+		return $this->invoiceEmailedTo;
+	}
 
-	#private $invoiceEmailedTo;
+	/**
+	 * @param $invoiceEmailedTo
+	 * @return $this
+	 */
+	public function setInvoiceEmailedTo($invoiceEmailedTo)
+	{
+		$this->invoiceEmailedTo = $invoiceEmailedTo;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getInvoiceEmailedCc()
+	{
+		return $this->invoiceEmailedCc;
+	}
+
+	/**
+	 * @param $invoiceEmailedCc
+	 * @return $this
+	 */
+	public function setInvoiceEmailedCc($invoiceEmailedCc)
+	{
+		$this->invoiceEmailedCc = $invoiceEmailedCc;
+
+		return $this;
+	}
 
 	/**
 	 * @return Money|null
@@ -961,9 +1005,11 @@ class CustomerOrder implements TaxableInterface
 	 */
 	public function getPayment()
 	{
+		## currency is defaulted CAD, amount is defaulted null
 		if (!$this->paymentCurrency) {
 			return null;
 		}
+
 		if (!$this->paymentAmount) {
 			return new Money(0, new Currency($this->paymentCurrency));
 		}
@@ -1026,6 +1072,16 @@ class CustomerOrder implements TaxableInterface
 	}
 
 	####################################################
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */
+	public function getCustomerOrderStatusHistories()
+	{
+		dump($this->customerOrderStatusHistories);
+
+		return $this->customerOrderStatusHistories;
+	}
 
 	/**
 	 * @ORM\PostUpdate

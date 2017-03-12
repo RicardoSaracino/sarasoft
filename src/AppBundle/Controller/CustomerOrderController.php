@@ -496,6 +496,7 @@ class CustomerOrderController extends Controller
 	 *
 	 * @Route("/{id}/edit/inprogress", name="customer_order_edit_inprogress")
 	 * @Method({"GET", "POST"})
+	 * @Method({"GET", "POST"})
 	 */
 	public function editInProgressAction(Request $request, CustomerOrder $customerOrder)
 	{
@@ -573,15 +574,11 @@ class CustomerOrderController extends Controller
      * @Route("/{id}/edit/invoice", name="customer_order_edit_invoice")
      * @Method({"GET", "POST"})
      */
-    public function editInvoiceAction(Request $request, CustomerOrder $customerOrder)
-    {
+	public function editInvoiceAction(Request $request, CustomerOrder $customerOrder)
+	{
 		$this->calculateInvoiceAmounts($customerOrder);
 
-		$form = $this->createForm(\AppBundle\Form\Type\CustomerOrderEditStatusInvoicedType::class, $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusInvoiced']]);
-
-
-		## todo this good here
-		$form->add('checkbox', \Symfony\Component\Form\Extension\Core\Type\CheckboxType::class, ['mapped' => false,'label' => 'CC Company']);
+		$form = $this->createForm('\AppBundle\Form\Type\CustomerOrderEditStatusInvoicedType', $customerOrder, ['label' => $customerOrder->getStatus(), 'validation_groups' => ['EditStatusInvoiced']]);
 
 		$form->handleRequest($request);
 
@@ -589,13 +586,23 @@ class CustomerOrderController extends Controller
 			$form->addError(new \Symfony\Component\Form\FormError('Cannot Invoice Order'));
 		}
 
-        if ($form->isSubmitted() && $form->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) {
 
 			$customerOrder->setStatus(CustomerOrder::STATUS_INVOICED);
 
-			if($request->request->get('customerOrder_sendInvoice')) {
+			if ($request->request->get('customerOrder_sendInvoice')) {
+
 				$customerOrder->setInvoiceEmailedAt(new \DateTime());
-				#$customerOrder->
+				$customerOrder->setInvoiceEmailedTo($customerOrder->getCustomer()->getEmail());
+
+				if ($request->get('invoiceEmailCc')) {
+					$customerOrder->setInvoiceEmailedCc($customerOrder->getCompany()->getEmail());
+				}
+
+				## always true
+				if ($r = $this->emailInvoice($customerOrder)) {
+					$this->addFlash('info', 'Customer invoice email sent.');
+				}
 			}
 
 			$this->getDoctrine()->getManager()->flush();
@@ -607,7 +614,7 @@ class CustomerOrderController extends Controller
 			return $this->redirectToRoute('show_customer_order', ['id' => $customerOrder->getId()]);
 		}
 
-        return $this->render(
+		return $this->render(
 			'customerorder/edit_invoiced.html.twig',
 			[
 				'customerOrder' => $customerOrder,
