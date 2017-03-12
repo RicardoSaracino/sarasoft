@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "eonasdan-bootstrap-datetimepicker": "^4.17.43",
-    "fullcalendar": "^3.0.1"
+    "fullcalendar": "^3.0.1",
 	"symfony-collection": "master"
   }
 }

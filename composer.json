@@ -33,6 +33,7 @@
 
 		"phpunit/phpunit": "^5.5",
 		"components/jquery": "^3.1",
+		"components/jqueryui": "^1.12",
 		"twitter/bootstrap": "^3.3",
 
 		"ancarebeca/full-calendar-bundle":"^3.0",

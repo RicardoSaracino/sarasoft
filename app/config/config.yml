@@ -132,6 +132,8 @@ assetic:
             inputs:
                 - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff"
             output: "fonts/glyphicons-halflings-regular.woff"
-        jquery:
+        jquery_and_ui:
             inputs:
                 - "%kernel.root_dir%/../vendor/components/jquery/jquery.js"
+                - "%kernel.root_dir%/../vendor/components/jqueryui/jquery-ui.js"
+
