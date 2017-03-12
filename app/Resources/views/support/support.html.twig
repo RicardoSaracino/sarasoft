@@ -7,13 +7,6 @@
 {% block header %}<h1>Support</h1>{% endblock %}
 
 {% block main %}
-
-	{% for flash_message in app.session.flashBag.get('success') %}
-		<div class="alert alert-success">
-			{{ flash_message }}
-		</div>
-	{% endfor %}
-
 	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'autocomplete':'off' }}) }}
 	{{ form_widget(form) }}
 	<div class="form-group">
