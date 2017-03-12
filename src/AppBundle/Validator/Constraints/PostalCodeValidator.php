@@ -63,7 +63,6 @@ class PostalCodeValidator extends ConstraintValidator
 			#groupedFields: null
 			}
 			*/
-			dump($addressFormat, preg_match('!' . $pattern . '!', $value), $pattern, $value);
 
 			if (preg_match('!' . $pattern . '!', $value) === 0) {
 				$this->context->buildViolation($constraint->message)

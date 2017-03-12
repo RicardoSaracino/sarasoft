@@ -36,8 +36,6 @@ class AddressExtension extends \Twig_Extension
 
 		if($subdivision = $subdivisionRepository->get($address->getAdministrativeArea(),$locale)){
 
-			dump($subdivision);
-
 			return $subdivision->getName();
 		}
 

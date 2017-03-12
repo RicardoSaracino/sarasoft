@@ -21,8 +21,6 @@ class PhoneNumberValidator extends \Misd\PhoneNumberBundle\Validator\Constraints
 			if (is_callable([$object, $constraint->getter])) {
 
 				$constraint->defaultRegion = call_user_func([$object, $constraint->getter]);
-
-				dump($constraint->defaultRegion);
 			}
 		}
 

@@ -1088,8 +1088,6 @@ class CustomerOrder implements TaxableInterface
 	 */
 	public function getCustomerOrderStatusHistories()
 	{
-		dump($this->customerOrderStatusHistories);
-
 		return $this->customerOrderStatusHistories;
 	}
 
