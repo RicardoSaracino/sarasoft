@@ -536,205 +536,205 @@ h4, .h4 {
 
 <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
 <center>
-<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable">
-	<tr>
-		<td align="center" valign="top" style="padding-top:20px;">
-			<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer">
-				{#<tr>
-					<td align="center" valign="top">
-						<!-- // Begin Template Header \\ -->
-						<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader">
-							<tr>
-								<td class="headerContent">
+	<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable">
+		<tr>
+			<td align="center" valign="top" style="padding-top:20px;">
+				<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer">
+					{#<tr>
+						<td align="center" valign="top">
+							<!-- // Begin Template Header \\ -->
+							<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader">
+								<tr>
+									<td class="headerContent">
 
-									<!-- // Begin Module: Standard Header Image \\ -->
-									<img src="http://gallery.mailchimp.com/653153ae841fd11de66ad181a/images/placeholder_600.gif" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext/>
-									<!-- // End Module: Standard Header Image \\ -->
+										<!-- // Begin Module: Standard Header Image \\ -->
+										<img src="http://gallery.mailchimp.com/653153ae841fd11de66ad181a/images/placeholder_600.gif" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext/>
+										<!-- // End Module: Standard Header Image \\ -->
 
-								</td>
-							</tr>
-						</table>
-						<!-- // End Template Header \\ -->
-					</td>
-				</tr>#}
-				<tr>
-					<td align="center" valign="top">
-						<!-- // Begin Template Body \\ -->
-						<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateBody">
-							<tr>
-								<td valign="top" class="bodyContent">
-									<table border="0" cellpadding="20" cellspacing="0" width="100%">
-										<tr>
-											<td valign="top" style="padding-bottom:10px;">
-												<table border="0" cellpadding="0" cellspacing="0" width="100%">
-													<tr>
-														<td valign="top">
-															<div style="font-size: 23px; font-weight: bold">{{ customerOrder.company.name }} Invoice</div>
-														</td>
-
-														{# https://blog.serverdensity.com/handling-timezone-conversion-with-php-datetime/ #}
-														<td valign="top">
-															<div style="text-align: right">{{ 'now'|date('r') }}</div>
-														</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-										<tr>
-											<td valign="top" style="padding-top:0;">
-												<div>
-													{{ customerOrder.company.address.addressLine1 }}<br/>
-													{% if customerOrder.company.address.addressLine2 %}{{ customerOrder.company.address.addressLine2 }}<br/>{% endif %}
-													{{ customerOrder.company.address.locality }}
-													{{ customerOrder.company.address.administrativeArea }}
-													{{ customerOrder.company.address.postalcode }}<br/>
-													{{ customerOrder.company.address.countryCode|country }}<br/>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td valign="top" style="padding-top:0;">
-												<div>
-													{{ customerOrder.customer.fullName }}<br/>
-													{{ customerOrder.customer.address.addressLine1 }}<br/>
-													{% if customerOrder.customer.address.addressLine2 %}{{ customerOrder.customer.address.addressLine2 }}<br/>{% endif %}
-													{{ customerOrder.customer.address.locality }}
-													{{ customerOrder.customer.address.administrativeArea }}
-													{{ customerOrder.customer.address.postalcode }}<br/>
-													{{ customerOrder.customer.address.countryCode|country }}<br/>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td valign="top" style="padding-top:0;">
-												<div>
-													<strong>Completed</strong> {{ customerOrder.completedAt|date }}<br/>
-
-													<p class="dateNotes" style="margin-top: 5px">{{ customerOrder.completionNotes|trim|nl2br }}</p>
-												</div>
-											</td>
-										</tr>
-										{% if customerOrder.customerOrderServices %}
+									</td>
+								</tr>
+							</table>
+							<!-- // End Template Header \\ -->
+						</td>
+					</tr>#}
+					<tr>
+						<td align="center" valign="top">
+							<!-- // Begin Template Body \\ -->
+							<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateBody">
+								<tr>
+									<td valign="top" class="bodyContent">
+										<table border="0" cellpadding="20" cellspacing="0" width="100%">
 											<tr>
-												<td valign="top" style="padding-top:0;">
-													<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
+												<td valign="top" style="padding-bottom:10px;">
+													<table border="0" cellpadding="0" cellspacing="0" width="100%">
 														<tr>
-															<th scope="col" valign="top" width="50%" class="dataTableHeading">Service</th>
-															<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Unit Price
-															</th>
-															<th scope="col" valign="top" width="10%" class="dataTableHeading" style="text-align: right;">Qty</th>
-															<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Amount</th>
+															<td valign="top">
+																<div style="font-size: 23px; font-weight: bold">{{ customerOrder.company.name }} Invoice</div>
+															</td>
+
+															{# https://blog.serverdensity.com/handling-timezone-conversion-with-php-datetime/ #}
+															<td valign="top">
+																<div style="text-align: right">{{ 'now'|date('r') }}</div>
+															</td>
 														</tr>
-														{% for customerOrderService in customerOrder.customerOrderServices %}
-															<tr>
-																<td valign="top" class="dataTableContent">{{ customerOrderService.service.name }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.invoicePrice|user_money }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.quantity }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.invoiceAmount|user_money }}</td>
-															</tr>
-															{% if customerOrderService.comments %}
-																<tr>
-																	<td valign="top" colspan="4" class="dataTableContent dateNotes" style="border-top: 0; padding-top: 0">{{ customerOrderService.comments }}</td>
-																</tr>
-															{% endif %}
-														{% endfor %}
 													</table>
 												</td>
 											</tr>
-										{% endif %}
+											<tr>
+												<td valign="top" style="padding-top:0;">
+													<div>
+														{{ customerOrder.company.address.addressLine1 }}<br/>
+														{% if customerOrder.company.address.addressLine2 %}{{ customerOrder.company.address.addressLine2 }}<br/>{% endif %}
+														{{ customerOrder.company.address.locality }}
+														{{ customerOrder.company.address|administrative_area }}
+														{{ customerOrder.company.address.postalcode }}<br/>
+														{{ customerOrder.company.address|country }}<br/>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td valign="top" style="padding-top:0;">
+													<div>
+														{{ customerOrder.customer.fullName }}<br/>
+														{{ customerOrder.customer.address.addressLine1 }}<br/>
+														{% if customerOrder.customer.address.addressLine2 %}{{ customerOrder.customer.address.addressLine2 }}<br/>{% endif %}
+														{{ customerOrder.customer.address.locality }}
+														{{ customerOrder.customer.address|administrative_area }}
+														{{ customerOrder.customer.address.postalcode }}<br/>
+														{{ customerOrder.customer.address|country }}<br/>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td valign="top" style="padding-top:0;">
+													<div>
+														<strong>Completed</strong> {{ customerOrder.completedAt|date }}<br/>
 
-										{% if customerOrder.customerOrderProducts %}
+														<p class="dateNotes" style="margin-top: 5px">{{ customerOrder.completionNotes|trim|nl2br }}</p>
+													</div>
+												</td>
+											</tr>
+											{% if customerOrder.customerOrderServices %}
+												<tr>
+													<td valign="top" style="padding-top:0;">
+														<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
+															<tr>
+																<th scope="col" valign="top" width="50%" class="dataTableHeading">Service</th>
+																<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Unit Price
+																</th>
+																<th scope="col" valign="top" width="10%" class="dataTableHeading" style="text-align: right;">Qty</th>
+																<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Amount</th>
+															</tr>
+															{% for customerOrderService in customerOrder.customerOrderServices %}
+																<tr>
+																	<td valign="top" class="dataTableContent">{{ customerOrderService.service.name }}</td>
+																	<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.invoicePrice|user_money }}</td>
+																	<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.quantity }}</td>
+																	<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderService.invoiceAmount|user_money }}</td>
+																</tr>
+																{% if customerOrderService.comments %}
+																	<tr>
+																		<td valign="top" colspan="4" class="dataTableContent dateNotes" style="border-top: 0; padding-top: 0">{{ customerOrderService.comments }}</td>
+																	</tr>
+																{% endif %}
+															{% endfor %}
+														</table>
+													</td>
+												</tr>
+											{% endif %}
+
+											{% if customerOrder.customerOrderProducts %}
+												<tr>
+													<td valign="top">
+														<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
+															<tr>
+																<th scope="col" valign="top" width="50%" class="dataTableHeading">Product</th>
+																<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Unit Price</th>
+																<th scope="col" valign="top" width="10%" class="dataTableHeading" style="text-align: right;">Qty</th>
+																<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Amount</th>
+															</tr>
+															{% for customerOrderProduct in customerOrder.customerOrderProducts %}
+																<tr>
+																	<td valign="top" class="dataTableContent">{{ customerOrderProduct.product.name }}</td>
+																	<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.invoicePrice|user_money }}</td>
+																	<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.quantity }}</td>
+																	<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.invoiceAmount|user_money }}</td>
+																</tr>
+																{% if customerOrderProduct.comments %}
+																	<tr>
+																		<td valign="top" colspan="4" class="dataTableContent dateNotes" style="border-top: 0; padding-top: 0">{{ customerOrderProduct.comments }}</td>
+																	</tr>
+																{% endif %}
+															{% endfor %}
+														</table>
+													</td>
+												</tr>
+											{% endif %}
+
+
 											<tr>
 												<td valign="top">
 													<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
 														<tr>
-															<th scope="col" valign="top" width="50%" class="dataTableHeading">Product</th>
-															<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Unit Price</th>
-															<th scope="col" valign="top" width="10%" class="dataTableHeading" style="text-align: right;">Qty</th>
-															<th scope="col" valign="top" width="20%" class="dataTableHeading" style="text-align: right;">Amount</th>
+															<td valign="top" width="80%" class="dataTableContent" style="text-align: right;">Subtotal</td>
+															<td valign="top" width="20%" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrder.invoiceSubtotal|user_money }}</td>
 														</tr>
-														{% for customerOrderProduct in customerOrder.customerOrderProducts %}
+														{% for cutomerOrderTaxRateAmounts in customerOrder.customerOrderTaxRateAmounts %}
 															<tr>
-																<td valign="top" class="dataTableContent">{{ customerOrderProduct.product.name }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.invoicePrice|user_money }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.quantity }}</td>
-																<td valign="top" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrderProduct.invoiceAmount|user_money }}</td>
+																<td valign="top" width="80%" class="dataTableContent" style="text-align: right;">{{ cutomerOrderTaxRateAmounts.taxRateAmount.rate.name }}</td>
+																<td valign="top" width="20%" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ cutomerOrderTaxRateAmounts.taxes|user_money }}</td>
 															</tr>
-															{% if customerOrderProduct.comments %}
-																<tr>
-																	<td valign="top" colspan="4" class="dataTableContent dateNotes" style="border-top: 0; padding-top: 0">{{ customerOrderProduct.comments }}</td>
-																</tr>
-															{% endif %}
 														{% endfor %}
+														<tr>
+															<td valign="top" width="80%" class="dataTableContent" style="text-align: right;">Total</td>
+															<td valign="top" width="20%" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrder.invoiceTotal|user_money }}</td>
+														</tr>
 													</table>
 												</td>
 											</tr>
-										{% endif %}
-
-
-										<tr>
-											<td valign="top">
-												<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
-													<tr>
-														<td valign="top" width="80%" class="dataTableContent" style="text-align: right;">Subtotal</td>
-														<td valign="top" width="20%" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrder.invoiceSubtotal|user_money }}</td>
-													</tr>
-													{% for cutomerOrderTaxRateAmounts in customerOrder.customerOrderTaxRateAmounts %}
-													<tr>
-														<td valign="top" width="80%" class="dataTableContent" style="text-align: right;">{{ cutomerOrderTaxRateAmounts.taxRateAmount.rate.name }}</td>
-														<td valign="top" width="20%" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ cutomerOrderTaxRateAmounts.taxes|user_money }}</td>
-													</tr>
-													{%  endfor %}
-													<tr>
-														<td valign="top" width="80%" class="dataTableContent" style="text-align: right;">Total</td>
-														<td valign="top" width="20%" class="dataTableContent" style="text-align: right; white-space: nowrap; font-weight: normal">{{ customerOrder.invoiceTotal|user_money }}</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-									</table>
-									<!-- // End Module: Standard Content \\ -->
-								</td>
-							</tr>
-						</table>
-						<!-- // End Template Body \\ -->
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="top">
-						<!-- // Begin Template Footer \\ -->
-						<table border="0" cellpadding="10" cellspacing="0" width="600" id="templateFooter">
-							<tr>
-								<td valign="top" class="footerContent">
-									<!-- // Begin Module: Transactional Footer \\ -->
-									<table border="0" cellpadding="10" cellspacing="0" width="100%">
-										<tr>
-											<td valign="middle" align="center" id="utility">
-												<div>
-													&nbsp;<a href="{{ customerOrder.company.websiteUrl }}" target="_blank">Website</a> | <a href="{{ customerOrder.company.facebookUrl }}" target="_blank">Facebook</a>&nbsp;
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td valign="top" align="center">
-												<div>
-													<em>Copyright &copy; 2016 Sarasoft, All rights reserved.</em>
-												</div>
-											</td>
-										</tr>
-									</table>
-									<!-- // End Module: Transactional Footer \\ -->
-								</td>
-							</tr>
-						</table>
-						<!-- // End Template Footer \\ -->
-					</td>
-				</tr>
-			</table>
-			<br/>
-		</td>
-	</tr>
-</table>
+										</table>
+										<!-- // End Module: Standard Content \\ -->
+									</td>
+								</tr>
+							</table>
+							<!-- // End Template Body \\ -->
+						</td>
+					</tr>
+					<tr>
+						<td align="center" valign="top">
+							<!-- // Begin Template Footer \\ -->
+							<table border="0" cellpadding="10" cellspacing="0" width="600" id="templateFooter">
+								<tr>
+									<td valign="top" class="footerContent">
+										<!-- // Begin Module: Transactional Footer \\ -->
+										<table border="0" cellpadding="10" cellspacing="0" width="100%">
+											<tr>
+												<td valign="middle" align="center" id="utility">
+													<div>
+														&nbsp;<a href="{{ customerOrder.company.websiteUrl }}" target="_blank">Website</a> | <a href="{{ customerOrder.company.facebookUrl }}" target="_blank">Facebook</a>&nbsp;
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td valign="top" align="center">
+													<div>
+														<em>Copyright &copy; 2016 Sarasoft, All rights reserved.</em>
+													</div>
+												</td>
+											</tr>
+										</table>
+										<!-- // End Module: Transactional Footer \\ -->
+									</td>
+								</tr>
+							</table>
+							<!-- // End Template Footer \\ -->
+						</td>
+					</tr>
+				</table>
+				<br/>
+			</td>
+		</tr>
+	</table>
 </center>
 </body>
 </html>
