@@ -17,3 +17,9 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+
+
+    site_name: SaraSoft
+    site_version: 1.0.0
+    support_email: support.sarasoft@ricardosaracino.com
