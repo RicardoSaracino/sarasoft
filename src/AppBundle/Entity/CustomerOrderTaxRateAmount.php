@@ -134,7 +134,7 @@ class CustomerOrderTaxRateAmount
 	{
 		if (!$taxes->getCurrency()) {
 			$this->taxesAmount = $taxes->getAmount();
-			$this->taxesCurrency = $taxes->getCurrency()->getName();
+			$this->taxesCurrency = $taxes->getCurrency()->getCode();
 		}
 
 		return $this;

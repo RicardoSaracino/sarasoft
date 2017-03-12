@@ -138,7 +138,7 @@ class ServicePrice
 		if (!is_null($price)) {
 
 			$this->priceAmount = $price->getAmount();
-			$this->priceCurrency = $price->getCurrency()->getName();
+			$this->priceCurrency = $price->getCurrency()->getCode();
 		}
 
 		return $this;

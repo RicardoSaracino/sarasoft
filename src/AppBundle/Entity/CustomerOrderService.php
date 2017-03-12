@@ -189,7 +189,7 @@ class CustomerOrderService
 	public function setInvoicePrice(Money $invoicePrice)
 	{
 		$this->invoicePriceAmount = $invoicePrice->getAmount();
-		$this->invoicePriceCurrency = $invoicePrice->getCurrency()->getName();
+		$this->invoicePriceCurrency = $invoicePrice->getCurrency()->getCode();
 
 		return $this;
 	}
