@@ -63,7 +63,7 @@ class SupportController extends Controller
 
 			## always true
 			if ($r = $this->email($support)) {
-				$this->addFlash('success', 'Email Sent.');
+				$this->addFlash('info', 'Support email sent.');
 			}
 
 			/* return $this->render(
