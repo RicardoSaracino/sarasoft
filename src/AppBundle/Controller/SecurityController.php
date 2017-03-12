@@ -25,7 +25,7 @@ class SecurityController extends Controller
 	 */
 	public function loginAction(Request $request)
 	{
-		$loginForm = $this->createForm(\AppBundle\Form\Type\LoginType::class);
+		$loginForm = $this->createForm('\AppBundle\Form\Type\LoginType');
 
 		$loginForm->handleRequest($request);
 
