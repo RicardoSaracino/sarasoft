@@ -31,7 +31,7 @@ class ZoneMemberCountry implements ZoneMemberEntityInterface
 	/**
 	 * @var \Zone
 	 *
-	 * @ORM\ManyToOne(targetEntity="Zone")
+	 * @ORM\ManyToOne(targetEntity="Zone", inversedBy="members")
 	 * @ORM\JoinColumns({
 	 *   @ORM\JoinColumn(name="zone_id", referencedColumnName="id")
 	 * })
