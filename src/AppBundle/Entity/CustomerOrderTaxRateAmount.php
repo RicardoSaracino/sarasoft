@@ -132,8 +132,10 @@ class CustomerOrderTaxRateAmount
 	 */
 	public function setTaxes(Money $taxes)
 	{
-		$this->taxesAmount = $taxes->getAmount();
-		$this->taxesCurrency = $taxes->getCurrency()->getName();
+		if (!$this->taxesCurrency) {
+			$this->taxesAmount = $taxes->getAmount();
+			$this->taxesCurrency = $taxes->getCurrency()->getName();
+		}
 
 		return $this;
 	}

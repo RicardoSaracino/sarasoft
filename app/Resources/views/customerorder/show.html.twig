@@ -9,7 +9,7 @@
 	<h1>Order<br>
 		<small><a href="{{ path('customer_show', { 'id': customerOrder.customer.id }) }}">{{ customerOrder.customer.fullName }}</a></small>
 		<br>
-		<small><a href="{{ customerOrder.customer.phone|phone_number_format }}">{{ customerOrder.customer.phone|phone_number_format }}</a></small>
+		<small><a href="{{ customerOrder.customer.phone|phone_number_format('RFC3966') }}">{{ customerOrder.customer.phone|phone_number_format }}</a></small>
 	</h1>
 {% endblock %}
 
