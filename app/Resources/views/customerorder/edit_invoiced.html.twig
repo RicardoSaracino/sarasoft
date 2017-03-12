@@ -17,6 +17,11 @@
 	{{ form_widget(form) }}
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
+			<label style="font-weight: normal"><input type="checkbox" name="invoiceEmailCc"> CC Company</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
 			<input type="submit" class="btn btn-default" value="Save">
 			<input type="submit" class="btn btn-default" value="Pay" name="{{ constant('STATUS_PAID',customerOrder) }}">
 			<input type="submit" class="btn btn-default" value="Send Invoice" name="customerOrder.sendInvoice">
