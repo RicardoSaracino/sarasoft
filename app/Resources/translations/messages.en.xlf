@@ -189,6 +189,18 @@
                 <source>customerOrder.label.invoicedAt</source>
                 <target>Invoiced</target>
             </trans-unit>
+            <trans-unit id="customerOrder.label.invoiceEmailedAt">
+                <source>customerOrder.label.invoiceEmailedAt</source>
+                <target>Emailed</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.invoiceEmailedTo">
+                <source>customerOrder.label.invoiceEmailedTo</source>
+                <target>Emailed To</target>
+            </trans-unit>
+            <trans-unit id="customerOrder.label.invoiceEmailedCc">
+                <source>customerOrder.label.invoiceEmailedCc</source>
+                <target>Emailed CC</target>
+            </trans-unit>
              <trans-unit id="customerOrder.label.invoiceTotal">
                 <source>customerOrder.label.invoiceTotal</source>
                 <target>Invoice Total</target>

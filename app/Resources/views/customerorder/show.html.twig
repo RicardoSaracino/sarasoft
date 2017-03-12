@@ -44,6 +44,12 @@
 
 	{% if customerOrder.invoicedAt %}{{ table.row_user_datetime('customerOrder.label.invoicedAt', customerOrder.invoicedAt) }}{% endif %}
 
+	{% if customerOrder.invoiceEmailedAt %}{{ table.row_user_datetime('customerOrder.label.invoiceEmailedAt', customerOrder.invoiceEmailedAt) }}{% endif %}
+
+	{% if customerOrder.invoiceEmailedTo %}{{ table.row('customerOrder.label.invoiceEmailedTo', customerOrder.invoiceEmailedTo) }}{% endif %}
+
+	{% if customerOrder.invoiceEmailedCc %}{{ table.row('customerOrder.label.invoiceEmailedCc', customerOrder.invoiceEmailedCc) }}{% endif %}
+
 	{% if customerOrder.invoiceSubtotal %}{{ table.row_user_money('customerOrder.label.invoiceSubtotal', customerOrder.invoiceSubtotal) }}{% endif %}
 
 	{% for cutomerOrderTaxRateAmounts in customerOrder.customerOrderTaxRateAmounts %}
