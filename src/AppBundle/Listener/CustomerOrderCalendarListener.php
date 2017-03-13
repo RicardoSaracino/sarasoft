@@ -51,20 +51,23 @@ class CustomerOrderCalendarListener
 
 			FROM AppBundle:CustomerOrder o
 
-			WHERE :startDate BETWEEN o.bookedFrom AND o.bookedUntil
+			WHERE
+				o.bookedFrom BETWEEN :startDate AND :endDate
 
-				OR :endDate BETWEEN o.bookedFrom AND o.bookedUntil
+				OR o.bookedUntil BETWEEN :startDate AND :endDate
 
-				OR :startDate BETWEEN o.progressStartedAt AND o.progressEstimatedCompletionAt
+				OR o.progressStartedAt BETWEEN :startDate AND :endDate
 
-				OR :startDate BETWEEN o.progressStartedAt AND o.progressEstimatedCompletionAt
+				OR o.progressEstimatedCompletionAt BETWEEN :startDate AND :endDate
 
 				OR o.completedAt BETWEEN :startDate AND :endDate
 
 				OR o.invoicedAt BETWEEN :startDate AND :endDate
 
+				OR o.paidAt BETWEEN :startDate AND :endDate
+
 				OR o.cancelledAt BETWEEN :startDate AND :endDate
-				'
+			'
 		)
 			->setParameter('startDate', $calendarEvent->getStart())
 			->setParameter('endDate', $calendarEvent->getEnd());
