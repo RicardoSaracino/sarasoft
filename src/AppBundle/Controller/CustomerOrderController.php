@@ -496,7 +496,6 @@ class CustomerOrderController extends Controller
 	 *
 	 * @Route("/{id}/edit/inprogress", name="customer_order_edit_inprogress")
 	 * @Method({"GET", "POST"})
-	 * @Method({"GET", "POST"})
 	 */
 	public function editInProgressAction(Request $request, CustomerOrder $customerOrder)
 	{

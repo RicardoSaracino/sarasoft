@@ -59,7 +59,7 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=false)
 	 * })
 	 *
-	 * @Assert\NotBlank(message="Select an option.", groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
+	 * @AppAssert\OptionNotBlank(groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
 	 */
 	private $company;
 
@@ -71,7 +71,7 @@ class CustomerOrder implements TaxableInterface
 	 * @ORM\JoinColumn(name="order_type_id", referencedColumnName="id", nullable=false)
 	 * })
 	 *
-	 * @Assert\NotBlank(message="Select an option.", groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
+	 * @AppAssert\OptionNotBlank(groups={"NewStatusBooked", "NewStatusInProgress", "NewStatusComplete"})
 	 */
 	private $orderType;
 
@@ -130,7 +130,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="booked_from", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"NewStatusBooked", "EditStatusBooked"})
+	 * @AppAssert\DateNotBlank(groups={"NewStatusBooked", "EditStatusBooked"})
 	 */
 	private $bookedFrom;
 
@@ -139,7 +139,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="booked_until", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"NewStatusBooked", "EditStatusBooked"})
+	 * @AppAssert\DateNotBlank(groups={"NewStatusBooked", "EditStatusBooked"})
 	 *
 	 * @AppAssert\DateAfter(field="bookedFrom", message="Booked Until should be after Booked From.", groups={"NewStatusBooked", "EditStatusBooked"})
 	 */
@@ -150,7 +150,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="booking_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Notes should not be blank.", groups={"NewStatusBooked"})
+	 * @AppAssert\NoteNotBlank(groups={"NewStatusBooked"})
 	 */
 	private $bookingNotes;
 
@@ -160,9 +160,9 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="progress_started_at", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"NewStatusInProgress", "EditStatusInProgress"})
+	 * @AppAssert\DateNotBlank(groups={"NewStatusInProgress", "EditStatusInProgress"})
 	 *
-	 * @Assert\LessThanOrEqual("now UTC", message="This date should not be future dated.", groups={"NewStatusInProgress", "EditStatusInProgress"})
+	 * @AppAssert\DateNotFutureDated(groups={"NewStatusInProgress", "EditStatusInProgress"})
 	 */
 	private $progressStartedAt;
 
@@ -171,7 +171,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="progress_estimated_completion_at", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"NewStatusInProgress", "EditStatusInProgress"})
+	 * @AppAssert\DateNotBlank(groups={"NewStatusInProgress", "EditStatusInProgress"})
 	 *
 	 * @AppAssert\DateAfter(field="progressStartedAt", message="Est. Completion should be after Started.", groups={"NewStatusInProgress", "EditStatusInProgress"})
 	 */
@@ -182,7 +182,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="progress_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Notes should not be blank.", groups={"NewStatusInProgress"})
+	 * @AppAssert\NoteNotBlank(groups={"NewStatusInProgress"})
 	 */
 	private $progressNotes;
 
@@ -192,9 +192,9 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="completed_at", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"NewStatusComplete", "EditStatusComplete"})
+	 * @AppAssert\DateNotBlank(groups={"NewStatusComplete", "EditStatusComplete"})
 	 *
-	 * @Assert\LessThanOrEqual("now UTC", message="This date should not be future dated.", groups={"NewStatusComplete", "EditStatusComplete"})
+	 * @AppAssert\DateNotFutureDated(groups={"NewStatusComplete", "EditStatusComplete"})
 	 */
 	private $completedAt;
 
@@ -203,7 +203,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="completion_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Notes should not be blank.", groups={"NewStatusComplete"})
+	 * @AppAssert\NoteNotBlank(groups={"NewStatusComplete"})
 	 */
 	private $completionNotes;
 
@@ -213,9 +213,9 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="invoiced_at", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"EditStatusInvoiced"})
+	 * @AppAssert\DateNotBlank(groups={"EditStatusInvoiced"})
 	 *
-	 * @Assert\LessThanOrEqual("now UTC",  message="This date should not be future dated.", groups={"EditStatusInvoiced"})
+	 * @AppAssert\DateNotFutureDated(groups={"EditStatusInvoiced"})
 	 *
 	 * @AppAssert\DateAfter(field="completedAt", message="Invoiced must be after Completion %date%.", groups={"EditStatusInvoiced"})
 	 */
@@ -226,7 +226,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="invoice_notes", type="text", length=65535, nullable=true)
 	 *
-	 * Assert\NotBlank(message="Notes should not be blank.", groups={"EditStatusInvoiced"})
+	 * @AppAssert\NoteNotBlank(groups={"NewStatusInvoiced"})
 	 */
 	private $invoiceNotes;
 
@@ -284,9 +284,9 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="paid_at", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"EditStatusPaid"})
+	 * @AppAssert\DateNotBlank(groups={"EditStatusPaid"})
 	 *
-	 * @Assert\LessThanOrEqual("now UTC", message="This date should not be future dated.", groups={"EditStatusInvoiced"})
+	 * @AppAssert\DateNotFutureDated(groups={"EditStatusInvoiced"})
 	 *
 	 * @AppAssert\DateAfter(field="invoicedAt", message="Payment should be after Invoiced %date%.", groups={"EditStatusPaid"})
 	 */
@@ -297,7 +297,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="payment_amount", type="integer", nullable=true)
 	 *
-	 * @AppAssert\Decimal(message="Payment is not a proper decimal", groups={"EditStatusPaid"})
+	 * @AppAssert\Decimal(message="Payment is not a proper decimal.", groups={"EditStatusPaid"})
 	 */
 	private $paymentAmount;
 
@@ -314,7 +314,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="payment_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Notes should not be blank.", groups={"NewStatusPaid"})
+	 * @AppAssert\NoteNotBlank(groups={"NewStatusPaid"})
 	 */
 	private $paymentNotes;
 
@@ -323,9 +323,9 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="cancelled_at", type="datetime", nullable=true)
 	 *
-	 * @Assert\NotBlank(groups={"EditStatusCancelled"})
+	 * @AppAssert\DateNotBlank(groups={"EditStatusCancelled"})
 	 *
-	 * @Assert\LessThanOrEqual("now UTC", message="This date should not be future dated.", groups={"EditStatusCancelled"})
+	 * @AppAssert\DateNotFutureDated(groups={"EditStatusCancelled"})
 	 */
 	private $cancelledAt;
 
@@ -334,7 +334,7 @@ class CustomerOrder implements TaxableInterface
 	 *
 	 * @ORM\Column(name="cancellation_notes", type="text", length=65535, nullable=true)
 	 *
-	 * @Assert\NotBlank(message="Notes should not be blank.", groups={"EditStatusCancelled"})
+	 * @AppAssert\NoteNotBlank(groups={"EditStatusCancelled"})
 	 */
 	private $cancellationNotes;
 

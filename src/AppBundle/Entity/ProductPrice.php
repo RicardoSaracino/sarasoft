@@ -46,7 +46,7 @@ class ProductPrice
 	 *
 	 * @ORM\Column(name="effective_from", type="date", nullable=false)
 	 *
-	 * @Assert\NotBlank()
+	 * @AppAssert\DateNotBlank()
 	 *
 	 * @AppAssert\ProductPriceEffectiveFrom()
 	 */
