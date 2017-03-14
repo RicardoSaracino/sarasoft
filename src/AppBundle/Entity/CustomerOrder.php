@@ -1033,9 +1033,9 @@ class CustomerOrder implements TaxableInterface
 	 */
 	public function setPayment(Money $payment = null)
 	{
-		if (!is_null($payment) && $payment->getCurrency()) {
+		if (!is_null($payment)) {
 			$this->paymentAmount = $payment->getAmount();
-			$this->paymentCurrency = $payment->getCurrency()->getName();
+			$this->paymentCurrency = $payment->getCurrency()->getCode();
 		}
 
 		return $this;

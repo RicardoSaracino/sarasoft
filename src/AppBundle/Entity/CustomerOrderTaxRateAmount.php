@@ -130,9 +130,9 @@ class CustomerOrderTaxRateAmount
 	 * @param Money $taxes
 	 * @return $this
 	 */
-	public function setTaxes(Money $taxes)
+	public function setTaxes(Money $taxes = null)
 	{
-		if (!$taxes->getCurrency()) {
+		if (!is_null($taxes)) {
 			$this->taxesAmount = $taxes->getAmount();
 			$this->taxesCurrency = $taxes->getCurrency()->getCode();
 		}
