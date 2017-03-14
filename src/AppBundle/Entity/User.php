@@ -239,6 +239,7 @@ class User implements UserInterface, \Serializable
 	public function setRoles($roles)
 	{
 		$this->roles = $roles;
+
 		return $this;
 	}
 
@@ -248,7 +249,8 @@ class User implements UserInterface, \Serializable
 	 */
 	public function addRole($roles)
 	{
-	   	$this->roles->add($roles);
+		$this->roles->add($roles);
+
 		return $this;
 	}
 
@@ -259,7 +261,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function getRoles()
 	{
-		if($this->roles){
+		if ($this->roles) {
 			return $this->roles->getValues();
 		}
 
@@ -271,9 +273,8 @@ class User implements UserInterface, \Serializable
 	 */
 	public function hasAdminRole()
 	{
-		foreach($this->roles as $role){
-			if($role->getRole() == 'ROLE_SUPER_ADMIN' || $role->getRole() == 'ROLE_ADMIN')
-			{
+		foreach ($this->roles as $role) {
+			if ($role->getRole() == 'ROLE_SUPER_ADMIN' || $role->getRole() == 'ROLE_ADMIN') {
 				return true;
 			}
 		}
@@ -286,9 +287,8 @@ class User implements UserInterface, \Serializable
 	 */
 	public function hasSuperAdminRole()
 	{
-		foreach($this->roles as $role){
-			if($role->getRole() == 'ROLE_SUPER_ADMIN')
-			{
+		foreach ($this->roles as $role) {
+			if ($role->getRole() == 'ROLE_SUPER_ADMIN') {
 				return true;
 			}
 		}

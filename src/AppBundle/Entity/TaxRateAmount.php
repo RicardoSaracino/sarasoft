@@ -19,45 +19,45 @@ class TaxRateAmount implements TaxRateAmountEntityInterface
 	use Traits\Timestampable;
 	use Traits\Blameable;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="id", type="integer", nullable=false)
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="IDENTITY")
+	 */
+	private $id;
 
 	/**
 	 * @var \AppBundle\Entity\TaxRate
 	 *
 	 * @ORM\ManyToOne(targetEntity="TaxRate", inversedBy="taxRateAmounts")
 	 * @ORM\JoinColumns({
-	 *   @ORM\JoinColumn(name="tax_rate_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="tax_rate_id", referencedColumnName="id")
 	 * })
 	 */
 	private $taxRate;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="amount", type="decimal", precision=6, scale=4, nullable=false)
-     */
-    private $amount;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="amount", type="decimal", precision=6, scale=4, nullable=false)
+	 */
+	private $amount;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="start_date", type="date", nullable=false)
-     */
-    private $startDate;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="start_date", type="date", nullable=false)
+	 */
+	private $startDate;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="end_date", type="date", nullable=true)
-     */
-    private $endDate;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="end_date", type="date", nullable=true)
+	 */
+	private $endDate;
 
 	/**
 	 * {@inheritdoc}
@@ -73,6 +73,7 @@ class TaxRateAmount implements TaxRateAmountEntityInterface
 	public function setId($id)
 	{
 		$this->id = $id;
+
 		return $this;
 	}
 
@@ -90,6 +91,7 @@ class TaxRateAmount implements TaxRateAmountEntityInterface
 	public function setRate(TaxRateEntityInterface $taxRate = null)
 	{
 		$this->taxRate = $taxRate;
+
 		return $this;
 	}
 
@@ -107,6 +109,7 @@ class TaxRateAmount implements TaxRateAmountEntityInterface
 	public function setAmount($amount)
 	{
 		$this->amount = $amount;
+
 		return $this;
 	}
 
@@ -124,6 +127,7 @@ class TaxRateAmount implements TaxRateAmountEntityInterface
 	public function setStartDate(\DateTime $startDate)
 	{
 		$this->startDate = $startDate;
+
 		return $this;
 	}
 
@@ -141,6 +145,7 @@ class TaxRateAmount implements TaxRateAmountEntityInterface
 	public function setEndDate(\DateTime $endDate)
 	{
 		$this->endDate = $endDate;
+
 		return $this;
 	}
 }

@@ -17,24 +17,24 @@ class Company
 	use \AppBundle\Entity\Traits\Timestampable;
 	use \AppBundle\Entity\Traits\Blameable;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="id", type="integer", nullable=false)
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="IDENTITY")
+	 */
+	private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=64, nullable=false)
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="name", type="string", length=64, nullable=false)
 	 *
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min=3)
 	 */
-    private $name;
+	private $name;
 
 	/**
 	 * @var \libphonenumber\PhoneNumber
@@ -55,53 +55,53 @@ class Company
 	 */
 	private $altPhone;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=64, nullable=false)
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="email", type="string", length=64, nullable=false)
 	 *
 	 * @Assert\NotBlank()
 	 * @Assert\Email()
-     */
-    private $email;
+	 */
+	private $email;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="website_url", type="string", length=256, nullable=true)
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="website_url", type="string", length=256, nullable=true)
 	 *
 	 * @Assert\Url()
-     */
-    private $websiteUrl;
+	 */
+	private $websiteUrl;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="facebook_url", type="string", length=256, nullable=true)
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="facebook_url", type="string", length=256, nullable=true)
 	 *
 	 * @Assert\Url()
-     */
-    private $facebookUrl;
+	 */
+	private $facebookUrl;
 
-    /**
-     * @var \AppBundle\Entity\Address
-     *
-     * @ORM\ManyToOne(targetEntity="Address", cascade={"all"})
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="address_id", referencedColumnName="id")
-     * })
+	/**
+	 * @var \AppBundle\Entity\Address
+	 *
+	 * @ORM\ManyToOne(targetEntity="Address", cascade={"all"})
+	 * @ORM\JoinColumns({
+	 * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+	 * })
 	 *
 	 * @Assert\Valid()
-     */
-    private $address;
+	 */
+	private $address;
 
 	/**
 	 * @return int
 	 */
 	public function getId()
-    {
-        return $this->id;
-    }
+	{
+		return $this->id;
+	}
 
 
 	/**
@@ -118,114 +118,114 @@ class Company
 	 * @return $this
 	 */
 	public function setName($name)
-    {
-        $this->name = $name;
+	{
+		$this->name = $name;
 
-        return $this;
-    }
+		return $this;
+	}
 
 	/**
 	 * @return string
 	 */
 	public function getName()
-    {
-        return $this->name;
-    }
+	{
+		return $this->name;
+	}
 
 	/**
 	 * @param $phone
 	 * @return $this
 	 */
 	public function setPhone($phone)
-    {
-        $this->phone = $phone;
+	{
+		$this->phone = $phone;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return string
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
+	/**
+	 * @return string
+	 */
+	public function getPhone()
+	{
+		return $this->phone;
+	}
 
 	/**
 	 * @param $altPhone
 	 * @return $this
 	 */
 	public function setAltPhone($altPhone)
-    {
-        $this->altPhone = $altPhone;
+	{
+		$this->altPhone = $altPhone;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return string
-     */
-    public function getAltPhone()
-    {
-        return $this->altPhone;
-    }
+	/**
+	 * @return string
+	 */
+	public function getAltPhone()
+	{
+		return $this->altPhone;
+	}
 
 	/**
 	 * @param $email
 	 * @return $this
 	 */
 	public function setEmail($email)
-    {
+	{
 		$this->email = mb_strtolower($email);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
+	/**
+	 * @return string
+	 */
+	public function getEmail()
+	{
+		return $this->email;
+	}
 
 	/**
 	 * @param $websiteUrl
 	 * @return $this
 	 */
 	public function setWebsiteUrl($websiteUrl)
-    {
+	{
 		$this->websiteUrl = mb_strtolower($websiteUrl);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return string
-     */
-    public function getWebsiteUrl()
-    {
-        return $this->websiteUrl;
-    }
+	/**
+	 * @return string
+	 */
+	public function getWebsiteUrl()
+	{
+		return $this->websiteUrl;
+	}
 
 	/**
 	 * @param $facebookUrl
 	 * @return $this
 	 */
 	public function setFacebookUrl($facebookUrl)
-    {
+	{
 		$this->facebookUrl = mb_strtolower($facebookUrl);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return string
-     */
-    public function getFacebookUrl()
-    {
-        return $this->facebookUrl;
-    }
+	/**
+	 * @return string
+	 */
+	public function getFacebookUrl()
+	{
+		return $this->facebookUrl;
+	}
 
 	/**
 	 * @param Address $address

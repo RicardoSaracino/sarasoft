@@ -33,7 +33,7 @@ class ZoneMemberCountry implements ZoneMemberEntityInterface
 	 *
 	 * @ORM\ManyToOne(targetEntity="Zone", inversedBy="members")
 	 * @ORM\JoinColumns({
-	 *   @ORM\JoinColumn(name="zone_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="zone_id", referencedColumnName="id")
 	 * })
 	 */
 	private $zone;
@@ -102,6 +102,7 @@ class ZoneMemberCountry implements ZoneMemberEntityInterface
 	public function setId($id)
 	{
 		$this->id = $id;
+
 		return $this;
 	}
 
@@ -120,6 +121,7 @@ class ZoneMemberCountry implements ZoneMemberEntityInterface
 	public function setName($name)
 	{
 		$this->name = $name;
+
 		return $this;
 	}
 

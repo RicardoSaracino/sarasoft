@@ -86,7 +86,7 @@ class Customer
 	 *
 	 * @ORM\ManyToOne(targetEntity="Address", cascade={"all"})
 	 * @ORM\JoinColumns({
-	 *   @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
 	 * })
 	 *
 	 * @Assert\Valid()
@@ -155,7 +155,7 @@ class Customer
 	 */
 	public function getFullName()
 	{
-		return $this->getFirstName(). ' ' . $this->getLastName();
+		return $this->getFirstName() . ' ' . $this->getLastName();
 	}
 
 	/**
