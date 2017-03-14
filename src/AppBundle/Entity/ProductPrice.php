@@ -136,9 +136,8 @@ class ProductPrice
 	public function setPrice(Money $price = null)
 	{
 		if (!is_null($price)) {
-
 			$this->priceAmount = $price->getAmount();
-			$this->priceCurrency = $price->getCurrency()->getCode();
+			$this->priceCurrency = $price->getCurrency()->getName();
 		}
 
 		return $this;

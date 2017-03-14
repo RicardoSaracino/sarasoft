@@ -850,9 +850,9 @@ class CustomerOrder implements TaxableInterface
 	 */
 	public function setInvoiceSubtotal(Money $invoiceSubtotal)
 	{
-		if (!is_null($invoiceSubtotal) && $invoiceSubtotal->getCurrency()) {
+		if (!is_null($invoiceSubtotal)) {
 			$this->invoiceSubtotalAmount = $invoiceSubtotal->getAmount();
-			$this->invoiceSubtotalCurrency = $invoiceSubtotal->getCurrency()->getCode();
+			$this->invoiceSubtotalCurrency = $invoiceSubtotal->getCurrency()->getName();
 		}
 
 		return $this;
@@ -881,7 +881,7 @@ class CustomerOrder implements TaxableInterface
 	{
 		if (!is_null($invoiceTotal)) {
 			$this->invoiceTotalAmount = $invoiceTotal->getAmount();
-			$this->invoiceTotalCurrency = $invoiceTotal->getCurrency()->getCode();
+			$this->invoiceTotalCurrency = $invoiceTotal->getCurrency()->getName();
 		}
 
 		return $this;
@@ -1035,7 +1035,7 @@ class CustomerOrder implements TaxableInterface
 	{
 		if (!is_null($payment)) {
 			$this->paymentAmount = $payment->getAmount();
-			$this->paymentCurrency = $payment->getCurrency()->getCode();
+			$this->paymentCurrency = $payment->getCurrency()->getName();
 		}
 
 		return $this;
