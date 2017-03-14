@@ -16,3 +16,4 @@
 /web/bundles/
 /.idea
 sarasoft.iml
+/web/assetic/*
