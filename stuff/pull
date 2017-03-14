@@ -1,0 +1,20 @@
+
+
+sudo git pull;
+sudo php /bin/composer.phar update;
+sudo php bin/console cache:clear --env dev;
+sudo php bin/console cache:clear --env prod;
+sudo php bin/console assetic:dump --env=prod;
+sudo find * -type d -exec chmod 775 {} \;
+sudo find * -type f -exec chmod 664 {} \;
+sudo chown -R apache:apache .;
+
+
+
+
+
+sudo git pull;
+sudo php bin/console cache:clear --env prod;
+sudo find * -type d -exec chmod 775 {} \;
+sudo find * -type f -exec chmod 664 {} \;
+sudo chown -R apache:apache .;
