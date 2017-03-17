@@ -66,7 +66,7 @@
 				eventSources: [
 					{
 						url: '{{ app.environment == 'dev' ? '/app_dev.php' : '/app.php' }}/full-calendar/load', // todo fix this
-						type: 'POST',
+						type: 'GET',   // post wasnt working in production
 						data: {
 						},
 						error: function () {
