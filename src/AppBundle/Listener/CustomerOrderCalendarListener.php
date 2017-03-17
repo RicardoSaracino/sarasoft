@@ -136,7 +136,7 @@ class CustomerOrderCalendarListener
 
 					$calEvent = new CustomerOrderCalendarEvent('Paid', $customerOrder->getInvoicedAt());
 
-					$calEvent->setUrl($this->router->generate('customer_order_edit_invoice', array('id' => $customerOrder->getId())));
+					$calEvent->setUrl($this->router->generate('customer_order_edit_paid', array('id' => $customerOrder->getId())));
 
 					$calEvent->setNotes($customerOrder->getPaymentNotes());
 
