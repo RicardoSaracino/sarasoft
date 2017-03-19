@@ -36,6 +36,15 @@ framework:
     translator: { fallbacks: [en] }
 
 
+mobile_detect:
+    redirect:
+        mobile:
+            is_enabled: true
+            #host: http://m.example.com
+            #action: redirect
+        detect_tablet_as_mobile: true
+
+
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"

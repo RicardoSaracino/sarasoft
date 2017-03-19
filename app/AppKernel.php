@@ -27,6 +27,9 @@ class AppKernel extends Kernel
 			new AncaRebeca\FullCalendarBundle\FullCalendarBundle(),
 			## Added RS 2016-11-19 https://github.com/TheBigBrainsCompany/TbbcMoneyBundle#installation
 			new Tbbc\MoneyBundle\TbbcMoneyBundle(),
+			## Added RS 2017-03-18 https://github.com/suncat2000/MobileDetectBundle/blob/master/Resources/doc/index.md
+			new SunCat\MobileDetectBundle\MobileDetectBundle(),
+
 		];
 
 		if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
