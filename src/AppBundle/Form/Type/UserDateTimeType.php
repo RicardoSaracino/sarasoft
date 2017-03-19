@@ -29,7 +29,10 @@ class UserDateTimeType extends \Symfony\Component\Form\Extension\Core\Type\DateT
 		$resolver->setDefaults(
 			[
 				'widget' => 'single_text',
+
+
 				'format' => 'MM/dd/yyyy hh:mm a',
+
 				'html5' => false,
 				'compound' => false,
 				'input' => null,
