@@ -27,7 +27,7 @@ class UserDateTimeTransformer implements DataTransformerInterface
 	 * @param TokenStorage $tokenStorage
 	 * @param string $html5Format
 	 */
-	public function __construct(TokenStorage $tokenStorage, $html5Format = 'Y-m-d\Th:m')
+	public function __construct(TokenStorage $tokenStorage, $html5Format = 'Y-m-d\Th:i')
 	{
 		$this->tokenStorage = $tokenStorage;
 
