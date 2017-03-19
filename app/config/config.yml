@@ -59,6 +59,7 @@ twig:
         - "form/textarea_prepend.html.twig"
         - "form/date_picker.html.twig"
         - "form/date_time_picker.html.twig"
+        - "form/date_time.html.twig"
         - "form/collection.html.twig"
         - "form/compound.html.twig"
     paths:
