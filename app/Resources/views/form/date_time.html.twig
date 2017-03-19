@@ -1,7 +1,3 @@
 {% block date_time_widget %}
-	{{ form_widget(form, { 'type' : 'datetime', 'attr': {'placeholder': 'MM/DD/YYYY hh:mm a'} }) }}
-
-	<input type="datetime" name="tesft">
-	<input type="date" name="testf">
-	<input type="datetime-local" name="testf">
+	{{ form_widget(form, { 'type' : 'datetime-local'}) }}
 {% endblock %}

@@ -6,11 +6,21 @@
 
 namespace AppBundle\Form\Type;
 
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class UserDateTimeType extends \Symfony\Component\Form\Extension\Core\Type\DateType {
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
+/**
+ * Class UserDateTimeType
+ * @package AppBundle\Form\Type
+ */
+class UserDateTimeType extends DateType
+{
+	/**
+	 * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
+	 */
 	private $tokenStorage;
 
 	/**
@@ -24,18 +34,23 @@ class UserDateTimeType extends \Symfony\Component\Form\Extension\Core\Type\DateT
 	/**
 	 * {@inheritdoc}
 	 */
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{
+		$builder->addModelTransformer(new \AppBundle\Form\Transformer\UserDateTimeTransformer($this->tokenStorage));
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(
 			[
 				'widget' => 'single_text',
-
-
-				'format' => 'MM/dd/yyyy hh:mm a',
-
-				'html5' => false,
+				'format' => \DateTime::W3C,
+				'html5' => true,
 				'compound' => false,
-				'input' => null,
+				'input' => 'sting',
 				'model_timezone' => 'UTC',
 				'view_timezone' => $this->tokenStorage->getToken()->getUser()->getTimeZone(),
 			]
